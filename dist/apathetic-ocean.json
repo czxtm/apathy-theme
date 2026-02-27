@@ -257,7 +257,7 @@
 				"string"
 			],
 			"settings": {
-				"foreground": "#aac17b"
+				"foreground": "#95c17b"
 			}
 		},
 		{
@@ -276,7 +276,7 @@
 				"constant.character.escape"
 			],
 			"settings": {
-				"foreground": "#aac17b"
+				"foreground": "#95c17b"
 			}
 		},
 		{
@@ -285,7 +285,7 @@
 				"constant.other.placeholder"
 			],
 			"settings": {
-				"foreground": "#aac17b"
+				"foreground": "#95c17b"
 			}
 		},
 		{
@@ -339,7 +339,7 @@
 				"punctuation.definition.template-expression"
 			],
 			"settings": {
-				"foreground": "#aac17b"
+				"foreground": "#95c17b"
 			}
 		},
 		{
@@ -348,7 +348,7 @@
 				"meta.template.expression"
 			],
 			"settings": {
-				"foreground": "#aac17b"
+				"foreground": "#95c17b"
 			}
 		},
 		{
@@ -786,7 +786,7 @@
 				"support.class.component"
 			],
 			"settings": {
-				"foreground": "#a7a4af"
+				"foreground": "#383d51"
 			}
 		},
 		{
@@ -795,7 +795,7 @@
 				"support.class.component.jsx"
 			],
 			"settings": {
-				"foreground": "#a7a4af"
+				"foreground": "#383d51"
 			}
 		},
 		{
@@ -1104,7 +1104,7 @@
 				"markup.italic"
 			],
 			"settings": {
-				"foreground": "#aac17b",
+				"foreground": "#95c17b",
 				"fontStyle": "italic"
 			}
 		},
@@ -1114,7 +1114,7 @@
 				"markup.inline.raw"
 			],
 			"settings": {
-				"foreground": "#aac17b"
+				"foreground": "#95c17b"
 			}
 		},
 		{
@@ -1123,7 +1123,7 @@
 				"markup.fenced_code.block.markdown"
 			],
 			"settings": {
-				"foreground": "#aac17b"
+				"foreground": "#95c17b"
 			}
 		},
 		{
@@ -1341,7 +1341,7 @@
 				"string.unquoted.plain.out.yaml"
 			],
 			"settings": {
-				"foreground": "#aac17b"
+				"foreground": "#95c17b"
 			}
 		},
 		{
@@ -1350,7 +1350,7 @@
 				"string.quoted.single.yaml"
 			],
 			"settings": {
-				"foreground": "#aac17b"
+				"foreground": "#95c17b"
 			}
 		},
 		{
@@ -1377,7 +1377,7 @@
 				"meta.structure.dictionary.value.json"
 			],
 			"settings": {
-				"foreground": "#aac17b"
+				"foreground": "#95c17b"
 			}
 		},
 		{
@@ -1392,7 +1392,7 @@
 	],
 	"semanticTokenColors": {
 		"comment": "#383d51",
-		"string": "#aac17b",
+		"string": "#95c17b",
 		"number": "#33b3cc",
 		"regexp": "#FF6188",
 		"keyword": "#afd1e9cf",

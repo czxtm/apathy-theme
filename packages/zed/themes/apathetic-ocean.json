@@ -300,7 +300,7 @@
 						"color": "#afd1e9cf"
 					},
 					"string": {
-						"color": "#aac17b"
+						"color": "#95c17b"
 					},
 					"string.escape": {
 						"color": "#FFD866"
@@ -310,16 +310,16 @@
 						"font_style": "italic"
 					},
 					"string.special": {
-						"color": "#aac17b"
+						"color": "#95c17b"
 					},
 					"string.special.symbol": {
-						"color": "#aac17b"
+						"color": "#95c17b"
 					},
 					"tag": {
 						"color": "#5c5675"
 					},
 					"text.literal": {
-						"color": "#aac17b"
+						"color": "#95c17b"
 					},
 					"title": {
 						"color": "#79e3bd",
