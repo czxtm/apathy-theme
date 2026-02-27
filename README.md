@@ -1,7 +1,16 @@
+<div align="center">
+  <h1>apathy</h1>
+  <a href="https://vscode.dev/editor/theme/coopermaruyama.apathy-theme">Live Demo</a>
+</div>
+
+<br />
+
 ![005](/assets/006.png)
 <!-- <img alt="006" src="https://github.com/user-attachments/assets/768db3aa-572f-4f19-8922-539494fbf3e1" style="max-width: 100%;object-fit: cover;aspect-ratio: 16/9;object-position: top left;box-shadow: 0px 2px 5px hsla(0,0%,0%,0.2);border-radius: 6px;" /> -->
 
-<h1 style="text-align: center;"><center>apathy</center></h1>
+
+
+
 
 <center>
   A sophisticated dark theme with vibrant, neon-like syntax highlighting.<br /> Excellent contrast and readability while maintaining a visually striking aesthetic.

@@ -18,7 +18,7 @@ import { makeColors } from "@/core/color";
 export enum palette {
   // Backgrounds
   // midnight = "#0d1117",
-  midnight = "#0f0f15",
+  midnight = "#0e0e15",
   midnight2 = "#0e0e15",
   midnightLight = "#161620",
   midnightDark = "#07070a",
@@ -62,6 +62,15 @@ export enum palette {
   blush = "#e0a2d3",
   crimson = "#ca175d",
   gold = "#ffd014d4",
+
+  // UI foreground hierarchy
+  softMist = "#585B70",
+  dimGray = "#3A4158",
+  deepGray = "#2B2F3F",
+
+  // Surfaces & accents
+  nightPurple = "#201F31",
+  deletedRose = "#A63B65",
 
   // todo
   gray1 = "#5C5675",
@@ -274,22 +283,22 @@ const backgrounds: UserInterface<PaletteValue | string>["backgrounds"] = {
   base: palette.midnight,
   darker: darken(palette.midnight, 0.2),
   surface: lighten(palette.midnight, 0.15),
-  raised: lighten(palette.midnight, 1),
-  overlay: lighten(palette.midnight, 1),
+  raised: palette.nightPurple,
+  overlay: "#4240641A",
   codeBlock: palette["#08080c"],
 }
 const foregrounds: UserInterface<PaletteValue | string>["foregrounds"] = {
-  default: tokens.source,
-  muted: alpha20(palette.mist),
-  subtle: palette.charcoal,
-  accent: palette.cyan,
+  default: "#585B70CE",
+  muted: palette.dimGray,
+  subtle: palette.deepGray,
+  accent: palette.lavender,
   focused: lighten(palette.mist, 0.3),
 }
 const borders: UserInterface<PaletteValue | string>["borders"] = {
-  default: lighten(palette.midnight, 0.4),
-  active: palette.semiblack,
-  subtle: lighten(palette.midnight, 0.2),
-  separator: lighten(palette.midnight, 0.4),
+  default: "#161721",
+  active: "#4335A866",
+  subtle: "#161721",
+  separator: "#767B950D",
 };
 const accent: UserInterface<PaletteValue | string>["accent"] = {
   primary: palette.cyan,
@@ -363,7 +372,7 @@ const ui: UserInterface<PaletteValue | string> = {
     added: palette.seafoam,
     // modified: mix(palette.peach, palette.midnight, 0.2),
     modified: palette.bluegray,
-    deleted: palette.crimson,
+    deleted: palette.deletedRose,
     untracked: palette.mist,
     ignored: palette.mist,
     conflict: palette.crimson,

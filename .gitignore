@@ -1,6 +1,9 @@
 node_modules
+/dist
 *.vsix
 .env
 /tmp
 .DS_Store
 .mypy_cache
+dist
+tsconfig.tsbuildinfo

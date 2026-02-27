@@ -1,6 +1,6 @@
 id = "apathy-theme"
 name = "Apathy Theme"
-version = "2.3.0"
+version = "2.4.0"
 schema_version = 1
 authors = ["Cooper Maruyama <me@cooperm.com>"]
 description = "A dark, low-contrast theme family with muted purple undertones for reduced eye strain. Includes Apathy, Apathetic Ocean, and Minted variants."
