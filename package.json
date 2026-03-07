@@ -33,6 +33,11 @@
 				"path": "./dist/minted.json"
 			},
 			{
+				"label": "[apathy] minted theory",
+				"uiTheme": "vs-dark",
+				"path": "./dist/minted-theory.json"
+			},
+			{
 				"label": "[apathy] classic",
 				"uiTheme": "vs-dark",
 				"path": "./dist/apathy.json"

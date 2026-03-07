@@ -5,5 +5,9 @@ node_modules
 /tmp
 .DS_Store
 .mypy_cache
+<<<<<<< HEAD
 dist
 tsconfig.tsbuildinfo
+=======
+dist/
+>>>>>>> bd99902 (minted theory)
