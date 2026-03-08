@@ -9,5 +9,6 @@ themes = [
   "themes/apathy.json",
   "themes/apathetic-ocean.json",
   "themes/minted.json",
+  "themes/minted-theory.json",
   "themes/slate.json",
 ]
