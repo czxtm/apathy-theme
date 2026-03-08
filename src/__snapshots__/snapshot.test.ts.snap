@@ -1,0 +1,702 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`Zed theme snapshots Minted 1`] = `
+"Element                                  Contrast   ΔL     ΔS     FG HSL                 FG           BG          
+------------------------------------------------------------------------------------------------------------------------
+editor.foreground → editor.bg                  2.31    +34     -9 230/12/39 a0.81        #575B6FCE    #0B0B11FF   
+text → background                              2.30    +33    -11 230/12/39 a0.81        #575B6FCE    #0C0C13FF   
+text.muted → background                        1.93    +23     -2 226/21/29 a1           #3A4159FF    #0C0C13FF   
+text.accent → background                       4.81    +66    +35 247/58/72 a0.81        #998FE1CF    #0C0C13FF   
+line_number → gutter                           1.84    +22     -2 228/18/27 a1           #383D51FF    #0A0A0FFF   
+active_line_number → gutter                    3.18    +47     -7 230/13/52 a0.76        #767B95C2    #0A0A0FFF   
+tab.active → tab.active_bg                     2.30    +33    -11 230/12/39 a0.81        #575B6FCE    #0C0C13FF   
+tab.inactive → tab.inactive_bg                 1.93    +23     -2 226/21/29 a1           #3A4159FF    #0C0C13FF   
+status_bar text → status_bar.bg                2.30    +33    -11 230/12/39 a0.81        #575B6FCE    #0C0C13FF   
+terminal.fg → terminal.bg                      3.18    +47     -7 230/13/52 a0.76        #767B95C2    #0A0A0FFF   
+terminal.red → terminal.bg                     3.57    +39    +60 337/80/44 a1           #CA175DFF    #0A0A0FFF   
+terminal.green → terminal.bg                  12.00    +68    +21 153/41/73 a1           #9CD6BCFF    #0A0A0FFF   
+terminal.yellow → terminal.bg                 11.34    +72    +80 21/100/77 a1           #FFB389FF    #0A0A0FFF   
+terminal.blue → terminal.bg                    7.96    +45    +40 190/60/50 a1           #33B3CCFF    #0A0A0FFF   
+terminal.cyan → terminal.bg                   14.38    +75    +30 171/50/80 a1           #B3E6DEFF    #0A0A0FFF   
+error → background                             3.38    +38    +49 337/72/44 a1           #C1205FFF    #0C0C13FF   
+error.bg → background                          1.29    +38    +45 336/68/44 a0.32        #BD246052    #0C0C13FF   
+warning → background                           7.46    +57    +22 21/45/63 a1            #CB9477FF    #0C0C13FF   
+warning.bg → background                        1.80    +59    +23 20/46/65 a0.32         #CF997D52    #0C0C13FF   
+info → background                              7.46    +44    +32 190/55/50 a1           #3AAEC5FF    #0C0C13FF   
+info.bg → background                           1.73    +44    +28 190/51/50 a0.32        #3EABC152    #0C0C13FF   
+success → background                           7.45    +52     -3 156/20/58 a1           #7FA998FF    #0C0C13FF   
+success.bg → background                        1.78    +54     -4 156/19/60 a0.32        #84AC9C52    #0C0C13FF   
+hint → background                              7.46    +44    +32 190/55/50 a1           #3AAEC5FF    #0C0C13FF   
+hint.bg → background                           1.73    +44    +28 190/51/50 a0.32        #3EABC152    #0C0C13FF   
+border → background                            1.09    +46    -10 230/13/52 a0.1         #767B951A    #0C0C13FF   
+border.focused → background                    1.25    +37    +29 247/52/43 a0.4         #4335A866    #0C0C13FF   
+error.border → background                      2.83    +38    +49 337/72/44 a0.88        #C1205FE0    #0C0C13FF   
+info.border → background                       5.45    +42    +31 190/54/48 a0.88        #38A6BCE0    #0C0C13FF   
+element.bg → background                        1.11     +6     +7 256/30/12 a1           #1B1629FF    #0C0C13FF   
+element.hover → background                     1.04     +3     -6 233/17/9 a0.74         #13141BBC    #0C0C13FF   
+ghost_element.hover → background               1.04     +3     -6 233/17/9 a0.74         #13141BBC    #0C0C13FF   
+panel.bg → background                          1.01     +0     +1 240/24/6 a1            #0B0B12FF    #0C0C13FF   
+surface.bg → background                        1.01     +1     -1 240/22/7 a1            #0E0E16FF    #0C0C13FF   
+elevated_surface → background                  1.04     +3     -6 233/17/9 a0.74         #13141BBC    #0C0C13FF   
+icon → background                              7.75    +59     -5 212/18/65 a1           #96A5B6      #0C0C13FF   
+icon.muted → background                        1.93    +23     -2 226/21/29 a1           #3A4159FF    #0C0C13FF   
+icon.accent → background                       5.02    +66    +35 247/58/72 a0.83        #998FE1D4    #0C0C13FF   
+vc.added → background                          1.99    +25     -8 162/15/31 a0.76        #435A53C2    #0C0C13FF   
+vc.modified → background                       4.13    +45     +2 225/25/51 a1           #6372A1FF    #0C0C13FF   
+vc.deleted → background                        2.43    +38    +25 336/48/44 a0.8         #A63B65CC    #0C0C13FF   
+syntax.attribute → editor.bg                  11.27    +72    +79 21/100/77 a1           #FFB389FF    #0B0B11FF   
+syntax.boolean → editor.bg                     7.91    +45    +39 190/60/50 a1           #33B3CCFF    #0B0B11FF   
+syntax.comment → editor.bg                     1.83    +22     -3 228/18/27 a1           #383D51FF    #0B0B11FF   
+syntax.comment.doc → editor.bg                 1.83    +22     -3 228/18/27 a1           #383D51FF    #0B0B11FF   
+syntax.constant → editor.bg                    3.16    +47     -8 230/13/52 a0.76        #767B95C2    #0B0B11FF   
+syntax.constructor → editor.bg                14.29    +75    +29 171/50/80 a1           #B3E6DEFF    #0B0B11FF   
+syntax.embedded → editor.bg                    3.16    +47     -8 230/13/52 a0.76        #767B95C2    #0B0B11FF   
+syntax.enum → editor.bg                        7.75    +64     +8 231/29/69 a1           #9AA1C7FF    #0B0B11FF   
+syntax.function → editor.bg                   11.92    +68    +20 153/41/73 a1           #9CD6BCFF    #0B0B11FF   
+syntax.function.method → editor.bg            11.92    +68    +20 153/41/73 a1           #9CD6BCFF    #0B0B11FF   
+syntax.function.definition → editor.bg        11.92    +68    +20 153/41/73 a1           #9CD6BCFF    #0B0B11FF   
+syntax.hint → editor.bg                        7.91    +45    +39 190/60/50 a1           #33B3CCFF    #0B0B11FF   
+syntax.keyword → editor.bg                     8.27    +75    +36 205/57/80 a0.81        #AFD1E9CF    #0B0B11FF   
+syntax.label → editor.bg                       9.60    +71    +29 313/50/76 a1           #E0A2D3FF    #0B0B11FF   
+syntax.link_text → editor.bg                   7.91    +45    +39 190/60/50 a1           #33B3CCFF    #0B0B11FF   
+syntax.link_uri → editor.bg                    7.91    +45    +39 190/60/50 a1           #33B3CCFF    #0B0B11FF   
+syntax.namespace → editor.bg                   3.16    +47     -8 230/13/52 a0.76        #767B95C2    #0B0B11FF   
+syntax.number → editor.bg                      7.91    +45    +39 190/60/50 a1           #33B3CCFF    #0B0B11FF   
+syntax.operator → editor.bg                    3.54    +39    +59 337/80/44 a1           #CA175DFF    #0B0B11FF   
+syntax.predictive → editor.bg                  7.75    +64     +8 231/29/69 a1           #9AA1C7FF    #0B0B11FF   
+syntax.preproc → editor.bg                     8.27    +75    +36 205/57/80 a0.81        #AFD1E9CF    #0B0B11FF   
+syntax.primary → editor.bg                     3.16    +47     -8 230/13/52 a0.76        #767B95C2    #0B0B11FF   
+syntax.property → editor.bg                    5.43    +50    -11 220/10/55 a1           #7F8797FF    #0B0B11FF   
+syntax.punctuation → editor.bg                 3.16    +47     -8 230/13/52 a0.76        #767B95C2    #0B0B11FF   
+syntax.punctuation.bracket → editor.bg         1.83    +22     -3 228/18/27 a1           #383D51FF    #0B0B11FF   
+syntax.punctuation.delimiter → editor.bg       1.83    +22     -3 228/18/27 a1           #383D51FF    #0B0B11FF   
+syntax.punctuation.list_marker → editor.bg       3.16    +47     -8 230/13/52 a0.76        #767B95C2    #0B0B11FF   
+syntax.punctuation.markup → editor.bg          2.84    +35     -6 252/15/40 a1           #5C5675FF    #0B0B11FF   
+syntax.punctuation.special → editor.bg         1.83    +22     -3 228/18/27 a1           #383D51FF    #0B0B11FF   
+syntax.selector → editor.bg                   14.29    +75    +29 171/50/80 a1           #B3E6DEFF    #0B0B11FF   
+syntax.selector.pseudo → editor.bg             8.27    +75    +36 205/57/80 a0.81        #AFD1E9CF    #0B0B11FF   
+syntax.string → editor.bg                     11.74    +65    +19 86/40/70 a1            #B7D194FF    #0B0B11FF   
+syntax.string.escape → editor.bg              11.27    +72    +79 21/100/77 a1           #FFB389      #0B0B11FF   
+syntax.string.regex → editor.bg               11.27    +72    +79 21/100/77 a1           #FFB389FF    #0B0B11FF   
+syntax.string.special → editor.bg             11.74    +65    +19 86/40/70 a1            #B7D194FF    #0B0B11FF   
+syntax.string.special.symbol → editor.bg      11.74    +65    +19 86/40/70 a1            #B7D194FF    #0B0B11FF   
+syntax.tag → editor.bg                         2.84    +35     -6 252/15/40 a1           #5C5675FF    #0B0B11FF   
+syntax.text.literal → editor.bg               11.74    +65    +19 86/40/70 a1            #B7D194FF    #0B0B11FF   
+syntax.title → editor.bg                      11.92    +68    +20 153/41/73 a1           #9CD6BCFF    #0B0B11FF   
+syntax.type → editor.bg                       14.29    +75    +29 171/50/80 a1           #B3E6DEFF    #0B0B11FF   
+syntax.variable → editor.bg                    7.75    +64     +8 231/29/69 a1           #9AA1C7FF    #0B0B11FF   
+syntax.variable.special → editor.bg            7.75    +64     +8 231/29/69 a1           #9AA1C7FF    #0B0B11FF   
+syntax.variant → editor.bg                     7.75    +64     +8 231/29/69 a1           #9AA1C7FF    #0B0B11FF   "
+`;
+
+exports[`Zed theme snapshots Minted Theory 1`] = `
+"Element                                  Contrast   ΔL     ΔS     FG HSL                 FG           BG          
+------------------------------------------------------------------------------------------------------------------------
+editor.foreground → editor.bg                  2.31    +34     -9 230/12/39 a0.81        #575B6FCE    #0B0B11FF   
+text → background                              2.30    +33    -11 230/12/39 a0.81        #575B6FCE    #0C0C13FF   
+text.muted → background                        1.93    +23     -2 226/21/29 a1           #3A4159FF    #0C0C13FF   
+text.accent → background                      16.24    +82    +30 171/53/88 a1           #D1F1ECFF    #0C0C13FF   
+line_number → gutter                           1.84    +22     -2 228/18/27 a1           #383D51FF    #0A0A0FFF   
+active_line_number → gutter                    3.18    +47     -7 230/13/52 a0.76        #767B95C2    #0A0A0FFF   
+tab.active → tab.active_bg                     2.30    +33    -11 230/12/39 a0.81        #575B6FCE    #0C0C13FF   
+tab.inactive → tab.inactive_bg                 1.93    +23     -2 226/21/29 a1           #3A4159FF    #0C0C13FF   
+status_bar text → status_bar.bg                2.30    +33    -11 230/12/39 a0.81        #575B6FCE    #0C0C13FF   
+terminal.fg → terminal.bg                      3.18    +47     -7 230/13/52 a0.76        #767B95C2    #0A0A0FFF   
+terminal.red → terminal.bg                     3.57    +39    +60 337/80/44 a1           #CA175DFF    #0A0A0FFF   
+terminal.green → terminal.bg                  12.00    +68    +21 153/41/73 a1           #9CD6BCFF    #0A0A0FFF   
+terminal.yellow → terminal.bg                 11.34    +72    +80 21/100/77 a1           #FFB389FF    #0A0A0FFF   
+terminal.blue → terminal.bg                    7.96    +45    +40 190/60/50 a1           #33B3CCFF    #0A0A0FFF   
+terminal.cyan → terminal.bg                   14.38    +75    +30 171/50/80 a1           #B3E6DEFF    #0A0A0FFF   
+error → background                             4.17    +46    +29 337/52/52 a1           #C44677FF    #0C0C13FF   
+error.bg → background                          1.41    +46    +26 337/49/52 a0.32        #C1497752    #0C0C13FF   
+warning → background                           7.49    +57    +21 22/44/63 a1            #CA9577FF    #0C0C13FF   
+warning.bg → background                        1.79    +58    +21 22/44/64 a0.32         #CC997C52    #0C0C13FF   
+info → background                              7.45    +62    +32 218/55/68 a1           #80A1DAFF    #0C0C13FF   
+info.bg → background                           1.82    +63    +34 217/57/69 a0.32        #84A6DD52    #0C0C13FF   
+success → background                           7.49    +53     -3 119/20/59 a1           #81AB80FF    #0C0C13FF   
+success.bg → background                        1.80    +54     -2 117/21/60 a0.32        #87AF8552    #0C0C13FF   
+hint → background                              7.45    +62    +32 218/55/68 a1           #80A1DAFF    #0C0C13FF   
+hint.bg → background                           1.82    +63    +34 217/57/69 a0.32        #84A6DD52    #0C0C13FF   
+border → background                            1.06    +33    -11 230/12/39 a0.1         #575B6F19    #0C0C13FF   
+border.focused → background                    4.66    +82    +30 171/53/88 a0.5         #D1F1EC80    #0C0C13FF   
+error.border → background                      3.45    +46    +29 337/52/52 a0.88        #C44677E0    #0C0C13FF   
+info.border → background                       5.50    +59    +25 218/48/65 a0.88        #7A9AD0E0    #0C0C13FF   
+element.bg → background                        1.11     +6     +7 256/30/12 a1           #1B1629FF    #0C0C13FF   
+element.hover → background                     1.04     +3     -6 233/17/9 a0.74         #13141BBC    #0C0C13FF   
+ghost_element.hover → background               1.04     +3     -6 233/17/9 a0.74         #13141BBC    #0C0C13FF   
+panel.bg → background                          1.01     +0     +1 240/24/6 a1            #0B0B12FF    #0C0C13FF   
+surface.bg → background                        1.03     +2     -3 240/20/8 a1            #101018FF    #0C0C13FF   
+elevated_surface → background                  1.04     +3     -6 233/17/9 a0.74         #13141BBC    #0C0C13FF   
+icon → background                              7.75    +59     -5 212/18/65 a1           #96A5B6      #0C0C13FF   
+icon.muted → background                        1.93    +23     -2 226/21/29 a1           #3A4159FF    #0C0C13FF   
+icon.accent → background                      11.25    +82    +30 171/53/88 a0.83        #D1F1ECD4    #0C0C13FF   
+vc.added → background                          2.17    +30    -14 203/9/36 a0.76         #545E64C2    #0C0C13FF   
+vc.modified → background                      15.96    +85    +22 21/45/91 a1            #F3E6DFFF    #0C0C13FF   
+vc.deleted → background                        3.05    +46    +34 337/57/52 a0.8         #CB3F75CC    #0C0C13FF   
+syntax.attribute → editor.bg                  14.74    +85    +21 352/42/90 a1           #F0DADDFF    #0B0B11FF   
+syntax.boolean → editor.bg                    16.36    +83    +32 171/53/88 a1           #D1F1ECFF    #0B0B11FF   
+syntax.comment → editor.bg                     1.46    +16     -3 231/18/21 a1           #2B2E3EFF    #0B0B11FF   
+syntax.comment.doc → editor.bg                 1.46    +16     -3 231/18/21 a1           #2B2E3EFF    #0B0B11FF   
+syntax.constant → editor.bg                   16.36    +83    +32 171/53/88 a1           #D1F1ECFF    #0B0B11FF   
+syntax.constructor → editor.bg                16.21    +83    +32 144/53/88 a1           #D1F1DEFF    #0B0B11FF   
+syntax.embedded → editor.bg                    2.31    +34     -9 230/12/39 a0.81        #575B6FCE    #0B0B11FF   
+syntax.enum → editor.bg                       13.49    +82    +26 321/47/87 a1           #EDCDE2FF    #0B0B11FF   
+syntax.function → editor.bg                   14.94    +82    +32 197/53/87 a1           #CBE5EFFF    #0B0B11FF   
+syntax.function.method → editor.bg            14.94    +82    +32 197/53/87 a1           #CBE5EFFF    #0B0B11FF   
+syntax.function.definition → editor.bg        14.94    +82    +32 197/53/87 a1           #CBE5EFFF    #0B0B11FF   
+syntax.hint → editor.bg                        9.32    +71    +71 217/92/76 a1           #89B4FAFF    #0B0B11FF   
+syntax.keyword → editor.bg                     2.31    +34     -9 230/12/39 a0.81        #575B6FCE    #0B0B11FF   
+syntax.label → editor.bg                      13.49    +82    +26 321/47/87 a1           #EDCDE2FF    #0B0B11FF   
+syntax.link_text → editor.bg                   9.32    +71    +71 217/92/76 a1           #89B4FAFF    #0B0B11FF   
+syntax.link_uri → editor.bg                    9.32    +71    +71 217/92/76 a1           #89B4FAFF    #0B0B11FF   
+syntax.namespace → editor.bg                   2.31    +34     -9 230/12/39 a0.81        #575B6FCE    #0B0B11FF   
+syntax.number → editor.bg                     16.36    +83    +32 171/53/88 a1           #D1F1ECFF    #0B0B11FF   
+syntax.operator → editor.bg                   14.74    +85    +21 352/42/90 a1           #F0DADDFF    #0B0B11FF   
+syntax.predictive → editor.bg                 16.21    +83    +32 144/53/88 a1           #D1F1DEFF    #0B0B11FF   
+syntax.preproc → editor.bg                     2.31    +34     -9 230/12/39 a0.81        #575B6FCE    #0B0B11FF   
+syntax.primary → editor.bg                     2.31    +34     -9 230/12/39 a0.81        #575B6FCE    #0B0B11FF   
+syntax.property → editor.bg                    3.91    +48    -16 245/5/53 a0.85         #81808DD8    #0B0B11FF   
+syntax.punctuation → editor.bg                 1.94    +24     +0 226/21/29 a1           #3A4159FF    #0B0B11FF   
+syntax.punctuation.bracket → editor.bg         1.94    +24     +0 226/21/29 a1           #3A4159FF    #0B0B11FF   
+syntax.punctuation.delimiter → editor.bg       1.46    +16     -3 231/18/21 a1           #2B2E3EFF    #0B0B11FF   
+syntax.punctuation.list_marker → editor.bg       1.94    +24     +0 226/21/29 a1           #3A4159FF    #0B0B11FF   
+syntax.punctuation.markup → editor.bg         16.07    +86    +24 21/45/91 a1            #F3E6DFFF    #0B0B11FF   
+syntax.punctuation.special → editor.bg         1.46    +16     -3 231/18/21 a1           #2B2E3EFF    #0B0B11FF   
+syntax.selector → editor.bg                   16.21    +83    +32 144/53/88 a1           #D1F1DEFF    #0B0B11FF   
+syntax.selector.pseudo → editor.bg             2.31    +34     -9 230/12/39 a0.81        #575B6FCE    #0B0B11FF   
+syntax.string → editor.bg                     14.94    +82    +32 197/53/87 a1           #CBE5EFFF    #0B0B11FF   
+syntax.string.escape → editor.bg              11.27    +72    +79 21/100/77 a1           #FFB389      #0B0B11FF   
+syntax.string.regex → editor.bg               14.74    +85    +21 352/42/90 a1           #F0DADDFF    #0B0B11FF   
+syntax.string.special → editor.bg             14.94    +82    +32 197/53/87 a1           #CBE5EFFF    #0B0B11FF   
+syntax.string.special.symbol → editor.bg      14.94    +82    +32 197/53/87 a1           #CBE5EFFF    #0B0B11FF   
+syntax.tag → editor.bg                        16.07    +86    +24 21/45/91 a1            #F3E6DFFF    #0B0B11FF   
+syntax.text.literal → editor.bg               14.94    +82    +32 197/53/87 a1           #CBE5EFFF    #0B0B11FF   
+syntax.title → editor.bg                      13.20    +71    +33 115/54/76 a1           #A6E3A1FF    #0B0B11FF   
+syntax.type → editor.bg                       16.21    +83    +32 144/53/88 a1           #D1F1DEFF    #0B0B11FF   
+syntax.variable → editor.bg                    2.31    +34     -9 230/12/39 a0.81        #575B6FCE    #0B0B11FF   
+syntax.variable.special → editor.bg           16.21    +83    +32 144/53/88 a1           #D1F1DEFF    #0B0B11FF   
+syntax.variant → editor.bg                    13.49    +82    +26 321/47/87 a1           #EDCDE2FF    #0B0B11FF   "
+`;
+
+exports[`Zed theme snapshots Slate 1`] = `
+"Element                                  Contrast   ΔL     ΔS     FG HSL                 FG           BG          
+------------------------------------------------------------------------------------------------------------------------
+editor.foreground → editor.bg                  7.85    +59    -14 256/6/66 a1            #A7A4AFFF    #0E0E15FF   
+text → background                              7.85    +59    -14 256/6/66 a1            #A7A4AFFF    #0E0E15FF   
+text.muted → background                        4.55    +45     -9 231/11/52 a1           #767A92FF    #0E0E15FF   
+text.accent → background                      11.28    +64    +80 31/100/71 a1           #FFB86CFF    #0E0E15FF   
+line_number → gutter                           1.40    +13     -5 240/15/20 a1           #2C2C3CFF    #0E0E15FF   
+active_line_number → gutter                    7.85    +59    -14 256/6/66 a1            #A7A4AFFF    #0E0E15FF   
+tab.active → tab.active_bg                     7.67    +58    -13 256/6/66 a1            #A7A4AFFF    #111119FF   
+tab.inactive → tab.inactive_bg                 4.55    +45     -9 231/11/52 a1           #767A92FF    #0E0E15FF   
+status_bar text → status_bar.bg                7.67    +58    -13 256/6/66 a1            #A7A4AFFF    #111119FF   
+terminal.fg → terminal.bg                      7.85    +59    -14 256/6/66 a1            #A7A4AFFF    #0E0E15FF   
+terminal.red → terminal.bg                     4.16    +38    +80 334/100/45 a1          #E60063FF    #0E0E15FF   
+terminal.green → terminal.bg                   8.84    +53    +17 152/37/60 a1           #73BF9CFF    #0E0E15FF   
+terminal.yellow → terminal.bg                 11.28    +64    +80 31/100/71 a1           #FFB86CFF    #0E0E15FF   
+terminal.blue → terminal.bg                    7.75    +43    +40 190/60/50 a1           #33B3CCFF    #0E0E15FF   
+terminal.cyan → terminal.bg                   12.68    +70    +80 197/100/77 a1          #89DDFFFF    #0E0E15FF   
+error → background                             3.84    +38    +69 334/89/45 a1           #D90D65FF    #0E0E15FF   
+error.bg → background                          1.31    +38    +65 334/85/45 a0.32        #D5116552    #0E0E15FF   
+warning → background                           7.47    +49    +24 38/44/56 a1            #C09C5DFF    #0E0E15FF   
+warning.bg → background                        1.81    +50    +24 39/44/57 a0.32         #C19F6052    #0E0E15FF   
+info → background                              7.29    +43    +34 190/54/50 a1           #3BADC4FF    #0E0E15FF   
+info.bg → background                           1.73    +43    +31 190/51/50 a0.32        #3EABC152    #0E0E15FF   
+success → background                           7.44    +45    +10 81/30/52 a1            #91AA61FF    #0E0E15FF   
+success.bg → background                        1.78    +46     +9 81/29/53 a0.32         #93AB6552    #0E0E15FF   
+hint → background                              7.29    +43    +34 190/54/50 a1           #3BADC4FF    #0E0E15FF   
+hint.bg → background                           1.73    +43    +31 190/51/50 a0.32        #3EABC152    #0E0E15FF   
+border → background                            1.27    +10     -6 240/14/17 a1           #252531FF    #0E0E15FF   
+border.focused → background                    7.98    +59     +7 208/27/66 a1           #91AAC0FF    #0E0E15FF   
+error.border → background                      3.16    +38    +69 334/89/45 a0.88        #D90D65E0    #0E0E15FF   
+info.border → background                       5.45    +41    +34 190/54/48 a0.88        #39A7BEE0    #0E0E15FF   
+element.bg → background                        1.03     -2     +5 240/25/5 a1            #09090FFF    #0E0E15FF   
+element.hover → background                     1.01     +0     +1 240/21/7 a1            #0F0F17FF    #0E0E15FF   
+ghost_element.hover → background               1.01     +0     +1 240/21/7 a1            #0F0F17FF    #0E0E15FF   
+panel.bg → background                          1.02     +1     -1 240/19/8 a1            #111119FF    #0E0E15FF   
+surface.bg → background                        1.02     +1     -1 240/19/8 a1            #111119FF    #0E0E15FF   
+elevated_surface → background                  1.01     +0     +1 240/21/7 a1            #0F0F17FF    #0E0E15FF   
+icon → background                              3.18    +33    -10 219/10/40 a1           #5C6370      #0E0E15FF   
+icon.muted → background                        4.55    +45     -9 231/11/52 a1           #767A92FF    #0E0E15FF   
+icon.accent → background                       7.97    +64    +80 31/100/71 a0.83        #FFB86CD4    #0E0E15FF   
+vc.added → background                          1.47    +17    -13 210/7/24 a0.76         #383C40C2    #0E0E15FF   
+vc.modified → background                       4.99    +45     +1 208/21/52 a1           #69859EFF    #0E0E15FF   
+vc.deleted → background                        2.88    +40     -2 304/18/47 a0.8         #8C6289CC    #0E0E15FF   
+syntax.attribute → editor.bg                  12.82    +64    +80 39/100/71 a1           #FFCB6BFF    #0E0E15FF   
+syntax.boolean → editor.bg                     7.75    +43    +40 190/60/50 a1           #33B3CCFF    #0E0E15FF   
+syntax.comment → editor.bg                     2.34    +24    -11 206/9/31 a1            #485056FF    #0E0E15FF   
+syntax.comment.doc → editor.bg                 2.34    +24    -11 206/9/31 a1            #485056FF    #0E0E15FF   
+syntax.constant → editor.bg                    7.98    +59     +7 208/27/66 a1           #91AAC0FF    #0E0E15FF   
+syntax.constructor → editor.bg                 9.41    +69    +30 313/50/76 a1           #E0A2D3FF    #0E0E15FF   
+syntax.embedded → editor.bg                    7.85    +59    -14 256/6/66 a1            #A7A4AFFF    #0E0E15FF   
+syntax.enum → editor.bg                        9.46    +74    +64 267/84/81 a1           #CBA6F7FF    #0E0E15FF   
+syntax.function → editor.bg                    8.84    +53    +17 152/37/60 a1           #73BF9CFF    #0E0E15FF   
+syntax.function.method → editor.bg             8.84    +53    +17 152/37/60 a1           #73BF9CFF    #0E0E15FF   
+syntax.function.definition → editor.bg         8.84    +53    +17 152/37/60 a1           #73BF9CFF    #0E0E15FF   
+syntax.hint → editor.bg                        7.75    +43    +40 190/60/50 a1           #33B3CCFF    #0E0E15FF   
+syntax.keyword → editor.bg                     7.64    +55     +7 197/27/62 a1           #84A9B8FF    #0E0E15FF   
+syntax.label → editor.bg                       9.41    +69    +30 313/50/76 a1           #E0A2D3FF    #0E0E15FF   
+syntax.link_text → editor.bg                   7.75    +43    +40 190/60/50 a1           #33B3CCFF    #0E0E15FF   
+syntax.link_uri → editor.bg                    7.75    +43    +40 190/60/50 a1           #33B3CCFF    #0E0E15FF   
+syntax.namespace → editor.bg                   7.85    +59    -14 256/6/66 a1            #A7A4AFFF    #0E0E15FF   
+syntax.number → editor.bg                      7.75    +43    +40 190/60/50 a1           #33B3CCFF    #0E0E15FF   
+syntax.operator → editor.bg                    4.16    +38    +80 334/100/45 a1          #E60063FF    #0E0E15FF   
+syntax.predictive → editor.bg                  7.85    +59    -14 256/6/66 a1            #A7A4AFFF    #0E0E15FF   
+syntax.preproc → editor.bg                     7.64    +55     +7 197/27/62 a1           #84A9B8FF    #0E0E15FF   
+syntax.primary → editor.bg                     7.85    +59    -14 256/6/66 a1            #A7A4AFFF    #0E0E15FF   
+syntax.property → editor.bg                    9.41    +69    +30 313/50/76 a1           #E0A2D3FF    #0E0E15FF   
+syntax.punctuation → editor.bg                 4.55    +45     -9 231/11/52 a1           #767A92FF    #0E0E15FF   
+syntax.punctuation.bracket → editor.bg         4.55    +45     -9 231/11/52 a1           #767A92FF    #0E0E15FF   
+syntax.punctuation.delimiter → editor.bg       4.55    +45     -9 231/11/52 a1           #767A92FF    #0E0E15FF   
+syntax.punctuation.list_marker → editor.bg       4.55    +45     -9 231/11/52 a1           #767A92FF    #0E0E15FF   
+syntax.punctuation.markup → editor.bg          4.55    +45     -9 231/11/52 a1           #767A92FF    #0E0E15FF   
+syntax.punctuation.special → editor.bg         4.55    +45     -9 231/11/52 a1           #767A92FF    #0E0E15FF   
+syntax.selector → editor.bg                    9.41    +69    +30 313/50/76 a1           #E0A2D3FF    #0E0E15FF   
+syntax.selector.pseudo → editor.bg             7.64    +55     +7 197/27/62 a1           #84A9B8FF    #0E0E15FF   
+syntax.string → editor.bg                     11.36    +56    +34 80/54/63 a1            #B1D36DFF    #0E0E15FF   
+syntax.string.escape → editor.bg              11.28    +64    +80 31/100/71 a1           #FFB86C      #0E0E15FF   
+syntax.string.regex → editor.bg                4.16    +38    +80 334/100/45 a1          #E60063FF    #0E0E15FF   
+syntax.string.special → editor.bg             11.36    +56    +34 80/54/63 a1            #B1D36DFF    #0E0E15FF   
+syntax.string.special.symbol → editor.bg      11.36    +56    +34 80/54/63 a1            #B1D36DFF    #0E0E15FF   
+syntax.tag → editor.bg                         4.55    +45     -9 231/11/52 a1           #767A92FF    #0E0E15FF   
+syntax.text.literal → editor.bg               11.36    +56    +34 80/54/63 a1            #B1D36DFF    #0E0E15FF   
+syntax.title → editor.bg                      11.36    +56    +34 80/54/63 a1            #B1D36DFF    #0E0E15FF   
+syntax.type → editor.bg                        9.46    +74    +64 267/84/81 a1           #CBA6F7FF    #0E0E15FF   
+syntax.variable → editor.bg                    7.85    +59    -14 256/6/66 a1            #A7A4AFFF    #0E0E15FF   
+syntax.variable.special → editor.bg            7.85    +59    -14 256/6/66 a1            #A7A4AFFF    #0E0E15FF   
+syntax.variant → editor.bg                     9.46    +74    +64 267/84/81 a1           #CBA6F7FF    #0E0E15FF   "
+`;
+
+exports[`Zed theme snapshots Apathy 1`] = `
+"Element                                  Contrast   ΔL     ΔS     FG HSL                 FG           BG          
+------------------------------------------------------------------------------------------------------------------------
+editor.foreground → editor.bg                  3.73    +39    -20 254/7/45 a1            #6E6A7BFF    #0E0B13FF   
+text → background                              7.06    +78     -2 194/25/84 a0.7         #CBDBE0B3    #0E0B13FF   
+text.muted → background                        1.95    +21    -22 274/5/27 a1            #454148FF    #0E0B13FF   
+text.accent → background                       7.86    +44    +33 190/60/50 a1           #33B3CCFF    #0E0B13FF   
+line_number → gutter                           1.97    +22    -18 274/5/27 a1            #454148FF    #0C0A10FF   
+active_line_number → gutter                    6.55    +59     -3 259/20/64 a1           #9B8FB5FF    #0C0A10FF   
+tab.active → tab.active_bg                     7.02    +78    +18 194/25/84 a0.7         #CBDBE0B3    #0F0E10FF   
+tab.inactive → tab.inactive_bg                 1.93    +21     -2 274/5/27 a1            #454148FF    #0F0E10FF   
+status_bar text → status_bar.bg                7.06    +78     -2 194/25/84 a0.7         #CBDBE0B3    #0E0B13FF   
+terminal.fg → terminal.bg                     10.85    +83     -8 240/19/89 a0.86        #DDDDE8DC    #0E0B13FF   
+terminal.red → terminal.bg                     6.82    +63    +54 357/81/69 a1           #F07178FF    #0E0B13FF   
+terminal.green → terminal.bg                  14.17    +67    +39 84/66/73 a1            #C3E88DFF    #0E0B13FF   
+terminal.yellow → terminal.bg                 13.02    +65    +73 39/100/71 a1           #FFCB6BFF    #0E0B13FF   
+terminal.blue → terminal.bg                    8.50    +69    +73 221/100/75 a1          #82AAFFFF    #0E0B13FF   
+terminal.cyan → terminal.bg                   12.87    +71    +73 197/100/77 a1          #89DDFFFF    #0E0B13FF   
+error → background                             2.76    +32    +54 351/81/38 a1           #B01229FF    #0E0B13FF   
+error.bg → background                          1.21    +32    +48 351/75/38 a0.32        #AA182D52    #0E0B13FF   
+warning → background                           7.49    +56    +28 22/55/62 a1            #D4916AFF    #0E0B13FF   
+warning.bg → background                        1.81    +58    +29 22/56/64 a0.32         #D7967152    #0E0B13FF   
+info → background                              7.47    +49     +9 188/36/55 a1           #64ABB6FF    #0E0B13FF   
+info.bg → background                           1.80    +52    +10 188/37/58 a0.32        #6CB1BC52    #0E0B13FF   
+success → background                           7.46    +43    +18 145/45/49 a1           #45B473FF    #0E0B13FF   
+success.bg → background                        1.81    +46    +18 145/45/52 a0.32        #4DBB7A52    #0E0B13FF   
+hint → background                              7.47    +49     +9 188/36/55 a1           #64ABB6FF    #0E0B13FF   
+hint.bg → background                           1.80    +52    +10 188/37/58 a0.32        #6CB1BC52    #0E0B13FF   
+border → background                            1.96    +22    -19 262/8/28 a1            #45414CFF    #0E0B13FF   
+border.focused → background                   12.59    +76    -23 255/4/82 a1            #D0CFD3FF    #0E0B13FF   
+error.border → background                      2.34    +32    +54 351/81/38 a0.88        #B01229E0    #0E0B13FF   
+info.border → background                       5.49    +47     +6 188/33/53 a0.88        #5FA3AEE0    #0E0B13FF   
+element.bg → background                        1.00     +0     +0 263/27/6 a1            #0E0B13FF    #0E0B13FF   
+element.hover → background                     1.11     +6     +3 256/30/12 a1           #1B1629FF    #0E0B13FF   
+ghost_element.hover → background               1.11     +6     +3 256/30/12 a1           #1B1629FF    #0E0B13FF   
+panel.bg → background                          1.00     +0     +0 263/27/6 a1            #0E0B13FF    #0E0B13FF   
+surface.bg → background                        1.00     +0     +0 263/27/6 a1            #0E0B13FF    #0E0B13FF   
+elevated_surface → background                  1.03     -2    +18 264/45/4 a1            #0A0610FF    #0E0B13FF   
+icon → background                              6.05    +49    -18 194/9/55 a1            #829297      #0E0B13FF   
+icon.muted → background                        1.95    +21    -22 274/5/27 a1            #454148FF    #0E0B13FF   
+icon.accent → background                       5.71    +44    +33 190/60/50 a0.83        #33B3CCD4    #0E0B13FF   
+vc.added → background                          1.84    +18    +15 149/42/24 a0.76        #24583DC2    #0E0B13FF   
+vc.modified → background                       9.30    +48    +73 48/100/54 a0.83        #FFD014D4    #0E0B13FF   
+vc.deleted → background                        3.62    +50    +68 338/95/56 a0.8         #F92672CC    #0E0B13FF   
+syntax.attribute → editor.bg                   7.51    +61    +73 11/100/67 a1           #FF7859      #0E0B13FF   
+syntax.boolean → editor.bg                     7.86    +44    +33 190/60/50 a1           #33B3CCFF    #0E0B13FF   
+syntax.comment → editor.bg                     2.26    +25    -19 255/8/31 a1            #4D4A56FF    #0E0B13FF   
+syntax.comment.doc → editor.bg                 2.26    +25    -19 255/8/31 a1            #4D4A56FF    #0E0B13FF   
+syntax.constant → editor.bg                    7.86    +44    +33 190/60/50 a1           #33B3CCFF    #0E0B13FF   
+syntax.constructor → editor.bg                11.11    +58    +73 36/100/64 a1           #FFB547FF    #0E0B13FF   
+syntax.embedded → editor.bg                    9.41    +84    -14 257/13/90 a0.78        #E3E1E8C8    #0E0B13FF   
+syntax.enum → editor.bg                       11.11    +58    +73 36/100/64 a1           #FFB547FF    #0E0B13FF   
+syntax.function → editor.bg                   11.11    +58    +73 36/100/64 a1           #FFB547FF    #0E0B13FF   
+syntax.function.method → editor.bg            11.11    +58    +73 36/100/64 a1           #FFB547FF    #0E0B13FF   
+syntax.function.definition → editor.bg        11.66    +65    +15 170/42/71 a1           #95D4CAFF    #0E0B13FF   
+syntax.hint → editor.bg                       12.27    +63    +44 186/71/69 a1           #78DCE8FF    #0E0B13FF   
+syntax.keyword → editor.bg                     8.25    +74    +30 205/57/80 a0.81        #AFD1E9CF    #0E0B13FF   
+syntax.label → editor.bg                       8.25    +74    +30 205/57/80 a0.81        #AFD1E9CF    #0E0B13FF   
+syntax.link_text → editor.bg                  12.27    +63    +44 186/71/69 a1           #78DCE8FF    #0E0B13FF   
+syntax.link_uri → editor.bg                   12.27    +63    +44 186/71/69 a1           #78DCE8FF    #0E0B13FF   
+syntax.namespace → editor.bg                   9.41    +84    -14 257/13/90 a0.78        #E3E1E8C8    #0E0B13FF   
+syntax.number → editor.bg                      7.86    +44    +33 190/60/50 a1           #33B3CCFF    #0E0B13FF   
+syntax.operator → editor.bg                    4.22    +39    +73 334/100/45 a1          #E60063FF    #0E0B13FF   
+syntax.predictive → editor.bg                  6.14    +57     -7 242/20/63 a1           #8E8DB3FF    #0E0B13FF   
+syntax.preproc → editor.bg                     8.25    +74    +30 205/57/80 a0.81        #AFD1E9CF    #0E0B13FF   
+syntax.primary → editor.bg                     9.41    +84    -14 257/13/90 a0.78        #E3E1E8C8    #0E0B13FF   
+syntax.property → editor.bg                   12.02    +84    -14 257/13/90 a0.89        #E3E1E8E4    #0E0B13FF   
+syntax.punctuation → editor.bg                 2.13    +40    -25 264/2/46 a0.58         #74727794    #0E0B13FF   
+syntax.punctuation.bracket → editor.bg         4.10    +40    -25 264/2/46 a1            #747277FF    #0E0B13FF   
+syntax.punctuation.delimiter → editor.bg       2.13    +40    -25 264/2/46 a0.58         #74727794    #0E0B13FF   
+syntax.punctuation.list_marker → editor.bg       2.13    +40    -25 264/2/46 a0.58         #74727794    #0E0B13FF   
+syntax.punctuation.markup → editor.bg          9.27    +70    +23 345/50/76 a1           #E0A2B1FF    #0E0B13FF   
+syntax.punctuation.special → editor.bg         4.79    +57    +20 245/47/63 a1           #7A73CCFF    #0E0B13FF   
+syntax.selector → editor.bg                   11.11    +58    +73 36/100/64 a1           #FFB547FF    #0E0B13FF   
+syntax.selector.pseudo → editor.bg             8.25    +74    +30 205/57/80 a0.81        #AFD1E9CF    #0E0B13FF   
+syntax.string → editor.bg                     11.53    +57    +27 80/54/63 a1            #B1D36DFF    #0E0B13FF   
+syntax.string.escape → editor.bg              14.19    +64    +73 45/100/70 a1           #FFD866      #0E0B13FF   
+syntax.string.regex → editor.bg                6.80    +63    +73 345/100/69 a1          #FF6188FF    #0E0B13FF   
+syntax.string.special → editor.bg             11.53    +57    +27 80/54/63 a1            #B1D36DFF    #0E0B13FF   
+syntax.string.special.symbol → editor.bg      11.53    +57    +27 80/54/63 a1            #B1D36DFF    #0E0B13FF   
+syntax.tag → editor.bg                        14.51    +81    -27 0/0/87 a1              #DEDEDE      #0E0B13FF   
+syntax.text.literal → editor.bg               11.53    +57    +27 80/54/63 a1            #B1D36DFF    #0E0B13FF   
+syntax.title → editor.bg                      12.58    +62    +38 158/65/68 a1           #79E3BD      #0E0B13FF   
+syntax.type → editor.bg                       11.11    +58    +73 36/100/64 a1           #FFB547FF    #0E0B13FF   
+syntax.variable → editor.bg                   12.02    +84    -14 257/13/90 a0.89        #E3E1E8E4    #0E0B13FF   
+syntax.variable.special → editor.bg            9.63    +48    +73 36/100/54 a1           #FFA114FF    #0E0B13FF   
+syntax.variant → editor.bg                    11.11    +58    +73 36/100/64 a1           #FFB547FF    #0E0B13FF   "
+`;
+
+exports[`Zed theme snapshots Apathetic Ocean 1`] = `
+"Element                                  Contrast   ΔL     ΔS     FG HSL                 FG           BG          
+------------------------------------------------------------------------------------------------------------------------
+editor.foreground → editor.bg                  4.12    +55     -2 231/18/62 a0.76        #8E93B0C2    #0E0E15FF   
+text → background                              7.85    +59    -14 256/6/66 a1            #A7A4AFFF    #0E0E15FF   
+text.muted → background                        3.49    +45    -11 260/9/52 a0.81         #827B90CF    #0E0E15FF   
+text.accent → background                       7.75    +43    +40 190/60/50 a1           #33B3CCFF    #0E0E15FF   
+line_number → gutter                           1.92    +21     -4 274/5/27 a1            #454148FF    #0F0F12FF   
+active_line_number → gutter                    6.37    +58    +11 259/20/64 a1           #9B8FB5FF    #0F0F12FF   
+tab.active → tab.active_bg                     7.86    +60     -1 256/6/66 a1            #A7A4AFFF    #0F0E10FF   
+tab.inactive → tab.inactive_bg                 3.51    +46     +0 260/9/52 a0.81         #827B90CF    #0F0F12FF   
+status_bar text → status_bar.bg                7.81    +60     -3 256/6/66 a1            #A7A4AFFF    #0F0F12FF   
+terminal.fg → terminal.bg                      3.24    +36     -8 240/8/42 a1            #626274FF    #0F0D12FF   
+terminal.red → terminal.bg                     5.40    +44    +84 319/100/50 a1          #FF00AFFF    #0F0D12FF   
+terminal.green → terminal.bg                  14.03    +67    +50 84/66/73 a1            #C3E88DFF    #0F0D12FF   
+terminal.yellow → terminal.bg                 12.89    +65    +84 39/100/71 a1           #FFCB6BFF    #0F0D12FF   
+terminal.blue → terminal.bg                    6.80    +69    +84 260/100/75 a1          #AC82FFFF    #0F0D12FF   
+terminal.cyan → terminal.bg                   11.07    +60    +33 169/49/66 a1           #80D3C4FF    #0F0D12FF   
+error → background                             6.74    +62    +69 345/89/69 a1           #F66A8CFF    #0E0E15FF   
+error.bg → background                          1.70    +62    +65 345/85/69 a0.32        #F36D8E52    #0E0E15FF   
+warning → background                           7.47    +49    +24 38/44/56 a1            #C09C5DFF    #0E0E15FF   
+warning.bg → background                        1.81    +50    +24 39/44/57 a0.32         #C19F6052    #0E0E15FF   
+info → background                              7.46    +49    +16 188/36/56 a1           #66ACB7FF    #0E0E15FF   
+info.bg → background                           1.79    +50    +15 188/35/57 a0.32        #6AAEB852    #0E0E15FF   
+success → background                           5.85    +40    +19 188/39/47 a1           #4999A6FF    #0E0E15FF   
+success.bg → background                        1.61    +40    +16 188/36/47 a0.32        #4C97A352    #0E0E15FF   
+hint → background                              7.46    +49    +16 188/36/56 a1           #66ACB7FF    #0E0E15FF   
+hint.bg → background                           1.79    +50    +15 188/35/57 a0.32        #6AAEB852    #0E0E15FF   
+border → background                            1.07     +4     +0 240/20/11 a1           #161621FF    #0E0E15FF   
+border.focused → background                    1.29    +15    +36 229/56/22 a1           #182356FF    #0E0E15FF   
+error.border → background                      5.42    +62    +69 345/89/69 a0.88        #F66A8CE0    #0E0E15FF   
+info.border → background                       5.56    +47    +12 188/32/54 a0.88        #62A5AFE0    #0E0E15FF   
+element.bg → background                        1.18    +51    +33 257/53/58 a0.18        #7A5ACD2E    #0E0E15FF   
+element.hover → background                     1.21    +62    +80 257/100/69 a0.18       #8D61FF2E    #0E0E15FF   
+ghost_element.hover → background               1.21    +62    +80 257/100/69 a0.18       #8D61FF2E    #0E0E15FF   
+panel.bg → background                          1.00     -1    -11 240/9/6 a1             #0F0F12FF    #0E0E15FF   
+surface.bg → background                        1.00     -1    -11 240/9/6 a1             #0F0F12FF    #0E0E15FF   
+elevated_surface → background                  1.12     +7     -1 231/19/14 a0.8         #1C1E29CC    #0E0E15FF   
+icon → background                              7.65    +58     -2 212/18/65 a1           #96A5B6      #0E0E15FF   
+icon.muted → background                        2.26    +38     -4 234/16/45 a0.72        #5F6384B8    #0E0E15FF   
+icon.accent → background                       5.62    +43    +40 190/60/50 a0.83        #33B3CCD4    #0E0E15FF   
+vc.added → background                          1.55    +15    +18 193/38/22 a0.76        #23454EC2    #0E0E15FF   
+vc.modified → background                       5.01    +49    +20 217/40/56 a1           #6183BBFF    #0E0E15FF   
+vc.deleted → background                        2.39    +36    +11 353/31/43 a0.8         #914C54CC    #0E0E15FF   
+syntax.attribute → editor.bg                   7.40    +60    +80 11/100/67 a1           #FF7859      #0E0E15FF   
+syntax.boolean → editor.bg                     7.75    +43    +40 190/60/50 a1           #33B3CCFF    #0E0E15FF   
+syntax.comment → editor.bg                     1.79    +20     -2 228/18/27 a1           #383D51FF    #0E0E15FF   
+syntax.comment.doc → editor.bg                 1.79    +20     -2 228/18/27 a1           #383D51FF    #0E0E15FF   
+syntax.constant → editor.bg                    7.75    +43    +40 190/60/50 a1           #33B3CCFF    #0E0E15FF   
+syntax.constructor → editor.bg                 9.41    +69    +30 313/50/76 a1           #E0A2D3FF    #0E0E15FF   
+syntax.embedded → editor.bg                    7.85    +59    -14 256/6/66 a1            #A7A4AFFF    #0E0E15FF   
+syntax.enum → editor.bg                        9.41    +69    +30 313/50/76 a1           #E0A2D3FF    #0E0E15FF   
+syntax.function → editor.bg                   15.18    +84    +36 10/56/91 a1            #F5E0DCFF    #0E0E15FF   
+syntax.function.method → editor.bg            15.18    +84    +36 10/56/91 a1            #F5E0DCFF    #0E0E15FF   
+syntax.function.definition → editor.bg        11.49    +64    +22 170/42/71 a1           #95D4CAFF    #0E0E15FF   
+syntax.hint → editor.bg                       12.09    +62    +51 186/71/69 a1           #78DCE8FF    #0E0E15FF   
+syntax.keyword → editor.bg                     8.12    +73    +37 205/57/80 a0.81        #AFD1E9CF    #0E0E15FF   
+syntax.label → editor.bg                       8.12    +73    +37 205/57/80 a0.81        #AFD1E9CF    #0E0E15FF   
+syntax.link_text → editor.bg                  12.09    +62    +51 186/71/69 a1           #78DCE8FF    #0E0E15FF   
+syntax.link_uri → editor.bg                   12.09    +62    +51 186/71/69 a1           #78DCE8FF    #0E0E15FF   
+syntax.namespace → editor.bg                   7.85    +59    -14 256/6/66 a1            #A7A4AFFF    #0E0E15FF   
+syntax.number → editor.bg                      7.75    +43    +40 190/60/50 a1           #33B3CCFF    #0E0E15FF   
+syntax.operator → editor.bg                    4.16    +38    +80 334/100/45 a1          #E60063FF    #0E0E15FF   
+syntax.predictive → editor.bg                  6.05    +56     +0 242/20/63 a1           #8E8DB3FF    #0E0E15FF   
+syntax.preproc → editor.bg                     8.12    +73    +37 205/57/80 a0.81        #AFD1E9CF    #0E0E15FF   
+syntax.primary → editor.bg                     7.85    +59    -14 256/6/66 a1            #A7A4AFFF    #0E0E15FF   
+syntax.property → editor.bg                    7.65    +58     -2 212/18/65 a1           #96A5B6FF    #0E0E15FF   
+syntax.punctuation → editor.bg                 1.90    +23     +5 229/25/30 a1           #394060FF    #0E0E15FF   
+syntax.punctuation.bracket → editor.bg         1.42    +14     +3 271/23/21 a1           #362942FF    #0E0E15FF   
+syntax.punctuation.delimiter → editor.bg       1.90    +23     +5 229/25/30 a1           #394060FF    #0E0E15FF   
+syntax.punctuation.list_marker → editor.bg       1.90    +23     +5 229/25/30 a1           #394060FF    #0E0E15FF   
+syntax.punctuation.markup → editor.bg          9.41    +69    +30 313/50/76 a1           #E0A2D3FF    #0E0E15FF   
+syntax.punctuation.special → editor.bg         4.72    +56    +27 245/47/63 a1           #7A73CCFF    #0E0E15FF   
+syntax.selector → editor.bg                    9.41    +69    +30 313/50/76 a1           #E0A2D3FF    #0E0E15FF   
+syntax.selector.pseudo → editor.bg             8.12    +73    +37 205/57/80 a0.81        #AFD1E9CF    #0E0E15FF   
+syntax.string → editor.bg                      9.33    +55    +16 98/36/62 a1            #95C17BFF    #0E0E15FF   
+syntax.string.escape → editor.bg              13.98    +63    +80 45/100/70 a1           #FFD866      #0E0E15FF   
+syntax.string.regex → editor.bg                6.70    +62    +80 345/100/69 a1          #FF6188FF    #0E0E15FF   
+syntax.string.special → editor.bg              9.33    +55    +16 98/36/62 a1            #95C17BFF    #0E0E15FF   
+syntax.string.special.symbol → editor.bg       9.33    +55    +16 98/36/62 a1            #95C17BFF    #0E0E15FF   
+syntax.tag → editor.bg                         2.79    +33     -5 252/15/40 a1           #5C5675      #0E0E15FF   
+syntax.text.literal → editor.bg                9.33    +55    +16 98/36/62 a1            #95C17BFF    #0E0E15FF   
+syntax.title → editor.bg                      12.39    +61    +45 158/65/68 a1           #79E3BD      #0E0E15FF   
+syntax.type → editor.bg                        9.41    +69    +30 313/50/76 a1           #E0A2D3FF    #0E0E15FF   
+syntax.variable → editor.bg                    9.24    +83     -7 257/13/90 a0.78        #E3E1E8C7    #0E0E15FF   
+syntax.variable.special → editor.bg            9.48    +47    +80 36/100/54 a1           #FFA114FF    #0E0E15FF   
+syntax.variant → editor.bg                     9.41    +69    +30 313/50/76 a1           #E0A2D3FF    #0E0E15FF   "
+`;
+
+exports[`Zed theme snapshots Apathy Experimental 1`] = `
+"Element                                  Contrast   ΔL     ΔS     FG HSL                 FG           BG          
+------------------------------------------------------------------------------------------------------------------------
+editor.foreground → editor.bg                 14.36    +80    -15 225/7/89 a1            #E1E2E5FF    #12121CFF   
+text → background                              6.88    +75     +3 194/25/84 a0.7         #CBDBE0B3    #12121CFF   
+text.muted → background                        1.86    +18    -17 274/5/27 a1            #454148FF    #12121CFF   
+text.accent → background                       7.49    +41    +38 190/60/50 a1           #33B3CCFF    #12121CFF   
+line_number → gutter                           1.95    +21    -18 274/5/27 a1            #454148FF    #0C0C13FF   
+active_line_number → gutter                    6.49    +58     -3 259/20/64 a1           #9B8FB5FF    #0C0C13FF   
+tab.active → tab.active_bg                     7.02    +78    +18 194/25/84 a0.7         #CBDBE0B3    #0F0E10FF   
+tab.inactive → tab.inactive_bg                 1.93    +21     -2 274/5/27 a1            #454148FF    #0F0E10FF   
+status_bar text → status_bar.bg                7.06    +78     -2 194/25/84 a0.7         #CBDBE0B3    #0E0B13FF   
+terminal.fg → terminal.bg                     10.85    +83     -8 240/19/89 a0.86        #DDDDE8DC    #0E0B13FF   
+terminal.red → terminal.bg                     6.82    +63    +54 357/81/69 a1           #F07178FF    #0E0B13FF   
+terminal.green → terminal.bg                  14.17    +67    +39 84/66/73 a1            #C3E88DFF    #0E0B13FF   
+terminal.yellow → terminal.bg                 13.02    +65    +73 39/100/71 a1           #FFCB6BFF    #0E0B13FF   
+terminal.blue → terminal.bg                    8.50    +69    +73 221/100/75 a1          #82AAFFFF    #0E0B13FF   
+terminal.cyan → terminal.bg                   12.87    +71    +73 197/100/77 a1          #89DDFFFF    #0E0B13FF   
+error → background                             2.63    +29    +59 351/81/38 a1           #B01229FF    #12121CFF   
+error.bg → background                          1.21    +29    +53 351/75/38 a0.32        #AA182D52    #12121CFF   
+warning → background                           7.47    +55    +38 21/60/64 a1            #DA946DFF    #12121CFF   
+warning.bg → background                        1.79    +54    +31 22/53/63 a0.32         #D3936F52    #12121CFF   
+info → background                              7.45    +47    +16 188/38/56 a1           #66AFBAFF    #12121CFF   
+info.bg → background                           1.82    +47    +13 188/35/56 a0.32        #69ACB752    #12121CFF   
+success → background                           7.49    +41    +23 145/45/50 a1           #46B976FF    #12121CFF   
+success.bg → background                        1.78    +41    +20 145/42/50 a0.32        #4BB57752    #12121CFF   
+hint → background                              7.45    +47    +16 188/38/56 a1           #66AFBAFF    #12121CFF   
+hint.bg → background                           1.82    +47    +13 188/35/56 a0.32        #69ACB752    #12121CFF   
+border → background                            1.87    +19    -14 262/8/28 a1            #45414CFF    #12121CFF   
+border.focused → background                   12.00    +73    -18 255/4/82 a1            #D0CFD3FF    #12121CFF   
+error.border → background                      2.26    +29    +59 351/81/38 a0.88        #B01229E0    #12121CFF   
+info.border → background                       5.50    +45    +12 188/34/54 a0.88        #61A7B1E0    #12121CFF   
+element.bg → background                        1.05     -3     +5 263/27/6 a1            #0E0B13FF    #12121CFF   
+element.hover → background                     1.06     +3     +8 256/30/12 a1           #1B1629FF    #12121CFF   
+ghost_element.hover → background               1.06     +3     +8 256/30/12 a1           #1B1629FF    #12121CFF   
+panel.bg → background                          1.05     -3     +5 263/27/6 a1            #0E0B13FF    #12121CFF   
+surface.bg → background                        1.05     -3     +5 263/27/6 a1            #0E0B13FF    #12121CFF   
+elevated_surface → background                  1.08     -5    +23 264/45/4 a1            #0A0610FF    #12121CFF   
+icon → background                              5.76    +46    -13 194/9/55 a1            #829297      #12121CFF   
+icon.muted → background                        1.86    +18    -17 274/5/27 a1            #454148FF    #12121CFF   
+icon.accent → background                       5.50    +41    +38 190/60/50 a0.83        #33B3CCD4    #12121CFF   
+vc.added → background                          1.78    +15    +20 149/42/24 a0.76        #24583DC2    #12121CFF   
+vc.modified → background                       8.96    +45    +78 48/100/54 a0.83        #FFD014D4    #12121CFF   
+vc.deleted → background                        3.49    +47    +73 338/95/56 a0.8         #F92672CC    #12121CFF   
+syntax.attribute → editor.bg                   7.16    +58    +78 11/100/67 a1           #FF7859      #12121CFF   
+syntax.boolean → editor.bg                     7.49    +41    +38 190/60/50 a1           #33B3CCFF    #12121CFF   
+syntax.comment → editor.bg                     2.15    +22    -14 255/8/31 a1            #4D4A56FF    #12121CFF   
+syntax.comment.doc → editor.bg                 2.15    +22    -14 255/8/31 a1            #4D4A56FF    #12121CFF   
+syntax.constant → editor.bg                    7.49    +41    +38 190/60/50 a1           #33B3CCFF    #12121CFF   
+syntax.constructor → editor.bg                10.59    +55    +78 36/100/64 a1           #FFB547FF    #12121CFF   
+syntax.embedded → editor.bg                    9.07    +81     -9 257/13/90 a0.78        #E3E1E8C8    #12121CFF   
+syntax.enum → editor.bg                       10.59    +55    +78 36/100/64 a1           #FFB547FF    #12121CFF   
+syntax.function → editor.bg                   10.59    +55    +78 36/100/64 a1           #FFB547FF    #12121CFF   
+syntax.function.method → editor.bg            10.59    +55    +78 36/100/64 a1           #FFB547FF    #12121CFF   
+syntax.function.definition → editor.bg        11.11    +62    +20 170/42/71 a1           #95D4CAFF    #12121CFF   
+syntax.hint → editor.bg                       11.69    +60    +49 186/71/69 a1           #78DCE8FF    #12121CFF   
+syntax.keyword → editor.bg                     7.94    +71    +35 205/57/80 a0.81        #AFD1E9CF    #12121CFF   
+syntax.label → editor.bg                       7.94    +71    +35 205/57/80 a0.81        #AFD1E9CF    #12121CFF   
+syntax.link_text → editor.bg                  11.69    +60    +49 186/71/69 a1           #78DCE8FF    #12121CFF   
+syntax.link_uri → editor.bg                   11.69    +60    +49 186/71/69 a1           #78DCE8FF    #12121CFF   
+syntax.namespace → editor.bg                   9.07    +81     -9 257/13/90 a0.78        #E3E1E8C8    #12121CFF   
+syntax.number → editor.bg                      7.49    +41    +38 190/60/50 a1           #33B3CCFF    #12121CFF   
+syntax.operator → editor.bg                    4.03    +36    +78 334/100/45 a1          #E60063FF    #12121CFF   
+syntax.predictive → editor.bg                  5.86    +54     -2 242/20/63 a1           #8E8DB3FF    #12121CFF   
+syntax.preproc → editor.bg                     7.94    +71    +35 205/57/80 a0.81        #AFD1E9CF    #12121CFF   
+syntax.primary → editor.bg                     9.07    +81     -9 257/13/90 a0.78        #E3E1E8C8    #12121CFF   
+syntax.property → editor.bg                   11.58    +81     -9 257/13/90 a0.89        #E3E1E8E4    #12121CFF   
+syntax.punctuation → editor.bg                 2.12    +37    -20 264/2/46 a0.58         #74727794    #12121CFF   
+syntax.punctuation.bracket → editor.bg         3.91    +37    -20 264/2/46 a1            #747277FF    #12121CFF   
+syntax.punctuation.delimiter → editor.bg       2.12    +37    -20 264/2/46 a0.58         #74727794    #12121CFF   
+syntax.punctuation.list_marker → editor.bg       2.12    +37    -20 264/2/46 a0.58         #74727794    #12121CFF   
+syntax.punctuation.markup → editor.bg          8.83    +67    +28 345/50/76 a1           #E0A2B1FF    #12121CFF   
+syntax.punctuation.special → editor.bg         4.56    +54    +25 245/47/63 a1           #7A73CCFF    #12121CFF   
+syntax.selector → editor.bg                   10.59    +55    +78 36/100/64 a1           #FFB547FF    #12121CFF   
+syntax.selector.pseudo → editor.bg             7.94    +71    +35 205/57/80 a0.81        #AFD1E9CF    #12121CFF   
+syntax.string → editor.bg                     10.99    +54    +32 80/54/63 a1            #B1D36DFF    #12121CFF   
+syntax.string.escape → editor.bg              13.52    +61    +78 45/100/70 a1           #FFD866      #12121CFF   
+syntax.string.regex → editor.bg                6.48    +60    +78 345/100/69 a1          #FF6188FF    #12121CFF   
+syntax.string.special → editor.bg             10.99    +54    +32 80/54/63 a1            #B1D36DFF    #12121CFF   
+syntax.string.special.symbol → editor.bg      10.99    +54    +32 80/54/63 a1            #B1D36DFF    #12121CFF   
+syntax.tag → editor.bg                         8.83    +67    +28 345/50/76 a1           #E0A2B1FF    #12121CFF   
+syntax.text.literal → editor.bg               10.99    +54    +32 80/54/63 a1            #B1D36DFF    #12121CFF   
+syntax.title → editor.bg                      11.99    +44    +54 80/76/53 a1            #A6E22E      #12121CFF   
+syntax.type → editor.bg                       10.59    +55    +78 36/100/64 a1           #FFB547FF    #12121CFF   
+syntax.variable → editor.bg                   11.58    +81     -9 257/13/90 a0.89        #E3E1E8E4    #12121CFF   
+syntax.variable.special → editor.bg            9.18    +45    +78 36/100/54 a1           #FFA114FF    #12121CFF   
+syntax.variant → editor.bg                    10.59    +55    +78 36/100/64 a1           #FFB547FF    #12121CFF   "
+`;
+
+exports[`VSCode theme snapshots Minted 1`] = `
+"Element                                  Contrast   ΔL     ΔS     FG HSL                 FG           BG          
+------------------------------------------------------------------------------------------------------------------------
+editor.fg → editor.bg                          2.31    +34     -9 230/12/39 a0.81        #575B6FCE    #0B0B11FF   
+sidebar.fg → sidebar.bg                        2.30    +33    -11 230/12/39 a0.81        #575B6FCE    #0C0C13FF   
+activityBar.fg → activityBar.bg                2.73    +42     -7 230/13/47 a0.76        #696E87C2    #0A0A0FFF   
+activityBar.inactiveFg → activityBar.bg        1.53    +21     -7 229/13/26 a0.76        #3A3D4BC2    #0A0A0FFF   
+tab.activeFg → tab.activeBg                    3.16    +46    -10 230/13/52 a0.76        #767B95C2    #0C0C13FF   
+tab.inactiveFg → tab.inactiveBg                3.16    +46    -10 230/13/52 a0.76        #767B95C2    #0C0C13FF   
+statusBar.fg → statusBar.bg                    3.16    +46    -10 230/13/52 a0.76        #767B95C2    #0C0C13FF   
+panelTitle.activeFg → panel.bg                 3.17    +46    -11 230/13/52 a0.76        #767B95C2    #0B0B12FF   
+input.fg → input.bg                            5.83    +66     -9 230/13/73 a0.76        #B2B5C4C2    #0E0E16FF   
+input.placeholder → input.bg                   2.34    +35     -9 229/13/42 a0.76        #5D6278C2    #0E0E16FF   
+button.fg → button.bg                          9.80    +66     -3 231/14/80 a1           #C5C7D3FF    #1E1E2AF8   
+list.activeFg → list.activeBg                  3.16    +46    -10 230/13/52 a0.76        #767B95C2    #0C0C13FF   
+list.hoverFg → list.hoverBg                    5.61    +45    +78 21/100/77 a1           #FFB389FF    #4240641A   
+badge.fg → badge.bg                            3.16    +46    -10 230/13/52 a0.76        #767B95C2    #0C0C13FF   "
+`;
+
+exports[`VSCode theme snapshots Minted Theory 1`] = `
+"Element                                  Contrast   ΔL     ΔS     FG HSL                 FG           BG          
+------------------------------------------------------------------------------------------------------------------------
+editor.fg → editor.bg                          2.31    +34     -9 230/12/39 a0.81        #575B6FCE    #0B0B11FF   
+sidebar.fg → sidebar.bg                        2.30    +33    -11 230/12/39 a0.81        #575B6FCE    #0C0C13FF   
+activityBar.fg → activityBar.bg                2.73    +42     -7 230/13/47 a0.76        #696E87C2    #0A0A0FFF   
+activityBar.inactiveFg → activityBar.bg        1.53    +21     -7 229/13/26 a0.76        #3A3D4BC2    #0A0A0FFF   
+tab.activeFg → tab.activeBg                    3.16    +46    -10 230/13/52 a0.76        #767B95C2    #0C0C13FF   
+tab.inactiveFg → tab.inactiveBg                3.16    +46    -10 230/13/52 a0.76        #767B95C2    #0C0C13FF   
+statusBar.fg → statusBar.bg                    3.16    +46    -10 230/13/52 a0.76        #767B95C2    #0C0C13FF   
+panelTitle.activeFg → panel.bg                 3.17    +46    -11 230/13/52 a0.76        #767B95C2    #0B0B12FF   
+input.fg → input.bg                            5.83    +66     -9 230/13/73 a0.76        #B2B5C4C2    #0E0E16FF   
+input.placeholder → input.bg                   2.34    +35     -9 229/13/42 a0.76        #5D6278C2    #0E0E16FF   
+button.fg → button.bg                          9.80    +66     -3 231/14/80 a1           #C5C7D3FF    #1E1E2AF8   
+list.activeFg → list.activeBg                  3.16    +46    -10 230/13/52 a0.76        #767B95C2    #0C0C13FF   
+list.hoverFg → list.hoverBg                   13.69    +80    +15 352/42/90 a1           #F0DADDFF    #12151FFF   
+badge.fg → badge.bg                            3.16    +46    -10 230/13/52 a0.76        #767B95C2    #0C0C13FF   "
+`;
+
+exports[`VSCode theme snapshots Slate 1`] = `
+"Element                                  Contrast   ΔL     ΔS     FG HSL                 FG           BG          
+------------------------------------------------------------------------------------------------------------------------
+editor.fg → editor.bg                          7.85    +59    -14 256/6/66 a1            #A7A4AFFF    #0E0E15FF   
+sidebar.fg → sidebar.bg                        7.67    +58    -13 256/6/66 a1            #A7A4AFFF    #111119FF   
+activityBar.fg → activityBar.bg                2.48    +28    -18 256/7/33 a1            #524F5AFF    #09090FFF   
+activityBar.inactiveFg → activityBar.bg        8.11    +61    -19 256/6/66 a1            #A7A4AFFF    #09090FFF   
+tab.activeFg → tab.activeBg                    7.67    +58    -13 256/6/66 a1            #A7A4AFFF    #111119FF   
+tab.inactiveFg → tab.inactiveBg                7.85    +59    -14 256/6/66 a1            #A7A4AFFF    #0E0E15FF   
+statusBar.fg → statusBar.bg                    7.67    +58    -13 256/6/66 a1            #A7A4AFFF    #111119FF   
+panelTitle.activeFg → panel.bg                 7.67    +58    -13 256/6/66 a1            #A7A4AFFF    #111119FF   
+input.fg → input.bg                            8.61    +61     -9 253/7/73 a1            #B8B6BFFF    #1A1A24FF   
+input.placeholder → input.bg                   4.49    +41    -10 256/6/53 a1            #84808FFF    #1A1A24FF   
+button.fg → button.bg                          1.77    +15    -32 256/6/66 a1            #A7A4AFFF    #527BB254   
+list.activeFg → list.activeBg                  7.67    +58    -13 256/6/66 a1            #A7A4AFFF    #111119FF   
+list.hoverFg → list.hoverBg                   12.93    +78    +44 10/56/91 a1            #F5E0DCFF    #221E26FF   
+badge.fg → badge.bg                            7.85    +59    -14 256/6/66 a1            #A7A4AFFF    #0E0E15FF   "
+`;
+
+exports[`VSCode theme snapshots Apathy 1`] = `
+"Element                                  Contrast   ΔL     ΔS     FG HSL                 FG           BG          
+------------------------------------------------------------------------------------------------------------------------
+editor.fg → editor.bg                          3.73    +39    -20 254/7/45 a1            #6E6A7BFF    #0E0B13FF   
+sidebar.fg → sidebar.bg                        3.54    +46    -18 260/9/52 a0.81         #827B90CF    #0E0B13FF   
+activityBar.fg → activityBar.bg               12.02    +84    -14 257/13/90 a0.89        #E3E1E8E4    #0E0B13FF   
+activityBar.inactiveFg → activityBar.bg        1.40    +82    -24 270/3/88 a0.15         #E0DFE127    #0E0B13FF   
+tab.activeFg → tab.activeBg                    5.49    +84     +6 257/13/90 a0.58        #E3E1E894    #0F0E10FF   
+tab.inactiveFg → tab.inactiveBg                4.20    +65     -7 0/0/71 a0.62           #B5B5B59E    #0F0E10FF   
+statusBar.fg → statusBar.bg                    2.16    +43    -27 0/0/49 a0.54           #7C7C7C8A    #0E0B13FF   
+panelTitle.activeFg → panel.bg                 5.36    +84    -14 257/13/90 a0.57        #E3E1E891    #0E0B13FF   
+input.fg → input.bg                           14.68    +80    +21 49/30/86 a1            #E6E2D1FF    #110F12FF   
+input.placeholder → input.bg                   1.74    +65     -9 0/0/71 a0.27           #B5B5B545    #110F12FF   
+button.fg → button.bg                          3.17    +56    +87 194/100/84 a0.49       #ACECFF7D    #443E5040   
+list.activeFg → list.activeBg                 11.33    +66     +1 49/30/86 a1            #E6E2D1FF    #2A2441FF   
+list.hoverFg → list.hoverBg                    7.15    +80    -20 194/25/84 a0.7         #CBDBE0B3    #0A0610FF   
+badge.fg → badge.bg                            6.12    +68    +61 221/100/75 a0.83       #82AAFFD4    #0B0B19C9   "
+`;
+
+exports[`VSCode theme snapshots Apathetic Ocean 1`] = `
+"Element                                  Contrast   ΔL     ΔS     FG HSL                 FG           BG          
+------------------------------------------------------------------------------------------------------------------------
+editor.fg → editor.bg                          4.12    +55     -2 231/18/62 a0.76        #8E93B0C2    #0E0E15FF   
+sidebar.fg → sidebar.bg                        3.51    +46     +0 260/9/52 a0.81         #827B90CF    #0F0F12FF   
+activityBar.fg → activityBar.bg                7.61    +59     +9 212/18/65 a1           #96A5B6FF    #0F0F12FF   
+activityBar.inactiveFg → activityBar.bg        1.93    +22     -1 262/8/28 a1            #45414CFF    #0F0F12FF   
+tab.activeFg → tab.activeBg                    7.66    +59    +11 212/18/65 a1           #96A5B6FF    #0F0E10FF   
+tab.inactiveFg → tab.inactiveBg                9.33    +65     -9 0/0/71 a1              #B5B5B5FF    #0F0F12FF   
+statusBar.fg → statusBar.bg                    2.28    +39     +7 234/16/45 a0.72        #5F6384B8    #0F0F12FF   
+panelTitle.activeFg → panel.bg                 7.61    +59     +9 212/18/65 a1           #96A5B6FF    #0F0F12FF   
+input.fg → input.bg                            7.11    +91    -15 0/0/100 a0.6           #FFFFFF99    #14141BFF   
+input.placeholder → input.bg                   1.78    +62    -15 0/0/71 a0.27           #B5B5B545    #14141BFF   
+button.fg → button.bg                          2.93    +17    +47 171/100/75 a0.73       #80FFECBA    #7A5ACD2E   
+list.activeFg → list.activeBg                 11.33    +66     +1 49/30/86 a1            #E6E2D1FF    #2A2441FF   
+list.hoverFg → list.hoverBg                   12.79    +75    -12 225/7/89 a1            #E1E2E5FF    #1C1E29CC   
+badge.fg → badge.bg                            6.12    +68    +61 221/100/75 a0.83       #82AAFFD4    #0B0B19C9   "
+`;
+
+exports[`VSCode theme snapshots Apathy Experimental 1`] = `
+"Element                                  Contrast   ΔL     ΔS     FG HSL                 FG           BG          
+------------------------------------------------------------------------------------------------------------------------
+editor.fg → editor.bg                         14.36    +80    -15 225/7/89 a1            #E1E2E5FF    #12121CFF   
+sidebar.fg → sidebar.bg                        3.54    +46    -18 260/9/52 a0.81         #827B90CF    #0E0B13FF   
+activityBar.fg → activityBar.bg               12.02    +84    -14 257/13/90 a0.89        #E3E1E8E4    #0E0B13FF   
+activityBar.inactiveFg → activityBar.bg        1.96    +22    -19 262/8/28 a1            #45414CFF    #0E0B13FF   
+tab.activeFg → tab.activeBg                   11.97    +84     +6 257/13/90 a0.89        #E3E1E8E4    #0F0E10FF   
+tab.inactiveFg → tab.inactiveBg                9.39    +65     -7 0/0/71 a1              #B5B5B5FF    #0F0E10FF   
+statusBar.fg → statusBar.bg                    5.21    +84    -14 257/13/90 a0.56        #E3E1E88F    #0E0B13FF   
+panelTitle.activeFg → panel.bg                12.02    +84    -14 257/13/90 a0.89        #E3E1E8E4    #0E0B13FF   
+input.fg → input.bg                           14.68    +80    +21 49/30/86 a1            #E6E2D1FF    #110F12FF   
+input.placeholder → input.bg                   1.74    +65     -9 0/0/71 a0.27           #B5B5B545    #110F12FF   
+button.fg → button.bg                          5.06    +56    +87 194/100/84 a0.73       #ACECFFBA    #443E5040   
+list.activeFg → list.activeBg                 11.33    +66     +1 49/30/86 a1            #E6E2D1FF    #2A2441FF   
+list.hoverFg → list.hoverBg                    7.15    +80    -20 194/25/84 a0.7         #CBDBE0B3    #0A0610FF   
+badge.fg → badge.bg                            6.12    +68    +61 221/100/75 a0.83       #82AAFFD4    #0B0B19C9   "
+`;
+
+exports[`Cross-theme consistency status color contrast ranges 1`] = `
+"error fg: range 2.63–6.74 (spread 4.11) [Minted: 3.38, Minted Theory: 4.17, Slate: 3.84, Apathy: 2.76, Apathetic Ocean: 6.74, Apathy Experimental: 2.63]
+warning fg: range 7.46–7.49 (spread 0.03) [Minted: 7.46, Minted Theory: 7.49, Slate: 7.47, Apathy: 7.49, Apathetic Ocean: 7.47, Apathy Experimental: 7.47]
+info fg: range 7.29–7.47 (spread 0.18) [Minted: 7.46, Minted Theory: 7.45, Slate: 7.29, Apathy: 7.47, Apathetic Ocean: 7.46, Apathy Experimental: 7.45]
+success fg: range 5.85–7.49 (spread 1.64) [Minted: 7.45, Minted Theory: 7.49, Slate: 7.44, Apathy: 7.46, Apathetic Ocean: 5.85, Apathy Experimental: 7.49]
+hint fg: range 7.29–7.47 (spread 0.18) [Minted: 7.46, Minted Theory: 7.45, Slate: 7.29, Apathy: 7.47, Apathetic Ocean: 7.46, Apathy Experimental: 7.45]"
+`;
+
+exports[`Cross-theme consistency syntax token contrast ranges 1`] = `
+"attribute: range 7.16–14.74 (spread 7.58) [Minted: 11.27, Minted Theory: 14.74, Slate: 12.82, Apathy: 7.51, Apathetic Ocean: 7.40, Apathy Experimental: 7.16]
+boolean: range 7.49–16.36 (spread 8.87) [Minted: 7.91, Minted Theory: 16.36, Slate: 7.75, Apathy: 7.86, Apathetic Ocean: 7.75, Apathy Experimental: 7.49]
+comment: range 1.46–2.34 (spread 0.88) [Minted: 1.83, Minted Theory: 1.46, Slate: 2.34, Apathy: 2.26, Apathetic Ocean: 1.79, Apathy Experimental: 2.15]
+comment.doc: range 1.46–2.34 (spread 0.88) [Minted: 1.83, Minted Theory: 1.46, Slate: 2.34, Apathy: 2.26, Apathetic Ocean: 1.79, Apathy Experimental: 2.15]
+constant: range 3.16–16.36 (spread 13.20) [Minted: 3.16, Minted Theory: 16.36, Slate: 7.98, Apathy: 7.86, Apathetic Ocean: 7.75, Apathy Experimental: 7.49]
+embedded: range 2.31–9.41 (spread 7.10) [Minted: 3.16, Minted Theory: 2.31, Slate: 7.85, Apathy: 9.41, Apathetic Ocean: 7.85, Apathy Experimental: 9.07]
+enum: range 7.75–13.49 (spread 5.74) [Minted: 7.75, Minted Theory: 13.49, Slate: 9.46, Apathy: 11.11, Apathetic Ocean: 9.41, Apathy Experimental: 10.59]
+function: range 8.84–15.18 (spread 6.34) [Minted: 11.92, Minted Theory: 14.94, Slate: 8.84, Apathy: 11.11, Apathetic Ocean: 15.18, Apathy Experimental: 10.59]
+function.definition: range 8.84–14.94 (spread 6.10) [Minted: 11.92, Minted Theory: 14.94, Slate: 8.84, Apathy: 11.66, Apathetic Ocean: 11.49, Apathy Experimental: 11.11]
+function.method: range 8.84–15.18 (spread 6.34) [Minted: 11.92, Minted Theory: 14.94, Slate: 8.84, Apathy: 11.11, Apathetic Ocean: 15.18, Apathy Experimental: 10.59]
+hint: range 7.75–12.27 (spread 4.52) [Minted: 7.91, Minted Theory: 9.32, Slate: 7.75, Apathy: 12.27, Apathetic Ocean: 12.09, Apathy Experimental: 11.69]
+keyword: range 2.31–8.27 (spread 5.96) [Minted: 8.27, Minted Theory: 2.31, Slate: 7.64, Apathy: 8.25, Apathetic Ocean: 8.12, Apathy Experimental: 7.94]
+label: range 7.94–13.49 (spread 5.55) [Minted: 9.60, Minted Theory: 13.49, Slate: 9.41, Apathy: 8.25, Apathetic Ocean: 8.12, Apathy Experimental: 7.94]
+link_text: range 7.75–12.27 (spread 4.52) [Minted: 7.91, Minted Theory: 9.32, Slate: 7.75, Apathy: 12.27, Apathetic Ocean: 12.09, Apathy Experimental: 11.69]
+link_uri: range 7.75–12.27 (spread 4.52) [Minted: 7.91, Minted Theory: 9.32, Slate: 7.75, Apathy: 12.27, Apathetic Ocean: 12.09, Apathy Experimental: 11.69]
+namespace: range 2.31–9.41 (spread 7.10) [Minted: 3.16, Minted Theory: 2.31, Slate: 7.85, Apathy: 9.41, Apathetic Ocean: 7.85, Apathy Experimental: 9.07]
+number: range 7.49–16.36 (spread 8.87) [Minted: 7.91, Minted Theory: 16.36, Slate: 7.75, Apathy: 7.86, Apathetic Ocean: 7.75, Apathy Experimental: 7.49]
+operator: range 3.54–14.74 (spread 11.20) [Minted: 3.54, Minted Theory: 14.74, Slate: 4.16, Apathy: 4.22, Apathetic Ocean: 4.16, Apathy Experimental: 4.03]
+predictive: range 5.86–16.21 (spread 10.35) [Minted: 7.75, Minted Theory: 16.21, Slate: 7.85, Apathy: 6.14, Apathetic Ocean: 6.05, Apathy Experimental: 5.86]
+preproc: range 2.31–8.27 (spread 5.96) [Minted: 8.27, Minted Theory: 2.31, Slate: 7.64, Apathy: 8.25, Apathetic Ocean: 8.12, Apathy Experimental: 7.94]
+primary: range 2.31–9.41 (spread 7.10) [Minted: 3.16, Minted Theory: 2.31, Slate: 7.85, Apathy: 9.41, Apathetic Ocean: 7.85, Apathy Experimental: 9.07]
+property: range 3.91–12.02 (spread 8.11) [Minted: 5.43, Minted Theory: 3.91, Slate: 9.41, Apathy: 12.02, Apathetic Ocean: 7.65, Apathy Experimental: 11.58]
+punctuation: range 1.90–4.55 (spread 2.65) [Minted: 3.16, Minted Theory: 1.94, Slate: 4.55, Apathy: 2.13, Apathetic Ocean: 1.90, Apathy Experimental: 2.12]
+punctuation.bracket: range 1.42–4.55 (spread 3.13) [Minted: 1.83, Minted Theory: 1.94, Slate: 4.55, Apathy: 4.10, Apathetic Ocean: 1.42, Apathy Experimental: 3.91]
+punctuation.delimiter: range 1.46–4.55 (spread 3.09) [Minted: 1.83, Minted Theory: 1.46, Slate: 4.55, Apathy: 2.13, Apathetic Ocean: 1.90, Apathy Experimental: 2.12]
+punctuation.list_marker: range 1.90–4.55 (spread 2.65) [Minted: 3.16, Minted Theory: 1.94, Slate: 4.55, Apathy: 2.13, Apathetic Ocean: 1.90, Apathy Experimental: 2.12]
+punctuation.markup: range 2.84–16.07 (spread 13.23) [Minted: 2.84, Minted Theory: 16.07, Slate: 4.55, Apathy: 9.27, Apathetic Ocean: 9.41, Apathy Experimental: 8.83]
+punctuation.special: range 1.46–4.79 (spread 3.33) [Minted: 1.83, Minted Theory: 1.46, Slate: 4.55, Apathy: 4.79, Apathetic Ocean: 4.72, Apathy Experimental: 4.56]
+selector: range 9.41–16.21 (spread 6.80) [Minted: 14.29, Minted Theory: 16.21, Slate: 9.41, Apathy: 11.11, Apathetic Ocean: 9.41, Apathy Experimental: 10.59]
+selector.pseudo: range 2.31–8.27 (spread 5.96) [Minted: 8.27, Minted Theory: 2.31, Slate: 7.64, Apathy: 8.25, Apathetic Ocean: 8.12, Apathy Experimental: 7.94]
+string: range 9.33–14.94 (spread 5.61) [Minted: 11.74, Minted Theory: 14.94, Slate: 11.36, Apathy: 11.53, Apathetic Ocean: 9.33, Apathy Experimental: 10.99]
+string.escape: range 11.27–14.19 (spread 2.92) [Minted: 11.27, Minted Theory: 11.27, Slate: 11.28, Apathy: 14.19, Apathetic Ocean: 13.98, Apathy Experimental: 13.52]
+string.regex: range 4.16–14.74 (spread 10.58) [Minted: 11.27, Minted Theory: 14.74, Slate: 4.16, Apathy: 6.80, Apathetic Ocean: 6.70, Apathy Experimental: 6.48]
+string.special: range 9.33–14.94 (spread 5.61) [Minted: 11.74, Minted Theory: 14.94, Slate: 11.36, Apathy: 11.53, Apathetic Ocean: 9.33, Apathy Experimental: 10.99]
+string.special.symbol: range 9.33–14.94 (spread 5.61) [Minted: 11.74, Minted Theory: 14.94, Slate: 11.36, Apathy: 11.53, Apathetic Ocean: 9.33, Apathy Experimental: 10.99]
+tag: range 2.79–16.07 (spread 13.28) [Minted: 2.84, Minted Theory: 16.07, Slate: 4.55, Apathy: 14.51, Apathetic Ocean: 2.79, Apathy Experimental: 8.83]
+text.literal: range 9.33–14.94 (spread 5.61) [Minted: 11.74, Minted Theory: 14.94, Slate: 11.36, Apathy: 11.53, Apathetic Ocean: 9.33, Apathy Experimental: 10.99]
+title: range 11.36–13.20 (spread 1.84) [Minted: 11.92, Minted Theory: 13.20, Slate: 11.36, Apathy: 12.58, Apathetic Ocean: 12.39, Apathy Experimental: 11.99]
+type: range 9.41–16.21 (spread 6.80) [Minted: 14.29, Minted Theory: 16.21, Slate: 9.46, Apathy: 11.11, Apathetic Ocean: 9.41, Apathy Experimental: 10.59]
+variable: range 2.31–12.02 (spread 9.71) [Minted: 7.75, Minted Theory: 2.31, Slate: 7.85, Apathy: 12.02, Apathetic Ocean: 9.24, Apathy Experimental: 11.58]
+variable.special: range 7.75–16.21 (spread 8.46) [Minted: 7.75, Minted Theory: 16.21, Slate: 7.85, Apathy: 9.63, Apathetic Ocean: 9.48, Apathy Experimental: 9.18]
+variant: range 7.75–13.49 (spread 5.74) [Minted: 7.75, Minted Theory: 13.49, Slate: 9.46, Apathy: 11.11, Apathetic Ocean: 9.41, Apathy Experimental: 10.59]"
+`;
