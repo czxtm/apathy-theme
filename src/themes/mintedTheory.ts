@@ -59,11 +59,11 @@ export const palette = {
   muted: baseMuted,
   subtle: baseSubtle,
 
-  warning: "#fab387",
-  errora: "#f38ba8",
-  info: "#89b4fa",
-  hint: "#d1f1ec",
-  success: "#a6e3a1",
+  warning: "#ffdecc", // #e59ac2
+  errora: "#e59ac2", // #ffdecc
+  info: "#83a6d2", // #9483d2
+  hint: "#9483d2",
+  success: "#a1cec5", // #a1cec5
   rosewater: "#f5e0dc",
 
 

@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    // VS Code Extension compilation
     "module": "commonjs",
     "target": "ES2020",
     "outDir": "out",
@@ -11,11 +10,13 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": ["src/*"]
+    },
+    "incremental": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", ".vscode-test", "out"]
+	"exclude": ["node_modules", ".vscode-test", "out", "src/archive"]
 }
