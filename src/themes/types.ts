@@ -21,7 +21,6 @@ import type {
 	Semantic,
 } from "../types";
 import type { ThemeFilters } from "../filters";
-import Color from "color";
 import { Color as CoreColor, type ColorLike, toHex, Color } from "../core/color";
 
 // ============================================================================
@@ -935,16 +934,10 @@ export interface UserInterface<ColorValue extends ColorLike> {
 		foreground: ColorValue;
 	};
 
-	/**
-	 * Window chrome colors (borders, title bar accents).
-	 * @example VS Code: `window.activeBorder`, `window.inactiveBorder`
-	 */
-	window?: {
-		/** Border color when window is focused */
-		activeBorder?: ColorValue;
-		/** Border color when window is not focused */
-		inactiveBorder?: ColorValue;
-	};
+		window?: {
+			activeBorder?: Color;
+			inactiveBorder?: Color;
+		};
 
 	/**
 	 * Default icon colors throughout the UI.
@@ -1146,7 +1139,7 @@ export interface ThemeDefinition<ColorValue extends ColorLike = ColorLike> {
 	extraColors?: Record<string, string>;
 }
 
-export type ThemeDefinitionExtended = ThemeDefinition<Color>;
+export type ThemeDefinitionExtended = ThemeDefinition<ColorLike>;
 
 // ============================================================================
 // Resolution helpers
@@ -1172,7 +1165,7 @@ export function semantic(
 ): string | undefined {
 	if (value === undefined) return undefined;
 	if (typeof value === "string") return value;
-	if (value instanceof CoreColor) return value.hexa();
+	if (value instanceof Color) return value.hexa();
 	if (typeof value === "object" && value !== null) {
 		if (variant && (value as any)[variant]) return toHex((value as any)[variant]);
 		return toHex((value as any).default);
@@ -1302,31 +1295,31 @@ export function getThemeValue<P extends ThemePath>(
 export function applyFilters(c: ColorLike, filters: ThemeFilters): string {
 	let color = toHex(c);
 	if (filters.hueShift) {
-		color = Color(color).rotate(filters.hueShift).hexa();
+		color = new Color(color).rotate(filters.hueShift).hexa();
 	}
 	if (filters.saturation) {
-		color = Color(color).saturate(filters.saturation).hexa();
+		color = new Color(color).saturate(filters.saturation).hexa();
 	}
 	if (filters.brightness) {
-		color = Color(color).lighten(filters.brightness).hexa();
+		color = new Color(color).lighten(filters.brightness).hexa();
 	}
 	if (filters.contrast) {
 		const contrast = filters.contrast;
-		const lum = Color(color).luminosity();
+		const lum = new Color(color).luminosity();
 		const factor = (259 * (contrast + 255)) / (255 * (259 - contrast));
 		const r = Math.min(
 			255,
-			Math.max(0, factor * (Color(color).red() - 128) + 128),
+			Math.max(0, factor * (new Color(color).red() - 128) + 128),
 		);
 		const g = Math.min(
 			255,
-			Math.max(0, factor * (Color(color).green() - 128) + 128),
+			Math.max(0, factor * (new Color(color).green() - 128) + 128),
 		);
 		const b = Math.min(
 			255,
-			Math.max(0, factor * (Color(color).blue() - 128) + 128),
+			Math.max(0, factor * (new Color(color).blue() - 128) + 128),
 		);
-		color = Color({ r, g, b }).alpha(Color(color).alpha()).hexa();
+		color = new Color({ r, g, b }).alpha(new Color(color).alpha()).hexa();
 	}
 	return color;
 }

@@ -15,9 +15,10 @@ import {
   Color,
   type ColorInput,
   type ElementColors,
+  mkColor,
   mkElementColors,
 } from '../core/color';
-import { mix } from '../themes/utils';
+import { darken, mix } from '../themes/utils';
 
 // ============================================================================
 // Zed Theme Output Types
@@ -448,10 +449,34 @@ function buildStyle(
   const warning = c("ui.status.warning");
   const info = c("ui.status.info");
   const success = c("ui.status.success");
-  const infoel = mkElement(info, background, foreground);
-  const warningel = mkElement(warning, background, foreground);
-  const successel = mkElement(success, background, foreground);
-  const errorel = mkElement(error, background, foreground);
+  const infoel = mkElementColors(info, {
+    background,
+    foreground,
+    fg: { saturationBlend: 0.2, contrast: { minContrast: 4, maxContrast: 10 } },
+    bg: { alpha: 0.12, saturationScale: 0.9, contrast: { minContrast: 0, maxContrast: 4 } },
+    border: { contrast: { minContrast: 3, maxContrast: 10 } },
+  });
+  const warningel = mkElementColors(warning, {
+    background,
+    foreground,
+    // fg: { contrast: { minContrast: 3, maxContrast: 6 } },
+    // bg: { alpha: 0.2 },
+    // border: { contrast: { minContrast: 3, maxContrast: 6 } },
+  });
+  const successel = mkElementColors(success, {
+    background,
+    foreground,
+    // fg: { contrast: { minContrast: 3, maxContrast: 6 } },
+    // bg: { alpha: 0.2 },
+    // border: { contrast: { minContrast: 3, maxContrast: 6 } },
+  });
+  const errorel = mkElementColors(error, {
+    background,
+    foreground,
+    fg: { contrast: { minContrast: 3, maxContrast: 6 } },
+    bg: { alpha: 0.2, saturationScale: 0.4, contrast: { minContrast: 0, maxContrast: 6 } },
+    border: { contrast: { minContrast: 3, maxContrast: 6 } },
+  });
 
   // Predictive/ghost text color - use parameter color for better visibility
   const predictiveColor = get(t.tokens.variables, "parameter") || muted;
@@ -707,7 +732,19 @@ function buildStyle(
     "ghost_element.disabled": withAlpha(subtle, 0.33),
 
     // Text
-    text: foreground,
+    text: mkColor(foreground, {
+      background,
+      foreground: foreground,
+      saturation: {
+        amount: 1,
+        reference: foreground,
+      },
+      contrast: {
+        minContrast: 2.6,
+        maxContrast: 10.5,
+      },
+
+    }),
     "text.muted": muted,
     "text.placeholder": c("ui.foregrounds.subtle", "ui.foregrounds.muted"),
     "text.disabled": withAlpha(subtle, 0.62),
@@ -829,7 +866,19 @@ function buildStyle(
     "ignored.background": withAlpha(gitIgnored, 0.25),
     "ignored.border": gitIgnored,
     info:  infoel.fg,
-    "info.background": infoel.bg,
+    "info.background": mkColor(infoel.bg, {
+      background: "#000000",
+      foreground: infoel.fg,
+      alpha: 0.05,
+      saturation: {
+        amount: .1,
+        reference: c("ui.foregrounds.default"),
+      },
+      contrast: {
+        minContrast: 0,
+        maxContrast: 10.5,
+      },
+    }),
     "info.border": infoel.border,
     modified: gitModified,
     "modified.background": withAlpha(gitModified, 0.25),

@@ -337,6 +337,8 @@ export interface ClampContrastOptions {
 }
 
 /**
+ * Prevent overly bright colors
+ *
  * Return `color` adjusted so its effective contrast against `background`
  * stays within [minContrast, maxContrast]. If it falls short, it blends
  * toward `foreground`; if it exceeds the cap, it blends back toward
