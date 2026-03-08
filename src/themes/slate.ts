@@ -5,16 +5,16 @@
  * setting defaults and then overriding specific values.
  */
 
-import { make, type ThemeDefinition, ColorPalette, UserInterface, UIComponents } from "./types";
+import { make, type ThemeDefinition, ColorPalette, UserInterface, UIComponents, type ColorLike } from "./types";
 import { SemanticTokenModifier } from "../types";
 import { alpha20, darken, l10, lighten, mix, transparentize } from './utils';
-import Color from 'color';
+import { Color, makeColors } from '@/core/color';
 
 // ============================================================================
 // 1. Color Palette
 // ============================================================================
 
-const palette = {
+const rawColors = {
   // Backgrounds
   "#0e0e15": "#0e0e15",
 
@@ -81,16 +81,16 @@ const palette = {
 } ;
 
 const whites = {
-  "100": palette["#d1d3d9"],
-  "200": palette["#a7a4af"],
-  "300": palette["#f5e0dc"],
-  "400": palette["#91aac0"],
-  "500": palette["#829297"],
-  "600": palette["#767a92"],
-  "700": palette["#527bb254"],
+  "100": rawColors["#d1d3d9"],
+  "200": rawColors["#a7a4af"],
+  "300": rawColors["#f5e0dc"],
+  "400": rawColors["#91aac0"],
+  "500": rawColors["#829297"],
+  "600": rawColors["#767a92"],
+  "700": rawColors["#527bb254"],
 }
 
-type CV = string;
+type CV = ColorLike;
 export const WHITE: CV = "#d1d3d9";
 export const MIDNIGHT: CV = "#0e0e15";
 export const MUTEDWHITE: CV = "#a7a4af";
@@ -234,141 +234,162 @@ export const CRIMSON: CV = "#E60063";
 //   }
 // };
 
-export const v = (k: string): k is keyof typeof palette => k in palette;
+export const v = (k: string): k is keyof typeof rawColors => k in rawColors;
+
+const colors = makeColors(rawColors);
+const bgbase = colors.midnight;
+const bgsurface = colors.midnight.lighter(0.2);
+
+const BACKGROUND = colors["#0e0e15"];
+const BACKGROUND_DARKER = colors.black;
+const FOREGROUND = colors["#a7a4af"];
+const SELECTION_BACKGROUND = mix(FOREGROUND, BACKGROUND, 0.5);
+const SURFACE = colors.midnight.lighter(0.6);
+const OVERLAY = mix(lighten(rawColors.midnight, 0.6), rawColors.peach, 0.05);
+const BORDER = colors.sageGray.mix(colors.midnight, 0.5);
+const ACCENT = colors.peach;
+const CARD = colors.midnight.lighter(0.15);
+const CARD_FOREGROUND = colors.mist.mix(colors.midnight, 0.2);
+const SURFACE_FOREGROUND = colors.mist.mix(colors.midnight, 0.2);
+const SURFACE_BORDER = colors.charcoal.mix(colors.midnight, 0.8);
+const SURFACE_BORDER_ACTIVE = colors.peach.desaturate(0.1).darker(0.4).transparent(0.4);
+const SURFACE_BORDER_SUBTLE = colors.charcoal.mix(colors.midnight, 0.3);
+const SURFACE_BORDER_SEPARATOR = colors.mist.alpha(0.05).hexa();
+
 
 // ============================================================================
 // 2. Theme Definition
 // ============================================================================
-const backgrounds: UserInterface<keyof typeof palette | string>["backgrounds"] = {
-  base: palette.midnight,
-  surface: lighten(palette.midnight, 0.2),
-  raised: lighten(palette.midnight, 0.6),
-  overlay: mix(lighten(palette.midnight, 0.6), palette.peach, 0.05),
-  darker: palette.black,
-  codeBlock: palette.black,
+const backgrounds: UserInterface<ColorLike>["backgrounds"] = {
+  base: BACKGROUND,
+  surface: bgsurface,
+  raised: SURFACE,
+  overlay: OVERLAY,
+  darker: BACKGROUND_DARKER,
+  codeBlock: BACKGROUND_DARKER,
 };
 
-const foregrounds: UserInterface<keyof typeof palette | string>["foregrounds"] = {
-  default: palette.mutedwhite,
-  muted: palette.stormGray,
-  subtle: palette.charcoal,
-  accent: palette.peach,
-  focused: palette.vanillaCream,
+const foregrounds: UserInterface<ColorLike>["foregrounds"] = {
+  default: FOREGROUND,
+  muted: rawColors.stormGray,
+  subtle: rawColors.charcoal,
+  accent: rawColors.peach,
+  focused: rawColors.vanillaCream,
 };
 
-const borders: UserInterface<keyof typeof palette | string>["borders"] = {
-  default: palette.sageGray,
-  active: palette.dustyBlue,
-  subtle: palette.black,
-  separator: palette.dark1,
+const borders: UserInterface<ColorLike>["borders"] = {
+  default: colors.sageGray.mix(colors.midnight, 0.5),
+  active: rawColors.dustyBlue,
+  subtle: rawColors.black,
+  separator: rawColors.dark1,
 };
 
-const accent: UserInterface<keyof typeof palette | string>["accent"] = {
-  primary: palette.dustyBlue,
-  primaryForeground: palette.cyan,
-  secondary: palette.lavender,
+const accent: UserInterface<ColorLike>["accent"] = {
+  primary: rawColors.dustyBlue,
+  primaryForeground: rawColors.cyan,
+  secondary: rawColors.lavender,
 };
 
-const status: UserInterface<keyof typeof palette | string>["status"] = {
-  error: palette.crimson,
-  warning: palette.gold,
-  info: palette.cyan,
-  success: palette.celery,
+const status: UserInterface<ColorLike>["status"] = {
+  error: rawColors.crimson,
+  warning: rawColors.gold,
+  info: rawColors.cyan,
+  success: rawColors.celery,
 };
 
-const selection: UserInterface<keyof typeof palette | string>["selection"] = {
-  background: mix(foregrounds.default, palette.midnight, 0.5),
-  backgroundInactive: transparentize(palette.mutedwhite, 0.1),
-  text: palette.charcoal,
-  backgroundActive: lighten(palette.cyan, 0.4),
+const selection: UserInterface<ColorLike>["selection"] = {
+  background: mix(foregrounds.default, rawColors.midnight, 0.5),
+  backgroundInactive: transparentize(rawColors.mutedwhite, 0.1),
+  text: rawColors.charcoal,
+  backgroundActive: lighten(rawColors.cyan, 0.4),
 };
 
-const highlights: UserInterface<keyof typeof palette | string>["highlights"] = {
+const highlights: UserInterface<ColorLike>["highlights"] = {
   activeLine: {
     background: lighten(backgrounds.base, 0.5),
   },
   word: {
-    background: lighten(mix(backgrounds.base, palette.cyan, 0.9), 0.7),
+    background: lighten(mix(backgrounds.base, rawColors.cyan, 0.9), 0.7),
   },
   selection: {
     backgroundInactive: transparentize(lighten(backgrounds.base, 0.5), 0.5),
-    backgroundActive: mix(foregrounds.default, palette.midnight, 0.5),
+    backgroundActive: mix(foregrounds.default, rawColors.midnight, 0.5),
     foreground: lighten(foregrounds.default, 0.2),
   }
 };
 const tokens: ThemeDefinition["tokens"] = {
     source: foregrounds.default,
-    comments: mix(palette['#829297'], palette.midnight, 0.5),
+    comments: mix(rawColors['#829297'], rawColors.midnight, 0.5),
     strings: make({
-      default: palette.celery,
-      regex: palette.crimson,
+      default: rawColors.celery,
+      regex: rawColors.crimson,
     }),
     operators: {
       default: CRIMSON,
     },
 
     literals: {
-      default: palette.cyan,
-      string: palette.celery,
-      number: palette.cyan,
-      boolean: palette.cyan,
-      null: palette.lavender,
-      undefined: palette.lavender,
-      regex: palette.crimson,
+      default: rawColors.cyan,
+      string: rawColors.celery,
+      number: rawColors.cyan,
+      boolean: rawColors.cyan,
+      null: rawColors.lavender,
+      undefined: rawColors.lavender,
+      regex: rawColors.crimson,
     },
 
     keywords: {
-      default: mix(palette.mutedwhite, palette.cyan, 0.3),
+      default: mix(rawColors.mutedwhite, rawColors.cyan, 0.3),
       operator: CRIMSON,
     },
 
     variables: {
-      default: palette["#a7a4af"],
-      parameter: palette["#a7a4af"],
-      property: palette["#e0a2d3"],
+      default: rawColors["#a7a4af"],
+      parameter: rawColors["#a7a4af"],
+      property: rawColors["#e0a2d3"],
     },
 
     constants: {
-      default: palette["#91aac0"],
-      numeric: palette["#33b3cc"],
+      default: rawColors["#91aac0"],
+      numeric: rawColors["#33b3cc"],
     },
 
     functions: {
-      default: palette["#73bf9c"],
-      method: palette["#73bf9c"],
+      default: rawColors["#73bf9c"],
+      method: rawColors["#73bf9c"],
     },
 
     types: {
-      default: palette["#cba6f7"],
-      class: palette["#e0a2d3"],
-      interface: palette["#cba6f7"],
-      enum: palette["#cba6f7"],
-      typeParameter: palette["#cba6f7"],
-      namespace: palette["#a7a4af"],
+      default: rawColors["#cba6f7"],
+      class: rawColors["#e0a2d3"],
+      interface: rawColors["#cba6f7"],
+      enum: rawColors["#cba6f7"],
+      typeParameter: rawColors["#cba6f7"],
+      namespace: rawColors["#a7a4af"],
     },
 
     punctuation: {
-      default: palette["#767a92"],
+      default: rawColors["#767a92"],
     },
 
     meta: {
-      default: palette["#767a92"],
-      decorator: palette["#ffcb6b"],
-      macro: palette["#ffcb6b"],
-      label: palette["#e0a2d3"],
+      default: rawColors["#767a92"],
+      decorator: rawColors["#ffcb6b"],
+      macro: rawColors["#ffcb6b"],
+      label: rawColors["#e0a2d3"],
     },
     storage: {
-      default: palette["#8564d8"],
-      type: palette["#8564d8"],
+      default: rawColors["#8564d8"],
+      type: rawColors["#8564d8"],
     },
     special: {
-      jsxClass: palette.dustyBlue,
+      jsxClass: rawColors.dustyBlue,
     }
   };
 
 
 
-const ui: UserInterface<keyof typeof palette | string> = {
+const ui: UserInterface<ColorLike> = {
   backgrounds,
   foregrounds,
   borders,
@@ -376,15 +397,51 @@ const ui: UserInterface<keyof typeof palette | string> = {
   status,
   selection,
   highlights,
+  hoverWidget: {
+    background: colors.midnight.lighter(0.1),
+    foreground: colors.mist,
+    border: colors.sageGray.mix(colors.midnight, 0.5),
+  },
+  cursor: {
+    foreground: colors.mist,
+  },
+  panels: {
+    background: backgrounds.surface,
+    border: borders.default,
+    titleBackground: backgrounds.surface,
+    titleForeground: foregrounds.default,
+    foreground: foregrounds.default,
+  },
+  indentGuide: {
+    background: rawColors.dark1,
+    activeBackground: rawColors.dark1,
+
+  },
+  window: {},
+  whitespace: {
+    foreground: rawColors.dark1,
+  },
+  ruler: {
+    foreground: rawColors.dark1,
+  },
+  lineNumbers: {
+    foreground: rawColors.dark1,
+    activeForeground: rawColors.mist,
+  },
+  inlineHints: {
+    background: transparentize(rawColors.steel, 0.5),
+    foreground: rawColors.mist,
+    border: transparentize(rawColors.steel, 0.5),
+  },
   git: {
     // added: mix(palette.seafoam, palette.midnight, 0.5),
-    added: mix(foregrounds.muted, palette.celery, 0.2),
+    added: mix(foregrounds.muted, rawColors.celery, 0.2),
     // modified: mix(palette.peach, foregrounds.muted, 0.2),
-    modified: mix(foregrounds.muted, palette.cyan, 0.2),
-    deleted: mix(foregrounds.muted, palette.crimson, 0.2),
-    untracked: mix(foregrounds.muted, palette.dark1, 0.5),
-    ignored: mix(foregrounds.subtle, palette.dark1, 0.5),
-    conflict: mix(foregrounds.muted, palette.crimson, 0.5),
+    modified: mix(foregrounds.muted, rawColors.cyan, 0.2),
+    deleted: mix(foregrounds.muted, rawColors.crimson, 0.2),
+    untracked: mix(foregrounds.muted, rawColors.dark1, 0.5),
+    ignored: mix(foregrounds.subtle, rawColors.dark1, 0.5),
+    conflict: mix(foregrounds.muted, rawColors.crimson, 0.5),
   }
 };
 
@@ -393,15 +450,15 @@ const components: UIComponents = {
     background: ui.backgrounds.base,
     foreground: ui.foregrounds.default,
     lineHighlight: ui.highlights?.activeLine?.background || ui.backgrounds.overlay,
-    lineHighlightBorder: palette.midnight,
-    inactiveSelectionBackground: transparentize(mix(foregrounds.accent, palette.midnight, 0.9), 0.7),
-    selectionBackground: l10(palette.midnight),
-    selectionHighlightBackground: transparentize(mix(foregrounds.accent, palette.midnight, 0.95), 0.5),
-    findRangeHighlightBackground: transparentize(mix(palette.grape, palette.midnight, 0.2), 0.5),
-    findMatchHighlightBackground: transparentize(mix(palette.grape, palette.midnight, 0.8), 0.5),
-    lineNumberActiveForeground: palette.mist,
-    lineNumberForeground: palette.dark1,
-    findMatchBackground: transparentize(mix(palette.grape, palette.midnight, 0.9), 0.7),
+    lineHighlightBorder: rawColors.midnight,
+    inactiveSelectionBackground: transparentize(mix(foregrounds.accent, rawColors.midnight, 0.9), 0.7),
+    selectionBackground: l10(rawColors.midnight),
+    selectionHighlightBackground: transparentize(mix(foregrounds.accent, rawColors.midnight, 0.95), 0.5),
+    findRangeHighlightBackground: transparentize(mix(rawColors.grape, rawColors.midnight, 0.2), 0.5),
+    findMatchHighlightBackground: transparentize(mix(rawColors.grape, rawColors.midnight, 0.8), 0.5),
+    lineNumberActiveForeground: rawColors.mist,
+    lineNumberForeground: rawColors.dark1,
+    findMatchBackground: transparentize(mix(rawColors.grape, rawColors.midnight, 0.9), 0.7),
     // errorHighlight: palette.crimson,
     // warningHighlight: palette.peach,
     // selectionHighlight: l10(palette.midnight),
@@ -413,22 +470,25 @@ const components: UIComponents = {
   },
   editorGutter: {
     background: ui.backgrounds.base,
-    modifiedBackground: palette.peach,
-    addedBackground: palette.seafoam,
-    deletedBackground: palette.crimson,
-    foldingControl: palette.steel,
+    modifiedBackground: rawColors.peach,
+    addedBackground: rawColors.seafoam,
+    deletedBackground: rawColors.crimson,
+    foldingControl: rawColors.steel,
   },
   editorLineNumber: {
-    foreground: palette.charcoal,
-    activeForeground: palette.mist,
+    foreground: rawColors.charcoal,
+    activeForeground: rawColors.mist,
+  },
+  window: {
+    borders: rawColors.semiblack,
   },
   activityBar: {
-    background: palette.black,
-    foreground: darken(palette.mist, 0.5),
-    inactiveForeground: palette.mist,
-    border: palette.semiblack,
-    badgeBackground: palette.peach,
-    badgeForeground: palette.black,
+    background: rawColors.black,
+    foreground: darken(rawColors.mist, 0.5),
+    inactiveForeground: rawColors.mist,
+    border: rawColors.semiblack,
+    badgeBackground: rawColors.peach,
+    badgeForeground: rawColors.black,
   },
   editorWidget: {
     background: ui.backgrounds.overlay,
@@ -437,158 +497,169 @@ const components: UIComponents = {
   },
   sideBar: {
     background: ui.backgrounds.surface,
-    foreground: palette.mist,
-    border: palette.semiblack,
-    sectionHeaderBackground: palette.midnight,
-    sectionHeaderForeground: palette.mist,
+    foreground: rawColors.mist,
+    border: rawColors.semiblack,
+    sectionHeaderBackground: rawColors.midnight,
+    sectionHeaderForeground: rawColors.mist,
   },
   titleBar: {
     activeBackground: ui.backgrounds.base,
-    activeForeground: palette.mist,
+    activeForeground: rawColors.mist,
     inactiveBackground: ui.backgrounds.base,
-    inactiveForeground: palette.charcoal,
+    inactiveForeground: rawColors.charcoal,
   },
   panel: {
     background: ui.backgrounds.surface,
-    foreground: palette.mist,
-    border: palette.semiblack,
-    titleActiveForeground: palette.mist,
-    titleInactiveForeground: palette.charcoal,
-    titleActiveBorder: palette.steel,
+    foreground: rawColors.mist,
+    border: rawColors.semiblack,
+    titleActiveForeground: rawColors.mist,
+    titleInactiveForeground: rawColors.charcoal,
+    titleActiveBorder: rawColors.steel,
   },
   statusBar: {
     background: ui.backgrounds.surface,
-    foreground: palette.mist,
-    border: palette.semiblack,
-    debuggingBackground: palette.seafoam,
-    debuggingForeground: palette.crimson,
-    noFolderBackground: palette.midnight,
-    noFolderForeground: palette.mist,
+    foreground: rawColors.mist,
+    border: rawColors.semiblack,
+    debuggingBackground: rawColors.seafoam,
+    debuggingForeground: rawColors.crimson,
+    noFolderBackground: rawColors.midnight,
+    noFolderForeground: rawColors.mist,
   },
   tabs: {
     activeBackground: ui.backgrounds.surface,
-    activeForeground: palette.mist,
-    activeBorder: palette["#527bb254"],
-    activeBorderTop: palette.steel,
+    activeForeground: rawColors.mist,
+    activeBorder: rawColors["#527bb254"],
+    activeBorderTop: rawColors.steel,
     inactiveBackground: ui.backgrounds.base,
-    inactiveForeground: palette.mist,
-    hoverBackground: palette.midnight,
-    hoverForeground: palette.mist,
-    unfocusedActiveBackground: palette.midnight,
-    unfocusedActiveForeground: palette.mist,
-    modifiedBorder: palette.peach,
+    inactiveForeground: rawColors.mist,
+    hoverBackground: rawColors.midnight,
+    hoverForeground: rawColors.mist,
+    unfocusedActiveBackground: rawColors.midnight,
+    unfocusedActiveForeground: rawColors.mist,
+    modifiedBorder: rawColors.peach,
   },
   list: {
     activeSelectionBackground: ui.backgrounds.surface,
-    activeSelectionForeground: palette.mist,
+    activeSelectionForeground: rawColors.mist,
     inactiveSelectionBackground: ui.backgrounds.surface,
-    inactiveSelectionForeground: palette.mist,
+    inactiveSelectionForeground: rawColors.mist,
     hoverBackground: ui.backgrounds.overlay,
-    hoverForeground: palette.mist,
+    hoverForeground: rawColors.mist,
     focusBackground: ui.backgrounds.surface,
-    focusForeground: palette.mist,
-    highlightForeground: palette.steel,
+    focusForeground: rawColors.mist,
+    highlightForeground: rawColors.steel,
   },
   input: {
-    background: palette.midnightLight,
-    foreground: lighten(palette.mist, 0.1),        border: palette.steel,
-    placeholderForeground: darken(palette.mist, 0.2),
+    background: rawColors.midnightLight,
+    foreground: lighten(rawColors.mist, 0.1),        border: rawColors.steel,
+    placeholderForeground: darken(rawColors.mist, 0.2),
   },
   button: {
-    background: palette.alphaBlue,
-    foreground: palette.mist,
-    hoverBackground: palette.midnight,
-    secondaryBackground: palette.midnight,
-    secondaryForeground: palette.mist,
-    secondaryHoverBackground: palette.midnight,
+    background: rawColors.alphaBlue,
+    foreground: rawColors.mist,
+    hoverBackground: rawColors.midnight,
+    secondaryBackground: rawColors.midnight,
+    secondaryForeground: rawColors.mist,
+    secondaryHoverBackground: rawColors.midnight,
+    border: rawColors.steel,
+    secondaryBorder: rawColors.steel,
+  },
+  hoverWidget: {
+    background: rawColors.midnight,
+    foreground: rawColors.mist,
+    border: darken(rawColors.steel, 0.2),
+  },
+  cursor: {
+    foreground: rawColors.mist,
   },
   dropdown: {
-    background: palette.alphaBlue,
-    foreground: palette.mist,
-    border: darken(palette.steel, 0.2),
-    listBackground: palette.midnight,
+    background: rawColors.alphaBlue,
+    foreground: rawColors.mist,
+    border: darken(rawColors.steel, 0.2),
+    listBackground: rawColors.midnight,
   },
   badge: {
-    background: palette.midnight,
-    foreground: palette.mist,
-    border: lighten(palette.midnight, 0.2),
+    background: rawColors.midnight,
+    foreground: rawColors.mist,
+    border: lighten(rawColors.midnight, 0.2),
   },
   scrollbar: {
-    shadow: palette.midnight,
-    sliderBackground: palette.midnight,
-    sliderHoverBackground: palette.midnight,
-    sliderActiveBackground: palette.midnight,
+    shadow: rawColors.midnight,
+    sliderBackground: rawColors.midnight,
+    sliderHoverBackground: rawColors.midnight,
+    sliderActiveBackground: rawColors.midnight,
   },
   minimap: {
-    background: palette.midnight,
-    selectionHighlight: palette.mist,
-    errorHighlight: palette.crimson,
-    warningHighlight: palette.peach,
-    findMatchHighlight: mix(ui.backgrounds.surface, palette.lavender, 0.5),
+    background: rawColors.midnight,
+    selectionHighlight: rawColors.mist,
+    errorHighlight: rawColors.crimson,
+    warningHighlight: rawColors.peach,
+    findMatchHighlight: mix(ui.backgrounds.surface, rawColors.lavender, 0.5),
   },
   breadcrumb: {
-    background: palette.midnight,
-    foreground: palette.mist,
-    focusForeground: palette.mist,
-    activeSelectionForeground: palette.mist,
+    background: rawColors.midnight,
+    foreground: rawColors.mist,
+    focusForeground: rawColors.mist,
+    activeSelectionForeground: rawColors.mist,
   },
   terminal: {
-    background: palette.midnight,
-    foreground: palette.mist,
-    cursorForeground: palette.mist,
-    selectionBackground: l10(palette.midnight),
-    cursor: palette.mist,
-    ansiBlack: palette.charcoal,
-    ansiRed: palette.crimson,
-    ansiGreen: palette.seafoam,
-    ansiYellow: palette.peach,
-    ansiBlue: palette.cyan,
-    ansiMagenta: palette.lavender,
-    ansiCyan: palette.ice,
-    ansiWhite: palette.white,
-    ansiBrightBlack: palette.steel,
-    ansiBrightRed: palette.crimson,
-    ansiBrightGreen: palette.seafoam,
-    ansiBrightYellow: palette.peach,
-    ansiBrightBlue: palette.cyan,
-    ansiBrightMagenta: palette.lavender,
-    ansiBrightCyan: palette.ice,
-    ansiBrightWhite: palette.flatwhite,
+    background: rawColors.midnight,
+    foreground: rawColors.mist,
+    cursorForeground: rawColors.mist,
+    selectionBackground: l10(rawColors.midnight),
+    cursor: rawColors.mist,
+    ansiBlack: rawColors.charcoal,
+    ansiRed: rawColors.crimson,
+    ansiGreen: rawColors.seafoam,
+    ansiYellow: rawColors.peach,
+    ansiBlue: rawColors.cyan,
+    ansiMagenta: rawColors.lavender,
+    ansiCyan: rawColors.ice,
+    ansiWhite: rawColors.white,
+    ansiBrightBlack: rawColors.steel,
+    ansiBrightRed: rawColors.crimson,
+    ansiBrightGreen: rawColors.seafoam,
+    ansiBrightYellow: rawColors.peach,
+    ansiBrightBlue: rawColors.cyan,
+    ansiBrightMagenta: rawColors.lavender,
+    ansiBrightCyan: rawColors.ice,
+    ansiBrightWhite: rawColors.flatwhite,
+    border: rawColors.semiblack,
   },
   notification: {
-    background: palette.midnight,
-    foreground: palette.mist,
-    border: palette.midnightLight,
+    background: rawColors.midnight,
+    foreground: rawColors.mist,
+    border: rawColors.midnightLight,
   },
   peekView: {
-    editorBackground: palette.midnight,
-    editorBorder: palette.steel,
-    resultBackground: palette.midnight,
-    resultSelectionBackground: palette.midnight,
+    editorBackground: rawColors.midnight,
+    editorBorder: rawColors.steel,
+    resultBackground: rawColors.midnight,
+    resultSelectionBackground: rawColors.midnight,
     titleBackground: ui.backgrounds.surface,
-    titleForeground: palette.mist,
+    titleForeground: rawColors.mist,
   },
   diffEditor: {
     insertedTextBackground: "#09131588",
     removedTextBackground: "#2e060982",
     insertedLineBackground: "#09131588",
     removedLineBackground: "#1202049e",
-    diagonalFill: palette.steel,
+    diagonalFill: rawColors.steel,
   },
   merge: {
-    currentHeaderBackground: palette.midnight,
-    incomingHeaderBackground: palette.midnight,
-    commonHeaderBackground: palette.midnight,
-    currentContentBackground: mix(palette.seafoam, palette.midnight, 0.3),
-    incomingContentBackground: palette.peach,
-    commonContentBackground: mix(palette.steel, palette.midnight, 0.3),
+    currentHeaderBackground: rawColors.midnight,
+    incomingHeaderBackground: rawColors.midnight,
+    commonHeaderBackground: rawColors.midnight,
+    currentContentBackground: mix(rawColors.seafoam, rawColors.midnight, 0.3),
+    incomingContentBackground: rawColors.peach,
+    commonContentBackground: mix(rawColors.steel, rawColors.midnight, 0.3),
   },
 }
 
 export const slate: ThemeDefinition = {
   name: "Slate",
   type: "dark",
-  palette,
+  palette: rawColors,
   background: ui.backgrounds.base,
 
   tokens,
@@ -596,46 +667,46 @@ export const slate: ThemeDefinition = {
   languageOverrides: {
     go: {
       functions: {
-        default: palette.ice
+        default: rawColors.ice
       }
     },
     css: {
       variables: {
-        default: palette.dustyBlue,
-        property: palette.stormGray
+        default: rawColors.dustyBlue,
+        property: rawColors.stormGray
       }
     }
   },
 
   // Semantic overrides for fine-tuning
   semantic: {
-    comment: palette.charcoal,
-    string: palette.celery,
-    keyword: palette.lavender,
-    number: palette.cyan,
-    regexp: palette.peach,
-    operator: palette.crimson,
-    namespace: palette.ice,
-    type: palette.ice,
-    struct: palette.ice,
-    class: palette.ice,
-    interface: palette.ice,
-    enum: palette.dustyBlue,
-    typeParameter: palette.ice,
-    function: palette.seafoam,
-    method: palette.seafoam,
-    decorator: palette.peach,
-    macro: palette.peach,
-    variable: palette.vanillaCream,
-    parameter: palette.dustyBlue,
-    property: palette.stormGray,
-    label: palette.grape,
+    comment: rawColors.charcoal,
+    string: rawColors.celery,
+    keyword: rawColors.lavender,
+    number: rawColors.cyan,
+    regexp: rawColors.peach,
+    operator: rawColors.crimson,
+    namespace: rawColors.ice,
+    type: rawColors.ice,
+    struct: rawColors.ice,
+    class: rawColors.ice,
+    interface: rawColors.ice,
+    enum: rawColors.dustyBlue,
+    typeParameter: rawColors.ice,
+    function: rawColors.seafoam,
+    method: rawColors.seafoam,
+    decorator: rawColors.peach,
+    macro: rawColors.peach,
+    variable: rawColors.vanillaCream,
+    parameter: rawColors.dustyBlue,
+    property: rawColors.stormGray,
+    label: rawColors.grape,
   },
 
   // Modifier handlers
   modifiers: {
     [SemanticTokenModifier.documentation]: {
-      global: { foreground: palette.charcoal, fontStyle: "italic" },
+      global: { foreground: rawColors.charcoal, fontStyle: "italic" },
     },
     [SemanticTokenModifier.static]: {
       global: { fontStyle: "" },
@@ -645,7 +716,7 @@ export const slate: ThemeDefinition = {
     },
 
     [SemanticTokenModifier.async]: {
-      transform: (color: string) => Color(color).mix(Color(palette.lavender), 0.1).hex(),
+      transform: (color: string) => new Color(color).mix(rawColors.lavender, 0.1),
     },
   },
   ui: {
