@@ -217,21 +217,19 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		// @ts-ignore
 		// "editor.wordHighlightStrongBackground": c("ui.overrides.editor.wordHighlightStrong", "ui.selection.background"),
 		"list.highlightForeground": c("ui.overrides.list.highlightForeground", "ui.foregrounds.accent"),
-		"editor.selectionBackground": c("ui.overrides.editor.selectionBackground"),
-		"editor.selectionHighlightBackground": c("ui.overrides.editor.selectionHighlightBackground"),
-		"editor.inactiveSelectionBackground": c("ui.overrides.editor.inactiveSelectionBackground"),
+		"editor.selectionBackground": c("ui.overrides.editor.selectionBackground", "ui.selection.background"),
+		"editor.selectionHighlightBackground": c("ui.overrides.editor.selectionHighlightBackground", "ui.selection.background"),
+		"editor.inactiveSelectionBackground": c("ui.overrides.editor.inactiveSelectionBackground", "ui.selection.backgroundInactive", "ui.selection.background"),
 		// "editor.wordHighlightBackground": c("ui.overrides.editor.wordHighlightBackground"),
 		// "editor.wordHighlightStrongBackground": c("ui.overrides.editor.wordHighlightStrongBackground"),
-		"editor.findMatchBackground": c("ui.overrides.editor.findMatchBackground"),
-		"editor.findMatchHighlightBackground": c("ui.overrides.editor.findMatchHighlightBackground"),
-		"editor.findRangeHighlightBackground": c("ui.overrides.editor.findRangeHighlightBackground"),
+		"editor.findMatchBackground": c("ui.overrides.editor.findMatchBackground", "ui.foregrounds.accent"),
+		"editor.findMatchHighlightBackground": c("ui.overrides.editor.findMatchHighlightBackground", "ui.selection.background"),
+		"editor.findRangeHighlightBackground": c("ui.overrides.editor.findRangeHighlightBackground", "ui.selection.background"),
 		// ═══════════════════════════════════════════════════════════════════════
 		// Editor Gutter
 		// ═══════════════════════════════════════════════════════════════════════
 		// "editorGutter.background": c("ui.overrides.editorGutter.background", "ui.backgrounds.surface"),
 		// "diffEditorGutter.removedLineBackground": c("ui.overrides.editorGutter.modifiedBackground", "ui.git.modified"),
-		"diffEditorGutter.insertedLineBackground": c("ui.overrides.editorGutter.addedBackground", "ui.git.added"),
-		"diffEditorGutter.removedLineBackground": c("ui.overrides.editorGutter.deletedBackground", "ui.git.deleted"),
 		// "editorGutter.foldingControlForeground": c("ui.overrides.editorGutter.foldingControl", "ui.foregrounds.muted"),
 		// @ts-ignore
 		"editorGutter.modifiedBackground": c("ui.overrides.editorGutter.modifiedBackground", "ui.git.modified"),
@@ -729,8 +727,8 @@ function generateVSCodeTheme(t: ThemeDefinition): VSCodeThemeFile {
 
 			// Tags & Attributes (HTML/JSX)
 			tokenColor("entity.name.tag", c("tokens.meta.tag")),
-			tokenColor("support.class.component", c("tokens.special.jsxClass")),
-			tokenColor("support.class.component.jsx", c("tokens.special.jsxClass")),
+			tokenColor("support.class.component", sc("tokens.special.jsxClass", "tokens.types.class")),
+			tokenColor("support.class.component.jsx", sc("tokens.special.jsxClass", "tokens.types.class")),
 			tokenColor("entity.other.attribute-name", c("tokens.variables.property")),
 			tokenColor("meta.tag keyword.operator.assignment", c("tokens.variables.property")),
 			tokenColor("meta.tag.attributes", c("tokens.variables.property")),
