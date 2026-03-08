@@ -22,182 +22,184 @@ import type {
 } from "../types";
 import type { ThemeFilters } from "../filters";
 import Color from "color";
-import type { Color as CoreColor } from "../core/color";
+import { Color as CoreColor, type ColorLike, toHex, Color } from "../core/color";
 
 // ============================================================================
 // Color Palette
 // ============================================================================
 
+export type { ColorLike } from "../core/color";
+export { toHex } from "../core/color";
 
-export type ColorPalette = Record<string, string>;
+export type ColorPalette = Record<string, ColorLike>;
 
 // ============================================================================
 // Token Assignments (hierarchical, CSS-like)
 // ============================================================================
 export type Modifier = (defaultColor: string) => string;
 /** Helper type for a category with default + specific overrides */
-type WithDefault<T extends Record<string, string | Modifier>> = {
-	default: string;
+type WithDefault<T extends Record<string, ColorLike | Modifier>> = {
+	default: ColorLike;
 } & Partial<T>;
 
-export function make<T extends Record<string, string | Modifier>>(
+export function make<T extends Record<string, ColorLike | Modifier>>(
 	obj: T,
-): Record<keyof T, string> {
-	const defaultColor = obj.default as string;
+): Record<keyof T, ColorLike> {
+	const defaultColor = toHex(obj.default);
 	if (!defaultColor) {
 		throw new Error("Default color is required");
 	}
 	for (const [key, value] of Object.entries(obj)) {
 		if (typeof value === "function") {
-			(obj as Record<string, string | Modifier>)[key] = value(defaultColor);
+			(obj as Record<string, ColorLike | Modifier>)[key] = value(defaultColor);
 		}
 	}
-	return obj as Record<keyof T, string>;
+	return obj as Record<keyof T, ColorLike>;
 }
 
 export interface TokenAssignments {
 	/** Default color for all source code (fallback for everything) */
-	source: string;
+	source: ColorLike;
 
 	/** Comments */
-	comments: string;
+	comments: ColorLike;
 
 	/** Operators: +, -, =, &&, etc. */
 	operators: WithDefault<{
 		/** +, -, *, / */
-		arithmetic: string;
+		arithmetic: ColorLike;
 		/** =, +=, -= */
-		assignment: string;
+		assignment: ColorLike;
 		/** ==, !=, <, > */
-		comparison: string;
+		comparison: ColorLike;
 		/** &&, ||, ! */
-		logical: string;
+		logical: ColorLike;
 		/** &, |, ^, ~ */
-		bitwise: string;
+		bitwise: ColorLike;
 		/** and, or, not, in, is */
-		wordlike: string;
+		wordlike: ColorLike;
 	}>;
 
 	/** Literals: fixed values in code */
 	literals: WithDefault<{
 		/** "hello", 'world', `template` */
-		string: string;
+		string: ColorLike;
 		/** 42, 3.14, 0xFF, 1_000 */
-		number: string;
+		number: ColorLike;
 		/** true, false */
-		boolean: string;
+		boolean: ColorLike;
 		/** null */
-		null: string;
+		null: ColorLike;
 		/** undefined */
-		undefined: string;
+		undefined: ColorLike;
 		/** /pattern/g, /[a-z]+/i */
-		regex: string;
+		regex: ColorLike;
 	}>;
 
 	/** Keywords: language reserved words */
 	keywords: WithDefault<{
 		/** if, else, for, while, return */
-		control: string;
+		control: ColorLike;
 		/** let, const, var, function, class */
-		declaration: string;
+		declaration: ColorLike;
 		/** import, export, from */
-		import: string;
+		import: ColorLike;
 		/** public, private, static, async */
-		modifier: string;
+		modifier: ColorLike;
 		/** typeof, instanceof, new, delete */
-		operator: string;
+		operator: ColorLike;
 	}>;
 
 	/** Variables and identifiers */
 	variables: WithDefault<{
 		/** let x = 1, const data = ... */
-		local: string;
+		local: ColorLike;
 		/** function foo(param) { ... } */
-		parameter: string;
+		parameter: ColorLike;
 		/** obj.property, this.value */
-		property: string;
+		property: ColorLike;
 		/** window, document, process */
-		global: string;
+		global: ColorLike;
 		/** any other variable references */
-		other: string;
+		other: ColorLike;
 	}>;
 
 	/** Constants */
 	constants: WithDefault<{
 		/** 42, 3.14, 0xFF */
-		numeric: string;
+		numeric: ColorLike;
 		/** true, false, null */
-		language: string;
+		language: ColorLike;
 		/** const MY_CONST = ... */
-		userDefined: string;
+		userDefined: ColorLike;
 	}>;
 
 	/** Functions and methods */
 	functions: WithDefault<{
 		/** function foo() {}, const bar = () => {} */
-		declaration: string;
+		declaration: ColorLike;
 		/** foo(), myFunction(), doSomething() */
-		call: string;
+		call: ColorLike;
 		/** obj.method(), this.doThing() */
-		method: string;
+		method: ColorLike;
 		/** console.log(), Array.from(), Math.max() */
-		builtin: string;
+		builtin: ColorLike;
 	}>;
 
 	/** Types and type system */
 	types: WithDefault<{
 		/** string, number, boolean */
-		primitive: string;
+		primitive: ColorLike;
 		/** class MyClass {} */
-		class: string;
+		class: ColorLike;
 		/** interface IFoo {} */
-		interface: string;
+		interface: ColorLike;
 		/** enum Status {} */
-		enum: string;
+		enum: ColorLike;
 		/** <T> */
-		typeParameter: string;
+		typeParameter: ColorLike;
 		/** namespace Foo {} */
-		namespace: string;
+		namespace: ColorLike;
 	}>;
 
 	/** Punctuation */
 	punctuation: WithDefault<{
 		/** (), [], {} */
-		bracket: string;
+		bracket: ColorLike;
 		/** ,, ;, : */
-		delimiter: string;
+		delimiter: ColorLike;
 		/** ., ?. */
-		accessor: string;
+		accessor: ColorLike;
 		/** =, ==, !=, <, >, <=, >= */
-		definition: string;
+		definition: ColorLike;
 	}>;
 
 	/** Meta/special tokens */
 	meta: WithDefault<{
 		/** @decorator */
-		decorator: string;
+		decorator: ColorLike;
 		/** macro!, #define */
-		macro: string;
+		macro: ColorLike;
 		/** @Override */
-		annotation: string;
+		annotation: ColorLike;
 		/** myLabel: */
-		label: string;
+		label: ColorLike;
 		/** <tag> */
-		tag: string;
+		tag: ColorLike;
 	}>;
 
 	/** Storage types and modifiers */
 	storage: WithDefault<{
 		/** let, const, var, function, class */
-		type: string;
+		type: ColorLike;
 	}>;
 
 	/** String literals */
 	strings: WithDefault<{
 		/** "hello", 'world', `template` */
-		default: string;
+		default: ColorLike;
 		/** /pattern/g */
-		regex: string;
+		regex: ColorLike;
 	}>;
 
 	/**
@@ -205,7 +207,7 @@ export interface TokenAssignments {
 	 */
 	special: {
 		/** <Component /> */
-		jsxClass: string
+		jsxClass: ColorLike
 	}
 }
 
@@ -221,23 +223,7 @@ export interface TokenAssignments {
  * @example VS Code: Maps directly to `editor.*`, `activityBar.*`, `sideBar.*`, etc.
  * @example Zed: Maps to `editor.*`, `tab_bar.*`, `status_bar.*`, etc.
  */
-export type ColorLike = string | CoreColor;
-
-function toHex(value: unknown): string {
-	if (typeof value === "string") return value;
-	try {
-		const v: any = value as any;
-		if (v == null) return "";
-		if (typeof v.hex === "function") return v.hex();
-		if (v.cv && typeof v.cv.hex === "function") return v.cv.hex();
-		if (typeof v.toString === "function") return v.toString();
-	} catch (e) {
-		// fallthrough
-	}
-	return String(value as any);
-}
-
-export interface UIComponents<ColorValue extends ColorLike = string> {
+export interface UIComponents<ColorValue extends ColorLike = Color> {
 	/**
 	 * Main code editor area.
 	 * @example VS Code: `editor.background`, `editor.foreground`, `editor.selectionBackground`
@@ -470,6 +456,8 @@ export interface UIComponents<ColorValue extends ColorLike = string> {
 		background: ColorValue;
 		/** Primary button text */
 		foreground: ColorValue;
+		border: ColorValue;
+		secondaryBorder: ColorValue;
 		/** Primary button hover background */
 		hoverBackground: ColorValue;
 		/** Secondary button background */
@@ -663,6 +651,8 @@ export interface UIComponents<ColorValue extends ColorLike = string> {
 	};
 }
 
+
+
 export interface UserInterface<ColorValue extends ColorLike> {
 	// ═══════════════════════════════════════════════════════════════════════════
 	// Primitives (semantic building blocks)
@@ -722,7 +712,7 @@ export interface UserInterface<ColorValue extends ColorLike> {
 		separator: ColorValue;
 	};
 
-	elements: {
+	elements?: {
 		/** Default element background (buttons, lists, etc.) */
 		background: ColorValue;
 		/** Hover state background for elements */
@@ -737,7 +727,7 @@ export interface UserInterface<ColorValue extends ColorLike> {
 		backgroundActive?: ColorValue;
 	}
 
-	subtleElements: {
+	subtleElements?: {
 		background: ColorValue;
 		hover: ColorValue;
 		active: ColorValue;
@@ -1075,7 +1065,7 @@ export interface UserInterface<ColorValue extends ColorLike> {
 	// ═══════════════════════════════════════════════════════════════════════════
 
 	/** Override specific components when primitives aren't enough */
-	overrides?: UIComponents;
+	overrides?: UIComponents<ColorValue>;
 }
 
 // ============================================================================
@@ -1083,22 +1073,22 @@ export interface UserInterface<ColorValue extends ColorLike> {
 // ============================================================================
 
 export interface SemanticTokens {
-	namespace?: string;
-	class?: string | { default: string; declaration?: string };
-	interface?: string;
-	enum?: string;
-	enumMember?: string;
-	type?: string;
-	typeParameter?: string;
-	parameter?: string;
-	variable?: string | { default: string; readonly?: string };
+	namespace?: ColorLike;
+	class?: ColorLike | { default: ColorLike; declaration?: ColorLike };
+	interface?: ColorLike;
+	enum?: ColorLike;
+	enumMember?: ColorLike;
+	type?: ColorLike;
+	typeParameter?: ColorLike;
+	parameter?: ColorLike;
+	variable?: ColorLike | { default: ColorLike; readonly?: ColorLike };
 	property?:
-		| string
-		| { default: string; declaration?: string; readonly?: string };
-	function?: string | { default: string; declaration?: string };
-	method?: string | { default: string; declaration?: string; static?: string };
-	decorator?: string;
-	macro?: string;
+		| ColorLike
+		| { default: ColorLike; declaration?: ColorLike; readonly?: ColorLike };
+	function?: ColorLike | { default: ColorLike; declaration?: ColorLike };
+	method?: ColorLike | { default: ColorLike; declaration?: ColorLike; static?: ColorLike };
+	decorator?: ColorLike;
+	macro?: ColorLike;
 }
 
 export interface LanguageSpecificTokens {
@@ -1115,7 +1105,7 @@ export interface SemanticOverrides
 // Complete Theme Definition
 // ============================================================================
 
-export interface ThemeDefinition<ColorValue extends ColorLike = string> {
+export interface ThemeDefinition<ColorValue extends ColorLike = ColorLike> {
 	/** Name of the theme */
 	name: string;
 
@@ -1126,7 +1116,7 @@ export interface ThemeDefinition<ColorValue extends ColorLike = string> {
 	palette: ColorPalette;
 
 	/** Background color */
-	background: string;
+	background: ColorValue;
 
 	/** Token assignments with CSS-like cascading defaults */
 	tokens: TokenAssignments;
@@ -1156,32 +1146,38 @@ export interface ThemeDefinition<ColorValue extends ColorLike = string> {
 	extraColors?: Record<string, string>;
 }
 
+export type ThemeDefinitionExtended = ThemeDefinition<Color>;
+
 // ============================================================================
 // Resolution helpers
 // ============================================================================
 
 /** Get a value or fall back to default */
-export function get<T extends { default: string }>(
+export function get<T extends { default: ColorLike }>(
 	category: T,
 	key: keyof T,
 ): string {
 	const value = category[key];
-	if (typeof value === "string") return value;
-	return category.default;
+	if (value != null && value !== undefined) return toHex(value);
+	return toHex(category.default);
 }
 
 /** Resolve a semantic override that might be string or object */
 export function semantic(
 	value:
-		| string
-		| { default: string; [key: string]: string | undefined }
+		| ColorLike
+		| { default: ColorLike; [key: string]: ColorLike | undefined }
 		| undefined,
 	variant?: string,
 ): string | undefined {
 	if (value === undefined) return undefined;
 	if (typeof value === "string") return value;
-	if (variant && value[variant]) return value[variant];
-	return value.default;
+	if (value instanceof CoreColor) return value.hexa();
+	if (typeof value === "object" && value !== null) {
+		if (variant && (value as any)[variant]) return toHex((value as any)[variant]);
+		return toHex((value as any).default);
+	}
+	return undefined;
 }
 
 /**
@@ -1277,16 +1273,16 @@ export function getThemeValue<P extends ThemePath>(
 
 		// If the key doesn't exist, fall back to default if available
 		if (next === undefined) {
-			if (typeof lastDefault === "string") {
-				return lastDefault;
+			if (lastDefault !== undefined) {
+				return toHex(lastDefault);
 			}
 			console.warn(
 				`Property '${part}' not found at path '${path}' and no default available while building ${theme.name} theme`,
 			);
 			if (theme.ui?.foregrounds?.default) {
-				return theme.ui.foregrounds.default; // Fallback to a safe value
+				return toHex(theme.ui.foregrounds.default); // Fallback to a safe value
 			}
-			if (theme.tokens?.source) return theme.tokens.source;
+			if (theme.tokens?.source) return toHex(theme.tokens.source);
 			console.warn(
 				`No fallback available, returning hardcoded red color for theme ${theme.name}`,
 			);
@@ -1303,16 +1299,16 @@ export function getThemeValue<P extends ThemePath>(
 	return toHex(current);
 }
 
-export function applyFilters(c: string, filters: ThemeFilters): string {
-	let color = c;
+export function applyFilters(c: ColorLike, filters: ThemeFilters): string {
+	let color = toHex(c);
 	if (filters.hueShift) {
-		color = Color(color).rotate(filters.hueShift).hex();
+		color = Color(color).rotate(filters.hueShift).hexa();
 	}
 	if (filters.saturation) {
-		color = Color(color).saturate(filters.saturation).hex();
+		color = Color(color).saturate(filters.saturation).hexa();
 	}
 	if (filters.brightness) {
-		color = Color(color).lighten(filters.brightness).hex();
+		color = Color(color).lighten(filters.brightness).hexa();
 	}
 	if (filters.contrast) {
 		const contrast = filters.contrast;
@@ -1330,7 +1326,7 @@ export function applyFilters(c: string, filters: ThemeFilters): string {
 			255,
 			Math.max(0, factor * (Color(color).blue() - 128) + 128),
 		);
-		color = Color({ r, g, b }).hex();
+		color = Color({ r, g, b }).alpha(Color(color).alpha()).hexa();
 	}
 	return color;
 }
@@ -1342,7 +1338,7 @@ export function colorFactory(t: ThemeDefinition) {
 	 */
 	return function c<P extends ThemePath>(path: P): string {
 		const v = getThemeValue(t, path);
-		return applyFilters(v || t.ui?.foregrounds?.default || "#ff0000", t.filters || {});
+		return applyFilters(v || toHex(t.ui?.foregrounds?.default) || "#ff0000", t.filters || {});
 	};
 }
 
@@ -1372,7 +1368,7 @@ function getExactValue(theme: ThemeDefinition, path: string): string | null {
 	return toHex(current);
 }
 
-export function strictColorFactory(t: ThemeDefinition) {
+export function strictColorFactory(t: ThemeDefinition<string>) {
 	const c = colorFactory(t);
 
 	/**
@@ -1403,7 +1399,7 @@ export function semanticFactory(t: ThemeDefinition) {
 		T extends SemanticTokenModifier,
 		S extends ThemePath,
 	>(path: P, fallback: S = "ui.foregrounds.default" as S, mod?: T): string {
-		const rawV = t.semantic?.[path] ?? getThemeValue(t, fallback) ?? t.ui.foregrounds.default;
+		const rawV = t.semantic?.[path] ?? getThemeValue(t, fallback) ?? toHex(t.ui.foregrounds.default);
 		let v: string = toHex(rawV);
 		const parts = path.split(".");
 		const last = parts.length > 1 ? parts[parts.length - 1] : null;
@@ -1414,12 +1410,12 @@ export function semanticFactory(t: ThemeDefinition) {
 			? t.modifiers?.[mk as SemanticTokenModifier]
 			: null;
 		if (tokenModifier?.transform) {
-			v = tokenModifier.transform(v);
+			v = toHex(tokenModifier.transform(v));
 		} else if (tokenModifier?.global?.foreground) {
 			// mix colors
 			const fg = toHex(tokenModifier.global.foreground);
 			const color = Color(v).mix(Color(fg), 0.5);
-			v = color.hex();
+			v = color.hexa();
 		}
 		v = applyFilters(v, t.filters || {});
 		return v;
