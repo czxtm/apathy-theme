@@ -548,6 +548,305 @@ function tokenTable(tokens: TokenAssignments): string {
 }
 
 // ────────────────────────────────────────────────────────────────────────────
+// Color picker panel + live-edit script (injected into dev preview)
+// ────────────────────────────────────────────────────────────────────────────
+
+function colorPickerScript(theme: ThemeDefinition): string {
+  const paletteEntries = Object.entries(theme.palette).map(([name, color]) => ({
+    path: `palette.${name}`,
+    label: name,
+    value: safeColor(color as any),
+  }));
+
+  const uiEntries = [
+    { path: "ui.backgrounds.base", label: "bg.base", value: safeColor(theme.ui.backgrounds.base) },
+    { path: "ui.backgrounds.surface", label: "bg.surface", value: safeColor(theme.ui.backgrounds.surface) },
+    { path: "ui.backgrounds.raised", label: "bg.raised", value: safeColor(theme.ui.backgrounds.raised) },
+    { path: "ui.foregrounds.default", label: "fg.default", value: safeColor(theme.ui.foregrounds.default) },
+    { path: "ui.foregrounds.muted", label: "fg.muted", value: safeColor(theme.ui.foregrounds.muted) },
+    { path: "ui.foregrounds.subtle", label: "fg.subtle", value: safeColor(theme.ui.foregrounds.subtle) },
+    { path: "ui.accent.primary", label: "accent", value: safeColor(theme.ui.accent.primary) },
+    { path: "ui.status.error", label: "error", value: safeColor(theme.ui.status.error) },
+    { path: "ui.status.warning", label: "warning", value: safeColor(theme.ui.status.warning) },
+    { path: "ui.status.info", label: "info", value: safeColor(theme.ui.status.info) },
+    { path: "ui.status.success", label: "success", value: safeColor(theme.ui.status.success) },
+    { path: "ui.borders.default", label: "border", value: safeColor(theme.ui.borders.default) },
+  ];
+
+  const allEntries = [...uiEntries, ...paletteEntries];
+  const entriesJson = JSON.stringify(allEntries);
+  const themeName = theme.name;
+
+  return `
+<style>
+  .color-picker-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    max-height: 100vh;
+    overflow-y: auto;
+    background: #0a0a0efa;
+    border-left: 1px solid #ffffff15;
+    padding: 12px;
+    z-index: 9999;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 11px;
+    color: #b0b0b8;
+    transition: transform .2s;
+    box-shadow: -4px 0 24px #00000040;
+  }
+  .color-picker-panel.collapsed { transform: translateX(268px); }
+  .color-picker-panel.collapsed .cp-body { display: none; }
+  .cp-toggle {
+    position: absolute;
+    left: -28px;
+    top: 8px;
+    width: 28px;
+    height: 28px;
+    background: #0a0a0efa;
+    border: 1px solid #ffffff15;
+    border-right: none;
+    border-radius: 6px 0 0 6px;
+    color: #b0b0b8;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+  .cp-header {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0e0e8;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .cp-section { margin-bottom: 10px; }
+  .cp-section-title {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    opacity: .5;
+    margin-bottom: 6px;
+    padding-top: 6px;
+    border-top: 1px solid #ffffff10;
+  }
+  .cp-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 3px;
+  }
+  .cp-row input[type="color"] {
+    -webkit-appearance: none;
+    appearance: none;
+    border: 1px solid #ffffff20;
+    border-radius: 4px;
+    width: 24px;
+    height: 20px;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+  }
+  .cp-row input[type="color"]::-webkit-color-swatch-wrapper { padding: 1px; }
+  .cp-row input[type="color"]::-webkit-color-swatch { border: none; border-radius: 2px; }
+  .cp-label { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cp-hex {
+    font-family: 'SF Mono', Menlo, monospace;
+    font-size: 10px;
+    opacity: .6;
+    width: 62px;
+    text-align: right;
+  }
+  .cp-reset {
+    font-size: 10px;
+    color: #888;
+    background: none;
+    border: 1px solid #ffffff15;
+    border-radius: 4px;
+    padding: 2px 6px;
+    cursor: pointer;
+  }
+  .cp-reset:hover { color: #e0e0e8; border-color: #ffffff30; }
+  .cp-dirty { background: #ffffff08; border-radius: 3px; padding: 1px 2px; }
+  .cp-status {
+    font-size: 10px;
+    opacity: .4;
+    text-align: center;
+    padding: 4px;
+  }
+</style>
+<script>
+(function() {
+  var THEME_NAME = ${JSON.stringify(themeName)};
+  var entries = ${entriesJson};
+  var originals = {};
+  entries.forEach(function(e) { originals[e.path] = e.value; });
+  var overrides = {};
+  var panel = document.createElement('div');
+  panel.className = 'color-picker-panel';
+  var toggle = document.createElement('button');
+  toggle.className = 'cp-toggle';
+  toggle.textContent = '🎨';
+  toggle.onclick = function() { panel.classList.toggle('collapsed'); };
+  panel.appendChild(toggle);
+
+  var header = document.createElement('div');
+  header.className = 'cp-header';
+  header.innerHTML = '<span>Color Editor</span>';
+  var resetBtn = document.createElement('button');
+  resetBtn.className = 'cp-reset';
+  resetBtn.textContent = 'Reset All';
+  resetBtn.onclick = function() {
+    overrides = {};
+    entries.forEach(function(e) {
+      var input = document.getElementById('cp-' + e.path);
+      if (input) { input.value = toHex6(e.value); }
+      var hexLabel = document.getElementById('cpv-' + e.path);
+      if (hexLabel) { hexLabel.textContent = e.value.slice(0, 7); }
+      var row = document.getElementById('cpr-' + e.path);
+      if (row) { row.classList.remove('cp-dirty'); }
+    });
+    sendOverrides();
+  };
+  header.appendChild(resetBtn);
+  panel.appendChild(header);
+
+  var body = document.createElement('div');
+  body.className = 'cp-body';
+
+  function toHex6(val) {
+    if (!val) return '#000000';
+    var s = val.replace(/[^0-9a-fA-F#]/g, '');
+    if (s.length === 9) s = s.slice(0, 7);
+    if (s.length === 4) s = '#' + s[1]+s[1] + s[2]+s[2] + s[3]+s[3];
+    return s.slice(0, 7);
+  }
+
+  var uiPaths = entries.filter(function(e) { return !e.path.startsWith('palette.'); });
+  var palettePaths = entries.filter(function(e) { return e.path.startsWith('palette.'); });
+
+  function makeSection(title, items) {
+    var sec = document.createElement('div');
+    sec.className = 'cp-section';
+    var t = document.createElement('div');
+    t.className = 'cp-section-title';
+    t.textContent = title;
+    sec.appendChild(t);
+    items.forEach(function(e) {
+      var row = document.createElement('div');
+      row.className = 'cp-row';
+      row.id = 'cpr-' + e.path;
+      var input = document.createElement('input');
+      input.type = 'color';
+      input.id = 'cp-' + e.path;
+      input.value = toHex6(e.value);
+      var label = document.createElement('span');
+      label.className = 'cp-label';
+      label.textContent = e.label;
+      label.title = e.path;
+      var hexLabel = document.createElement('span');
+      hexLabel.className = 'cp-hex';
+      hexLabel.id = 'cpv-' + e.path;
+      hexLabel.textContent = e.value.slice(0, 7);
+      input.addEventListener('input', function(ev) {
+        var val = ev.target.value;
+        hexLabel.textContent = val;
+        overrides[e.path] = val;
+        row.classList.add('cp-dirty');
+        scheduleUpdate();
+      });
+      row.appendChild(input);
+      row.appendChild(label);
+      row.appendChild(hexLabel);
+      sec.appendChild(row);
+    });
+    return sec;
+  }
+
+  body.appendChild(makeSection('UI Colors', uiPaths));
+  body.appendChild(makeSection('Palette', palettePaths));
+
+  var status = document.createElement('div');
+  status.className = 'cp-status';
+  status.id = 'cp-status';
+  status.textContent = 'Ready';
+  body.appendChild(status);
+
+  panel.appendChild(body);
+  document.body.appendChild(panel);
+
+  var debounceTimer = null;
+  function scheduleUpdate() {
+    if (debounceTimer) clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(sendOverrides, 120);
+  }
+
+  var ws = null;
+  var wsReady = false;
+  function connectWS() {
+    ws = new WebSocket('ws://' + location.host + '/__ws');
+    ws.onopen = function() {
+      wsReady = true;
+      document.getElementById('cp-status').textContent = 'Connected';
+    };
+    ws.onmessage = function(ev) {
+      try {
+        var msg = JSON.parse(ev.data);
+        if (msg.type === 'preview_update') {
+          applyUpdate(msg.html);
+        }
+      } catch(e) {
+        if (ev.data === 'reload' && Object.keys(overrides).length === 0) {
+          location.reload();
+        }
+      }
+    };
+    ws.onclose = function() {
+      wsReady = false;
+      document.getElementById('cp-status').textContent = 'Disconnected';
+      setTimeout(connectWS, 1000);
+    };
+  }
+  connectWS();
+
+  function sendOverrides() {
+    if (!wsReady || !ws) return;
+    var keys = Object.keys(overrides);
+    if (keys.length === 0) return;
+    document.getElementById('cp-status').textContent = 'Rebuilding\u2026';
+    ws.send(JSON.stringify({
+      type: 'color_override',
+      theme: THEME_NAME,
+      overrides: overrides,
+    }));
+  }
+
+  function applyUpdate(html) {
+    var scrollY = window.scrollY;
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(html, 'text/html');
+    var newPage = doc.querySelector('.page');
+    var oldPage = document.querySelector('.page');
+    if (newPage && oldPage) {
+      oldPage.innerHTML = newPage.innerHTML;
+    }
+    var newStyle = doc.querySelector('style');
+    var oldStyle = document.querySelector('style');
+    if (newStyle && oldStyle) {
+      oldStyle.textContent = newStyle.textContent;
+    }
+    window.scrollTo(0, scrollY);
+    document.getElementById('cp-status').textContent = 'Updated';
+  }
+})();
+</script>`;
+}
+
+// ────────────────────────────────────────────────────────────────────────────
 // Full page HTML
 // ────────────────────────────────────────────────────────────────────────────
 
@@ -718,6 +1017,7 @@ export function generatePreviewHTML(theme: ThemeDefinition): string {
 
   <div class="timestamp">Generated ${new Date().toISOString()}</div>
 </div>
+${colorPickerScript(theme)}
 </body>
 </html>`;
 }
