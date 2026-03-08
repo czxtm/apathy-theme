@@ -5,13 +5,18 @@
  * It reads from ThemeDefinition and produces Zed JSON.
  */
 
-import type { ThemeDefinition, TokenAssignments } from "../themes/types";
+import type { ThemeDefinitionExtended } from "../themes/types";
 import {
   strictColorFactory,
   get,
 } from "../themes/types";
 import type { ThemeFilters } from "../filters";
-import { Color } from '../core/color';
+import {
+  Color,
+  type ColorInput,
+  type ElementColors,
+  mkElementColors,
+} from '../core/color';
 import { mix } from '../themes/utils';
 
 // ============================================================================
@@ -226,6 +231,26 @@ export interface BuildOptions {
   filters?: ThemeFilters;
   /** Author name for the theme file */
   author?: string;
+  /** Clamp all generated Zed colors to this max saturation (0..1) */
+  maxSaturation?: number;
+  /** Base color used to compute tuned saturated colors */
+  saturatedBaseColor?: string;
+  /** Number of computed saturated colors */
+  saturatedColorCount?: number;
+  /** Hue step between computed saturated colors (degrees) */
+  saturatedHueStep?: number;
+  /** Target saturation for computed saturated colors (0..1) */
+  saturatedSaturation?: number;
+  /** Target lightness for computed saturated colors (0..1) */
+  saturatedLightness?: number;
+  /** Max saturation for red-ish hues (0..1), applied after global cap */
+  redMaxSaturation?: number;
+  /** Hue center for "red-ish" detection in degrees */
+  redHueCenter?: number;
+  /** Hue window around the red center in degrees */
+  redHueWindow?: number;
+  /** Ensure red-ish colors don't get too dark (0..1) */
+  redMinLightness?: number;
 }
 
 // ============================================================================
@@ -254,15 +279,133 @@ function lighten(color: string, amount: number): string {
   }
 }
 
-/**
- * Darken a color
- */
-function darken(color: string, amount: number): string {
+function clamp(value: number, min: number, max: number): number {
+  return Math.max(min, Math.min(max, value));
+}
+
+function capSaturation(color: string, maxSaturation: number): string {
   try {
-    return new Color(color).darker(amount).hexa();
+    const maxSatPercent = clamp(maxSaturation, 0, 1) * 100;
+    const hsl = new Color(color).cv.hsl();
+    const currentSat = hsl.saturationl();
+    if (Number.isNaN(currentSat) || currentSat <= maxSatPercent) {
+      return hsl.hexa();
+    }
+    return hsl.saturationl(maxSatPercent).hexa();
   } catch {
     return color;
   }
+}
+
+function applySaturationCap<T>(value: T, maxSaturation: number): T {
+  if (typeof value === "string") {
+    return capSaturation(value, maxSaturation) as T;
+  }
+  if (Array.isArray(value)) {
+    return value.map((entry) => applySaturationCap(entry, maxSaturation)) as T;
+  }
+  if (value && typeof value === "object") {
+    const obj = value as Record<string, unknown>;
+    const out: Record<string, unknown> = {};
+    for (const [key, entry] of Object.entries(obj)) {
+      out[key] = applySaturationCap(entry, maxSaturation);
+    }
+    return out as T;
+  }
+  return value;
+}
+
+function buildTunedSaturatedColors(
+  baseColor: string,
+  count = 6,
+  hueStep = 26,
+  targetSaturation = 0.72,
+  targetLightness = 0.67,
+): string[] {
+  const safeCount = Math.max(3, Math.floor(count));
+  const center = (safeCount - 1) / 2;
+  const sat = clamp(targetSaturation, 0, 1) * 100;
+  const base = new Color(baseColor).cv.hsl();
+  const baseHue = base.hue();
+
+  return Array.from({ length: safeCount }, (_, i) => {
+    const offset = i - center;
+    const hue = (baseHue + offset * hueStep + 360) % 360;
+    const lightness = clamp(targetLightness + offset * 0.025, 0.42, 0.82) * 100;
+    return base.hue(hue).saturationl(sat).lightness(lightness).hexa();
+  });
+}
+
+function angularDistance(a: number, b: number): number {
+  const diff = Math.abs(a - b) % 360;
+  return diff > 180 ? 360 - diff : diff;
+}
+
+function capHueBand(
+  color: string,
+  centerHue: number,
+  hueWindow: number,
+  maxSaturation?: number,
+  minLightness?: number,
+): string {
+  try {
+    const hsl = new Color(color).cv.hsl();
+    const hue = hsl.hue();
+    if (Number.isNaN(hue)) return hsl.hexa();
+    if (angularDistance(hue, centerHue) > hueWindow) return hsl.hexa();
+
+    let next = hsl;
+    if (maxSaturation !== undefined) {
+      const satCap = clamp(maxSaturation, 0, 1) * 100;
+      if (next.saturationl() > satCap) {
+        next = next.saturationl(satCap);
+      }
+    }
+    if (minLightness !== undefined) {
+      const lightFloor = clamp(minLightness, 0, 1) * 100;
+      if (next.lightness() < lightFloor) {
+        next = next.lightness(lightFloor);
+      }
+    }
+    return next.hexa();
+  } catch {
+    return color;
+  }
+}
+
+function applyHueBandCap<T>(
+  value: T,
+  centerHue: number,
+  hueWindow: number,
+  maxSaturation?: number,
+  minLightness?: number,
+): T {
+  if (typeof value === "string") {
+    return capHueBand(value, centerHue, hueWindow, maxSaturation, minLightness) as T;
+  }
+  if (Array.isArray(value)) {
+    return value.map((entry) =>
+      applyHueBandCap(entry, centerHue, hueWindow, maxSaturation, minLightness),
+    ) as T;
+  }
+  if (value && typeof value === "object") {
+    const obj = value as Record<string, unknown>;
+    const out: Record<string, unknown> = {};
+    for (const [key, entry] of Object.entries(obj)) {
+      out[key] = applyHueBandCap(entry, centerHue, hueWindow, maxSaturation, minLightness);
+    }
+    return out as T;
+  }
+  return value;
+}
+
+/** Convenience alias — delegates to mkElementColors from core/color. */
+function mkElement(
+  color: ColorInput,
+  background: ColorInput,
+  foreground: ColorInput,
+): ElementColors {
+  return mkElementColors(color, { background, foreground });
 }
 
 // ============================================================================
@@ -272,14 +415,27 @@ function darken(color: string, amount: number): string {
 /**
  * Build Zed theme style from ThemeDefinition
  */
-function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>): ZedThemeStyle {
+function buildStyle(
+  t: ThemeDefinitionExtended,
+  c: ReturnType<typeof strictColorFactory>,
+  options: BuildOptions,
+): ZedThemeStyle {
   // Get colors from theme
   const background = c("ui.backgrounds.base", "background");
   const surface = c("ui.backgrounds.surface", "background");
   const raised = c("ui.backgrounds.raised", "ui.backgrounds.surface", "background");
-  const overlay = c("ui.backgrounds.overlay", "ui.backgrounds.raised", "background");
+  const darker = c("ui.backgrounds.darker", "ui.backgrounds.surface", "ui.backgrounds.base", "background");
+  const hoverSurface = c("ui.hoverWidget.background", "ui.backgrounds.overlay", "ui.backgrounds.raised");
+  const menuBackground = c("ui.menu.background", "ui.backgrounds.raised", "ui.backgrounds.surface");
+  const elementBackground = c("ui.elements.background", "ui.menu.background", "ui.backgrounds.darker", "ui.backgrounds.surface");
+  const elementHover = c("ui.elements.hover", "ui.hoverWidget.background", "ui.menu.selectionBackground", "ui.backgrounds.raised");
+  const elementActive = c("ui.elements.active", "ui.menu.selectionBackground", "ui.backgrounds.raised");
+  const elementSelected = c("ui.elements.selected", "ui.menu.selectionBackground", "ui.backgrounds.raised");
 
-  const foreground = c("ui.foregrounds.default");
+  const fgLuminance = (new Color(c("ui.foregrounds.default"))).l();
+  const foreground = fgLuminance > 0.5
+      ? c("ui.foregrounds.default")
+      : lighten(c("ui.foregrounds.default"), 0.5);
   const muted = c("ui.foregrounds.muted");
   const subtle = c("ui.foregrounds.subtle", "ui.foregrounds.muted");
   const accent = c("ui.foregrounds.accent", "ui.accent.primary");
@@ -292,8 +448,10 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
   const warning = c("ui.status.warning");
   const info = c("ui.status.info");
   const success = c("ui.status.success");
-
-  const selection = c("ui.selection.background");
+  const infoel = mkElement(info, background, foreground);
+  const warningel = mkElement(warning, background, foreground);
+  const successel = mkElement(success, background, foreground);
+  const errorel = mkElement(error, background, foreground);
 
   // Predictive/ghost text color - use parameter color for better visibility
   const predictiveColor = get(t.tokens.variables, "parameter") || muted;
@@ -342,11 +500,6 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
   const panelBg = c( "ui.overrides.panel.background", "ui.panels.background", "ui.backgrounds.base", "background");
   const panelBorder = c("ui.overrides.panel.border", "ui.borders.default");
 
-  // Scrollbar
-  const scrollbarThumb = c("ui.overrides.scrollbar.sliderBackground", "ui.borders.subtle");
-  const scrollbarThumbHover = c("ui.overrides.scrollbar.sliderHoverBackground", "ui.borders.default");
-  const scrollbarBorder = c("ui.borders.default");
-
   // Access palette for specific colors that may not be in the token system
   const palette = t.palette as Record<string, string>;
 
@@ -354,6 +507,15 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
   const pal = (key: string, fallback: string): string => {
     return palette[key] || fallback;
   };
+
+  const computedSaturatedColors = buildTunedSaturatedColors(
+    options.saturatedBaseColor || c("ui.accent.primary", "ui.foregrounds.accent"),
+    options.saturatedColorCount ?? 6,
+    options.saturatedHueStep ?? 26,
+    options.saturatedSaturation ?? 0.72,
+    options.saturatedLightness ?? 0.67,
+  );
+  const accents = t.ui.accent.palette || computedSaturatedColors;
 
   // Build syntax highlighting
   const tokens = t.tokens;
@@ -365,11 +527,11 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
       color: get(tokens.literals, "boolean") || get(tokens.literals, "default"),
     },
     comment: {
-      color: tokens.comments,
+      color: c("tokens.comments"),
       font_style: "italic",
     },
     "comment.doc": {
-      color: tokens.comments,
+      color: c("tokens.comments"),
       font_style: "italic",
     },
     constant: {
@@ -379,7 +541,7 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
       color: get(tokens.types, "class") || get(tokens.types, "default") || pal("lightOrchid", foreground),
     },
     embedded: {
-      color: tokens.source,
+      color: c("tokens.source"),
     },
     emphasis: {
       font_style: "italic",
@@ -417,7 +579,7 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
       color: info,
     },
     namespace: {
-      color: tokens.source,
+      color: c("tokens.source"),
     },
     number: {
       color: get(tokens.literals, "number") || get(tokens.literals, "default"),
@@ -433,7 +595,7 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
       color: get(tokens.keywords, "default"),
     },
     primary: {
-      color: tokens.source,
+      color: c("tokens.source"),
     },
     property: {
       color: get(tokens.variables, "property") || get(tokens.variables, "default"),
@@ -504,7 +666,10 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
   };
 
   // Build players array (for multi-cursor/collaboration)
-  const playerColors = [ansiBlue, ansiMagenta, ansiCyan, ansiGreen, ansiYellow, c("ui.status.error")];
+  const playerColors = [
+    ...accents.slice(0, 5),
+    c("ui.status.error"),
+  ];
   const players: ZedPlayer[] = playerColors.map((color) => ({
     cursor: color,
     background: color,
@@ -513,7 +678,7 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
 
   return {
     "background.appearance": "blurred",
-    accents: t.ui.accent.palette || ["#ff0000", "#ff7f00", "#ffff00", "#00ff00", "#0000ff", "#8b00ff"],
+    accents,
     background,
 
     // Borders
@@ -525,20 +690,20 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     "border.disabled": withAlpha(borderSubtle, 0.6),
 
     // Surfaces
-    "elevated_surface.background": raised,
+    "elevated_surface.background": hoverSurface,
     "surface.background": surface,
 
     // Elements
-    "element.background": c( "ui.elements.background", "ui.backgrounds.surface"),
-    "element.hover": c("ui.elements.hover", "ui.backgrounds.raised"),
-    "element.active": c("ui.elements.backgroundActive", "ui.backgrounds.overlay"),
-    "element.selected": c("ui.elements.backgroundActive", "ui.backgrounds.overlay"),
+    "element.background": elementBackground,
+    "element.hover": elementHover,
+    "element.active": elementActive,
+    "element.selected": elementSelected,
     "element.disabled": c("ui.elements.disabled", "ui.foregrounds.subtle"),
-    "drop_target.background": c("ui.menu.background"),
-    "ghost_element.background": "#00000000",
-    "ghost_element.hover": mix(c("ui.elements.hover", "ui.backgrounds.raised"), c("ui.backgrounds.base"), 0.5),
-    "ghost_element.active": c("ui.menu.selectionBackground"),
-    "ghost_element.selected": mix(c("ui.elements.hover", "ui.backgrounds.raised"), c("ui.backgrounds.base"), 0.5),
+    "drop_target.background": menuBackground,
+    "ghost_element.background": withAlpha(elementBackground, 0.2),
+    "ghost_element.hover": elementHover,
+    "ghost_element.active": elementActive,
+    "ghost_element.selected": elementSelected,
     "ghost_element.disabled": withAlpha(subtle, 0.33),
 
     // Text
@@ -546,7 +711,8 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     "text.muted": muted,
     "text.placeholder": c("ui.foregrounds.subtle", "ui.foregrounds.muted"),
     "text.disabled": withAlpha(subtle, 0.62),
-    "text.accent": withAlpha(accent, 0.83),
+    "text.accent": c("ui.foregrounds.accent"),
+
 
     // Icons
     icon: pal("steel", foreground),
@@ -633,11 +799,11 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     "link_text.hover": pal("linkGreen", info),
 
     // Version Control
-    "version_control.added": gitAdded,
+    "version_control.added": mix(withAlpha(gitAdded, 0.6), darker, 0.4).hexa(),
     "version_control.modified": gitModified,
-    "version_control.deleted": gitDeleted,
-    "version_control.word_added": withAlpha(gitAdded, 0.35),
-    "version_control.word_deleted": withAlpha(gitDeleted, 0.8),
+    "version_control.deleted": withAlpha(gitDeleted, 0.8),
+    "version_control.word_added": withAlpha(gitAdded, 0.15),
+    "version_control.word_deleted": withAlpha(gitDeleted, 0.4),
     "version_control.conflict_marker.ours": withAlpha(success, 0.1),
     "version_control.conflict_marker.theirs": withAlpha(info, 0.1),
 
@@ -645,27 +811,26 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     "conflict.background": withAlpha(gitConflict, 0.25),
     "conflict.border": gitConflict,
     created: gitAdded,
-    "created.background": withAlpha(gitAdded, 0.13),
+    "created.background": withAlpha(gitAdded, 0.08),
     "created.border": gitAdded,
     deleted: gitDeleted,
     "deleted.background": withAlpha(gitDeleted, 0.08),
     "deleted.border": gitDeleted,
-    error,
-    "error.background": withAlpha(darken(error, 0.5), 0.5),
-    // "error.background": transparentize(c("ui.error.background"), 0.5),
-    "error.border": error,
+    error: errorel.fg,
+    "error.background": errorel.bg,
+    "error.border": errorel.border,
     hidden: gitIgnored,
     "hidden.background": withAlpha(gitIgnored, 0.25),
     "hidden.border": gitIgnored,
-    hint: info,
-    "hint.background": withAlpha(info, 0.25),
-    "hint.border": info,
+    hint: infoel.fg,
+    "hint.background": infoel.bg,
+    "hint.border": infoel.border,
     ignored: gitIgnored,
     "ignored.background": withAlpha(gitIgnored, 0.25),
     "ignored.border": gitIgnored,
-    info,
-    "info.background": withAlpha(info, 0.25),
-    "info.border": info,
+    info:  infoel.fg,
+    "info.background": infoel.bg,
+    "info.border": infoel.border,
     modified: gitModified,
     "modified.background": withAlpha(gitModified, 0.25),
     "modified.border": gitModified,
@@ -675,15 +840,15 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
     renamed: gitAdded,
     "renamed.background": withAlpha(gitAdded, 0.25),
     "renamed.border": gitAdded,
-    success,
-    "success.background": withAlpha(success, 0.25),
-    "success.border": success,
+    success: successel.fg,
+    "success.background": successel.bg,
+    "success.border": successel.border,
     unreachable: subtle,
     "unreachable.background": withAlpha(subtle, 0.25),
     "unreachable.border": subtle,
-    warning,
-    "warning.background": withAlpha(warning, 0.5),
-    "warning.border": warning,
+    warning: warningel.fg,
+    "warning.background": warningel.bg,
+    "warning.border": warningel.border,
 
     players,
     syntax,
@@ -694,7 +859,7 @@ function buildStyle(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory>
 /**
  * Map a ThemeDefinition to Zed theme format
  */
-export function mapZed(theme: ThemeDefinition, options: BuildOptions = {}): ZedThemeFile {
+export function mapZed(theme: ThemeDefinitionExtended, options: BuildOptions = {}): ZedThemeFile {
   // Merge filters into theme (filters are applied by the color factory)
   const filters: ThemeFilters = {
     ...theme.filters,
@@ -702,7 +867,7 @@ export function mapZed(theme: ThemeDefinition, options: BuildOptions = {}): ZedT
   };
 
   // Create a theme with merged filters for the color factory
-  const processedTheme: ThemeDefinition = {
+  const processedTheme: ThemeDefinitionExtended = {
     ...theme,
     filters: Object.keys(filters).length > 0 ? filters : undefined,
   };
@@ -711,7 +876,21 @@ export function mapZed(theme: ThemeDefinition, options: BuildOptions = {}): ZedT
   const c = strictColorFactory(processedTheme);
 
   // Build the theme style
-  const style = buildStyle(processedTheme, c);
+  const rawStyle = buildStyle(processedTheme, c, options);
+  const saturatedStyle =
+    options.maxSaturation === undefined
+      ? rawStyle
+      : applySaturationCap(rawStyle, options.maxSaturation);
+  const style =
+    options.redMaxSaturation === undefined && options.redMinLightness === undefined
+      ? saturatedStyle
+      : applyHueBandCap(
+          saturatedStyle,
+          options.redHueCenter ?? 0,
+          options.redHueWindow ?? 28,
+          options.redMaxSaturation,
+          options.redMinLightness,
+        );
 
   // Construct the theme file
   const themeFile: ZedThemeFile = {
