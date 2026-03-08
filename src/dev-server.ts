@@ -4,6 +4,9 @@
  * - Serves `dist/previews/` on localhost
  * - Watches `src/` for changes, re-runs the build, then tells every
  *   connected browser to reload via WebSocket
+ * - Accepts color_override messages from the preview color picker,
+ *   rebuilds just that theme's preview with the patched palette,
+ *   and pushes the updated HTML back to the browser
  * - Zero dependencies beyond Bun
  *
  * Usage:  bun run dev          (or: bun run src/dev-server.ts)
@@ -12,6 +15,23 @@
 import { watch, type FSWatcher } from "fs";
 import { join, extname } from "path";
 import { spawn, type Subprocess } from "bun";
+import { generatePreviewHTML } from "./integrations/preview";
+import type { ThemeDefinition } from "./themes/types";
+import { minted } from "./themes/minted";
+import { mintedTheory } from "./themes/mintedTheory";
+import { slate } from "./themes/slate";
+import { apathy } from "./themes/apathy";
+import { apatheticOcean } from "./themes/apatheticOcean";
+import { apathyExperimental } from "./themes/apathyExperimental";
+
+const themeMap: Record<string, ThemeDefinition> = {
+  "Minted": minted,
+  "Minted Theory": mintedTheory,
+  "Slate": slate,
+  "Apathy": apathy,
+  "Apathetic Ocean": apatheticOcean,
+  "Apathy Experimental": apathyExperimental,
+};
 
 // ── Config ──────────────────────────────────────────────────────────────────
 const PORT = Number(process.env.PORT) || 3333;
@@ -85,6 +105,53 @@ async function runBuild() {
   if (queued) { queued = false; runBuild(); }
 }
 
+// ── Color override handler ───────────────────────────────────────────────────
+
+function deepClone<T>(obj: T): T {
+  if (obj === null || typeof obj !== "object") return obj;
+  if (Array.isArray(obj)) return obj.map(deepClone) as any;
+  const out: Record<string, any> = {};
+  for (const [k, v] of Object.entries(obj as any)) {
+    out[k] = deepClone(v);
+  }
+  return out as T;
+}
+
+function deepSet(obj: Record<string, any>, path: string, value: any): void {
+  const parts = path.split(".");
+  let current = obj;
+  for (let i = 0; i < parts.length - 1; i++) {
+    if (current[parts[i]] === undefined || typeof current[parts[i]] !== "object") {
+      current[parts[i]] = {};
+    }
+    current = current[parts[i]];
+  }
+  current[parts[parts.length - 1]] = value;
+}
+
+function handleColorOverride(ws: any, data: { theme: string; overrides: Record<string, string> }) {
+  const base = themeMap[data.theme];
+  if (!base) {
+    console.log(`\x1b[33m⚠ Unknown theme: ${data.theme}\x1b[0m`);
+    return;
+  }
+
+  const start = performance.now();
+  const patched = deepClone(base) as Record<string, any>;
+  for (const [path, value] of Object.entries(data.overrides)) {
+    deepSet(patched, path, value);
+  }
+
+  try {
+    const html = generatePreviewHTML(patched as ThemeDefinition);
+    const elapsed = (performance.now() - start).toFixed(0);
+    console.log(`\x1b[35m🎨 color override rebuilt ${data.theme} in ${elapsed}ms\x1b[0m`);
+    ws.send(JSON.stringify({ type: "preview_update", html }));
+  } catch (err) {
+    console.log(`\x1b[31m✗ color override rebuild failed: ${err}\x1b[0m`);
+  }
+}
+
 // ── File watcher on src/ ────────────────────────────────────────────────────
 let debounce: ReturnType<typeof setTimeout> | null = null;
 
@@ -149,7 +216,14 @@ const server = Bun.serve({
   websocket: {
     open(ws) { clients.add(ws); },
     close(ws) { clients.delete(ws); },
-    message() { /* client doesn't send anything */ },
+    message(ws, message) {
+      try {
+        const data = JSON.parse(typeof message === "string" ? message : new TextDecoder().decode(message as ArrayBuffer));
+        if (data.type === "color_override") {
+          handleColorOverride(ws, data);
+        }
+      } catch { /* ignore non-JSON messages */ }
+    },
   },
 });
 
