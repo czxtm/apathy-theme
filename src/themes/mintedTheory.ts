@@ -34,48 +34,57 @@ type ColorPalette =
   | "#c3dc8f"
   | "#b7d194"
 
-const baseAccent = new Color(toHex(minted.ui.accent.primary));
-const baseError = new Color(toHex(minted.ui.status.error));
+const baseAccent = "#B3E6DEFF";
+const baseError = "#CA175DFF";
 const baseForeground = "#575B6FCE"
-const baseMuted = toHex(minted.ui.foregrounds.muted);
-const baseSubtle = toHex(minted.ui.foregrounds.subtle);
+const baseMuted = "#3A4159FF"
+const baseSubtle = "#2B2E3EFF"
 
 const swatches = {
-  baseError: baseError.hexa(),
-  baseAccent: baseAccent.hexa(),
+  baseError: baseError,
+  baseAccent: baseAccent,
   baseForeground: baseForeground,
   baseMuted: baseMuted,
   baseSubtle: baseSubtle,
 };
 
-console.log({ baseError: baseError.hexa() , baseAccent: baseAccent.hexa() , baseForeground: baseForeground , baseMuted: baseMuted , baseSubtle: baseSubtle })
+const anchors = {
+    primary: new Color(baseAccent).saturate(0.08).lighter(0.1).hexa(),
+  complement: new Color(baseAccent).rotate(180).desaturate(0.14).lighter(0.12).hexa(),
+  analogousBlue: new Color(baseAccent).rotate(-26).saturate(0.06).lighter(0.1).hexa(),
+  analogousGreen: new Color(baseAccent).rotate(26).saturate(0.06).lighter(0.08).hexa(),
+  splitGold: new Color(baseAccent).rotate(210).desaturate(0.08).lighter(0.14).hexa(),
+  splitViolet: new Color(baseAccent).rotate(150).desaturate(0.06).lighter(0.08).hexa(),
+
+}
+
 export const palette = {
   // background: "#101018",
   background: "#0C0C13",
   surface: "#101018",
   raised: "#161a27",
 
-  foreground: "#575B6FCE",
+  foreground: "#8b8fa7",
   muted: baseMuted,
   subtle: baseSubtle,
 
-  warning: "#ffdecc", // #e59ac2
-  errora: "#e59ac2", // #ffdecc
-  info: "#83a6d2", // #9483d2
+  warning: "#ffdecc",
+  errora: "#e59ac2",
+  info: "#83a6d2",
   hint: "#9483d2",
-  success: "#a1cec5", // #a1cec5
+  success: "#a1cec5",
   rosewater: "#f5e0dc",
 
 
   // Color-theory anchors (derived from Minted's base accent)
-  primary: baseAccent.saturate(0.08).lighter(0.1).hexa(),
-  complement: baseAccent.rotate(180).desaturate(0.14).lighter(0.12).hexa(),
-  analogousBlue: baseAccent.rotate(-26).saturate(0.06).lighter(0.1).hexa(),
-  analogousGreen: baseAccent.rotate(26).saturate(0.06).lighter(0.08).hexa(),
-  splitGold: baseAccent.rotate(210).desaturate(0.08).lighter(0.14).hexa(),
-  splitViolet: baseAccent.rotate(150).desaturate(0.06).lighter(0.08).hexa(),
+  primary: new Color(baseAccent).saturate(0.08).lighter(0.1).hexa(),
+  complement: new Color(baseAccent).rotate(180).desaturate(0.14).lighter(0.12).hexa(),
+  analogousBlue: new Color(baseAccent).rotate(-26).saturate(0.06).lighter(0.1).hexa(),
+  analogousGreen: new Color(baseAccent).rotate(26).saturate(0.06).lighter(0.08).hexa(),
+  splitGold: new Color(baseAccent).rotate(210).desaturate(0.08).lighter(0.14).hexa(),
+  splitViolet: new Color(baseAccent).rotate(150).desaturate(0.06).lighter(0.08).hexa(),
 
-  error: baseError.desaturate(0.28).lighter(0.18).hexa(),
+  error: new Color(baseError).desaturate(0.28).lighter(0.18).hexa(),
 } as const;
 
 const tokens: ThemeDefinition["tokens"] = {
@@ -292,6 +301,10 @@ export const mintedTheory: ThemeDefinition = {
         diagonalFill:
           baseOverrides.diffEditor.diagonalFill ??
           transparentize(palette.subtle, 0.5),
+      },
+      terminal: {
+        ...minted.ui?.overrides?.terminal ?? {},
+        foreground: palette.foreground,
       },
     },
   },

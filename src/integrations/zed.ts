@@ -5,7 +5,7 @@
  * It reads from ThemeDefinition and produces Zed JSON.
  */
 
-import type { ThemeDefinitionExtended } from "../themes/types";
+import type { ThemeDefinition, ThemeDefinitionExtended } from "../themes/types";
 import {
   strictColorFactory,
   get,
@@ -418,7 +418,7 @@ function mkElement(
  */
 function buildStyle(
   t: ThemeDefinitionExtended,
-  c: ReturnType<typeof strictColorFactory>,
+  c: ReturnType<typeof strictColorFactory<ThemeDefinition<string>>>,
   options: BuildOptions,
 ): ZedThemeStyle {
   // Get colors from theme
@@ -715,14 +715,78 @@ function buildStyle(
     "border.disabled": withAlpha(borderSubtle, 0.6),
 
     // Surfaces
-    "elevated_surface.background": hoverSurface,
-    "surface.background": surface,
+    // Extensions -> Container of each item
+    "elevated_surface.background": mkColor(t.ui.backgrounds.raised, {
+      background,
+      foreground,
+      saturation: {
+        amount: 0.5,
+        reference: c("ui.backgrounds.darker"),
+      },
+      contrast: {
+        minContrast: 0.5,
+        maxContrast: 1,
+      },
+      alpha: 0.9,
+    }),
+    "surface.background": mkColor(t.ui.backgrounds.surface, {
+      background,
+      foreground,
+      saturation: {
+        amount: 0.1,
+        reference: foreground,
+      },
+      alpha: 0.3,
+    }),
 
     // Elements
-    "element.background": elementBackground,
-    "element.hover": elementHover,
-    "element.active": elementActive,
-    "element.selected": elementSelected,
+    "element.background": mkColor(elementBackground, {
+      background: c("ui.backgrounds.darker"),
+      foreground,
+      saturation: {
+        amount: 0.3,
+        reference: accent
+      },
+      contrast: {
+        minContrast: 0.6,
+        maxContrast: 2,
+      },
+      alpha: 0.6,
+    }),
+    "element.hover" : mkColor(elementHover, {
+      background: c("ui.backgrounds.darker"),
+      foreground,
+      saturation: {
+        amount: 0.8,
+        reference: c("ui.backgrounds.darker"),
+      },
+      contrast: {
+        minContrast: 1,
+        maxContrast: 3,
+      },
+      alpha: 0.2,
+    }),
+    "element.active ": mkColor(elementActive, {
+      background: c("ui.backgrounds.darker"),
+      foreground,
+      saturation: {
+        amount: 0.8,
+        reference: c("ui.backgrounds.darker"),
+      },
+      contrast: {
+        minContrast: 1,
+        maxContrast: 3,
+      },
+      alpha: 0.2,
+    }),
+    "element.selected": mkColor(elementSelected, {
+      background: c("ui.backgrounds.darker"),
+      foreground,
+      saturation: {
+        amount: 0.8,
+        reference: c("ui.backgrounds.darker"),
+      },
+    }),
     "element.disabled": c("ui.elements.disabled", "ui.foregrounds.subtle"),
     "drop_target.background": menuBackground,
     "ghost_element.background": withAlpha(elementBackground, 0.2),
@@ -736,14 +800,14 @@ function buildStyle(
       background,
       foreground: foreground,
       saturation: {
-        amount: 1,
+        amount: 0.5,
         reference: foreground,
       },
       contrast: {
-        minContrast: 2.6,
+        minContrast: 3.6,
         maxContrast: 10.5,
       },
-
+      alpha: 1
     }),
     "text.muted": muted,
     "text.placeholder": c("ui.foregrounds.subtle", "ui.foregrounds.muted"),
