@@ -1324,12 +1324,12 @@ export function applyFilters(c: ColorLike, filters: ThemeFilters): string {
 	return color;
 }
 
-export function colorFactory(t: ThemeDefinition) {
+export function colorFactory<T extends ThemeDefinition>(t: T) {
 	/**
 	 * Get a color from the theme using a dot-notation path.
 	 * Uses CSS-like cascading - if a key is missing, falls back to parent's "default".
 	 */
-	return function c<P extends ThemePath>(path: P): string {
+	return function c<P extends ThemePath>(path: P): T[P] {
 		const v = getThemeValue(t, path);
 		return applyFilters(v || toHex(t.ui?.foregrounds?.default) || "#ff0000", t.filters || {});
 	};
@@ -1361,7 +1361,7 @@ function getExactValue(theme: ThemeDefinition, path: string): string | null {
 	return toHex(current);
 }
 
-export function strictColorFactory(t: ThemeDefinition<string>) {
+export function strictColorFactory<T extends ThemeDefinition>(t: T) {
 	const c = colorFactory(t);
 
 	/**

@@ -1,0 +1,9 @@
+{
+  "hooks": {
+    "after:version:bump": "bun run packages/scripts/update-zed-version.ts ${version} && git add packages/zed/extension.toml",
+    "after:release": "bash packages/scripts/update-zed-submodule.sh"
+  },
+  "npm": {
+    "publish": false
+  }
+}

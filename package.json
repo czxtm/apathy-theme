@@ -71,11 +71,14 @@
 		"bump:patch": "bun run src/main.ts bump patch",
 		"bump:minor": "bun run src/main.ts bump minor",
 		"bump:major": "bun run src/main.ts bump major",
-		"vscode:prepublish": "npm run build",
+		"vscode:prepublish": "bun run build",
+		"release": "bunx release-it",
+		"release:ci": "bunx release-it --ci",
 		"pack": "vsce package",
 		"publish": "vsce publish"
 	},
 	"devDependencies": {
+		"release-it": "^19.2.4",
 		"@biomejs/biome": "^2.3.8",
 		"@types/bun": "latest",
 		"@types/vscode": "1.98.0"
@@ -87,10 +90,5 @@
 		"color": "^5.0.3",
 		"tsx": "^4.20.5",
 		"vsce": "^2.15.0"
-	},
-	"release-it": {
-		"hooks": {
-			"after:version:bump": "nix run nixpkgs#toml-cli -- set packages/zed/extension.toml version ${version} > /tmp/extension.toml && mv /tmp/extension.toml packages/zed/extension.toml && git add packages/zed/extension.toml"
-		}
 	}
 }
