@@ -18,32 +18,32 @@ terminal.green → terminal.bg                  12.00    +68    +21 153/41/73 a1
 terminal.yellow → terminal.bg                 11.34    +72    +80 21/100/77 a1           #FFB389FF    #0A0A0FFF   
 terminal.blue → terminal.bg                    7.96    +45    +40 190/60/50 a1           #33B3CCFF    #0A0A0FFF   
 terminal.cyan → terminal.bg                   14.38    +75    +30 171/50/80 a1           #B3E6DEFF    #0A0A0FFF   
-error → background                             3.38    +38    +49 337/72/44 a1           #C1205FFF    #0C0C13FF   
-error.bg → background                          1.29    +38    +45 336/68/44 a0.32        #BD246052    #0C0C13FF   
-warning → background                           7.46    +57    +22 21/45/63 a1            #CB9477FF    #0C0C13FF   
-warning.bg → background                        1.80    +59    +23 20/46/65 a0.32         #CF997D52    #0C0C13FF   
-info → background                              7.46    +44    +32 190/55/50 a1           #3AAEC5FF    #0C0C13FF   
-info.bg → background                           1.73    +44    +28 190/51/50 a0.32        #3EABC152    #0C0C13FF   
-success → background                           7.45    +52     -3 156/20/58 a1           #7FA998FF    #0C0C13FF   
-success.bg → background                        1.78    +54     -4 156/19/60 a0.32        #84AC9C52    #0C0C13FF   
-hint → background                              7.46    +44    +32 190/55/50 a1           #3AAEC5FF    #0C0C13FF   
-hint.bg → background                           1.73    +44    +28 190/51/50 a0.32        #3EABC152    #0C0C13FF   
-border → background                            1.09    +46    -10 230/13/52 a0.1         #767B951A    #0C0C13FF   
-border.focused → background                    1.25    +37    +29 247/52/43 a0.4         #4335A866    #0C0C13FF   
-error.border → background                      2.83    +38    +49 337/72/44 a0.88        #C1205FE0    #0C0C13FF   
-info.border → background                       5.45    +42    +31 190/54/48 a0.88        #38A6BCE0    #0C0C13FF   
+error → background                             3.52    +38    +57 337/80/44 a1           #CA175DFF    #0C0C13FF   
+error.bg → background                          1.02    +10    +77 0/100/16 a0.27         #52000045    #0C0C13FF   
+warning → background                          11.19    +71    +77 21/100/77 a1           #FFB389FF    #0C0C13FF   
+warning.bg → background                       11.19    +71    +77 21/100/77 a1           #FFB389FF    #0C0C13FF   
+info → background                              7.85    +44    +37 190/60/50 a1           #33B3CCFF    #0C0C13FF   
+info.bg → background                           7.85    +44    +37 190/60/50 a1           #33B3CCFF    #0C0C13FF   
+success → background                          11.84    +67    +18 153/41/73 a1           #9CD6BCFF    #0C0C13FF   
+success.bg → background                       11.84    +67    +18 153/41/73 a1           #9CD6BCFF    #0C0C13FF   
+hint → background                              7.85    +44    +37 190/60/50 a1           #33B3CCFF    #0C0C13FF   
+hint.bg → background                           7.85    +44    +37 190/60/50 a1           #33B3CCFF    #0C0C13FF   
+border → background                            1.08     +4     -4 234/19/10 a1           #15161FFF    #0C0C13FF   
+border.focused → background                    1.10    +58    -12 260/11/64 a0.08        #A099AE14    #0C0C13FF   
+error.border → background                      3.52    +38    +57 337/80/44 a1           #CA175DFF    #0C0C13FF   
+info.border → background                       7.85    +44    +37 190/60/50 a1           #33B3CCFF    #0C0C13FF   
 element.bg → background                        1.11     +6     +7 256/30/12 a1           #1B1629FF    #0C0C13FF   
 element.hover → background                     1.04     +3     -6 233/17/9 a0.74         #13141BBC    #0C0C13FF   
-ghost_element.hover → background               1.04     +3     -6 233/17/9 a0.74         #13141BBC    #0C0C13FF   
+ghost_element.hover → background               1.04    +26     -1 243/22/32 a0.1         #4240641A    #0C0C13FF   
 panel.bg → background                          1.01     +0     +1 240/24/6 a1            #0B0B12FF    #0C0C13FF   
 surface.bg → background                        1.01     +1     -1 240/22/7 a1            #0E0E16FF    #0C0C13FF   
-elevated_surface → background                  1.04     +3     -6 233/17/9 a0.74         #13141BBC    #0C0C13FF   
-icon → background                              7.75    +59     -5 212/18/65 a1           #96A5B6      #0C0C13FF   
+elevated_surface → background                  1.02     +2     +7 245/30/8 a1            #0F0E1AFF    #0C0C13FF   
+icon → background                              2.29    +39     -7 234/16/45 a0.72        #5F6384B8    #0C0C13FF   
 icon.muted → background                        1.93    +23     -2 226/21/29 a1           #3A4159FF    #0C0C13FF   
-icon.accent → background                       5.02    +66    +35 247/58/72 a0.83        #998FE1D4    #0C0C13FF   
-vc.added → background                          1.99    +25     -8 162/15/31 a0.76        #435A53C2    #0C0C13FF   
+icon.accent → background                       4.81    +66    +35 247/58/72 a0.81        #998FE1CF    #0C0C13FF   
+vc.added → background                         11.84    +67    +18 153/41/73 a1           #9CD6BCFF    #0C0C13FF   
 vc.modified → background                       4.13    +45     +2 225/25/51 a1           #6372A1FF    #0C0C13FF   
-vc.deleted → background                        2.43    +38    +25 336/48/44 a0.8         #A63B65CC    #0C0C13FF   
+vc.deleted → background                        3.19    +38    +25 336/48/44 a1           #A63B65FF    #0C0C13FF   
 syntax.attribute → editor.bg                  11.27    +72    +79 21/100/77 a1           #FFB389FF    #0B0B11FF   
 syntax.boolean → editor.bg                     7.91    +45    +39 190/60/50 a1           #33B3CCFF    #0B0B11FF   
 syntax.comment → editor.bg                     1.83    +22     -3 228/18/27 a1           #383D51FF    #0B0B11FF   
@@ -76,7 +76,7 @@ syntax.punctuation.special → editor.bg         1.83    +22     -3 228/18/27 a1
 syntax.selector → editor.bg                   14.29    +75    +29 171/50/80 a1           #B3E6DEFF    #0B0B11FF   
 syntax.selector.pseudo → editor.bg             8.27    +75    +36 205/57/80 a0.81        #AFD1E9CF    #0B0B11FF   
 syntax.string → editor.bg                     11.74    +65    +19 86/40/70 a1            #B7D194FF    #0B0B11FF   
-syntax.string.escape → editor.bg              11.27    +72    +79 21/100/77 a1           #FFB389      #0B0B11FF   
+syntax.string.escape → editor.bg              11.74    +65    +19 86/40/70 a1            #B7D194FF    #0B0B11FF   
 syntax.string.regex → editor.bg               11.27    +72    +79 21/100/77 a1           #FFB389FF    #0B0B11FF   
 syntax.string.special → editor.bg             11.74    +65    +19 86/40/70 a1            #B7D194FF    #0B0B11FF   
 syntax.string.special.symbol → editor.bg      11.74    +65    +19 86/40/70 a1            #B7D194FF    #0B0B11FF   
@@ -101,38 +101,38 @@ active_line_number → gutter                    3.18    +47     -7 230/13/52 a0
 tab.active → tab.active_bg                     2.30    +33    -11 230/12/39 a0.81        #575B6FCE    #0C0C13FF   
 tab.inactive → tab.inactive_bg                 1.93    +23     -2 226/21/29 a1           #3A4159FF    #0C0C13FF   
 status_bar text → status_bar.bg                2.30    +33    -11 230/12/39 a0.81        #575B6FCE    #0C0C13FF   
-terminal.fg → terminal.bg                      3.18    +47     -7 230/13/52 a0.76        #767B95C2    #0A0A0FFF   
+terminal.fg → terminal.bg                      2.29    +34     -8 230/12/39 a0.81        #575B6FCE    #0A0A0FFF   
 terminal.red → terminal.bg                     3.57    +39    +60 337/80/44 a1           #CA175DFF    #0A0A0FFF   
 terminal.green → terminal.bg                  12.00    +68    +21 153/41/73 a1           #9CD6BCFF    #0A0A0FFF   
 terminal.yellow → terminal.bg                 11.34    +72    +80 21/100/77 a1           #FFB389FF    #0A0A0FFF   
 terminal.blue → terminal.bg                    7.96    +45    +40 190/60/50 a1           #33B3CCFF    #0A0A0FFF   
 terminal.cyan → terminal.bg                   14.38    +75    +30 171/50/80 a1           #B3E6DEFF    #0A0A0FFF   
-error → background                             4.17    +46    +29 337/52/52 a1           #C44677FF    #0C0C13FF   
-error.bg → background                          1.41    +46    +26 337/49/52 a0.32        #C1497752    #0C0C13FF   
-warning → background                           7.49    +57    +21 22/44/63 a1            #CA9577FF    #0C0C13FF   
-warning.bg → background                        1.79    +58    +21 22/44/64 a0.32         #CC997C52    #0C0C13FF   
-info → background                              7.45    +62    +32 218/55/68 a1           #80A1DAFF    #0C0C13FF   
-info.bg → background                           1.82    +63    +34 217/57/69 a0.32        #84A6DD52    #0C0C13FF   
-success → background                           7.49    +53     -3 119/20/59 a1           #81AB80FF    #0C0C13FF   
-success.bg → background                        1.80    +54     -2 117/21/60 a0.32        #87AF8552    #0C0C13FF   
-hint → background                              7.45    +62    +32 218/55/68 a1           #80A1DAFF    #0C0C13FF   
-hint.bg → background                           1.82    +63    +34 217/57/69 a0.32        #84A6DD52    #0C0C13FF   
-border → background                            1.06    +33    -11 230/12/39 a0.1         #575B6F19    #0C0C13FF   
-border.focused → background                    4.66    +82    +30 171/53/88 a0.5         #D1F1EC80    #0C0C13FF   
-error.border → background                      3.45    +46    +29 337/52/52 a0.88        #C44677E0    #0C0C13FF   
-info.border → background                       5.50    +59    +25 218/48/65 a0.88        #7A9AD0E0    #0C0C13FF   
+error → background                             4.18    +46    +34 337/57/52 a1           #CB3F75FF    #0C0C13FF   
+error.bg → background                          1.02    +10    +77 0/100/16 a0.27         #52000045    #0C0C13FF   
+warning → background                          15.38    +84    +77 21/100/90 a1           #FFDECCFF    #0C0C13FF   
+warning.bg → background                       15.38    +84    +77 21/100/90 a1           #FFDECCFF    #0C0C13FF   
+info → background                              7.75    +61    +24 213/47/67 a1           #83A6D2FF    #0C0C13FF   
+info.bg → background                           7.75    +61    +24 213/47/67 a1           #83A6D2FF    #0C0C13FF   
+success → background                          11.27    +66     +8 168/31/72 a1           #A1CEC5FF    #0C0C13FF   
+success.bg → background                       11.27    +66     +8 168/31/72 a1           #A1CEC5FF    #0C0C13FF   
+hint → background                              7.75    +61    +24 213/47/67 a1           #83A6D2FF    #0C0C13FF   
+hint.bg → background                           7.75    +61    +24 213/47/67 a1           #83A6D2FF    #0C0C13FF   
+border → background                            1.17     +8     -4 235/19/14 a1           #1C1D29FF    #0C0C13FF   
+border.focused → background                    1.10    +58    -12 260/11/64 a0.08        #A099AE14    #0C0C13FF   
+error.border → background                      4.18    +46    +34 337/57/52 a1           #CB3F75FF    #0C0C13FF   
+info.border → background                       7.75    +61    +24 213/47/67 a1           #83A6D2FF    #0C0C13FF   
 element.bg → background                        1.11     +6     +7 256/30/12 a1           #1B1629FF    #0C0C13FF   
 element.hover → background                     1.04     +3     -6 233/17/9 a0.74         #13141BBC    #0C0C13FF   
-ghost_element.hover → background               1.04     +3     -6 233/17/9 a0.74         #13141BBC    #0C0C13FF   
+ghost_element.hover → background               1.07     +4     +4 226/27/10 a1           #12151FFF    #0C0C13FF   
 panel.bg → background                          1.01     +0     +1 240/24/6 a1            #0B0B12FF    #0C0C13FF   
 surface.bg → background                        1.03     +2     -3 240/20/8 a1            #101018FF    #0C0C13FF   
-elevated_surface → background                  1.04     +3     -6 233/17/9 a0.74         #13141BBC    #0C0C13FF   
-icon → background                              7.75    +59     -5 212/18/65 a1           #96A5B6      #0C0C13FF   
+elevated_surface → background                  1.12     +6     +5 226/28/12 a1           #161A27FF    #0C0C13FF   
+icon → background                              2.29    +39     -7 234/16/45 a0.72        #5F6384B8    #0C0C13FF   
 icon.muted → background                        1.93    +23     -2 226/21/29 a1           #3A4159FF    #0C0C13FF   
-icon.accent → background                      11.25    +82    +30 171/53/88 a0.83        #D1F1ECD4    #0C0C13FF   
-vc.added → background                          2.17    +30    -14 203/9/36 a0.76         #545E64C2    #0C0C13FF   
+icon.accent → background                      16.24    +82    +30 171/53/88 a1           #D1F1ECFF    #0C0C13FF   
+vc.added → background                         14.84    +81    +30 197/53/87 a1           #CBE5EFFF    #0C0C13FF   
 vc.modified → background                      15.96    +85    +22 21/45/91 a1            #F3E6DFFF    #0C0C13FF   
-vc.deleted → background                        3.05    +46    +34 337/57/52 a0.8         #CB3F75CC    #0C0C13FF   
+vc.deleted → background                        4.18    +46    +34 337/57/52 a1           #CB3F75FF    #0C0C13FF   
 syntax.attribute → editor.bg                  14.74    +85    +21 352/42/90 a1           #F0DADDFF    #0B0B11FF   
 syntax.boolean → editor.bg                    16.36    +83    +32 171/53/88 a1           #D1F1ECFF    #0B0B11FF   
 syntax.comment → editor.bg                     1.46    +16     -3 231/18/21 a1           #2B2E3EFF    #0B0B11FF   
@@ -144,11 +144,11 @@ syntax.enum → editor.bg                       13.49    +82    +26 321/47/87 a1
 syntax.function → editor.bg                   14.94    +82    +32 197/53/87 a1           #CBE5EFFF    #0B0B11FF   
 syntax.function.method → editor.bg            14.94    +82    +32 197/53/87 a1           #CBE5EFFF    #0B0B11FF   
 syntax.function.definition → editor.bg        14.94    +82    +32 197/53/87 a1           #CBE5EFFF    #0B0B11FF   
-syntax.hint → editor.bg                        9.32    +71    +71 217/92/76 a1           #89B4FAFF    #0B0B11FF   
+syntax.hint → editor.bg                        7.80    +62    +26 213/47/67 a1           #83A6D2FF    #0B0B11FF   
 syntax.keyword → editor.bg                     2.31    +34     -9 230/12/39 a0.81        #575B6FCE    #0B0B11FF   
 syntax.label → editor.bg                      13.49    +82    +26 321/47/87 a1           #EDCDE2FF    #0B0B11FF   
-syntax.link_text → editor.bg                   9.32    +71    +71 217/92/76 a1           #89B4FAFF    #0B0B11FF   
-syntax.link_uri → editor.bg                    9.32    +71    +71 217/92/76 a1           #89B4FAFF    #0B0B11FF   
+syntax.link_text → editor.bg                   7.80    +62    +26 213/47/67 a1           #83A6D2FF    #0B0B11FF   
+syntax.link_uri → editor.bg                    7.80    +62    +26 213/47/67 a1           #83A6D2FF    #0B0B11FF   
 syntax.namespace → editor.bg                   2.31    +34     -9 230/12/39 a0.81        #575B6FCE    #0B0B11FF   
 syntax.number → editor.bg                     16.36    +83    +32 171/53/88 a1           #D1F1ECFF    #0B0B11FF   
 syntax.operator → editor.bg                   14.74    +85    +21 352/42/90 a1           #F0DADDFF    #0B0B11FF   
@@ -165,13 +165,13 @@ syntax.punctuation.special → editor.bg         1.46    +16     -3 231/18/21 a1
 syntax.selector → editor.bg                   16.21    +83    +32 144/53/88 a1           #D1F1DEFF    #0B0B11FF   
 syntax.selector.pseudo → editor.bg             2.31    +34     -9 230/12/39 a0.81        #575B6FCE    #0B0B11FF   
 syntax.string → editor.bg                     14.94    +82    +32 197/53/87 a1           #CBE5EFFF    #0B0B11FF   
-syntax.string.escape → editor.bg              11.27    +72    +79 21/100/77 a1           #FFB389      #0B0B11FF   
+syntax.string.escape → editor.bg              14.94    +82    +32 197/53/87 a1           #CBE5EFFF    #0B0B11FF   
 syntax.string.regex → editor.bg               14.74    +85    +21 352/42/90 a1           #F0DADDFF    #0B0B11FF   
 syntax.string.special → editor.bg             14.94    +82    +32 197/53/87 a1           #CBE5EFFF    #0B0B11FF   
 syntax.string.special.symbol → editor.bg      14.94    +82    +32 197/53/87 a1           #CBE5EFFF    #0B0B11FF   
 syntax.tag → editor.bg                        16.07    +86    +24 21/45/91 a1            #F3E6DFFF    #0B0B11FF   
 syntax.text.literal → editor.bg               14.94    +82    +32 197/53/87 a1           #CBE5EFFF    #0B0B11FF   
-syntax.title → editor.bg                      13.20    +71    +33 115/54/76 a1           #A6E3A1FF    #0B0B11FF   
+syntax.title → editor.bg                      11.35    +67    +10 168/31/72 a1           #A1CEC5FF    #0B0B11FF   
 syntax.type → editor.bg                       16.21    +83    +32 144/53/88 a1           #D1F1DEFF    #0B0B11FF   
 syntax.variable → editor.bg                    2.31    +34     -9 230/12/39 a0.81        #575B6FCE    #0B0B11FF   
 syntax.variable.special → editor.bg           16.21    +83    +32 144/53/88 a1           #D1F1DEFF    #0B0B11FF   
@@ -196,32 +196,32 @@ terminal.green → terminal.bg                   8.84    +53    +17 152/37/60 a1
 terminal.yellow → terminal.bg                 11.28    +64    +80 31/100/71 a1           #FFB86CFF    #0E0E15FF   
 terminal.blue → terminal.bg                    7.75    +43    +40 190/60/50 a1           #33B3CCFF    #0E0E15FF   
 terminal.cyan → terminal.bg                   12.68    +70    +80 197/100/77 a1          #89DDFFFF    #0E0E15FF   
-error → background                             3.84    +38    +69 334/89/45 a1           #D90D65FF    #0E0E15FF   
-error.bg → background                          1.31    +38    +65 334/85/45 a0.32        #D5116552    #0E0E15FF   
-warning → background                           7.47    +49    +24 38/44/56 a1            #C09C5DFF    #0E0E15FF   
-warning.bg → background                        1.81    +50    +24 39/44/57 a0.32         #C19F6052    #0E0E15FF   
-info → background                              7.29    +43    +34 190/54/50 a1           #3BADC4FF    #0E0E15FF   
-info.bg → background                           1.73    +43    +31 190/51/50 a0.32        #3EABC152    #0E0E15FF   
-success → background                           7.44    +45    +10 81/30/52 a1            #91AA61FF    #0E0E15FF   
-success.bg → background                        1.78    +46     +9 81/29/53 a0.32         #93AB6552    #0E0E15FF   
-hint → background                              7.29    +43    +34 190/54/50 a1           #3BADC4FF    #0E0E15FF   
-hint.bg → background                           1.73    +43    +31 190/51/50 a0.32        #3EABC152    #0E0E15FF   
-border → background                            1.27    +10     -6 240/14/17 a1           #252531FF    #0E0E15FF   
+error → background                             4.16    +38    +80 334/100/45 a1          #E60063FF    #0E0E15FF   
+error.bg → background                          4.16    +38    +80 334/100/45 a1          #E60063FF    #0E0E15FF   
+warning → background                          12.82    +64    +80 39/100/71 a1           #FFCB6BFF    #0E0E15FF   
+warning.bg → background                       12.82    +64    +80 39/100/71 a1           #FFCB6BFF    #0E0E15FF   
+info → background                              7.75    +43    +40 190/60/50 a1           #33B3CCFF    #0E0E15FF   
+info.bg → background                           7.75    +43    +40 190/60/50 a1           #33B3CCFF    #0E0E15FF   
+success → background                          11.36    +56    +34 80/54/63 a1            #B1D36DFF    #0E0E15FF   
+success.bg → background                       11.36    +56    +34 80/54/63 a1            #B1D36DFF    #0E0E15FF   
+hint → background                              7.75    +43    +40 190/60/50 a1           #33B3CCFF    #0E0E15FF   
+hint.bg → background                           7.75    +43    +40 190/60/50 a1           #33B3CCFF    #0E0E15FF   
+border → background                            2.34    +24    -11 206/9/31 a1            #485056FF    #0E0E15FF   
 border.focused → background                    7.98    +59     +7 208/27/66 a1           #91AAC0FF    #0E0E15FF   
-error.border → background                      3.16    +38    +69 334/89/45 a0.88        #D90D65E0    #0E0E15FF   
-info.border → background                       5.45    +41    +34 190/54/48 a0.88        #39A7BEE0    #0E0E15FF   
+error.border → background                      4.16    +38    +80 334/100/45 a1          #E60063FF    #0E0E15FF   
+info.border → background                       7.75    +43    +40 190/60/50 a1           #33B3CCFF    #0E0E15FF   
 element.bg → background                        1.03     -2     +5 240/25/5 a1            #09090FFF    #0E0E15FF   
 element.hover → background                     1.01     +0     +1 240/21/7 a1            #0F0F17FF    #0E0E15FF   
-ghost_element.hover → background               1.01     +0     +1 240/21/7 a1            #0F0F17FF    #0E0E15FF   
+ghost_element.hover → background               1.17     +6     -8 270/12/13 a1           #221E26FF    #0E0E15FF   
 panel.bg → background                          1.02     +1     -1 240/19/8 a1            #111119FF    #0E0E15FF   
 surface.bg → background                        1.02     +1     -1 240/19/8 a1            #111119FF    #0E0E15FF   
-elevated_surface → background                  1.01     +0     +1 240/21/7 a1            #0F0F17FF    #0E0E15FF   
-icon → background                              3.18    +33    -10 219/10/40 a1           #5C6370      #0E0E15FF   
+elevated_surface → background                  1.07     +4     +1 240/21/11 a1           #161622FF    #0E0E15FF   
+icon → background                              7.85    +59    -14 256/6/66 a1            #A7A4AFFF    #0E0E15FF   
 icon.muted → background                        4.55    +45     -9 231/11/52 a1           #767A92FF    #0E0E15FF   
-icon.accent → background                       7.97    +64    +80 31/100/71 a0.83        #FFB86CD4    #0E0E15FF   
-vc.added → background                          1.47    +17    -13 210/7/24 a0.76         #383C40C2    #0E0E15FF   
+icon.accent → background                      11.28    +64    +80 31/100/71 a1           #FFB86CFF    #0E0E15FF   
+vc.added → background                          5.56    +46    -16 174/4/53 a1            #828C8BFF    #0E0E15FF   
 vc.modified → background                       4.99    +45     +1 208/21/52 a1           #69859EFF    #0E0E15FF   
-vc.deleted → background                        2.88    +40     -2 304/18/47 a0.8         #8C6289CC    #0E0E15FF   
+vc.deleted → background                        3.87    +40     -2 304/18/47 a1           #8C6289FF    #0E0E15FF   
 syntax.attribute → editor.bg                  12.82    +64    +80 39/100/71 a1           #FFCB6BFF    #0E0E15FF   
 syntax.boolean → editor.bg                     7.75    +43    +40 190/60/50 a1           #33B3CCFF    #0E0E15FF   
 syntax.comment → editor.bg                     2.34    +24    -11 206/9/31 a1            #485056FF    #0E0E15FF   
@@ -254,7 +254,7 @@ syntax.punctuation.special → editor.bg         4.55    +45     -9 231/11/52 a1
 syntax.selector → editor.bg                    9.41    +69    +30 313/50/76 a1           #E0A2D3FF    #0E0E15FF   
 syntax.selector.pseudo → editor.bg             7.64    +55     +7 197/27/62 a1           #84A9B8FF    #0E0E15FF   
 syntax.string → editor.bg                     11.36    +56    +34 80/54/63 a1            #B1D36DFF    #0E0E15FF   
-syntax.string.escape → editor.bg              11.28    +64    +80 31/100/71 a1           #FFB86C      #0E0E15FF   
+syntax.string.escape → editor.bg              11.36    +56    +34 80/54/63 a1            #B1D36DFF    #0E0E15FF   
 syntax.string.regex → editor.bg                4.16    +38    +80 334/100/45 a1          #E60063FF    #0E0E15FF   
 syntax.string.special → editor.bg             11.36    +56    +34 80/54/63 a1            #B1D36DFF    #0E0E15FF   
 syntax.string.special.symbol → editor.bg      11.36    +56    +34 80/54/63 a1            #B1D36DFF    #0E0E15FF   
@@ -285,33 +285,33 @@ terminal.green → terminal.bg                  14.17    +67    +39 84/66/73 a1 
 terminal.yellow → terminal.bg                 13.02    +65    +73 39/100/71 a1           #FFCB6BFF    #0E0B13FF   
 terminal.blue → terminal.bg                    8.50    +69    +73 221/100/75 a1          #82AAFFFF    #0E0B13FF   
 terminal.cyan → terminal.bg                   12.87    +71    +73 197/100/77 a1          #89DDFFFF    #0E0B13FF   
-error → background                             2.76    +32    +54 351/81/38 a1           #B01229FF    #0E0B13FF   
-error.bg → background                          1.21    +32    +48 351/75/38 a0.32        #AA182D52    #0E0B13FF   
-warning → background                           7.49    +56    +28 22/55/62 a1            #D4916AFF    #0E0B13FF   
-warning.bg → background                        1.81    +58    +29 22/56/64 a0.32         #D7967152    #0E0B13FF   
-info → background                              7.47    +49     +9 188/36/55 a1           #64ABB6FF    #0E0B13FF   
-info.bg → background                           1.80    +52    +10 188/37/58 a0.32        #6CB1BC52    #0E0B13FF   
-success → background                           7.46    +43    +18 145/45/49 a1           #45B473FF    #0E0B13FF   
-success.bg → background                        1.81    +46    +18 145/45/52 a0.32        #4DBB7A52    #0E0B13FF   
-hint → background                              7.47    +49     +9 188/36/55 a1           #64ABB6FF    #0E0B13FF   
-hint.bg → background                           1.80    +52    +10 188/37/58 a0.32        #6CB1BC52    #0E0B13FF   
+error → background                             2.87    +32    +62 351/89/38 a1           #B70B24FF    #0E0B13FF   
+error.bg → background                          2.87    +32    +62 351/89/38 a1           #B70B24FF    #0E0B13FF   
+warning → background                           8.43    +60    +44 22/71/66 a1            #E6986BFF    #0E0B13FF   
+warning.bg → background                        8.43    +60    +44 22/71/66 a1            #E6986BFF    #0E0B13FF   
+info → background                             12.27    +63    +44 186/71/69 a1           #78DCE8FF    #0E0B13FF   
+info.bg → background                          12.27    +63    +44 186/71/69 a1           #78DCE8FF    #0E0B13FF   
+success → background                           6.29    +49    +32 144/59/55 a0.79        #47CF7EC9    #0E0B13FF   
+success.bg → background                        6.29    +49    +32 144/59/55 a0.79        #47CF7EC9    #0E0B13FF   
+hint → background                             12.27    +63    +44 186/71/69 a1           #78DCE8FF    #0E0B13FF   
+hint.bg → background                          12.27    +63    +44 186/71/69 a1           #78DCE8FF    #0E0B13FF   
 border → background                            1.96    +22    -19 262/8/28 a1            #45414CFF    #0E0B13FF   
 border.focused → background                   12.59    +76    -23 255/4/82 a1            #D0CFD3FF    #0E0B13FF   
-error.border → background                      2.34    +32    +54 351/81/38 a0.88        #B01229E0    #0E0B13FF   
-info.border → background                       5.49    +47     +6 188/33/53 a0.88        #5FA3AEE0    #0E0B13FF   
+error.border → background                      2.87    +32    +62 351/89/38 a1           #B70B24FF    #0E0B13FF   
+info.border → background                      12.27    +63    +44 186/71/69 a1           #78DCE8FF    #0E0B13FF   
 element.bg → background                        1.00     +0     +0 263/27/6 a1            #0E0B13FF    #0E0B13FF   
 element.hover → background                     1.11     +6     +3 256/30/12 a1           #1B1629FF    #0E0B13FF   
-ghost_element.hover → background               1.11     +6     +3 256/30/12 a1           #1B1629FF    #0E0B13FF   
+ghost_element.hover → background               1.03     -2    +18 264/45/4 a1            #0A0610FF    #0E0B13FF   
 panel.bg → background                          1.00     +0     +0 263/27/6 a1            #0E0B13FF    #0E0B13FF   
 surface.bg → background                        1.00     +0     +0 263/27/6 a1            #0E0B13FF    #0E0B13FF   
-elevated_surface → background                  1.03     -2    +18 264/45/4 a1            #0A0610FF    #0E0B13FF   
-icon → background                              6.05    +49    -18 194/9/55 a1            #829297      #0E0B13FF   
+elevated_surface → background                  1.11     +6     +3 256/30/12 a1           #1B1629FF    #0E0B13FF   
+icon → background                              7.06    +78     -2 194/25/84 a0.7         #CBDBE0B3    #0E0B13FF   
 icon.muted → background                        1.95    +21    -22 274/5/27 a1            #454148FF    #0E0B13FF   
-icon.accent → background                       5.71    +44    +33 190/60/50 a0.83        #33B3CCD4    #0E0B13FF   
-vc.added → background                          1.84    +18    +15 149/42/24 a0.76        #24583DC2    #0E0B13FF   
+icon.accent → background                       7.86    +44    +33 190/60/50 a1           #33B3CCFF    #0E0B13FF   
+vc.added → background                          6.29    +49    +32 144/59/55 a0.79        #47CF7EC9    #0E0B13FF   
 vc.modified → background                       9.30    +48    +73 48/100/54 a0.83        #FFD014D4    #0E0B13FF   
-vc.deleted → background                        3.62    +50    +68 338/95/56 a0.8         #F92672CC    #0E0B13FF   
-syntax.attribute → editor.bg                   7.51    +61    +73 11/100/67 a1           #FF7859      #0E0B13FF   
+vc.deleted → background                        5.16    +50    +68 338/95/56 a1           #F92672FF    #0E0B13FF   
+syntax.attribute → editor.bg                   6.77    +67    +53 329/80/73 a0.9         #F184BCE6    #0E0B13FF   
 syntax.boolean → editor.bg                     7.86    +44    +33 190/60/50 a1           #33B3CCFF    #0E0B13FF   
 syntax.comment → editor.bg                     2.26    +25    -19 255/8/31 a1            #4D4A56FF    #0E0B13FF   
 syntax.comment.doc → editor.bg                 2.26    +25    -19 255/8/31 a1            #4D4A56FF    #0E0B13FF   
@@ -343,13 +343,13 @@ syntax.punctuation.special → editor.bg         4.79    +57    +20 245/47/63 a1
 syntax.selector → editor.bg                   11.11    +58    +73 36/100/64 a1           #FFB547FF    #0E0B13FF   
 syntax.selector.pseudo → editor.bg             8.25    +74    +30 205/57/80 a0.81        #AFD1E9CF    #0E0B13FF   
 syntax.string → editor.bg                     11.53    +57    +27 80/54/63 a1            #B1D36DFF    #0E0B13FF   
-syntax.string.escape → editor.bg              14.19    +64    +73 45/100/70 a1           #FFD866      #0E0B13FF   
+syntax.string.escape → editor.bg              11.53    +57    +27 80/54/63 a1            #B1D36DFF    #0E0B13FF   
 syntax.string.regex → editor.bg                6.80    +63    +73 345/100/69 a1          #FF6188FF    #0E0B13FF   
 syntax.string.special → editor.bg             11.53    +57    +27 80/54/63 a1            #B1D36DFF    #0E0B13FF   
 syntax.string.special.symbol → editor.bg      11.53    +57    +27 80/54/63 a1            #B1D36DFF    #0E0B13FF   
-syntax.tag → editor.bg                        14.51    +81    -27 0/0/87 a1              #DEDEDE      #0E0B13FF   
+syntax.tag → editor.bg                         9.27    +70    +23 345/50/76 a1           #E0A2B1FF    #0E0B13FF   
 syntax.text.literal → editor.bg               11.53    +57    +27 80/54/63 a1            #B1D36DFF    #0E0B13FF   
-syntax.title → editor.bg                      12.58    +62    +38 158/65/68 a1           #79E3BD      #0E0B13FF   
+syntax.title → editor.bg                       6.29    +49    +32 144/59/55 a0.79        #47CF7EC9    #0E0B13FF   
 syntax.type → editor.bg                       11.11    +58    +73 36/100/64 a1           #FFB547FF    #0E0B13FF   
 syntax.variable → editor.bg                   12.02    +84    -14 257/13/90 a0.89        #E3E1E8E4    #0E0B13FF   
 syntax.variable.special → editor.bg            9.63    +48    +73 36/100/54 a1           #FFA114FF    #0E0B13FF   
@@ -374,33 +374,33 @@ terminal.green → terminal.bg                  14.03    +67    +50 84/66/73 a1 
 terminal.yellow → terminal.bg                 12.89    +65    +84 39/100/71 a1           #FFCB6BFF    #0F0D12FF   
 terminal.blue → terminal.bg                    6.80    +69    +84 260/100/75 a1          #AC82FFFF    #0F0D12FF   
 terminal.cyan → terminal.bg                   11.07    +60    +33 169/49/66 a1           #80D3C4FF    #0F0D12FF   
-error → background                             6.74    +62    +69 345/89/69 a1           #F66A8CFF    #0E0E15FF   
-error.bg → background                          1.70    +62    +65 345/85/69 a0.32        #F36D8E52    #0E0E15FF   
-warning → background                           7.47    +49    +24 38/44/56 a1            #C09C5DFF    #0E0E15FF   
-warning.bg → background                        1.81    +50    +24 39/44/57 a0.32         #C19F6052    #0E0E15FF   
-info → background                              7.46    +49    +16 188/36/56 a1           #66ACB7FF    #0E0E15FF   
-info.bg → background                           1.79    +50    +15 188/35/57 a0.32        #6AAEB852    #0E0E15FF   
-success → background                           5.85    +40    +19 188/39/47 a1           #4999A6FF    #0E0E15FF   
-success.bg → background                        1.61    +40    +16 188/36/47 a0.32        #4C97A352    #0E0E15FF   
-hint → background                              7.46    +49    +16 188/36/56 a1           #66ACB7FF    #0E0E15FF   
-hint.bg → background                           1.79    +50    +15 188/35/57 a0.32        #6AAEB852    #0E0E15FF   
-border → background                            1.07     +4     +0 240/20/11 a1           #161621FF    #0E0E15FF   
+error → background                             6.70    +62    +80 345/100/69 a1          #FF6188FF    #0E0E15FF   
+error.bg → background                          1.47    +31    +69 351/89/38 a0.5         #B70B2480    #0E0E15FF   
+warning → background                          12.82    +64    +80 39/100/71 a1           #FFCB6BFF    #0E0E15FF   
+warning.bg → background                       12.82    +64    +80 39/100/71 a1           #FFCB6BFF    #0E0E15FF   
+info → background                             12.09    +62    +51 186/71/69 a1           #78DCE8FF    #0E0E15FF   
+info.bg → background                          12.09    +62    +51 186/71/69 a1           #78DCE8FF    #0E0E15FF   
+success → background                           6.09    +40    +23 188/43/47 a1           #449DABFF    #0E0E15FF   
+success.bg → background                        6.09    +40    +23 188/43/47 a1           #449DABFF    #0E0E15FF   
+hint → background                             12.09    +62    +51 186/71/69 a1           #78DCE8FF    #0E0E15FF   
+hint.bg → background                          12.09    +62    +51 186/71/69 a1           #78DCE8FF    #0E0E15FF   
+border → background                            1.10    +57     -9 260/11/64 a0.08        #A099AE14    #0E0E15FF   
 border.focused → background                    1.29    +15    +36 229/56/22 a1           #182356FF    #0E0E15FF   
-error.border → background                      5.42    +62    +69 345/89/69 a0.88        #F66A8CE0    #0E0E15FF   
-info.border → background                       5.56    +47    +12 188/32/54 a0.88        #62A5AFE0    #0E0E15FF   
+error.border → background                      6.70    +62    +80 345/100/69 a1          #FF6188FF    #0E0E15FF   
+info.border → background                      12.09    +62    +51 186/71/69 a1           #78DCE8FF    #0E0E15FF   
 element.bg → background                        1.18    +51    +33 257/53/58 a0.18        #7A5ACD2E    #0E0E15FF   
 element.hover → background                     1.21    +62    +80 257/100/69 a0.18       #8D61FF2E    #0E0E15FF   
-ghost_element.hover → background               1.21    +62    +80 257/100/69 a0.18       #8D61FF2E    #0E0E15FF   
+ghost_element.hover → background               2.79    +30    -15 253/5/37 a1            #5B5962FF    #0E0E15FF   
 panel.bg → background                          1.00     -1    -11 240/9/6 a1             #0F0F12FF    #0E0E15FF   
 surface.bg → background                        1.00     -1    -11 240/9/6 a1             #0F0F12FF    #0E0E15FF   
-elevated_surface → background                  1.12     +7     -1 231/19/14 a0.8         #1C1E29CC    #0E0E15FF   
-icon → background                              7.65    +58     -2 212/18/65 a1           #96A5B6      #0E0E15FF   
-icon.muted → background                        2.26    +38     -4 234/16/45 a0.72        #5F6384B8    #0E0E15FF   
-icon.accent → background                       5.62    +43    +40 190/60/50 a0.83        #33B3CCD4    #0E0E15FF   
-vc.added → background                          1.55    +15    +18 193/38/22 a0.76        #23454EC2    #0E0E15FF   
+elevated_surface → background                  1.06     +3     +1 240/21/10 a1           #151520FF    #0E0E15FF   
+icon → background                              7.85    +59    -14 256/6/66 a1            #A7A4AFFF    #0E0E15FF   
+icon.muted → background                        3.49    +45    -11 260/9/52 a0.81         #827B90CF    #0E0E15FF   
+icon.accent → background                       7.75    +43    +40 190/60/50 a1           #33B3CCFF    #0E0E15FF   
+vc.added → background                          6.09    +40    +23 188/43/47 a1           #449DABFF    #0E0E15FF   
 vc.modified → background                       5.01    +49    +20 217/40/56 a1           #6183BBFF    #0E0E15FF   
-vc.deleted → background                        2.39    +36    +11 353/31/43 a0.8         #914C54CC    #0E0E15FF   
-syntax.attribute → editor.bg                   7.40    +60    +80 11/100/67 a1           #FF7859      #0E0E15FF   
+vc.deleted → background                        3.08    +36    +11 353/31/43 a1           #914C54FF    #0E0E15FF   
+syntax.attribute → editor.bg                   6.68    +66    +60 329/80/73 a0.9         #F184BCE6    #0E0E15FF   
 syntax.boolean → editor.bg                     7.75    +43    +40 190/60/50 a1           #33B3CCFF    #0E0E15FF   
 syntax.comment → editor.bg                     1.79    +20     -2 228/18/27 a1           #383D51FF    #0E0E15FF   
 syntax.comment.doc → editor.bg                 1.79    +20     -2 228/18/27 a1           #383D51FF    #0E0E15FF   
@@ -432,13 +432,13 @@ syntax.punctuation.special → editor.bg         4.72    +56    +27 245/47/63 a1
 syntax.selector → editor.bg                    9.41    +69    +30 313/50/76 a1           #E0A2D3FF    #0E0E15FF   
 syntax.selector.pseudo → editor.bg             8.12    +73    +37 205/57/80 a0.81        #AFD1E9CF    #0E0E15FF   
 syntax.string → editor.bg                      9.33    +55    +16 98/36/62 a1            #95C17BFF    #0E0E15FF   
-syntax.string.escape → editor.bg              13.98    +63    +80 45/100/70 a1           #FFD866      #0E0E15FF   
+syntax.string.escape → editor.bg               9.33    +55    +16 98/36/62 a1            #95C17BFF    #0E0E15FF   
 syntax.string.regex → editor.bg                6.70    +62    +80 345/100/69 a1          #FF6188FF    #0E0E15FF   
 syntax.string.special → editor.bg              9.33    +55    +16 98/36/62 a1            #95C17BFF    #0E0E15FF   
 syntax.string.special.symbol → editor.bg       9.33    +55    +16 98/36/62 a1            #95C17BFF    #0E0E15FF   
-syntax.tag → editor.bg                         2.79    +33     -5 252/15/40 a1           #5C5675      #0E0E15FF   
+syntax.tag → editor.bg                         9.41    +69    +30 313/50/76 a1           #E0A2D3FF    #0E0E15FF   
 syntax.text.literal → editor.bg                9.33    +55    +16 98/36/62 a1            #95C17BFF    #0E0E15FF   
-syntax.title → editor.bg                      12.39    +61    +45 158/65/68 a1           #79E3BD      #0E0E15FF   
+syntax.title → editor.bg                       6.09    +40    +23 188/43/47 a1           #449DABFF    #0E0E15FF   
 syntax.type → editor.bg                        9.41    +69    +30 313/50/76 a1           #E0A2D3FF    #0E0E15FF   
 syntax.variable → editor.bg                    9.24    +83     -7 257/13/90 a0.78        #E3E1E8C7    #0E0E15FF   
 syntax.variable.special → editor.bg            9.48    +47    +80 36/100/54 a1           #FFA114FF    #0E0E15FF   
@@ -463,33 +463,33 @@ terminal.green → terminal.bg                  14.17    +67    +39 84/66/73 a1 
 terminal.yellow → terminal.bg                 13.02    +65    +73 39/100/71 a1           #FFCB6BFF    #0E0B13FF   
 terminal.blue → terminal.bg                    8.50    +69    +73 221/100/75 a1          #82AAFFFF    #0E0B13FF   
 terminal.cyan → terminal.bg                   12.87    +71    +73 197/100/77 a1          #89DDFFFF    #0E0B13FF   
-error → background                             2.63    +29    +59 351/81/38 a1           #B01229FF    #12121CFF   
-error.bg → background                          1.21    +29    +53 351/75/38 a0.32        #AA182D52    #12121CFF   
-warning → background                           7.47    +55    +38 21/60/64 a1            #DA946DFF    #12121CFF   
-warning.bg → background                        1.79    +54    +31 22/53/63 a0.32         #D3936F52    #12121CFF   
-info → background                              7.45    +47    +16 188/38/56 a1           #66AFBAFF    #12121CFF   
-info.bg → background                           1.82    +47    +13 188/35/56 a0.32        #69ACB752    #12121CFF   
-success → background                           7.49    +41    +23 145/45/50 a1           #46B976FF    #12121CFF   
-success.bg → background                        1.78    +41    +20 145/42/50 a0.32        #4BB57752    #12121CFF   
-hint → background                              7.45    +47    +16 188/38/56 a1           #66AFBAFF    #12121CFF   
-hint.bg → background                           1.82    +47    +13 188/35/56 a0.32        #69ACB752    #12121CFF   
+error → background                             2.73    +29    +67 351/89/38 a1           #B70B24FF    #12121CFF   
+error.bg → background                          2.73    +29    +67 351/89/38 a1           #B70B24FF    #12121CFF   
+warning → background                           8.03    +57    +49 22/71/66 a1            #E6986BFF    #12121CFF   
+warning.bg → background                        8.03    +57    +49 22/71/66 a1            #E6986BFF    #12121CFF   
+info → background                             11.69    +60    +49 186/71/69 a1           #78DCE8FF    #12121CFF   
+info.bg → background                          11.69    +60    +49 186/71/69 a1           #78DCE8FF    #12121CFF   
+success → background                           6.13    +46    +37 144/59/55 a0.79        #47CF7EC9    #12121CFF   
+success.bg → background                        6.13    +46    +37 144/59/55 a0.79        #47CF7EC9    #12121CFF   
+hint → background                             11.69    +60    +49 186/71/69 a1           #78DCE8FF    #12121CFF   
+hint.bg → background                          11.69    +60    +49 186/71/69 a1           #78DCE8FF    #12121CFF   
 border → background                            1.87    +19    -14 262/8/28 a1            #45414CFF    #12121CFF   
 border.focused → background                   12.00    +73    -18 255/4/82 a1            #D0CFD3FF    #12121CFF   
-error.border → background                      2.26    +29    +59 351/81/38 a0.88        #B01229E0    #12121CFF   
-info.border → background                       5.50    +45    +12 188/34/54 a0.88        #61A7B1E0    #12121CFF   
+error.border → background                      2.73    +29    +67 351/89/38 a1           #B70B24FF    #12121CFF   
+info.border → background                      11.69    +60    +49 186/71/69 a1           #78DCE8FF    #12121CFF   
 element.bg → background                        1.05     -3     +5 263/27/6 a1            #0E0B13FF    #12121CFF   
 element.hover → background                     1.06     +3     +8 256/30/12 a1           #1B1629FF    #12121CFF   
-ghost_element.hover → background               1.06     +3     +8 256/30/12 a1           #1B1629FF    #12121CFF   
+ghost_element.hover → background               1.08     -5    +23 264/45/4 a1            #0A0610FF    #12121CFF   
 panel.bg → background                          1.05     -3     +5 263/27/6 a1            #0E0B13FF    #12121CFF   
 surface.bg → background                        1.05     -3     +5 263/27/6 a1            #0E0B13FF    #12121CFF   
-elevated_surface → background                  1.08     -5    +23 264/45/4 a1            #0A0610FF    #12121CFF   
-icon → background                              5.76    +46    -13 194/9/55 a1            #829297      #12121CFF   
+elevated_surface → background                  1.06     +3     +8 256/30/12 a1           #1B1629FF    #12121CFF   
+icon → background                              6.88    +75     +3 194/25/84 a0.7         #CBDBE0B3    #12121CFF   
 icon.muted → background                        1.86    +18    -17 274/5/27 a1            #454148FF    #12121CFF   
-icon.accent → background                       5.50    +41    +38 190/60/50 a0.83        #33B3CCD4    #12121CFF   
-vc.added → background                          1.78    +15    +20 149/42/24 a0.76        #24583DC2    #12121CFF   
+icon.accent → background                       7.49    +41    +38 190/60/50 a1           #33B3CCFF    #12121CFF   
+vc.added → background                          6.13    +46    +37 144/59/55 a0.79        #47CF7EC9    #12121CFF   
 vc.modified → background                       8.96    +45    +78 48/100/54 a0.83        #FFD014D4    #12121CFF   
-vc.deleted → background                        3.49    +47    +73 338/95/56 a0.8         #F92672CC    #12121CFF   
-syntax.attribute → editor.bg                   7.16    +58    +78 11/100/67 a1           #FF7859      #12121CFF   
+vc.deleted → background                        4.91    +47    +73 338/95/56 a1           #F92672FF    #12121CFF   
+syntax.attribute → editor.bg                   6.50    +64    +58 329/80/73 a0.9         #F184BCE6    #12121CFF   
 syntax.boolean → editor.bg                     7.49    +41    +38 190/60/50 a1           #33B3CCFF    #12121CFF   
 syntax.comment → editor.bg                     2.15    +22    -14 255/8/31 a1            #4D4A56FF    #12121CFF   
 syntax.comment.doc → editor.bg                 2.15    +22    -14 255/8/31 a1            #4D4A56FF    #12121CFF   
@@ -521,13 +521,13 @@ syntax.punctuation.special → editor.bg         4.56    +54    +25 245/47/63 a1
 syntax.selector → editor.bg                   10.59    +55    +78 36/100/64 a1           #FFB547FF    #12121CFF   
 syntax.selector.pseudo → editor.bg             7.94    +71    +35 205/57/80 a0.81        #AFD1E9CF    #12121CFF   
 syntax.string → editor.bg                     10.99    +54    +32 80/54/63 a1            #B1D36DFF    #12121CFF   
-syntax.string.escape → editor.bg              13.52    +61    +78 45/100/70 a1           #FFD866      #12121CFF   
+syntax.string.escape → editor.bg              10.99    +54    +32 80/54/63 a1            #B1D36DFF    #12121CFF   
 syntax.string.regex → editor.bg                6.48    +60    +78 345/100/69 a1          #FF6188FF    #12121CFF   
 syntax.string.special → editor.bg             10.99    +54    +32 80/54/63 a1            #B1D36DFF    #12121CFF   
 syntax.string.special.symbol → editor.bg      10.99    +54    +32 80/54/63 a1            #B1D36DFF    #12121CFF   
 syntax.tag → editor.bg                         8.83    +67    +28 345/50/76 a1           #E0A2B1FF    #12121CFF   
 syntax.text.literal → editor.bg               10.99    +54    +32 80/54/63 a1            #B1D36DFF    #12121CFF   
-syntax.title → editor.bg                      11.99    +44    +54 80/76/53 a1            #A6E22E      #12121CFF   
+syntax.title → editor.bg                       6.13    +46    +37 144/59/55 a0.79        #47CF7EC9    #12121CFF   
 syntax.type → editor.bg                       10.59    +55    +78 36/100/64 a1           #FFB547FF    #12121CFF   
 syntax.variable → editor.bg                   11.58    +81     -9 257/13/90 a0.89        #E3E1E8E4    #12121CFF   
 syntax.variable.special → editor.bg            9.18    +45    +78 36/100/54 a1           #FFA114FF    #12121CFF   
@@ -649,15 +649,15 @@ badge.fg → badge.bg                            6.12    +68    +61 221/100/75 a
 `;
 
 exports[`Cross-theme consistency status color contrast ranges 1`] = `
-"error fg: range 2.63–6.74 (spread 4.11) [Minted: 3.38, Minted Theory: 4.17, Slate: 3.84, Apathy: 2.76, Apathetic Ocean: 6.74, Apathy Experimental: 2.63]
-warning fg: range 7.46–7.49 (spread 0.03) [Minted: 7.46, Minted Theory: 7.49, Slate: 7.47, Apathy: 7.49, Apathetic Ocean: 7.47, Apathy Experimental: 7.47]
-info fg: range 7.29–7.47 (spread 0.18) [Minted: 7.46, Minted Theory: 7.45, Slate: 7.29, Apathy: 7.47, Apathetic Ocean: 7.46, Apathy Experimental: 7.45]
-success fg: range 5.85–7.49 (spread 1.64) [Minted: 7.45, Minted Theory: 7.49, Slate: 7.44, Apathy: 7.46, Apathetic Ocean: 5.85, Apathy Experimental: 7.49]
-hint fg: range 7.29–7.47 (spread 0.18) [Minted: 7.46, Minted Theory: 7.45, Slate: 7.29, Apathy: 7.47, Apathetic Ocean: 7.46, Apathy Experimental: 7.45]"
+"error fg: range 2.73–6.70 (spread 3.97) [Minted: 3.52, Minted Theory: 4.18, Slate: 4.16, Apathy: 2.87, Apathetic Ocean: 6.70, Apathy Experimental: 2.73]
+warning fg: range 8.03–15.38 (spread 7.35) [Minted: 11.19, Minted Theory: 15.38, Slate: 12.82, Apathy: 8.43, Apathetic Ocean: 12.82, Apathy Experimental: 8.03]
+info fg: range 7.75–12.27 (spread 4.52) [Minted: 7.85, Minted Theory: 7.75, Slate: 7.75, Apathy: 12.27, Apathetic Ocean: 12.09, Apathy Experimental: 11.69]
+success fg: range 6.09–11.84 (spread 5.75) [Minted: 11.84, Minted Theory: 11.27, Slate: 11.36, Apathy: 6.29, Apathetic Ocean: 6.09, Apathy Experimental: 6.13]
+hint fg: range 7.75–12.27 (spread 4.52) [Minted: 7.85, Minted Theory: 7.75, Slate: 7.75, Apathy: 12.27, Apathetic Ocean: 12.09, Apathy Experimental: 11.69]"
 `;
 
 exports[`Cross-theme consistency syntax token contrast ranges 1`] = `
-"attribute: range 7.16–14.74 (spread 7.58) [Minted: 11.27, Minted Theory: 14.74, Slate: 12.82, Apathy: 7.51, Apathetic Ocean: 7.40, Apathy Experimental: 7.16]
+"attribute: range 6.50–14.74 (spread 8.24) [Minted: 11.27, Minted Theory: 14.74, Slate: 12.82, Apathy: 6.77, Apathetic Ocean: 6.68, Apathy Experimental: 6.50]
 boolean: range 7.49–16.36 (spread 8.87) [Minted: 7.91, Minted Theory: 16.36, Slate: 7.75, Apathy: 7.86, Apathetic Ocean: 7.75, Apathy Experimental: 7.49]
 comment: range 1.46–2.34 (spread 0.88) [Minted: 1.83, Minted Theory: 1.46, Slate: 2.34, Apathy: 2.26, Apathetic Ocean: 1.79, Apathy Experimental: 2.15]
 comment.doc: range 1.46–2.34 (spread 0.88) [Minted: 1.83, Minted Theory: 1.46, Slate: 2.34, Apathy: 2.26, Apathetic Ocean: 1.79, Apathy Experimental: 2.15]
@@ -667,11 +667,11 @@ enum: range 7.75–13.49 (spread 5.74) [Minted: 7.75, Minted Theory: 13.49, Slat
 function: range 8.84–15.18 (spread 6.34) [Minted: 11.92, Minted Theory: 14.94, Slate: 8.84, Apathy: 11.11, Apathetic Ocean: 15.18, Apathy Experimental: 10.59]
 function.definition: range 8.84–14.94 (spread 6.10) [Minted: 11.92, Minted Theory: 14.94, Slate: 8.84, Apathy: 11.66, Apathetic Ocean: 11.49, Apathy Experimental: 11.11]
 function.method: range 8.84–15.18 (spread 6.34) [Minted: 11.92, Minted Theory: 14.94, Slate: 8.84, Apathy: 11.11, Apathetic Ocean: 15.18, Apathy Experimental: 10.59]
-hint: range 7.75–12.27 (spread 4.52) [Minted: 7.91, Minted Theory: 9.32, Slate: 7.75, Apathy: 12.27, Apathetic Ocean: 12.09, Apathy Experimental: 11.69]
+hint: range 7.75–12.27 (spread 4.52) [Minted: 7.91, Minted Theory: 7.80, Slate: 7.75, Apathy: 12.27, Apathetic Ocean: 12.09, Apathy Experimental: 11.69]
 keyword: range 2.31–8.27 (spread 5.96) [Minted: 8.27, Minted Theory: 2.31, Slate: 7.64, Apathy: 8.25, Apathetic Ocean: 8.12, Apathy Experimental: 7.94]
 label: range 7.94–13.49 (spread 5.55) [Minted: 9.60, Minted Theory: 13.49, Slate: 9.41, Apathy: 8.25, Apathetic Ocean: 8.12, Apathy Experimental: 7.94]
-link_text: range 7.75–12.27 (spread 4.52) [Minted: 7.91, Minted Theory: 9.32, Slate: 7.75, Apathy: 12.27, Apathetic Ocean: 12.09, Apathy Experimental: 11.69]
-link_uri: range 7.75–12.27 (spread 4.52) [Minted: 7.91, Minted Theory: 9.32, Slate: 7.75, Apathy: 12.27, Apathetic Ocean: 12.09, Apathy Experimental: 11.69]
+link_text: range 7.75–12.27 (spread 4.52) [Minted: 7.91, Minted Theory: 7.80, Slate: 7.75, Apathy: 12.27, Apathetic Ocean: 12.09, Apathy Experimental: 11.69]
+link_uri: range 7.75–12.27 (spread 4.52) [Minted: 7.91, Minted Theory: 7.80, Slate: 7.75, Apathy: 12.27, Apathetic Ocean: 12.09, Apathy Experimental: 11.69]
 namespace: range 2.31–9.41 (spread 7.10) [Minted: 3.16, Minted Theory: 2.31, Slate: 7.85, Apathy: 9.41, Apathetic Ocean: 7.85, Apathy Experimental: 9.07]
 number: range 7.49–16.36 (spread 8.87) [Minted: 7.91, Minted Theory: 16.36, Slate: 7.75, Apathy: 7.86, Apathetic Ocean: 7.75, Apathy Experimental: 7.49]
 operator: range 3.54–14.74 (spread 11.20) [Minted: 3.54, Minted Theory: 14.74, Slate: 4.16, Apathy: 4.22, Apathetic Ocean: 4.16, Apathy Experimental: 4.03]
@@ -688,13 +688,13 @@ punctuation.special: range 1.46–4.79 (spread 3.33) [Minted: 1.83, Minted Theor
 selector: range 9.41–16.21 (spread 6.80) [Minted: 14.29, Minted Theory: 16.21, Slate: 9.41, Apathy: 11.11, Apathetic Ocean: 9.41, Apathy Experimental: 10.59]
 selector.pseudo: range 2.31–8.27 (spread 5.96) [Minted: 8.27, Minted Theory: 2.31, Slate: 7.64, Apathy: 8.25, Apathetic Ocean: 8.12, Apathy Experimental: 7.94]
 string: range 9.33–14.94 (spread 5.61) [Minted: 11.74, Minted Theory: 14.94, Slate: 11.36, Apathy: 11.53, Apathetic Ocean: 9.33, Apathy Experimental: 10.99]
-string.escape: range 11.27–14.19 (spread 2.92) [Minted: 11.27, Minted Theory: 11.27, Slate: 11.28, Apathy: 14.19, Apathetic Ocean: 13.98, Apathy Experimental: 13.52]
+string.escape: range 9.33–14.94 (spread 5.61) [Minted: 11.74, Minted Theory: 14.94, Slate: 11.36, Apathy: 11.53, Apathetic Ocean: 9.33, Apathy Experimental: 10.99]
 string.regex: range 4.16–14.74 (spread 10.58) [Minted: 11.27, Minted Theory: 14.74, Slate: 4.16, Apathy: 6.80, Apathetic Ocean: 6.70, Apathy Experimental: 6.48]
 string.special: range 9.33–14.94 (spread 5.61) [Minted: 11.74, Minted Theory: 14.94, Slate: 11.36, Apathy: 11.53, Apathetic Ocean: 9.33, Apathy Experimental: 10.99]
 string.special.symbol: range 9.33–14.94 (spread 5.61) [Minted: 11.74, Minted Theory: 14.94, Slate: 11.36, Apathy: 11.53, Apathetic Ocean: 9.33, Apathy Experimental: 10.99]
-tag: range 2.79–16.07 (spread 13.28) [Minted: 2.84, Minted Theory: 16.07, Slate: 4.55, Apathy: 14.51, Apathetic Ocean: 2.79, Apathy Experimental: 8.83]
+tag: range 2.84–16.07 (spread 13.23) [Minted: 2.84, Minted Theory: 16.07, Slate: 4.55, Apathy: 9.27, Apathetic Ocean: 9.41, Apathy Experimental: 8.83]
 text.literal: range 9.33–14.94 (spread 5.61) [Minted: 11.74, Minted Theory: 14.94, Slate: 11.36, Apathy: 11.53, Apathetic Ocean: 9.33, Apathy Experimental: 10.99]
-title: range 11.36–13.20 (spread 1.84) [Minted: 11.92, Minted Theory: 13.20, Slate: 11.36, Apathy: 12.58, Apathetic Ocean: 12.39, Apathy Experimental: 11.99]
+title: range 6.09–11.92 (spread 5.83) [Minted: 11.92, Minted Theory: 11.35, Slate: 11.36, Apathy: 6.29, Apathetic Ocean: 6.09, Apathy Experimental: 6.13]
 type: range 9.41–16.21 (spread 6.80) [Minted: 14.29, Minted Theory: 16.21, Slate: 9.46, Apathy: 11.11, Apathetic Ocean: 9.41, Apathy Experimental: 10.59]
 variable: range 2.31–12.02 (spread 9.71) [Minted: 7.75, Minted Theory: 2.31, Slate: 7.85, Apathy: 12.02, Apathetic Ocean: 9.24, Apathy Experimental: 11.58]
 variable.special: range 7.75–16.21 (spread 8.46) [Minted: 7.75, Minted Theory: 16.21, Slate: 7.85, Apathy: 9.63, Apathetic Ocean: 9.48, Apathy Experimental: 9.18]

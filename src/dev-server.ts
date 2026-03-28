@@ -107,26 +107,40 @@ async function runBuild() {
 
 // ── Color override handler ───────────────────────────────────────────────────
 
-function deepClone<T>(obj: T): T {
-  if (obj === null || typeof obj !== "object") return obj;
-  if (Array.isArray(obj)) return obj.map(deepClone) as any;
-  const out: Record<string, any> = {};
-  for (const [k, v] of Object.entries(obj as any)) {
-    out[k] = deepClone(v);
-  }
-  return out as T;
+function cloneContainer<T extends Record<string, unknown> | unknown[]>(value: T): T {
+  if (Array.isArray(value)) return [...value] as T;
+  return { ...value } as T;
 }
 
-function deepSet(obj: Record<string, any>, path: string, value: any): void {
-  const parts = path.split(".");
-  let current = obj;
-  for (let i = 0; i < parts.length - 1; i++) {
-    if (current[parts[i]] === undefined || typeof current[parts[i]] !== "object") {
-      current[parts[i]] = {};
+function applyOverrides<T extends Record<string, unknown>>(base: T, overrides: Record<string, string>): T {
+  const root = cloneContainer(base);
+
+  for (const [path, value] of Object.entries(overrides)) {
+    const parts = path.split(".");
+    let sourceCursor: unknown = base;
+    let targetCursor: Record<string, unknown> = root;
+
+    for (let i = 0; i < parts.length - 1; i++) {
+      const key = parts[i];
+      const nextSource =
+        sourceCursor && typeof sourceCursor === "object"
+          ? (sourceCursor as Record<string, unknown>)[key]
+          : undefined;
+
+      const nextTarget =
+        nextSource && typeof nextSource === "object"
+          ? cloneContainer(nextSource as Record<string, unknown> | unknown[])
+          : {};
+
+      targetCursor[key] = nextTarget;
+      targetCursor = nextTarget as Record<string, unknown>;
+      sourceCursor = nextSource;
     }
-    current = current[parts[i]];
+
+    targetCursor[parts[parts.length - 1]] = value;
   }
-  current[parts[parts.length - 1]] = value;
+
+  return root;
 }
 
 function handleColorOverride(ws: any, data: { theme: string; overrides: Record<string, string> }) {
@@ -137,10 +151,7 @@ function handleColorOverride(ws: any, data: { theme: string; overrides: Record<s
   }
 
   const start = performance.now();
-  const patched = deepClone(base) as Record<string, any>;
-  for (const [path, value] of Object.entries(data.overrides)) {
-    deepSet(patched, path, value);
-  }
+  const patched = applyOverrides(base as Record<string, unknown>, data.overrides);
 
   try {
     const html = generatePreviewHTML(patched as ThemeDefinition);

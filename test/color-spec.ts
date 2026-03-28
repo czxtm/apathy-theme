@@ -1,9 +1,16 @@
 /**
  * Color specification testing framework.
  *
- * Allows defining expected theme output as plain objects and asserting that
- * actual generated colors are perceptually close (within a Delta-E threshold)
- * to those expected values.
+ * Spec-driven color testing: you manually define the colors you *want* in a
+ * spec file, and these tests verify that the generated theme stays perceptually
+ * close (within a Delta-E threshold) to those targets.
+ *
+ * Workflow:
+ *   1. Bootstrap a spec once:  bun packages/scripts/bootstrap-zed-spec.ts
+ *   2. Edit the spec to express the colors you actually want (hsl values make
+ *      this easy — tweak hue, saturation, lightness directly).
+ *   3. Run tests to see how far the generated output is from your targets.
+ *   4. Adjust theme code until tests pass. Failures = regressions or unmet targets.
  *
  * Usage:
  *   import { describeColorSpec } from "./color-spec";
@@ -46,20 +53,32 @@ export interface ColorSpecOptions {
 // ============================================================================
 
 const HEX_RE = /^#[0-9a-fA-F]{3,8}$/;
+const HSL_RE = /^hsla?\(\s*[\d.]+\s*,\s*[\d.]+%\s*,\s*[\d.]+%\s*(?:,\s*[\d.]+\s*)?\)$/i;
 
-/** Returns true if the value looks like a hex color string. */
+/** Returns true if the value looks like a hex or hsl(a) color string. */
 export function isColorString(value: unknown): value is string {
-  return typeof value === "string" && HEX_RE.test(value);
+  return typeof value === "string" && (HEX_RE.test(value) || HSL_RE.test(value));
+}
+
+function parseColor(s: string): ReturnType<typeof Color> {
+  // Strip alpha from 8-digit hex before parsing into Lab, so the color channel
+  // comparison is independent of alpha. For all other formats (hsl, hsla, rgb,
+  // etc.) pass the string directly — Color() handles them natively.
+  const stripped =
+    /^#[0-9a-fA-F]{8}$/.test(s) ? s.slice(0, 7) : s;
+  return Color(stripped);
 }
 
 /**
- * CIE76 Delta-E between two hex color strings, ignoring alpha.
+ * CIE76 Delta-E between two color strings, ignoring alpha.
  * Returns 0 for identical colors, up to ~100 for maximally different colors.
+ * Accepts hex (#RGB, #RRGGBB, #RRGGBBAA) or any format the `color` library
+ * understands (hsl, hsla, rgb, etc.).
  */
 export function deltaE(a: string, b: string): number {
   try {
-    const la = Color(a.slice(0, 7)).lab().array() as [number, number, number];
-    const lb = Color(b.slice(0, 7)).lab().array() as [number, number, number];
+    const la = parseColor(a).lab().array() as [number, number, number];
+    const lb = parseColor(b).lab().array() as [number, number, number];
     const dL = la[0] - lb[0];
     const da = la[1] - lb[1];
     const db = la[2] - lb[2];
@@ -71,7 +90,7 @@ export function deltaE(a: string, b: string): number {
 
 /**
  * Absolute alpha difference between two color strings, expressed 0–1.
- * Works with any format the `color` library understands, including 8-digit hex.
+ * Accepts hex (#RRGGBBAA) or any format the `color` library understands.
  */
 export function alphaDelta(a: string, b: string): number {
   const parseAlpha = (s: string): number => {

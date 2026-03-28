@@ -4,6 +4,7 @@
 	"type": "dark",
 	"semanticHighlighting": true,
 	"colors": {
+		"markdown.foreground": "#ff0000",
 		"chat.requestBackground": "#171726",
 		"chat.background": "#96a5b6",
 		"chat.editedFileForeground": "#96a5b6",
