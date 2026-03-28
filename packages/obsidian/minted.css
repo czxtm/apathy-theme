@@ -15,12 +15,12 @@ body.theme-dark.apathy-theme-minted,
   --background-secondary-alt: #0F0E1AFF;
   --background-modifier-cover: #4240641A;
   --background-modifier-hover: #0F0E1AFF;
-  --background-modifier-active-hover: #343644E1;
+  --background-modifier-active-hover: #2C303CF3;
   --background-modifier-border: #15161FFF;
   --background-modifier-border-hover: #4335A866;
   --background-modifier-border-focus: #0E0E16FF;
   --background-modifier-form-field: #0E0E16FF;
-  --text-normal: #575B6FCE;
+  --text-normal: #4B5263E9;
   --text-muted: #3A4159FF;
   --text-faint: #2B2E3EFF;
   --text-accent: #998FE1CF;
@@ -32,28 +32,28 @@ body.theme-dark.apathy-theme-minted,
   --interactive-success: #9cd6bcff;
   --interactive-warning: #ffb389ff;
   --interactive-accent-rgb: 153, 143, 225;
-  --text-highlight-bg: #343644E1;
-  --text-selection: #343644E1;
+  --text-highlight-bg: #2C303CF3;
+  --text-selection: #2C303CF3;
   --titlebar-background: #0A0A0FFF;
   --titlebar-background-focused: #0C0C13FF;
   --titlebar-text-color: #3A4159FF;
-  --titlebar-text-color-focused: #575B6FCE;
+  --titlebar-text-color-focused: #4B5263E9;
   --nav-item-background-hover: #0F0E1AFF;
-  --nav-item-background-active: #343644E1;
+  --nav-item-background-active: #2C303CF3;
   --nav-item-color: #3A4159FF;
-  --nav-item-color-hover: #575B6FCE;
-  --nav-item-color-active: #575B6FCE;
+  --nav-item-color-hover: #4B5263E9;
+  --nav-item-color-active: #4B5263E9;
   --tab-background-active: #0C0C13FF;
   --tab-background-inactive: #0A0A0FFF;
   --tab-text-color: #3A4159FF;
-  --tab-text-color-active: #575B6FCE;
+  --tab-text-color-active: #4B5263E9;
   --tab-outline-color: #15161FFF;
   --tab-divider-color: #15161FE6;
   --icon-color: #3A4159FF;
-  --icon-color-hover: #575B6FCE;
+  --icon-color-hover: #4B5263E9;
   --icon-color-focused: #998FE1CF;
   --code-background: #060608FF;
-  --code-normal: #575B6FCE;
+  --code-normal: #4B5263E9;
   --code-comment: #383d51ff;
   --code-function: #9cd6bcff;
   --code-keyword: #afd1e9cf;
@@ -69,7 +69,7 @@ body.theme-dark.apathy-theme-minted,
   --caret-color: #998FE1CF;
   --cursor-line-background: #1b162994;
   --editor-background: #0B0B11FF;
-  --editor-foreground: #575B6FCE;
+  --editor-foreground: #4B5263E9;
   --input-shadow: none;
   --text-error: #ca175dff;
   --text-warning: #ffb389ff;
@@ -77,7 +77,7 @@ body.theme-dark.apathy-theme-minted,
   --text-on-accent: #B3E6DEFF;
   --color-red-rgb: 202, 23, 93;
   --color-orange-rgb: 255, 179, 137;
-  --color-cyan-rgb: 51, 179, 204;
+  --color-cyan-rgb: 99, 114, 161;
   --color-green-rgb: 156, 214, 188;
   --callout-border-width: 1px;
   --callout-radius: 8px;
@@ -103,10 +103,10 @@ body.theme-dark.apathy-theme-minted,
   --callout-color: 179, 230, 222;
 }
 .theme-dark .callout[data-callout="info"] {
-  --callout-color: 51, 179, 204;
+  --callout-color: 99, 114, 161;
 }
 .theme-dark .callout[data-callout="todo"] {
-  --callout-color: 51, 179, 204;
+  --callout-color: 99, 114, 161;
 }
 .theme-dark .callout[data-callout="tip"] {
   --callout-color: 156, 214, 188;
