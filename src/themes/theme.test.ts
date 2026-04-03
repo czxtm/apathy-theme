@@ -1,8 +1,10 @@
-import { minted, palette as mintedPalette } from "./minted";
-import { getThemeValue } from "./types";
-import { test, expect } from "bun:test";
+import { expect, test } from "bun:test";
+import { minted } from "./minted";
+import { p } from "./mintedBase";
+import { getThemeValue, toHex } from "./types";
 
-test("path value retrieval with defaults", () => {
+test("path value retrieval with defaults", async () => {
+	const { minted } = await import("./minted");
 	const c = getThemeValue(minted, "tokens.types");
-	expect(c).toBe(mintedPalette.ice);
+	expect(c).toBe(toHex(p.ice));
 });

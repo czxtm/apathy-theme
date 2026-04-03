@@ -4,9 +4,14 @@
  * An experimental variant with brighter foreground and slightly different background.
  */
 
-import { make, type ThemeDefinition } from "./types";
+import {
+	make,
+	type ThemeDefinition,
+	type SlimThemeDefinition,
+	normalizeTheme,
+} from "./types";
 import { SemanticTokenModifier } from "../types";
-import { Color } from "@/core/color";
+import { Color, mkElementColors } from "@/core/color";
 import { mix } from "./utils";
 
 // ============================================================================
@@ -127,13 +132,13 @@ export const v = (k: PaletteValue): PaletteValue => k;
 // 2. Theme Definition
 // ============================================================================
 
-export const apathyExperimental: ThemeDefinition = {
+const apathyExperimentalSource = {
   name: "Apathy Experimental",
   type: "dark",
   palette,
   background: palette.background,
 
-  tokens: {
+  syntax: {
     source: palette.softWhite,
     comments: palette.muted,
     strings: make({
@@ -147,10 +152,6 @@ export const apathyExperimental: ThemeDefinition = {
     literals: {
       default: palette.cyan,
       string: palette.wasabi,
-      number: palette.cyan,
-      boolean: palette.cyan,
-      null: palette.cyan,
-      undefined: palette.cyan,
       regex: palette.rose,
     },
 
@@ -165,42 +166,29 @@ export const apathyExperimental: ThemeDefinition = {
 
     variables: {
       default: "#e3e1e8e4",
-      local: "#e3e1e8e4",
       parameter: palette.paramPurple,
-      property: "#e3e1e8e4",
       global: palette.amber,
-      other: "#e3e1e8e4",
     },
 
     constants: {
       default: palette.cyan,
-      numeric: palette.cyan,
-      language: palette.cyan,
       userDefined: "#e3e1e8e4",
     },
 
     functions: {
       default: palette.gold,
       declaration: palette.seafoam,
-      call: palette.gold,
-      method: palette.gold,
-      builtin: palette.gold,
     },
 
     types: {
       default: palette.gold,
-      primitive: palette.gold,
-      class: palette.gold,
       interface: palette.ice,
-      enum: palette.gold,
       typeParameter: palette.ice,
-      namespace: palette.gold,
     },
 
     punctuation: {
       default: palette.faintGray,
       definition: "#808080",
-      delimiter: palette.faintGray,
       bracket: "#747277",
       accessor: palette.accessor,
     },
@@ -208,13 +196,10 @@ export const apathyExperimental: ThemeDefinition = {
     meta: {
       default: palette.blush,
       decorator: palette.pink,
-      macro: palette.pink,
-      annotation: palette.pink,
       label: palette.softBlue,
     },
     storage: {
       default: palette.steel,
-      type: palette.steel,
     },
   },
 
@@ -235,31 +220,6 @@ export const apathyExperimental: ThemeDefinition = {
         default: palette.seafoam,
       },
     },
-  },
-
-  // Semantic overrides for fine-tuning
-  semantic: {
-    comment: palette.muted,
-    string: palette.wasabi,
-    keyword: palette.softBlue,
-    number: palette.cyan,
-    regexp: palette.rose,
-    operator: palette.crimson,
-    namespace: palette.gold,
-    type: palette.gold,
-    struct: palette.gold,
-    class: palette.gold,
-    interface: palette.ice,
-    enum: palette.gold,
-    typeParameter: palette.ice,
-    function: palette.gold,
-    method: palette.gold,
-    decorator: palette.pink,
-    macro: palette.pink,
-    variable: "#e3e1e8e4",
-    parameter: palette.paramPurple,
-    property: "#e3e1e8e4",
-    label: palette.softBlue,
   },
 
   // Modifier handlers
@@ -305,10 +265,10 @@ export const apathyExperimental: ThemeDefinition = {
       secondary: palette.gold,
     },
     status: {
-      error: palette.errorRed,
-      warning: palette.warning,
-      info: palette.info,
-      success: palette.addedGreen,
+      error: mkElementColors(palette.errorRed, { background: palette.background, foreground: "#cbdbe0b3" }),
+      warning: mkElementColors(palette.warning, { background: palette.background, foreground: "#cbdbe0b3" }),
+      info: mkElementColors(palette.info, { background: palette.background, foreground: "#cbdbe0b3" }),
+      success: mkElementColors(palette.addedGreen, { background: palette.background, foreground: "#cbdbe0b3" }),
     },
     selection: {
       background: palette.selection,
@@ -323,18 +283,17 @@ export const apathyExperimental: ThemeDefinition = {
       ignored: "#444248",
       conflict: palette.orange,
     },
-    overrides: {
+  },
+  componentOverrides: {
       editor: {
         background: palette.background,
         foreground: palette.white,
         lineHighlight: palette.lineHighlight,
         lineHighlightBorder: palette.lineHighlight,
-        selectionHighlight: palette.selectionHighlight,
-        wordHighlight: palette.wordHighlight,
-        wordHighlightStrong: palette.wordHighlightStrong,
-        findMatchHighlight: palette.findMatchHighlight,
-        findMatch: palette.findMatch,
-        rangeHighlight: "#2A244120",
+        selectionHighlightBackground: palette.selectionHighlight,
+        findMatchHighlightBackground: palette.findMatchHighlight,
+        findMatchBackground: palette.findMatch,
+        findRangeHighlightBackground: "#2A244120",
       },
       editorGutter: {
         background: palette.gutterBg,
@@ -497,8 +456,9 @@ export const apathyExperimental: ThemeDefinition = {
         incomingContentBackground: mix(palette.gold, palette.background, 0.3),
         commonContentBackground: mix(palette.widgetBorder, palette.background, 0.3),
       },
-    },
   },
-};
+} satisfies SlimThemeDefinition;
+
+export const apathyExperimental: ThemeDefinition = normalizeTheme(apathyExperimentalSource);
 
 export default apathyExperimental;

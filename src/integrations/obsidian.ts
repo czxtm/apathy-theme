@@ -51,10 +51,10 @@ function obsidianVars(
   const inputBg = ui("input.background");
   const inputFg = ui("input.foreground");
   const inputPlaceholder = ui("input.placeholderForeground");
-  const error = c("ui.status.error");
-  const warning = c("ui.status.warning");
-  const info = c("ui.status.info");
-  const success = c("ui.status.success");
+  const error = c("ui.status.error.foreground");
+  const warning = c("ui.status.warning.foreground");
+  const info = c("ui.status.info.foreground");
+  const success = c("ui.status.success.foreground");
 
   return {
     "--background-primary": base,
@@ -166,10 +166,10 @@ export function mapObsidian(
   const vars = obsidianVars(processedTheme, c, ui);
   const slug = slugify(theme.name);
 
-  const info = c("ui.status.info");
-  const success = c("ui.status.success");
-  const warning = c("ui.status.warning");
-  const error = c("ui.status.error");
+  const info = c("ui.status.info.foreground");
+  const success = c("ui.status.success.foreground");
+  const warning = c("ui.status.warning.foreground");
+  const error = c("ui.status.error.foreground");
   const accent = c("ui.accent.primary", "ui.foregrounds.accent");
   const quote = c("ui.foregrounds.muted");
 

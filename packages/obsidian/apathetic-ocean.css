@@ -10,11 +10,11 @@
 body.theme-dark.apathy-theme-apathetic-ocean,
 .theme-dark {
   --background-primary: #0e0e15ff;
-  --background-primary-alt: #0D0D13FF;
+  --background-primary-alt: #0a0a11ff;
   --background-secondary: #0f0f12ff;
-  --background-secondary-alt: #151520FF;
+  --background-secondary-alt: #151520ff;
   --background-modifier-cover: #1c1e29cc;
-  --background-modifier-hover: #151520FF;
+  --background-modifier-hover: #151520ff;
   --background-modifier-active-hover: #2d22476b;
   --background-modifier-border: #a099ae14;
   --background-modifier-border-hover: #182356ff;
@@ -24,27 +24,27 @@ body.theme-dark.apathy-theme-apathetic-ocean,
   --text-muted: #827b90cf;
   --text-faint: #26242a99;
   --text-accent: #33b3ccff;
-  --text-accent-hover: #4BBCD2FF;
+  --text-accent-hover: #42bed7ff;
   --interactive-normal: #0f0f12ff;
-  --interactive-hover: #151520FF;
+  --interactive-hover: #151520ff;
   --interactive-accent: #33b3ccff;
-  --interactive-accent-hover: #4BBCD2FF;
-  --interactive-success: #449dabff;
+  --interactive-accent-hover: #42bed7ff;
+  --interactive-success: #4f9ca8ff;
   --interactive-warning: #ffcb6bff;
   --interactive-accent-rgb: 51, 179, 204;
   --text-highlight-bg: #2d22476b;
   --text-selection: #2d22476b;
-  --titlebar-background: #0D0D13FF;
+  --titlebar-background: #0a0a11ff;
   --titlebar-background-focused: #0e0e15ff;
   --titlebar-text-color: #827b90cf;
   --titlebar-text-color-focused: #a7a4afff;
-  --nav-item-background-hover: #151520FF;
+  --nav-item-background-hover: #151520ff;
   --nav-item-background-active: #2d22476b;
   --nav-item-color: #827b90cf;
   --nav-item-color-hover: #a7a4afff;
   --nav-item-color-active: #a7a4afff;
   --tab-background-active: #0e0e15ff;
-  --tab-background-inactive: #0D0D13FF;
+  --tab-background-inactive: #0a0a11ff;
   --tab-text-color: #827b90cf;
   --tab-text-color-active: #a7a4afff;
   --tab-outline-color: #a099ae14;
@@ -52,15 +52,15 @@ body.theme-dark.apathy-theme-apathetic-ocean,
   --icon-color: #827b90cf;
   --icon-color-hover: #a7a4afff;
   --icon-color-focused: #33b3ccff;
-  --code-background: #07070BFF;
+  --code-background: #020204ff;
   --code-normal: #8e93b0c2;
   --code-comment: #383d51ff;
   --code-function: #f5e0dcff;
   --code-keyword: #afd1e9cf;
   --code-string: #95c17bff;
   --code-value: #33b3ccff;
-  --code-operator: #E60063ff;
-  --blockquote-background-color: #151520FF;
+  --code-operator: #e60063ff;
+  --blockquote-background-color: #151520ff;
   --blockquote-border-color: #a099ae14;
   --hr-color: #212131ff;
   --prompt-border-color: #a099ae14;
@@ -71,14 +71,14 @@ body.theme-dark.apathy-theme-apathetic-ocean,
   --editor-background: #0e0e15ff;
   --editor-foreground: #8e93b0c2;
   --input-shadow: none;
-  --text-error: #FF6188ff;
+  --text-error: #ff6188ff;
   --text-warning: #ffcb6bff;
-  --text-success: #449dabff;
-  --text-on-accent: #C3E88Dff;
+  --text-success: #4f9ca8ff;
+  --text-on-accent: #c3e88dff;
   --color-red-rgb: 255, 97, 136;
   --color-orange-rgb: 255, 203, 107;
   --color-cyan-rgb: 120, 220, 232;
-  --color-green-rgb: 68, 157, 171;
+  --color-green-rgb: 79, 156, 168;
   --callout-border-width: 1px;
   --callout-radius: 8px;
   --metadata-label-text-color: #26242a99;
@@ -86,7 +86,7 @@ body.theme-dark.apathy-theme-apathetic-ocean,
   --metadata-input-text-color: #ffffff99;
   --metadata-input-text-color-active: #ffffff99;
   --metadata-input-text-color-placeholder: #b5b5b545;
-  --metadata-input-background-hover: #151520FF;
+  --metadata-input-background-hover: #151520ff;
   --metadata-input-border-color: #a099ae14;
 }
 
@@ -109,16 +109,16 @@ body.theme-dark.apathy-theme-apathetic-ocean,
   --callout-color: 120, 220, 232;
 }
 .theme-dark .callout[data-callout="tip"] {
-  --callout-color: 68, 157, 171;
+  --callout-color: 79, 156, 168;
 }
 .theme-dark .callout[data-callout="success"] {
-  --callout-color: 68, 157, 171;
+  --callout-color: 79, 156, 168;
 }
 .theme-dark .callout[data-callout="check"] {
-  --callout-color: 68, 157, 171;
+  --callout-color: 79, 156, 168;
 }
 .theme-dark .callout[data-callout="done"] {
-  --callout-color: 68, 157, 171;
+  --callout-color: 79, 156, 168;
 }
 .theme-dark .callout[data-callout="question"] {
   --callout-color: 255, 203, 107;

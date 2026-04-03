@@ -28,27 +28,27 @@
 		},
 		"themes": [
 			{
-				"label": "[apathy] minted",
+				"label": "/// minted",
 				"uiTheme": "vs-dark",
 				"path": "./dist/minted.json"
 			},
 			{
-				"label": "[apathy] minted theory",
+				"label": "/// theory",
 				"uiTheme": "vs-dark",
 				"path": "./dist/minted-theory.json"
 			},
 			{
-				"label": "[apathy] classic",
+				"label": "/// apathy",
 				"uiTheme": "vs-dark",
 				"path": "./dist/apathy.json"
 			},
 			{
-				"label": "[apathy] ocean",
+				"label": "/// ocean",
 				"uiTheme": "vs-dark",
 				"path": "./dist/apathetic-ocean.json"
 			},
 			{
-				"label": "[apathy] slate",
+				"label": "/// slate",
 				"uiTheme": "vs-dark",
 				"path": "./themes/minted.json"
 			},
@@ -66,8 +66,10 @@
 	"license": "MIT",
 	"private": true,
 	"scripts": {
-		"build": "bun run src/main.ts",
-		"dev": "bun run src/dev-server.ts",
+		"generate:theme-paths": "bun run packages/scripts/generate-theme-paths.ts",
+		"check:theme-paths": "bun run generate:theme-paths && test -z \"$(git status --porcelain -- src/themes/themePaths.generated.ts)\"",
+		"build": "bun run generate:theme-paths && bun run src/main.ts",
+		"dev": "portless apathy --force bun run src/dev-server.ts",
 		"watch": "bun run --watch src/main.ts",
 		"bump:patch": "bun run src/main.ts bump patch",
 		"bump:minor": "bun run src/main.ts bump minor",
@@ -79,16 +81,16 @@
 		"publish": "vsce publish"
 	},
 	"devDependencies": {
-		"release-it": "^19.2.4",
 		"@biomejs/biome": "^2.3.8",
 		"@types/bun": "latest",
-		"@types/vscode": "1.98.0"
+		"@types/vscode": "1.98.0",
+		"release-it": "^19.2.4"
 	},
 	"peerDependencies": {
 		"typescript": "^5"
 	},
 	"dependencies": {
-		"color": "^5.0.3",
+		"colorjs.io": "^0.6.1",
 		"tsx": "^4.20.5",
 		"vsce": "^2.15.0"
 	}

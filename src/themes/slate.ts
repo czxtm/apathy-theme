@@ -5,10 +5,19 @@
  * setting defaults and then overriding specific values.
  */
 
-import { make, type ThemeDefinition, ColorPalette, UserInterface, UIComponents, type ColorLike } from "./types";
+import {
+	make,
+	type ThemeDefinition,
+	type SlimThemeDefinition,
+	ColorPalette,
+	UserInterface,
+	UIComponents,
+	type ColorLike,
+	normalizeTheme,
+} from "./types";
 import { SemanticTokenModifier } from "../types";
 import { alpha20, darken, l10, lighten, mix, transparentize } from './utils';
-import { Color, makeColors } from '@/core/color';
+import { Color, makeColors, mkElementColors } from '@/core/color';
 
 // ============================================================================
 // 1. Color Palette
@@ -291,10 +300,10 @@ const accent: UserInterface<ColorLike>["accent"] = {
 };
 
 const status: UserInterface<ColorLike>["status"] = {
-  error: rawColors.crimson,
-  warning: rawColors.gold,
-  info: rawColors.cyan,
-  success: rawColors.celery,
+  error: mkElementColors(rawColors.crimson, { background: BACKGROUND, foreground: FOREGROUND }),
+  warning: mkElementColors(rawColors.gold, { background: BACKGROUND, foreground: FOREGROUND }),
+  info: mkElementColors(rawColors.cyan, { background: BACKGROUND, foreground: FOREGROUND }),
+  success: mkElementColors(rawColors.celery, { background: BACKGROUND, foreground: FOREGROUND }),
 };
 
 const selection: UserInterface<ColorLike>["selection"] = {
@@ -317,7 +326,7 @@ const highlights: UserInterface<ColorLike>["highlights"] = {
     foreground: lighten(foregrounds.default, 0.2),
   }
 };
-const tokens: ThemeDefinition["tokens"] = {
+const syntax: SlimThemeDefinition["syntax"] = {
     source: foregrounds.default,
     comments: mix(rawColors['#829297'], rawColors.midnight, 0.5),
     strings: make({
@@ -397,10 +406,17 @@ const ui: UserInterface<ColorLike> = {
   status,
   selection,
   highlights,
-  hoverWidget: {
+  elements: {
     background: colors.midnight.lighter(0.1),
+    selectionBackground: colors.charcoal,
     foreground: colors.mist,
     border: colors.sageGray.mix(colors.midnight, 0.5),
+  },
+  subtleElements: {
+    background: colors.midnight,
+    selectionBackground: colors.charcoal,
+    foreground: colors.mutedwhite,
+    border: colors.black,
   },
   cursor: {
     foreground: colors.mist,
@@ -445,7 +461,7 @@ const ui: UserInterface<ColorLike> = {
   }
 };
 
-const components: UIComponents = {
+const components = {
   editor: {
     background: ui.backgrounds.base,
     foreground: ui.foregrounds.default,
@@ -564,7 +580,7 @@ const components: UIComponents = {
     border: rawColors.steel,
     secondaryBorder: rawColors.steel,
   },
-  hoverWidget: {
+  elements: {
     background: rawColors.midnight,
     foreground: rawColors.mist,
     border: darken(rawColors.steel, 0.2),
@@ -656,13 +672,13 @@ const components: UIComponents = {
   },
 }
 
-export const slate: ThemeDefinition = {
+const slateSource = {
   name: "Slate",
   type: "dark",
   palette: rawColors,
   background: ui.backgrounds.base,
 
-  tokens,
+  syntax,
 
   languageOverrides: {
     go: {
@@ -676,31 +692,6 @@ export const slate: ThemeDefinition = {
         property: rawColors.stormGray
       }
     }
-  },
-
-  // Semantic overrides for fine-tuning
-  semantic: {
-    comment: rawColors.charcoal,
-    string: rawColors.celery,
-    keyword: rawColors.lavender,
-    number: rawColors.cyan,
-    regexp: rawColors.peach,
-    operator: rawColors.crimson,
-    namespace: rawColors.ice,
-    type: rawColors.ice,
-    struct: rawColors.ice,
-    class: rawColors.ice,
-    interface: rawColors.ice,
-    enum: rawColors.dustyBlue,
-    typeParameter: rawColors.ice,
-    function: rawColors.seafoam,
-    method: rawColors.seafoam,
-    decorator: rawColors.peach,
-    macro: rawColors.peach,
-    variable: rawColors.vanillaCream,
-    parameter: rawColors.dustyBlue,
-    property: rawColors.stormGray,
-    label: rawColors.grape,
   },
 
   // Modifier handlers
@@ -719,11 +710,11 @@ export const slate: ThemeDefinition = {
       transform: (color: string) => new Color(color).mix(rawColors.lavender, 0.1),
     },
   },
-  ui: {
-    ...ui,
-    overrides: components
-  }
-};
+  ui,
+  componentOverrides: components,
+} satisfies SlimThemeDefinition;
+
+export const slate: ThemeDefinition = normalizeTheme(slateSource);
 
 export default slate;
 

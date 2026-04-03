@@ -8,18 +8,19 @@
  * - split complements for contrast accents
  */
 
-import type { ThemeDefinition } from "./types";
+import type { SlimThemeDefinition, ThemeDefinition } from "./types";
+import { normalizeTheme } from "./types";
 import { mix, transparentize } from "./utils";
-import { c, Color, mkColor } from "../core/color";
+import { c, Color, lch, mkColor, mkElementColors, oklch } from "../core/color";
 import type { MkColorOptions } from "../core/color";
 import { SemanticTokenModifier } from "../types";
 import {
 	mintedBaseExtraColors,
+	mintedBaseComponentOverrides,
 	mintedBaseLanguageOverrides,
 	mintedBaseModifiers,
 	mintedBasePalette,
-	mintedBaseSemantic,
-	mintedBaseTokens,
+	mintedBaseSyntax,
 	mintedBaseUi,
 } from "./mintedBase";
 
@@ -100,20 +101,20 @@ export const theme = {
 	border: c(palette.subtle).mix(c(palette.background), 0.5).hexa(),
 };
 
-const tokens: ThemeDefinition["tokens"] = {
+const syntax: SlimThemeDefinition["syntax"] = {
 	source: palette.foreground,
 	comments: palette.subtle,
 	strings: {
-		...mintedBaseTokens.strings,
+		...mintedBaseSyntax.strings,
 		default: palette.analogousGreen,
 		regex: palette.complement,
 	},
 	operators: {
-		...mintedBaseTokens.operators,
+		...mintedBaseSyntax.operators,
 		default: palette.complement,
 	},
 	literals: {
-		...mintedBaseTokens.literals,
+		...mintedBaseSyntax.literals,
 		default: palette.primary,
 		string: palette.analogousGreen,
 		number: palette.primary,
@@ -123,12 +124,12 @@ const tokens: ThemeDefinition["tokens"] = {
 		regex: palette.complement,
 	},
 	keywords: {
-		...mintedBaseTokens.keywords,
+		...mintedBaseSyntax.keywords,
 		default: palette.foreground,
 		operator: palette.complement,
 	},
 	variables: {
-		...mintedBaseTokens.variables,
+		...mintedBaseSyntax.variables,
 		default: palette.foreground,
 		local: palette.foreground,
 		parameter: palette.analogousBlue,
@@ -137,14 +138,14 @@ const tokens: ThemeDefinition["tokens"] = {
 		other: palette.foreground,
 	},
 	constants: {
-		...mintedBaseTokens.constants,
+		...mintedBaseSyntax.constants,
 		default: palette.primary,
 		numeric: palette.primary,
 		language: palette.primary,
 		userDefined: palette.foreground,
 	},
 	functions: {
-		...mintedBaseTokens.functions,
+		...mintedBaseSyntax.functions,
 		default: palette.analogousGreen,
 		declaration: palette.analogousGreen,
 		call: palette.analogousGreen,
@@ -152,7 +153,7 @@ const tokens: ThemeDefinition["tokens"] = {
 		builtin: palette.analogousGreen,
 	},
 	types: {
-		...mintedBaseTokens.types,
+		...mintedBaseSyntax.types,
 		default: palette.analogousBlue,
 		primitive: palette.splitGold,
 		class: palette.analogousBlue,
@@ -162,7 +163,7 @@ const tokens: ThemeDefinition["tokens"] = {
 		namespace: palette.analogousBlue,
 	},
 	punctuation: {
-		...mintedBaseTokens.punctuation,
+		...mintedBaseSyntax.punctuation,
 		default: palette.muted,
 		definition: palette.subtle,
 		delimiter: palette.subtle,
@@ -170,7 +171,7 @@ const tokens: ThemeDefinition["tokens"] = {
 		accessor: palette.subtle,
 	},
 	meta: {
-		...mintedBaseTokens.meta,
+		...mintedBaseSyntax.meta,
 		default: palette.complement,
 		decorator: palette.complement,
 		macro: palette.complement,
@@ -179,58 +180,88 @@ const tokens: ThemeDefinition["tokens"] = {
 		tag: palette.splitGold,
 	},
 	storage: {
-		...mintedBaseTokens.storage,
+		...mintedBaseSyntax.storage,
 		default: palette.analogousBlue,
 		type: palette.analogousBlue,
 	},
 	special: {
-		...mintedBaseTokens.special,
+		...mintedBaseSyntax.special,
 	},
 };
 
-const baseOverrides = mintedBaseUi.overrides;
-if (!baseOverrides) {
-	throw new Error("Minted Theory expects Minted to define ui.overrides");
-}
+const baseOverrides = mintedBaseComponentOverrides as {
+	editorGutter?: {
+		background?: string;
+		modifiedBackground?: string;
+		addedBackground?: string;
+		foldingControl?: string;
+	};
+	diffEditor?: {
+		insertedTextBackground?: string;
+		insertedLineBackground?: string;
+		diagonalFill?: string;
+	};
+};
 
-const terminalOverrides = mintedBaseUi.overrides?.terminal
+const terminalOverrides = mintedBaseComponentOverrides.terminal
 	? {
-			...mintedBaseUi.overrides.terminal,
-			background: "#0A0A0FFF",
-			foreground: mix(palette.foreground, palette.analogousGreen, 0.18),
-			ansiBlack: "#0B0A0FFF",
-			ansiRed: new Color(palette.error).rotate(18).darker(0.4).hexa(),
-			ansiGreen: new Color(palette.analogousBlue)
-				.darker(0.22)
-				.mix(new Color(palette.splitGold).darker(0.22), 0.55)
-				.hexa(),
-			ansiYellow: new Color(palette.splitGold)
-				.darker(0.18)
-				.mix(new Color(palette.analogousBlue).darker(0.55), 0.2)
-				.hexa(),
-			ansiBlue: new Color(palette.analogousGreen)
-				.darker(0.55)
-				.mix(new Color(palette.splitViolet).darker(0.45), 0.35)
-				.hexa(),
-			ansiMagenta: palette.error,
-			ansiCyan: new Color(palette.primary).darker(0.18).hexa(),
-			ansiBrightRed: new Color(palette.error)
-				.rotate(12)
-				.lighter(0.1)
-				.saturate(0.32)
-				.hexa(),
-			ansiBrightYellow: new Color(palette.splitGold)
-				.darker(0.32)
-				.mix(new Color(palette.analogousBlue).darker(0.48), 0.16)
-				.hexa(),
-			ansiBrightMagenta: new Color(palette.error)
-				.lighter(0.28)
-				.saturate(0.18)
-				.hexa(),
-		}
+		...mintedBaseComponentOverrides.terminal,
+		background: "#0A0A0FFF",
+		foreground: mix(palette.foreground, palette.analogousGreen, 0.18),
+		ansiBlack: "#0B0A0FFF",
+		ansiRed: new Color(palette.error).rotate(18).darker(0.4).hexa(),
+		ansiGreen: new Color(palette.analogousBlue)
+			.darker(0.22)
+			.mix(new Color(palette.splitGold).darker(0.22), 0.55)
+			.hexa(),
+		ansiYellow: new Color(palette.splitGold)
+			.darker(0.18)
+			.mix(new Color(palette.analogousBlue).darker(0.55), 0.2)
+			.hexa(),
+		ansiBlue: new Color(palette.analogousGreen)
+			.darker(0.55)
+			.mix(new Color(palette.splitViolet).darker(0.45), 0.35)
+			.hexa(),
+		ansiMagenta: palette.error,
+		ansiCyan: new Color(palette.primary).darker(0.18).hexa(),
+		ansiBrightRed: new Color(palette.error)
+			.rotate(12)
+			.lighter(0.1)
+			.saturate(0.32)
+			.hexa(),
+		ansiBrightYellow: new Color(palette.splitGold)
+			.darker(0.32)
+			.mix(new Color(palette.analogousBlue).darker(0.48), 0.16)
+			.hexa(),
+		ansiBrightMagenta: new Color(palette.error)
+			.lighter(0.28)
+			.saturate(0.18)
+			.hexa(),
+	}
 	: undefined;
-
-export const mintedTheory: ThemeDefinition = {
+const tempoverrides: Record<string, string> = {
+	"#1E434ACC": "#1E434AAB",
+	"#34347054": "#34347054",
+	"#F3E6DFFF": "#F3E6DFFF",
+	"#80123CDE": "#80123CDE",
+	"#CBE5EF26": "#CBE5EF26",
+	"#CB3F7566": "#CB3F7566",
+	"#A1CEC51A": "#A1CEC51A",
+	"#83A6D21A": "#83A6D21A",
+	"#F0DADDFF": "#F0DADDFF",
+	"#F0DADD40": "#F0DADD40",
+	"#2323432E": "#2323432E",
+	"#87A6CEE0": "#87A6CEE0",
+	"#B3A097E6": "#B3A097E6",
+	"#A8958DE0": "#A8958DE0",
+	"#8AAAA552": "#8AAAA552",
+	"#6B40B859": "#6B40B859",
+	"#43326959": "#43326959",
+	"#809F9BE0": "#809F9BE0",
+	"#4D3B3252": "#4D3B3252",
+	"#AB5726E0": "#AB5726E0",
+} as const;
+const mintedTheorySource = {
 	name: "Minted Theory",
 	type: "dark",
 	palette: {
@@ -238,32 +269,9 @@ export const mintedTheory: ThemeDefinition = {
 		...palette,
 	},
 	background: c(palette.background),
-	tokens,
+	backgroundAlpha: 1,
+	syntax,
 	languageOverrides: mintedBaseLanguageOverrides,
-	semantic: {
-		...mintedBaseSemantic,
-		comment: palette.subtle,
-		string: palette.analogousGreen,
-		keyword: palette.foreground,
-		number: palette.primary,
-		regexp: palette.complement,
-		operator: palette.complement,
-		namespace: palette.analogousBlue,
-		type: palette.analogousBlue,
-		struct: palette.analogousBlue,
-		class: palette.analogousBlue,
-		interface: palette.analogousBlue,
-		enum: palette.splitViolet,
-		typeParameter: palette.analogousBlue,
-		function: palette.analogousGreen,
-		method: palette.analogousGreen,
-		decorator: palette.complement,
-		macro: palette.complement,
-		variable: palette.foreground,
-		parameter: palette.analogousBlue,
-		property: mix(palette.foreground, palette.splitGold, 0.2),
-		label: palette.splitViolet,
-	},
 	modifiers: {
 		...mintedBaseModifiers,
 		[SemanticTokenModifier.declaration]: {
@@ -297,28 +305,64 @@ export const mintedTheory: ThemeDefinition = {
 			subtle: transparentize(palette.subtle, 0.85),
 			separator: transparentize(palette.foreground, 0.9),
 		},
-		elements: {
-			background: "#11111CE6",
-			hover: "#141426F0",
-			active: "#29294DB3",
-			selected: "#3535547A",
-			disabled: "#1D1F26F0",
-			foreground: palette.foreground,
-			border: theme.border,
-		},
-		subtleElements: {
-			background: "#2323432E",
-			hover: "#3C3C5D26",
-			active: "#2A244178",
-			selected: "#2A24417A",
-			disabled: "#21212C4D",
-			foreground: palette.foreground,
-			border: transparentize(palette.subtle, 0.7),
-		},
-		hoverWidget: {
-			...mintedBaseUi.hoverWidget,
-			background: "#0E0E1AFF",
-		},
+
+		subtleElements: (() => {
+			const bg = "#0B0B1284"
+			const hover = new Color("#0B0B12").lighter(0.1).hexa();
+			const active = new Color("#0B0B12").lighter(0.2).hexa();
+			const selected = "#51506F2B";
+			const disabled = new Color("#0B0B12").desaturate(0.5).transparent(0.5).hexa();
+			return {
+				background: bg,
+				selectionBackground: selected,
+				hover: {
+					background: hover,
+					border: transparentize(palette.subtle, 0.7),
+				},
+				active: {
+					background: active,
+					border: transparentize(palette.subtle, 0.7),
+				},
+				selected: {
+					background: selected,
+					border: transparentize(palette.subtle, 0.7),
+				},
+				disabled: {
+					background: disabled,
+					border: transparentize(palette.subtle, 0.7),
+				},
+				foreground: palette.foreground,
+				border: transparentize(palette.subtle, 0.7),
+			}
+		})(),
+		elements: (() => {
+			const bg = "#191629"
+			const hover = new Color(bg).lighter(0.1).hexa();
+			const active = new Color(bg).lighter(0.2).hexa();
+			const selected = "#6B6AAC24";
+			const disabled = new Color(bg).desaturate(0.5).transparent(0.5).hexa();
+			return {
+				background: bg,
+				hover: {
+					background: hover,
+					border: transparentize(palette.subtle, 0.7),
+				},
+				active: {
+					background: active,
+					border: transparentize(palette.subtle, 0.7),
+				},
+				selected: {
+					background: selected,
+					border: transparentize(palette.subtle, 0.7),
+				},
+				disabled: {
+					background: disabled,
+					border: transparentize(palette.subtle, 0.7),
+				},
+				foreground: palette.foreground,
+				border: transparentize(palette.subtle, 0.7),
+			}
+		})(),
 		panels: {
 			background: palette.background,
 			foreground: palette.foreground,
@@ -341,52 +385,84 @@ export const mintedTheory: ThemeDefinition = {
 			],
 		},
 		status: {
-			...mintedBaseUi.status,
-			error: palette.error,
-			warning: palette.warning,
-			info: palette.info,
-			success: palette.success,
+			info: {
+				...mkElementColors(palette.info, { background: palette.background, foreground: palette.foreground }),
+				background: new Color(palette.info).darker(0.35).desaturate(0.15).alpha(0.05).hexa(),
+			},
+			success: {
+				...mkElementColors(palette.success, { background: palette.background, foreground: palette.foreground }),
+				foreground: oklch(0.851, 0.083, 157).alpha(0.87).hexa(),
+			},
+			warning: {
+				...mkElementColors(palette.warning, { background: palette.background, foreground: palette.foreground }),
+				foreground: oklch(0.933, 0.017, 50).hexa(),
+				background: new Color(palette.warning).darker(0.7).desaturate(0.8).alpha(0.32).hexa(),
+				border: new Color(palette.warning).darker(0.55).desaturate(0.35).alpha(0.88).hexa(),
+			},
+			error: {
+				...mkElementColors(
+					new Color(palette.error).saturate(0.31).lighter(0.16).hex(),
+					{ background: palette.background, foreground: palette.foreground, fg: { saturationBlend: 0, alpha: 0.9 } },
+				),
+				background: new Color(palette.error).darker(0.8).desaturate(0.1).alpha(0.76).hexa(),
+			},
 		},
 		git: {
 			...mintedBaseUi.git,
-			added: palette.analogousGreen,
-			modified: palette.splitGold,
-			deleted: palette.error,
+			added: "#a1dfb8dF",
+			modified: "#F3E6DFFF",
+			deleted: tempoverrides["#80123CDE"],
 			conflict: palette.complement,
-			renamed: palette.primary,
+			renamed: tempoverrides["#CBE5EF26"],
 		},
-		overrides: {
-			...baseOverrides,
-			editorGutter: {
-				background:
-					baseOverrides.editorGutter.background ??
-					mintedBaseUi.backgrounds.surface,
-				modifiedBackground:
-					baseOverrides.editorGutter.modifiedBackground ??
-					mintedBaseUi.git.modified,
-				addedBackground:
-					baseOverrides.editorGutter.addedBackground ?? mintedBaseUi.git.added,
-				deletedBackground: transparentize(palette.error, 0.45),
-				foldingControl:
-					baseOverrides.editorGutter.foldingControl ??
-					mintedBaseUi.foregrounds.muted,
-			},
-			diffEditor: {
-				insertedTextBackground:
-					baseOverrides.diffEditor.insertedTextBackground ??
-					transparentize(palette.analogousGreen, 0.9),
-				removedTextBackground: transparentize(palette.error, 0.9),
-				insertedLineBackground:
-					baseOverrides.diffEditor.insertedLineBackground ??
-					transparentize(palette.analogousGreen, 0.84),
-				removedLineBackground: transparentize(palette.error, 0.82),
-				diagonalFill:
-					baseOverrides.diffEditor.diagonalFill ??
-					transparentize(palette.subtle, 0.5),
-			},
-			...(terminalOverrides ? { terminal: terminalOverrides } : {}),
+		indentGuide: {
+			background: tempoverrides["#25183B59"],
+			activeBackground: tempoverrides["#6B40B859"],
 		},
 	},
-};
+	componentOverrides: {
+		...baseOverrides,
+		editorGutter: {
+			background:
+				baseOverrides.editorGutter?.background ??
+				mintedBaseUi.backgrounds.surface,
+			modifiedBackground:
+				baseOverrides.editorGutter?.modifiedBackground ??
+				mintedBaseUi.git.modified,
+			addedBackground:
+				baseOverrides.editorGutter?.addedBackground ?? mintedBaseUi.git.added,
+			deletedBackground: transparentize(palette.error, 0.45),
+			foldingControl:
+				baseOverrides.editorGutter?.foldingControl ??
+				mintedBaseUi.foregrounds.muted,
+		},
+		// diffEditor: {
+		// 	insertedTextBackground:
+		// 		baseOverrides.diffEditor?.insertedTextBackground ??
+		// 		transparentize(palette.analogousGreen, 0.9),
+		// 	removedTextBackground: transparentize(palette.error, 0.9),
+		// 	insertedLineBackground:
+		// 		baseOverrides.diffEditor?.insertedLineBackground ??
+		// 		transparentize(palette.analogousGreen, 0.84),
+		// 	removedLineBackground: transparentize(palette.error, 0.82),
+		// 	diagonalFill:
+		// 		baseOverrides.diffEditor?.diagonalFill ??
+		// 		transparentize(palette.subtle, 0.5),
+		// },
+		"quickInputList.focusBackground": oklch(0.2466, 0.02518, 274.34, 0.4549),
+		quickInputList: {
+			"focusBackground": oklch(0.2466, 0.02518, 274.34, 0.4549),
+		},
+		editor: {
+			selectionBackground: oklch(0.244, 0.02083, 285, 0.513)
+		},
+		input: {
+			background: oklch(0.17, 0.0082, 285, 0.3725)
+		},
+		// ...(terminalOverrides ? { terminal: terminalOverrides } : {}),
+	},
+} satisfies SlimThemeDefinition;
+
+export const mintedTheory: ThemeDefinition = normalizeTheme(mintedTheorySource);
 
 export default mintedTheory;

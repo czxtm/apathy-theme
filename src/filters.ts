@@ -5,7 +5,8 @@
  * contrast, brightness, saturation, and other color properties.
  */
 
-import Color from "color";
+import { Color, toColorInstance } from "./core/color";
+import type { ThemeDefinition } from "./themes/types";
 
 // ============================================================================
 // Filter Configuration
@@ -31,7 +32,7 @@ export interface ThemeFilters {
   backgroundLightness?: number;
 
   /** Custom filter function applied last */
-  custom?: (color: string) => string;
+  custom?: (color: string, key: string, theme: ThemeDefinition) => string;
 }
 
 // ============================================================================
@@ -53,6 +54,9 @@ function isColor(value: string): boolean {
   // HSL/HSLA
   if (/^hsla?\s*\(/.test(value)) return true;
 
+  // OKLCH
+  if (/^oklch\s*\(/i.test(value)) return true;
+
   return false;
 }
 
@@ -61,7 +65,7 @@ function isColor(value: string): boolean {
  */
 function isLightColor(color: string): boolean {
   try {
-    return Color(color).luminosity() > 0.5;
+    return new Color(color).oklch().l > 0.5;
   } catch {
     return false;
   }
@@ -74,17 +78,23 @@ function isLightColor(color: string): boolean {
 /**
  * Apply all filters to a single color
  */
-export function applyFilters(colorStr: string, filters: ThemeFilters): string {
+export function applyFilters(
+  colorStr: string,
+  filters: ThemeFilters,
+  key = "",
+  theme = {} as ThemeDefinition,
+): string {
   if (!isColor(colorStr)) return colorStr;
 
   try {
-    let color = Color(colorStr);
-    const hasAlpha = color.alpha() < 1;
+    let color = new Color(colorStr);
+    const original = new Color(colorStr).oklch();
+    const hasAlpha = original.alpha < 1;
 
     // Contrast adjustment (move colors away from or toward middle gray)
     if (filters.contrast !== undefined && filters.contrast !== 0) {
       const factor = 1 + filters.contrast;
-      const l = color.lightness();
+      const l = color.oklch().l * 100;
       // Move lightness toward or away from 50%
       const newL = 50 + (l - 50) * factor;
       color = color.lightness(Math.max(0, Math.min(100, newL)));
@@ -92,7 +102,7 @@ export function applyFilters(colorStr: string, filters: ThemeFilters): string {
 
     // Brightness adjustment
     if (filters.brightness !== undefined && filters.brightness !== 0) {
-      const l = color.lightness();
+      const l = color.oklch().l * 100;
       // Scale: -1 -> 0%, 0 -> no change, 1 -> 100%
       const delta = filters.brightness * 50;
       color = color.lightness(Math.max(0, Math.min(100, l + delta)));
@@ -100,35 +110,30 @@ export function applyFilters(colorStr: string, filters: ThemeFilters): string {
 
     // Saturation adjustment
     if (filters.saturation !== undefined && filters.saturation !== 0) {
-      const s = color.saturationl();
-      // Scale: -1 -> 0%, 0 -> no change, 1 -> double
       if (filters.saturation > 0) {
-        const newS = s + (100 - s) * filters.saturation;
-        color = color.saturationl(newS);
+        color = color.saturate(filters.saturation);
       } else {
-        const newS = s * (1 + filters.saturation);
-        color = color.saturationl(Math.max(0, newS));
+        color = color.desaturate(Math.abs(filters.saturation));
       }
     }
 
     // Hue shift
     if (filters.hueShift !== undefined && filters.hueShift !== 0) {
-      const h = color.hue();
-      color = color.hue((h + filters.hueShift) % 360);
+      color = color.rotate(filters.hueShift);
     }
 
     // Custom filter
     if (filters.custom) {
-      const result = filters.custom(color.hexa());
-      color = Color(result);
+      const result = filters.custom(color.render(), key, theme);
+      color = new Color(result);
     }
 
     // Preserve original alpha
     if (hasAlpha) {
-      return color.alpha(Color(colorStr).alpha()).hexa();
+      return color.alpha(original.alpha).render();
     }
 
-    return color.hexa();
+    return color.render();
   } catch {
     // If color parsing fails, return original
     return colorStr;
@@ -141,35 +146,38 @@ export function applyFilters(colorStr: string, filters: ThemeFilters): string {
 export function applyFiltersWithContext(
   colorStr: string,
   filters: ThemeFilters,
-  context: "foreground" | "background" | "auto"
+  context: "foreground" | "background" | "auto",
+  key: string,
+  theme: ThemeDefinition
 ): string {
   if (!isColor(colorStr)) return colorStr;
 
   try {
-    let color = Color(colorStr);
-    const hasAlpha = color.alpha() < 1;
+    let color = new Color(colorStr);
+    const originalAlpha = color.oklch().alpha;
+    const hasAlpha = originalAlpha < 1;
     const effectiveContext = context === "auto"
       ? (isLightColor(colorStr) ? "foreground" : "background")
       : context;
 
     // Apply context-specific lightness adjustment first
     if (effectiveContext === "foreground" && filters.foregroundLightness) {
-      const l = color.lightness();
+      const l = color.oklch().l * 100;
       const delta = filters.foregroundLightness * 50;
       color = color.lightness(Math.max(0, Math.min(100, l + delta)));
     } else if (effectiveContext === "background" && filters.backgroundLightness) {
-      const l = color.lightness();
+      const l = color.oklch().l * 100;
       const delta = filters.backgroundLightness * 50;
       color = color.lightness(Math.max(0, Math.min(100, l + delta)));
     }
 
     // Then apply the rest
-    const tempHex = hasAlpha ? color.alpha(Color(colorStr).alpha()).hexa() : color.hexa();
+    const tempHex = hasAlpha ? color.alpha(originalAlpha).render() : color.render();
     return applyFilters(tempHex, {
       ...filters,
       foregroundLightness: undefined,
       backgroundLightness: undefined,
-    });
+    }, key, theme);
   } catch {
     return colorStr;
   }

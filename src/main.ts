@@ -56,7 +56,7 @@ const themes: ThemeConfig[] = [
   {
     theme: slate,
     outputPath: "./dist/slate.json",
-    basePath: "./themes/minted.jsonc",
+    // basePath: "./themes/minted.jsonc",
     zedOutputPath: "./packages/zed/themes/slate.json",
     shikiOutputPath: "./dist/shiki/slate.json",
     obsidianOutputPath: "./packages/obsidian/slate.css",

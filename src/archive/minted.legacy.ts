@@ -1,6 +1,6 @@
 import type { Theme, VSCodeTheme } from "../types";
 import { TokenType, SemanticTokenModifier, SemanticTokenType } from "../types";
-import Color from "color";
+import { Color } from "../core/color";
 
 export const colors = {
   "#8e93b0c2": "#8e93b0c2",
@@ -113,8 +113,8 @@ export const vscodeTheme: VSCodeTheme = {
     
     // Per-token transform: async tokens get mixed with keyword color
     [SemanticTokenModifier.async]: {
-      transform: (color: string) => 
-        Color(color).mix(Color(colors["#998fe1cf"]), 0.1).hex(),
+      transform: (color: string) =>
+        new Color(color).mix(new Color(colors["#998fe1cf"]), 0.1).hex(),
     },
   },
 }
