@@ -1,0 +1,3 @@
+creation_rules:
+  - path_regex: 'vars/.*\.json$'
+    age: "age16gv4kay7c3r24ezcav0hzps7xgdjlrpa26nhk6ag7ktk7huwudsqal3lsu"

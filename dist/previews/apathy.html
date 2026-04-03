@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apathy — Theme Preview</title>
+<style>
+  /* ── Reset ─────────────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background: #0e0b13;
+    color: #cbdbe0b3;
+    padding: 0;
+    line-height: 1.5;
+  }
+
+  /* ── Layout ────────────────────────────────────────────────────── */
+  .page { max-width: 1400px; margin: 0 auto; padding: 24px; }
+
+  h1 { color: #33b3cc; font-size: 28px; margin-bottom: 4px; }
+  h2 { color: #33b3cc; font-size: 20px; margin: 32px 0 16px; border-bottom: 1px solid #45414C; padding-bottom: 8px; opacity: .85; }
+  h3 { color: #cbdbe0b3; font-size: 16px; margin: 16px 0 8px; opacity: .7; }
+  h4 { font-size: 13px; opacity: .6; margin-bottom: 8px; text-transform: uppercase; letter-spacing: .5px; }
+  .subtitle { opacity: .5; margin-bottom: 24px; }
+
+  /* ── IDE Shell ─────────────────────────────────────────────────── */
+  .ide-shell {
+    display: grid;
+    grid-template-columns: 48px 220px 1fr;
+    border: 1px solid #45414C;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 620px;
+  }
+
+  .activity-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 0;
+    gap: 4px;
+  }
+  .ab-icon { font-size: 20px; padding: 8px; cursor: pointer; opacity: .8; }
+  .ab-icon.active { opacity: 1; }
+  .ab-badge { font-size: 10px; padding: 2px 6px; border-radius: 99px; margin-top: auto; }
+
+  .sidebar { overflow-y: auto; padding-bottom: 8px; }
+  .sb-header { padding: 8px 12px; font-size: 11px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; }
+  .sb-item { padding: 4px 12px 4px 20px; font-size: 13px; cursor: pointer; white-space: nowrap; }
+  .sb-item small { opacity: .6; margin-left: 4px; }
+
+  .editor-area { display: flex; flex-direction: column; overflow: hidden; }
+
+  .title-bar { padding: 6px 16px; font-size: 13px; text-align: center; font-weight: 500; }
+
+  .tab-bar { display: flex; overflow-x: auto; }
+  .tab { padding: 8px 16px; font-size: 12px; cursor: pointer; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+  .tab .dot { font-size: 8px; }
+
+  .breadcrumbs { padding: 4px 16px; font-size: 12px; opacity: .8; }
+
+  .editor {
+    flex: 1;
+    display: flex;
+    overflow: auto;
+    font-family: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  code {
+    font-family: 'Source Code Pro', 'Monaspace Neon Var', 'Cascadia Code', 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+  }
+  .gutter { padding: 4px 8px; text-align: right; user-select: none; min-width: 44px; }
+  .gutter .ln { font-size: 12px; line-height: 1.6; }
+  .gutter .ln.active { font-weight: 600; }
+  .code-area { flex: 1; padding: 4px 16px; position: relative; overflow-x: auto; }
+  .code-block { white-space: pre; }
+  .code-line { white-space: pre; min-height: 1.6em; }
+  .current-line { position: absolute; left: 0; right: 0; height: 1.6em; top: calc(5 * 1.6em + 4px); pointer-events: none; }
+  .selection-sample, .find-match, .find-match-hl { white-space: pre; border-radius: 2px; display: inline-block; margin-top: 4px; padding: 0 4px; }
+
+  .panel { height: 140px; display: flex; flex-direction: column; }
+  .panel-tabs { display: flex; gap: 16px; padding: 6px 16px 0; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; }
+  .panel-tab { padding-bottom: 4px; cursor: pointer; }
+  .terminal {
+    flex: 1;
+    padding: 8px 16px;
+    font-family: 'Fira Code', 'Cascadia Code', Menlo, monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    overflow: auto;
+  }
+
+  .status-bar { display: flex; justify-content: space-between; padding: 2px 16px; font-size: 12px; }
+
+  /* ── Widgets ───────────────────────────────────────────────────── */
+  .widgets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .widget-card { padding: 16px; border-radius: 8px; border: 1px solid #212131; }
+  .mock-input { padding: 6px 10px; border-radius: 4px; font-size: 13px; margin-bottom: 8px; }
+  .mock-input.placeholder { opacity: .6; }
+  .mock-btn { padding: 6px 16px; border: none; border-radius: 4px; font-size: 13px; cursor: pointer; margin-right: 8px; }
+  .mock-dropdown { padding: 6px 10px; border-radius: 4px; font-size: 13px; cursor: pointer; }
+  .mock-badge { display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 600; margin-right: 6px; }
+  .mock-notification { padding: 10px 14px; border-radius: 6px; font-size: 13px; }
+  .mock-status-bar { padding: 4px 16px; border-radius: 4px; font-size: 12px; }
+  .status-row { display: flex; align-items: center; gap: 8px; padding: 2px 0; font-size: 13px; }
+  .status-row .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .diff-line { padding: 2px 8px; font-family: monospace; font-size: 12px; margin: 1px 0; }
+
+  /* ── Palette ───────────────────────────────────────────────────── */
+  .palette-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; }
+  .swatch { text-align: center; }
+  .swatch-color { width: 100%; height: 40px; border-radius: 6px; border: 1px solid #212131; }
+  .swatch-label { font-size: 10px; opacity: .6; margin-top: 4px; word-break: break-all; }
+
+  /* ── Token Table ───────────────────────────────────────────────── */
+  .token-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .token-table th { text-align: left; padding: 8px; border-bottom: 2px solid #45414C; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; opacity: .6; }
+  .token-table td { padding: 6px 8px; border-bottom: 1px solid #212131; }
+  .token-table code { font-family: monospace; font-size: 11px; opacity: .7; }
+  .swatch-inline { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: middle; margin-right: 4px; }
+
+  /* ── Core UI Tokens ────────────────────────────────────────────── */
+  .core-tokens { display: flex; flex-direction: column; gap: 20px; }
+  .core-tokens-group h4 { margin-bottom: 10px; }
+  .core-tokens-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .core-token-item { display: flex; flex-direction: column; gap: 4px; }
+  .core-token-swatch { border-radius: 6px; padding: 12px 10px; font-size: 11px; min-height: 48px; display: flex; align-items: center; }
+  .core-token-swatch.bg .core-token-swatch-text { text-shadow: 0 1px 3px rgba(0,0,0,.5); font-weight: 500; }
+  .core-token-swatch.pill { justify-content: center; font-weight: 600; }
+  .core-token-swatch.pill .core-token-swatch-text { text-shadow: 0 1px 3px rgba(0,0,0,.4); }
+  .core-token-hex { font-size: 10px; opacity: .5; font-family: monospace; }
+
+  /* ── Timestamp ─────────────────────────────────────────────────── */
+  .timestamp { text-align: center; opacity: .3; font-size: 11px; padding: 24px 0; }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Apathy</h1>
+  <div class="subtitle">dark theme — generated preview</div>
+
+  <h2>IDE Layout</h2>
+  
+<!-- ═══ Activity Bar + Sidebar ═══ -->
+<div class="ide-shell">
+  <div class="activity-bar" style="background:#0e0b13;border-right:1px solid #0e0b13">
+    <div class="ab-icon active" style="color:#e3e1e8e4">📁</div>
+    <div class="ab-icon" style="color:#e0dfe127">🔍</div>
+    <div class="ab-icon" style="color:#e0dfe127">🔀</div>
+    <div class="ab-icon" style="color:#e0dfe127">🐛</div>
+    <div class="ab-badge" style="background:#FF7A0000;color:#C3E88D">3</div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar" style="background:#0e0b13;border-right:1px solid #0e0b13">
+    <div class="sb-header" style="background:#0f0e1000;color:#e3e1e8b7">EXPLORER</div>
+    <div class="sb-item hover" style="background:#2A244140;color:#E6E2D1">📄 index.ts</div>
+    <div class="sb-item active" style="background:#2A2441;color:#E6E2D1">📄 theme.ts</div>
+    <div class="sb-item" style="color:#827b90cf">📄 utils.ts</div>
+    <div class="sb-item" style="color:#827b90cf">📁 components/</div>
+    <div class="sb-item" style="color:#47cf7ec9">📄 new-file.ts <small>U</small></div>
+    <div class="sb-item" style="color:#ffd014d4">📄 modified.ts <small>M</small></div>
+    <div class="sb-item" style="color:#F92672">📄 removed.ts <small>D</small></div>
+  </div>
+
+  <!-- Main editor area -->
+  <div class="editor-area">
+    <!-- Title Bar -->
+    <div class="title-bar" style="background:#0e0b13;color:#cbdbe0b3">
+      Apathy — preview.tsx
+    </div>
+
+    <!-- Tabs -->
+    <div class="tab-bar" style="background:#0f0e10">
+      <div class="tab inactive" style="background:#0f0e10;color:#b5b5b59e;border-right:1px solid #d0cfd3">
+        index.ts
+      </div>
+      <div class="tab active" style="background:#0f0e10;color:#e3e1e894;border-top:2px solid #d0cfd3;border-right:1px solid #d0cfd3">
+        theme.ts
+      </div>
+      <div class="tab inactive modified" style="background:#0f0e10;color:#b5b5b59e;border-right:1px solid #d0cfd3">
+        utils.ts <span class="dot" style="color:#ffb547">●</span>
+      </div>
+    </div>
+
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs" style="background:#0e0b13;color:#e0e0e03c">
+      src <span style="opacity:.5">/</span> themes <span style="opacity:.5">/</span> <span style="color:#FFCB6B">theme.ts</span>
+    </div>
+
+    <!-- Editor -->
+    <div class="editor" style="background:#0e0b13;color:#6e6a7b">
+      <div class="gutter" style="background:#0c0a10">
+        <div class="ln" style="color:transparent">1</div>
+        <div class="ln" style="color:transparent">2</div>
+        <div class="ln" style="color:transparent">3</div>
+        <div class="ln" style="color:transparent">4</div>
+        <div class="ln" style="color:transparent">5</div>
+        <div class="ln active" style="color:transparent">6</div>
+        <div class="ln" style="color:transparent">7</div>
+        <div class="ln" style="color:transparent">8</div>
+        <div class="ln" style="color:transparent">9</div>
+        <div class="ln" style="color:transparent">10</div>
+        <div class="ln" style="color:transparent">11</div>
+        <div class="ln" style="color:transparent">12</div>
+        <div class="ln" style="color:transparent">13</div>
+        <div class="ln" style="color:transparent">14</div>
+        <div class="ln" style="color:transparent">15</div>
+        <div class="ln" style="color:transparent">16</div>
+        <div class="ln" style="color:transparent">17</div>
+        <div class="ln" style="color:transparent">18</div>
+        <div class="ln" style="color:transparent">19</div>
+        <div class="ln" style="color:transparent">20</div>
+      </div>
+      <div class="code-area" style="color:#6e6a7b">
+        <div class="current-line" style="background:#1b162994">
+        </div>
+        
+<div class="code-block">
+  <div class="code-line"><span style="color:#7d7a8bff">import</span> <span style="color:#ffb547ff">React</span><span style="color:#74727794">,</span> <span style="color:#747277ff">{</span> <span style="color:#93e3dbff">useState</span> <span style="color:#747277ff">}</span> <span style="color:#7d7a8bff">from</span> <span style="color:#b1d36dff">'react'</span><span style="color:#74727794">;</span></div>
+  <div class="code-line"></div>
+  <div class="code-line"><span style="color:#4D4A56">// A simple counter component</span></div>
+  <div class="code-line"><span style="color:#7d7a8bff">export</span> <span style="color:#7d7a8bff">function</span> <span style="color:#95d4caff">Counter</span><span style="color:#747277ff">(</span><span style="color:#8e8db3ff">props</span><span style="color:#74727794">:</span> <span style="color:#747277ff">{</span> <span style="color:#e3e1e8e4">initial</span><span style="color:#74727794">:</span> <span style="color:#ffb547ff">number</span> <span style="color:#747277ff">}</span><span style="color:#747277ff">)</span> <span style="color:#747277ff">{</span></div>
+  <div class="code-line">  <span style="color:#7d7a8bff">const</span> <span style="color:#747277ff">[</span><span style="color:#e3e1e8e4">count</span><span style="color:#74727794">,</span> <span style="color:#ffb547ff">setCount</span><span style="color:#747277ff">]</span> <span style="color:#e60063ff">=</span> <span style="color:#ffb547ff">useState</span><span style="color:#747277ff">(</span><span style="color:#e3e1e8e4">props</span><span style="color:#7a73ccff">.</span><span style="color:#e3e1e8e4">initial</span><span style="color:#747277ff">)</span><span style="color:#74727794">;</span></div>
+  <div class="code-line">  <span style="color:#7d7a8bff">const</span> <span style="color:#e3e1e8e4">MAX</span> <span style="color:#e60063ff">=</span> <span style="color:#33b3ccff">100</span><span style="color:#74727794">;</span></div>
+  <div class="code-line">  <span style="color:#7d7a8bff">const</span> <span style="color:#e3e1e8e4">isEven</span> <span style="color:#e60063ff">=</span> <span style="color:#e3e1e8e4">count</span> <span style="color:#e60063ff">%</span> <span style="color:#33b3ccff">2</span> <span style="color:#e60063ff">===</span> <span style="color:#33b3ccff">0</span><span style="color:#74727794">;</span></div>
+  <div class="code-line"></div>
+  <div class="code-line">  <span style="color:#e3e1e8a8">if</span> <span style="color:#747277ff">(</span><span style="color:#e3e1e8e4">count</span> <span style="color:#e60063ff">&gt;</span> <span style="color:#e3e1e8e4">MAX</span><span style="color:#747277ff">)</span> <span style="color:#747277ff">{</span></div>
+  <div class="code-line">    <span style="color:#e3e1e8a8">return</span> <span style="color:#33b3ccff">&lt;<span style="color:#e0a2b1ff">span</span>&gt;</span><span style="color:#b1d36dff">Limit reached</span><span style="color:#33b3ccff">&lt;/<span style="color:#e0a2b1ff">span</span>&gt;</span><span style="color:#74727794">;</span></div>
+  <div class="code-line">  <span style="color:#747277ff">}</span></div>
+  <div class="code-line"></div>
+  <div class="code-line">  <span style="color:#e3e1e8a8">return</span> <span style="color:#747277ff">(</span></div>
+  <div class="code-line">    <span style="color:#33b3ccff">&lt;<span style="color:#e0a2b1ff">div</span>&gt;</span></div>
+  <div class="code-line">      <span style="color:#33b3ccff">&lt;<span style="color:#e0a2b1ff">p</span>&gt;</span><span style="color:#b1d36dff">Count: </span><span style="color:#747277ff">{</span><span style="color:#e3e1e8e4">count</span><span style="color:#747277ff">}</span><span style="color:#33b3ccff">&lt;/<span style="color:#e0a2b1ff">p</span>&gt;</span></div>
+  <div class="code-line">      <span style="color:#33b3ccff">&lt;<span style="color:#e0a2b1ff">p</span>&gt;</span><span style="color:#b1d36dff">Even: </span><span style="color:#747277ff">{</span><span style="color:#e3e1e8e4">isEven</span> <span style="color:#e60063ff">?</span> <span style="color:#b1d36dff">"yes"</span> <span style="color:#e60063ff">:</span> <span style="color:#b1d36dff">"no"</span><span style="color:#747277ff">}</span><span style="color:#33b3ccff">&lt;/<span style="color:#e0a2b1ff">p</span>&gt;</span></div>
+  <div class="code-line">      <span style="color:#33b3ccff">&lt;<span style="color:#e0a2b1ff">button</span> <span style="color:#e3e1e8e4">onClick</span>=<span style="color:#747277ff">{</span><span style="color:#747277ff">(</span><span style="color:#747277ff">)</span> <span style="color:#e60063ff">=&gt;</span> <span style="color:#ffb547ff">setCount</span><span style="color:#747277ff">(</span><span style="color:#e3e1e8e4">count</span> <span style="color:#e60063ff">+</span> <span style="color:#33b3ccff">1</span><span style="color:#747277ff">)</span><span style="color:#747277ff">}</span>&gt;</span><span style="color:#b1d36dff">Increment</span><span style="color:#33b3ccff">&lt;/<span style="color:#e0a2b1ff">button</span>&gt;</span></div>
+  <div class="code-line">    <span style="color:#33b3ccff">&lt;/<span style="color:#e0a2b1ff">div</span>&gt;</span></div>
+  <div class="code-line">  <span style="color:#747277ff">)</span><span style="color:#74727794">;</span></div>
+  <div class="code-line"><span style="color:#747277ff">}</span></div>
+</div>
+        <div class="selection-sample" style="background:#2d22476b">  selected text example</div>
+        <div class="find-match" style="background:transparent">  find match</div>
+        <div class="find-match-hl" style="background:transparent">  other match</div>
+      </div>
+    </div>
+
+    <!-- Panel (terminal) -->
+    <div class="panel" style="background:#0e0b13;border-top:1px solid #352b4655">
+      <div class="panel-tabs">
+        <span class="panel-tab active" style="color:#e3e1e891;border-bottom:2px solid #ffffff">TERMINAL</span>
+        <span class="panel-tab" style="color:#e0e0e069">PROBLEMS</span>
+        <span class="panel-tab" style="color:#e0e0e069">OUTPUT</span>
+      </div>
+      <div class="terminal" style="background:#0e0b13;color:#dddde8dc;border-top:1px solid #45414C">
+        <span style="color:#C3E88D">~</span> <span style="color:#89DDFF">bun run build</span>
+        <br><span style="color:#FFCB6B">Built: Apathy</span> <span style="color:#C3E88D">✓</span>
+        <br><span style="color:#F07178">error:</span> <span style="color:#dddde8dc">Example error message</span>
+        <br><span style="color:#C792EA">warn:</span> <span style="color:#dddde8dc">Example warning</span>
+        <br><span style="color:#82AAFF">info:</span> <span style="color:#dddde8dc">Example info</span>
+      </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar" style="background:#0e0b13;color:#7c7c7c8a;border-top:1px solid #0e0b13">
+      <span>⑂ main</span>
+      <span>Ln 6, Col 12</span>
+      <span>TypeScript</span>
+    </div>
+  </div>
+</div>
+
+  <h2>Widgets &amp; Controls</h2>
+  
+<div class="widgets-grid">
+  <!-- Input -->
+  <div class="widget-card" style="background:#0e0b13">
+    <h4>Input</h4>
+    <div class="mock-input" style="background:#110f12;color:#E6E2D1;border:1px solid #26242a">
+      Search files…
+    </div>
+    <div class="mock-input placeholder" style="background:#110f12;color:#b5b5b545;border:1px solid #26242a">
+      placeholder text
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="widget-card" style="background:#0e0b13">
+    <h4>Buttons</h4>
+    <button class="mock-btn primary" style="background:#443e5040;color:#acecff7d">Primary</button>
+    <button class="mock-btn secondary" style="background:#17161e54;color:#d0d5db83">Secondary</button>
+  </div>
+
+  <!-- Dropdown -->
+  <div class="widget-card" style="background:#0e0b13">
+    <h4>Dropdown</h4>
+    <div class="mock-dropdown" style="background:#1B1629;color:#E6E2D1;border:1px solid #45414C">
+      TypeScript React ▾
+    </div>
+  </div>
+
+  <!-- Badge -->
+  <div class="widget-card" style="background:#0e0b13">
+    <h4>Badge</h4>
+    <span class="mock-badge" style="background:#0b0b19c9;color:#82aaffd4;border:1px solid #45414C">12</span>
+    <span class="mock-badge" style="background:#b70b24;color:#fff">3</span>
+    <span class="mock-badge" style="background:#E6986B;color:#000">!</span>
+  </div>
+
+  <!-- Notifications -->
+  <div class="widget-card" style="background:#0e0b13">
+    <h4>Notification</h4>
+    <div class="mock-notification" style="background:#0a0610;color:#e3e1e8e4;border:1px solid #45414C">
+      Extension activated successfully
+    </div>
+  </div>
+
+  <!-- Status colors -->
+  <div class="widget-card" style="background:#0e0b13">
+    <h4>Status</h4>
+    <div class="status-row"><span class="dot" style="background:#b70b24"></span> Error</div>
+    <div class="status-row"><span class="dot" style="background:#E6986B"></span> Warning</div>
+    <div class="status-row"><span class="dot" style="background:#78DCE8"></span> Info</div>
+    <div class="status-row"><span class="dot" style="background:#47cf7ec9"></span> Success</div>
+  </div>
+
+  <!-- Diff colors -->
+  <div class="widget-card" style="background:#0e0b13">
+    <h4>Diff Editor</h4>
+    <div class="diff-line inserted" style="background:#1b373473">+ added line</div>
+    <div class="diff-line removed" style="background:#3c152578">- removed line</div>
+    <div class="diff-line" style="background:#0e0b13">  unchanged line</div>
+  </div>
+
+  <!-- Debugging status bar -->
+  <div class="widget-card" style="background:#0e0b13">
+    <h4>Debugging Bar</h4>
+    <div class="mock-status-bar" style="background:#1f1a38;color:#bd5e2b">
+      ▶ Debugging — app.ts
+    </div>
+  </div>
+</div>
+
+  <h2>Core UI Tokens</h2>
+  <div class="core-tokens"><div class="core-tokens-group"><h4>Background</h4><div class="core-tokens-list">
+        <div class="core-token-item">
+          <div class="core-token-swatch bg" style="background:#0e0b13;border:1px solid #212131">
+            <span class="core-token-swatch-text" style="color:#cbdbe0b3">backgrounds.base</span>
+          </div>
+          <code class="core-token-hex">#0e0b13</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch bg" style="background:transparent;border:1px solid #212131">
+            <span class="core-token-swatch-text" style="color:#cbdbe0b3">backgrounds.darker</span>
+          </div>
+          <code class="core-token-hex">transparent</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch bg" style="background:#0e0b13;border:1px solid #212131">
+            <span class="core-token-swatch-text" style="color:#cbdbe0b3">backgrounds.surface</span>
+          </div>
+          <code class="core-token-hex">#0e0b13</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch bg" style="background:#1B1629;border:1px solid #212131">
+            <span class="core-token-swatch-text" style="color:#cbdbe0b3">backgrounds.raised</span>
+          </div>
+          <code class="core-token-hex">#1B1629</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch bg" style="background:#0a0610;border:1px solid #212131">
+            <span class="core-token-swatch-text" style="color:#cbdbe0b3">backgrounds.overlay</span>
+          </div>
+          <code class="core-token-hex">#0a0610</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch bg" style="background:transparent;border:1px solid #212131">
+            <span class="core-token-swatch-text" style="color:#cbdbe0b3">backgrounds.codeBlock</span>
+          </div>
+          <code class="core-token-hex">transparent</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch bg" style="background:#2d22476b;border:1px solid #212131">
+            <span class="core-token-swatch-text" style="color:#cbdbe0b3">selection.background</span>
+          </div>
+          <code class="core-token-hex">#2d22476b</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch bg" style="background:transparent;border:1px solid #212131">
+            <span class="core-token-swatch-text" style="color:#cbdbe0b3">highlights.activeLine</span>
+          </div>
+          <code class="core-token-hex">transparent</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch bg" style="background:transparent;border:1px solid #212131">
+            <span class="core-token-swatch-text" style="color:#cbdbe0b3">highlights.word</span>
+          </div>
+          <code class="core-token-hex">transparent</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch bg" style="background:transparent;border:1px solid #212131">
+            <span class="core-token-swatch-text" style="color:#cbdbe0b3">highlights.wordStrong</span>
+          </div>
+          <code class="core-token-hex">transparent</code>
+        </div></div></div><div class="core-tokens-group"><h4>Foreground</h4><div class="core-tokens-list">
+        <div class="core-token-item">
+          <div class="core-token-swatch fg" style="background:#0e0b13;border:1px solid #212131">
+            <span style="color:#cbdbe0b3">foregrounds.default</span>
+          </div>
+          <code class="core-token-hex">#cbdbe0b3</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch fg" style="background:#0e0b13;border:1px solid #212131">
+            <span style="color:#454148">foregrounds.muted</span>
+          </div>
+          <code class="core-token-hex">#454148</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch fg" style="background:#0e0b13;border:1px solid #212131">
+            <span style="color:#26242a">foregrounds.subtle</span>
+          </div>
+          <code class="core-token-hex">#26242a</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch fg" style="background:#0e0b13;border:1px solid #212131">
+            <span style="color:#33b3cc">foregrounds.accent</span>
+          </div>
+          <code class="core-token-hex">#33b3cc</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch fg" style="background:#0e0b13;border:1px solid #212131">
+            <span style="color:transparent">foregrounds.focused</span>
+          </div>
+          <code class="core-token-hex">transparent</code>
+        </div></div></div><div class="core-tokens-group"><h4>Border</h4><div class="core-tokens-list">
+        <div class="core-token-item">
+          <div class="core-token-swatch border-demo" style="background:#0e0b13;border:2px solid #45414C">
+            <span style="color:#cbdbe0b3">borders.default</span>
+          </div>
+          <code class="core-token-hex">#45414C</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch border-demo" style="background:#0e0b13;border:2px solid #d0cfd3">
+            <span style="color:#cbdbe0b3">borders.active</span>
+          </div>
+          <code class="core-token-hex">#d0cfd3</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch border-demo" style="background:#0e0b13;border:2px solid #212131">
+            <span style="color:#cbdbe0b3">borders.subtle</span>
+          </div>
+          <code class="core-token-hex">#212131</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch border-demo" style="background:#0e0b13;border:2px solid transparent">
+            <span style="color:#cbdbe0b3">borders.separator</span>
+          </div>
+          <code class="core-token-hex">transparent</code>
+        </div></div></div><div class="core-tokens-group"><h4>Accent</h4><div class="core-tokens-list">
+        <div class="core-token-item">
+          <div class="core-token-swatch pill" style="background:#33b3cc;border:1px solid #212131">
+            <span class="core-token-swatch-text" style="color:#cbdbe0b3">accent.primary</span>
+          </div>
+          <code class="core-token-hex">#33b3cc</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch pill" style="background:#C3E88D;border:1px solid #212131">
+            <span class="core-token-swatch-text" style="color:#cbdbe0b3">accent.primaryForeground</span>
+          </div>
+          <code class="core-token-hex">#C3E88D</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch pill" style="background:#ffb547;border:1px solid #212131">
+            <span class="core-token-swatch-text" style="color:#cbdbe0b3">accent.secondary</span>
+          </div>
+          <code class="core-token-hex">#ffb547</code>
+        </div></div></div><div class="core-tokens-group"><h4>Status</h4><div class="core-tokens-list">
+        <div class="core-token-item">
+          <div class="core-token-swatch pill" style="background:#b70b24;border:1px solid #212131">
+            <span class="core-token-swatch-text" style="color:#000">status.error</span>
+          </div>
+          <code class="core-token-hex">#b70b24</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch pill" style="background:#E6986B;border:1px solid #212131">
+            <span class="core-token-swatch-text" style="color:#000">status.warning</span>
+          </div>
+          <code class="core-token-hex">#E6986B</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch pill" style="background:#78DCE8;border:1px solid #212131">
+            <span class="core-token-swatch-text" style="color:#000">status.info</span>
+          </div>
+          <code class="core-token-hex">#78DCE8</code>
+        </div>
+        <div class="core-token-item">
+          <div class="core-token-swatch pill" style="background:#47cf7ec9;border:1px solid #212131">
+            <span class="core-token-swatch-text" style="color:#000">status.success</span>
+          </div>
+          <code class="core-token-hex">#47cf7ec9</code>
+        </div></div></div></div>
+
+  <h2>Token Colors</h2>
+  <table class="token-table">
+  <thead><tr><th>Token</th><th>Color</th><th>Sample</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Source</td>
+      <td><span class="swatch-inline" style="background:#e3e1e8c8"></span> <code>#e3e1e8c8</code></td>
+      <td style="color:#e3e1e8c8"><code>identifier</code></td>
+    </tr>
+    <tr>
+      <td>Comments</td>
+      <td><span class="swatch-inline" style="background:#4D4A56"></span> <code>#4D4A56</code></td>
+      <td style="color:#4D4A56"><code>// comment</code></td>
+    </tr>
+    <tr>
+      <td>String</td>
+      <td><span class="swatch-inline" style="background:#b1d36dff"></span> <code>#b1d36dff</code></td>
+      <td style="color:#b1d36dff"><code>"hello world"</code></td>
+    </tr>
+    <tr>
+      <td>Regex</td>
+      <td><span class="swatch-inline" style="background:#FF6188ff"></span> <code>#FF6188ff</code></td>
+      <td style="color:#FF6188ff"><code>/pattern/g</code></td>
+    </tr>
+    <tr>
+      <td>Operator</td>
+      <td><span class="swatch-inline" style="background:#e60063ff"></span> <code>#e60063ff</code></td>
+      <td style="color:#e60063ff"><code>= + - * /</code></td>
+    </tr>
+    <tr>
+      <td>Number</td>
+      <td><span class="swatch-inline" style="background:#33b3ccff"></span> <code>#33b3ccff</code></td>
+      <td style="color:#33b3ccff"><code>42  3.14  0xFF</code></td>
+    </tr>
+    <tr>
+      <td>Boolean</td>
+      <td><span class="swatch-inline" style="background:#33b3ccff"></span> <code>#33b3ccff</code></td>
+      <td style="color:#33b3ccff"><code>true  false</code></td>
+    </tr>
+    <tr>
+      <td>Null</td>
+      <td><span class="swatch-inline" style="background:#33b3ccff"></span> <code>#33b3ccff</code></td>
+      <td style="color:#33b3ccff"><code>null  undefined</code></td>
+    </tr>
+    <tr>
+      <td>Keyword (ctrl)</td>
+      <td><span class="swatch-inline" style="background:#e3e1e8a8"></span> <code>#e3e1e8a8</code></td>
+      <td style="color:#e3e1e8a8"><code>if  else  return  for</code></td>
+    </tr>
+    <tr>
+      <td>Keyword (decl)</td>
+      <td><span class="swatch-inline" style="background:#7d7a8bff"></span> <code>#7d7a8bff</code></td>
+      <td style="color:#7d7a8bff"><code>const  let  function  class</code></td>
+    </tr>
+    <tr>
+      <td>Keyword (import)</td>
+      <td><span class="swatch-inline" style="background:#d09bd2ff"></span> <code>#d09bd2ff</code></td>
+      <td style="color:#d09bd2ff"><code>import  export  from</code></td>
+    </tr>
+    <tr>
+      <td>Keyword (mod)</td>
+      <td><span class="swatch-inline" style="background:#829297ff"></span> <code>#829297ff</code></td>
+      <td style="color:#829297ff"><code>async  static  public</code></td>
+    </tr>
+    <tr>
+      <td>Variable</td>
+      <td><span class="swatch-inline" style="background:#e3e1e8e4"></span> <code>#e3e1e8e4</code></td>
+      <td style="color:#e3e1e8e4"><code>count  data  result</code></td>
+    </tr>
+    <tr>
+      <td>Parameter</td>
+      <td><span class="swatch-inline" style="background:#8e8db3ff"></span> <code>#8e8db3ff</code></td>
+      <td style="color:#8e8db3ff"><code>props  args  event</code></td>
+    </tr>
+    <tr>
+      <td>Property</td>
+      <td><span class="swatch-inline" style="background:#e3e1e8e4"></span> <code>#e3e1e8e4</code></td>
+      <td style="color:#e3e1e8e4"><code>obj.key  this.value</code></td>
+    </tr>
+    <tr>
+      <td>Function (decl)</td>
+      <td><span class="swatch-inline" style="background:#95d4caff"></span> <code>#95d4caff</code></td>
+      <td style="color:#95d4caff"><code>function myFn()</code></td>
+    </tr>
+    <tr>
+      <td>Function (call)</td>
+      <td><span class="swatch-inline" style="background:#ffb547ff"></span> <code>#ffb547ff</code></td>
+      <td style="color:#ffb547ff"><code>myFn()  doStuff()</code></td>
+    </tr>
+    <tr>
+      <td>Method</td>
+      <td><span class="swatch-inline" style="background:#ffb547ff"></span> <code>#ffb547ff</code></td>
+      <td style="color:#ffb547ff"><code>arr.map()  str.trim()</code></td>
+    </tr>
+    <tr>
+      <td>Built-in fn</td>
+      <td><span class="swatch-inline" style="background:#ffb547ff"></span> <code>#ffb547ff</code></td>
+      <td style="color:#ffb547ff"><code>console.log  parseInt</code></td>
+    </tr>
+    <tr>
+      <td>Type/Class</td>
+      <td><span class="swatch-inline" style="background:#ffb547ff"></span> <code>#ffb547ff</code></td>
+      <td style="color:#ffb547ff"><code>MyClass  React  Map</code></td>
+    </tr>
+    <tr>
+      <td>Interface</td>
+      <td><span class="swatch-inline" style="background:#93e3dbff"></span> <code>#93e3dbff</code></td>
+      <td style="color:#93e3dbff"><code>IProps  Readable</code></td>
+    </tr>
+    <tr>
+      <td>Enum</td>
+      <td><span class="swatch-inline" style="background:#ffb547ff"></span> <code>#ffb547ff</code></td>
+      <td style="color:#ffb547ff"><code>Status  Direction</code></td>
+    </tr>
+    <tr>
+      <td>Primitive type</td>
+      <td><span class="swatch-inline" style="background:#ffb547ff"></span> <code>#ffb547ff</code></td>
+      <td style="color:#ffb547ff"><code>string  number  boolean</code></td>
+    </tr>
+    <tr>
+      <td>Type param</td>
+      <td><span class="swatch-inline" style="background:#93e3dbff"></span> <code>#93e3dbff</code></td>
+      <td style="color:#93e3dbff"><code><T>  <K, V></code></td>
+    </tr>
+    <tr>
+      <td>Namespace</td>
+      <td><span class="swatch-inline" style="background:#ffb547ff"></span> <code>#ffb547ff</code></td>
+      <td style="color:#ffb547ff"><code>React  fs  path</code></td>
+    </tr>
+    <tr>
+      <td>Decorator</td>
+      <td><span class="swatch-inline" style="background:#f184bce6"></span> <code>#f184bce6</code></td>
+      <td style="color:#f184bce6"><code>@Injectable  @override</code></td>
+    </tr>
+    <tr>
+      <td>Macro</td>
+      <td><span class="swatch-inline" style="background:#f184bce6"></span> <code>#f184bce6</code></td>
+      <td style="color:#f184bce6"><code>macro!  #define</code></td>
+    </tr>
+    <tr>
+      <td>Tag</td>
+      <td><span class="swatch-inline" style="background:#e0a2b1ff"></span> <code>#e0a2b1ff</code></td>
+      <td style="color:#e0a2b1ff"><code><div>  <span></code></td>
+    </tr>
+    <tr>
+      <td>Bracket</td>
+      <td><span class="swatch-inline" style="background:#747277ff"></span> <code>#747277ff</code></td>
+      <td style="color:#747277ff"><code>( ) [ ] { }</code></td>
+    </tr>
+    <tr>
+      <td>Delimiter</td>
+      <td><span class="swatch-inline" style="background:#74727794"></span> <code>#74727794</code></td>
+      <td style="color:#74727794"><code>, ; :</code></td>
+    </tr>
+    <tr>
+      <td>Accessor</td>
+      <td><span class="swatch-inline" style="background:#7a73ccff"></span> <code>#7a73ccff</code></td>
+      <td style="color:#7a73ccff"><code>. ?. ::</code></td>
+    </tr>
+    <tr>
+      <td>Storage</td>
+      <td><span class="swatch-inline" style="background:#829297ff"></span> <code>#829297ff</code></td>
+      <td style="color:#829297ff"><code>let  const  var</code></td>
+    </tr></tbody>
+</table>
+
+  <h2>Color Palette</h2>
+  
+<div class="palette-grid">
+  <div class="swatch" title="background: #0e0b13"><div class="swatch-color" style="background:#0e0b13"></div><div class="swatch-label">background</div></div>
+    <div class="swatch" title="editorPaneBackground: #0e0a12"><div class="swatch-color" style="background:#0e0a12"></div><div class="swatch-label">editorPaneBackground</div></div>
+    <div class="swatch" title="gutterBg: #0c0a10"><div class="swatch-color" style="background:#0c0a10"></div><div class="swatch-label">gutterBg</div></div>
+    <div class="swatch" title="panelBg: #0e0b13"><div class="swatch-color" style="background:#0e0b13"></div><div class="swatch-label">panelBg</div></div>
+    <div class="swatch" title="tabBg: #0f0e10"><div class="swatch-color" style="background:#0f0e10"></div><div class="swatch-label">tabBg</div></div>
+    <div class="swatch" title="tabHeaderBg: #0d0b17"><div class="swatch-color" style="background:#0d0b17"></div><div class="swatch-label">tabHeaderBg</div></div>
+    <div class="swatch" title="white: #e3e1e8e4"><div class="swatch-color" style="background:#e3e1e8e4"></div><div class="swatch-label">white</div></div>
+    <div class="swatch" title="source: #e3e1e8c8"><div class="swatch-color" style="background:#e3e1e8c8"></div><div class="swatch-label">source</div></div>
+    <div class="swatch" title="muted: #4D4A56"><div class="swatch-color" style="background:#4D4A56"></div><div class="swatch-label">muted</div></div>
+    <div class="swatch" title="steel: #829297"><div class="swatch-color" style="background:#829297"></div><div class="swatch-label">steel</div></div>
+    <div class="swatch" title="slate: #9B8FB5"><div class="swatch-color" style="background:#9B8FB5"></div><div class="swatch-label">slate</div></div>
+    <div class="swatch" title="charcoal: #454148"><div class="swatch-color" style="background:#454148"></div><div class="swatch-label">charcoal</div></div>
+    <div class="swatch" title="gray: #7d7a8b"><div class="swatch-color" style="background:#7d7a8b"></div><div class="swatch-label">gray</div></div>
+    <div class="swatch" title="lightGray: #B5B5B5"><div class="swatch-color" style="background:#B5B5B5"></div><div class="swatch-label">lightGray</div></div>
+    <div class="swatch" title="faintGray: #74727794"><div class="swatch-color" style="background:#74727794"></div><div class="swatch-label">faintGray</div></div>
+    <div class="swatch" title="editorFg: #6e6a7b"><div class="swatch-color" style="background:#6e6a7b"></div><div class="swatch-label">editorFg</div></div>
+    <div class="swatch" title="uiForeground: #cbdbe0b3"><div class="swatch-color" style="background:#cbdbe0b3"></div><div class="swatch-label">uiForeground</div></div>
+    <div class="swatch" title="cyan: #33b3cc"><div class="swatch-color" style="background:#33b3cc"></div><div class="swatch-label">cyan</div></div>
+    <div class="swatch" title="ice: #93e3db"><div class="swatch-color" style="background:#93e3db"></div><div class="swatch-label">ice</div></div>
+    <div class="swatch" title="seafoam: #95d4ca"><div class="swatch-color" style="background:#95d4ca"></div><div class="swatch-label">seafoam</div></div>
+    <div class="swatch" title="softBlue: #afd1e9cf"><div class="swatch-color" style="background:#afd1e9cf"></div><div class="swatch-label">softBlue</div></div>
+    <div class="swatch" title="paleBlue: #78DCE8"><div class="swatch-color" style="background:#78DCE8"></div><div class="swatch-label">paleBlue</div></div>
+    <div class="swatch" title="lightBlue: #82AAFF"><div class="swatch-color" style="background:#82AAFF"></div><div class="swatch-label">lightBlue</div></div>
+    <div class="swatch" title="exportBlue: #91aac0"><div class="swatch-color" style="background:#91aac0"></div><div class="swatch-label">exportBlue</div></div>
+    <div class="swatch" title="importPurple: #d09bd2"><div class="swatch-color" style="background:#d09bd2"></div><div class="swatch-label">importPurple</div></div>
+    <div class="swatch" title="wasabi: #b1d36d"><div class="swatch-color" style="background:#b1d36d"></div><div class="swatch-label">wasabi</div></div>
+    <div class="swatch" title="mint: #A1EFE4"><div class="swatch-color" style="background:#A1EFE4"></div><div class="swatch-label">mint</div></div>
+    <div class="swatch" title="lime: #A6E22E"><div class="swatch-color" style="background:#A6E22E"></div><div class="swatch-label">lime</div></div>
+    <div class="swatch" title="brightGreen: #C3E88D"><div class="swatch-color" style="background:#C3E88D"></div><div class="swatch-label">brightGreen</div></div>
+    <div class="swatch" title="addedGreen: #47cf7ec9"><div class="swatch-color" style="background:#47cf7ec9"></div><div class="swatch-label">addedGreen</div></div>
+    <div class="swatch" title="gitInserted: #A7DA1E"><div class="swatch-color" style="background:#A7DA1E"></div><div class="swatch-label">gitInserted</div></div>
+    <div class="swatch" title="jsonValue: #afe641"><div class="swatch-color" style="background:#afe641"></div><div class="swatch-label">jsonValue</div></div>
+    <div class="swatch" title="yamlValue: #8dc781"><div class="swatch-color" style="background:#8dc781"></div><div class="swatch-label">yamlValue</div></div>
+    <div class="swatch" title="gold: #ffb547"><div class="swatch-color" style="background:#ffb547"></div><div class="swatch-label">gold</div></div>
+    <div class="swatch" title="amber: #ffa114"><div class="swatch-color" style="background:#ffa114"></div><div class="swatch-label">amber</div></div>
+    <div class="swatch" title="yellow: #FFCB6B"><div class="swatch-color" style="background:#FFCB6B"></div><div class="swatch-label">yellow</div></div>
+    <div class="swatch" title="yellowNote: #E6D86B"><div class="swatch-color" style="background:#E6D86B"></div><div class="swatch-label">yellowNote</div></div>
+    <div class="swatch" title="peach: #FFD866"><div class="swatch-color" style="background:#FFD866"></div><div class="swatch-label">peach</div></div>
+    <div class="swatch" title="orange: #FF7A00"><div class="swatch-color" style="background:#FF7A00"></div><div class="swatch-label">orange</div></div>
+    <div class="swatch" title="gitModified: #ffd014d4"><div class="swatch-color" style="background:#ffd014d4"></div><div class="swatch-label">gitModified</div></div>
+    <div class="swatch" title="gitModifiedAlt: #F7B83D"><div class="swatch-color" style="background:#F7B83D"></div><div class="swatch-label">gitModifiedAlt</div></div>
+    <div class="swatch" title="crimson: #e60063"><div class="swatch-color" style="background:#e60063"></div><div class="swatch-label">crimson</div></div>
+    <div class="swatch" title="rose: #FF6188"><div class="swatch-color" style="background:#FF6188"></div><div class="swatch-label">rose</div></div>
+    <div class="swatch" title="blush: #e0a2b1"><div class="swatch-color" style="background:#e0a2b1"></div><div class="swatch-label">blush</div></div>
+    <div class="swatch" title="pink: #f184bce6"><div class="swatch-color" style="background:#f184bce6"></div><div class="swatch-label">pink</div></div>
+    <div class="swatch" title="coral: #FF7859"><div class="swatch-color" style="background:#FF7859"></div><div class="swatch-label">coral</div></div>
+    <div class="swatch" title="errorRed: #b70b24"><div class="swatch-color" style="background:#b70b24"></div><div class="swatch-label">errorRed</div></div>
+    <div class="swatch" title="gitDeleted: #E61F44"><div class="swatch-color" style="background:#E61F44"></div><div class="swatch-label">gitDeleted</div></div>
+    <div class="swatch" title="deletedRed: #F92672"><div class="swatch-color" style="background:#F92672"></div><div class="swatch-label">deletedRed</div></div>
+    <div class="swatch" title="pythonDef: #fe90a0"><div class="swatch-color" style="background:#fe90a0"></div><div class="swatch-label">pythonDef</div></div>
+    <div class="swatch" title="lavender: #998fe1cf"><div class="swatch-color" style="background:#998fe1cf"></div><div class="swatch-label">lavender</div></div>
+    <div class="swatch" title="purple: #C792EA"><div class="swatch-color" style="background:#C792EA"></div><div class="swatch-label">purple</div></div>
+    <div class="swatch" title="lilac: #C574DD"><div class="swatch-color" style="background:#C574DD"></div><div class="swatch-label">lilac</div></div>
+    <div class="swatch" title="paramPurple: #8e8db3"><div class="swatch-color" style="background:#8e8db3"></div><div class="swatch-label">paramPurple</div></div>
+    <div class="swatch" title="paramValue: #c3c1d3"><div class="swatch-color" style="background:#c3c1d3"></div><div class="swatch-label">paramValue</div></div>
+    <div class="swatch" title="accessor: #7a73cc"><div class="swatch-color" style="background:#7a73cc"></div><div class="swatch-label">accessor</div></div>
+    <div class="swatch" title="taupe: #8a7b5c"><div class="swatch-color" style="background:#8a7b5c"></div><div class="swatch-label">taupe</div></div>
+    <div class="swatch" title="olive: #6c6048"><div class="swatch-color" style="background:#6c6048"></div><div class="swatch-label">olive</div></div>
+    <div class="swatch" title="darkOlive: #5c4c42"><div class="swatch-color" style="background:#5c4c42"></div><div class="swatch-label">darkOlive</div></div>
+    <div class="swatch" title="warning: #E6986B"><div class="swatch-color" style="background:#E6986B"></div><div class="swatch-label">warning</div></div>
+    <div class="swatch" title="info: #78DCE8"><div class="swatch-color" style="background:#78DCE8"></div><div class="swatch-label">info</div></div>
+    <div class="swatch" title="selection: #2d22476b"><div class="swatch-color" style="background:#2d22476b"></div><div class="swatch-label">selection</div></div>
+    <div class="swatch" title="selectionHighlight: #39324952"><div class="swatch-color" style="background:#39324952"></div><div class="swatch-label">selectionHighlight</div></div>
+    <div class="swatch" title="inactiveSelection: #2d22473d"><div class="swatch-color" style="background:#2d22473d"></div><div class="swatch-label">inactiveSelection</div></div>
+    <div class="swatch" title="wordHighlight: #383248a5"><div class="swatch-color" style="background:#383248a5"></div><div class="swatch-label">wordHighlight</div></div>
+    <div class="swatch" title="wordHighlightStrong: #52486cab"><div class="swatch-color" style="background:#52486cab"></div><div class="swatch-label">wordHighlightStrong</div></div>
+    <div class="swatch" title="findMatch: #2a2540dc"><div class="swatch-color" style="background:#2a2540dc"></div><div class="swatch-label">findMatch</div></div>
+    <div class="swatch" title="findMatchHighlight: #18142ddc"><div class="swatch-color" style="background:#18142ddc"></div><div class="swatch-label">findMatchHighlight</div></div>
+    <div class="swatch" title="lineHighlight: #1b162994"><div class="swatch-color" style="background:#1b162994"></div><div class="swatch-label">lineHighlight</div></div>
+    <div class="swatch" title="indentGuide: #292533dc"><div class="swatch-color" style="background:#292533dc"></div><div class="swatch-label">indentGuide</div></div>
+    <div class="swatch" title="indentGuideActive: #2b2a2ddb"><div class="swatch-color" style="background:#2b2a2ddb"></div><div class="swatch-label">indentGuideActive</div></div>
+    <div class="swatch" title="whitespace: #272636"><div class="swatch-color" style="background:#272636"></div><div class="swatch-label">whitespace</div></div>
+    <div class="swatch" title="ruler: #b8b1d222"><div class="swatch-color" style="background:#b8b1d222"></div><div class="swatch-label">ruler</div></div>
+    <div class="swatch" title="widgetBg: #0a0610"><div class="swatch-color" style="background:#0a0610"></div><div class="swatch-label">widgetBg</div></div>
+    <div class="swatch" title="widgetBorder: #45414C"><div class="swatch-color" style="background:#45414C"></div><div class="swatch-label">widgetBorder</div></div>
+    <div class="swatch" title="suggestBg: #1B1629"><div class="swatch-color" style="background:#1B1629"></div><div class="swatch-label">suggestBg</div></div>
+    <div class="swatch" title="listActive: #2A2441"><div class="swatch-color" style="background:#2A2441"></div><div class="swatch-label">listActive</div></div>
+    <div class="swatch" title="focusBorder: #a099ae14"><div class="swatch-color" style="background:#a099ae14"></div><div class="swatch-label">focusBorder</div></div>
+    <div class="swatch" title="tabBorder: #212131"><div class="swatch-color" style="background:#212131"></div><div class="swatch-label">tabBorder</div></div>
+    <div class="swatch" title="tabActiveBorder: #d0cfd3"><div class="swatch-color" style="background:#d0cfd3"></div><div class="swatch-label">tabActiveBorder</div></div>
+    <div class="swatch" title="buttonBg: #443e5040"><div class="swatch-color" style="background:#443e5040"></div><div class="swatch-label">buttonBg</div></div>
+    <div class="swatch" title="buttonFg: #acecff7d"><div class="swatch-color" style="background:#acecff7d"></div><div class="swatch-label">buttonFg</div></div>
+    <div class="swatch" title="buttonBorder: #60537836"><div class="swatch-color" style="background:#60537836"></div><div class="swatch-label">buttonBorder</div></div>
+    <div class="swatch" title="inputBg: #110f12"><div class="swatch-color" style="background:#110f12"></div><div class="swatch-label">inputBg</div></div>
+    <div class="swatch" title="inputBorder: #26242a"><div class="swatch-color" style="background:#26242a"></div><div class="swatch-label">inputBorder</div></div>
+    <div class="swatch" title="tagName: #DEDEDE"><div class="swatch-color" style="background:#DEDEDE"></div><div class="swatch-label">tagName</div></div>
+    <div class="swatch" title="cssProperty: #4b6672"><div class="swatch-color" style="background:#4b6672"></div><div class="swatch-label">cssProperty</div></div>
+    <div class="swatch" title="cssPropertyValue: #d0cfd3"><div class="swatch-color" style="background:#d0cfd3"></div><div class="swatch-label">cssPropertyValue</div></div>
+    <div class="swatch" title="cssSelector: #e5e3e8"><div class="swatch-color" style="background:#e5e3e8"></div><div class="swatch-label">cssSelector</div></div>
+    <div class="swatch" title="bracketPunctuation: #747277"><div class="swatch-color" style="background:#747277"></div><div class="swatch-label">bracketPunctuation</div></div>
+    <div class="swatch" title="jsBraces: #5b6567b0"><div class="swatch-color" style="background:#5b6567b0"></div><div class="swatch-label">jsBraces</div></div>
+    <div class="swatch" title="jsFunctionVar: #a3c1c7"><div class="swatch-color" style="background:#a3c1c7"></div><div class="swatch-label">jsFunctionVar</div></div>
+    <div class="swatch" title="jsFunctionCall: #DCDCAA"><div class="swatch-color" style="background:#DCDCAA"></div><div class="swatch-label">jsFunctionCall</div></div>
+    <div class="swatch" title="jsMemberExpr: #E0E0E0"><div class="swatch-color" style="background:#E0E0E0"></div><div class="swatch-label">jsMemberExpr</div></div>
+    <div class="swatch" title="markdownHeading: #79e3bd"><div class="swatch-color" style="background:#79e3bd"></div><div class="swatch-label">markdownHeading</div></div>
+    <div class="swatch" title="markdownBold: #5983a2"><div class="swatch-color" style="background:#5983a2"></div><div class="swatch-label">markdownBold</div></div>
+    <div class="swatch" title="markdownLink: #78DCE8"><div class="swatch-color" style="background:#78DCE8"></div><div class="swatch-label">markdownLink</div></div>
+    <div class="swatch" title="codeTagNotation: #4d7461"><div class="swatch-color" style="background:#4d7461"></div><div class="swatch-label">codeTagNotation</div></div>
+    <div class="swatch" title="yamlSource: #cfccd7e3"><div class="swatch-color" style="background:#cfccd7e3"></div><div class="swatch-label">yamlSource</div></div>
+    <div class="swatch" title="controlConditional: #e3e1e8a8"><div class="swatch-color" style="background:#e3e1e8a8"></div><div class="swatch-label">controlConditional</div></div>
+    <div class="swatch" title="ansiBlack: #2A273F"><div class="swatch-color" style="background:#2A273F"></div><div class="swatch-label">ansiBlack</div></div>
+    <div class="swatch" title="ansiBrightBlack: #3B3853"><div class="swatch-color" style="background:#3B3853"></div><div class="swatch-label">ansiBrightBlack</div></div>
+    <div class="swatch" title="ansiRed: #F07178"><div class="swatch-color" style="background:#F07178"></div><div class="swatch-label">ansiRed</div></div>
+    <div class="swatch" title="ansiBrightRed: #FF5370"><div class="swatch-color" style="background:#FF5370"></div><div class="swatch-label">ansiBrightRed</div></div>
+</div>
+
+  <div class="timestamp">Generated 2026-02-10T11:16:05.413Z</div>
+</div>
+</body>
+</html>

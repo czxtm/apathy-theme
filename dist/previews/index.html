@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apathy Theme Previews</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0e; color: #c0c0c8; padding: 48px; }
+  h1 { font-size: 32px; margin-bottom: 8px; color: #e1e2e5; }
+  .subtitle { opacity: .5; margin-bottom: 32px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+  .theme-card { display: block; text-decoration: none; color: inherit; border-radius: 12px; border: 1px solid; overflow: hidden; transition: transform .15s, box-shadow .15s; }
+  .theme-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px #00000060; }
+  .card-accent { height: 4px; }
+  .card-name { font-size: 20px; font-weight: 600; padding: 20px 20px 4px; }
+  .card-type { font-size: 13px; opacity: .5; padding: 0 20px; text-transform: uppercase; letter-spacing: .5px; }
+  .card-palette { display: flex; gap: 4px; padding: 16px 20px 20px; }
+  .mini-swatch { width: 20px; height: 20px; border-radius: 4px; border: 1px solid #ffffff10; }
+  .timestamp { text-align: center; opacity: .3; font-size: 11px; padding: 32px 0; }
+</style>
+</head>
+<body>
+  <h1>🎨 Apathy Theme Previews</h1>
+  <div class="subtitle">Click a theme to see the full preview</div>
+  <div class="grid">
+    <a href="minted.html" class="theme-card" style="background:#0E0E15FF;color:#585B70CE;border-color:#B3E6DEFF22">
+      <div class="card-accent" style="background:#B3E6DEFF"></div>
+      <div class="card-name">Minted</div>
+      <div class="card-type">dark</div>
+      <div class="card-palette"><span class="mini-swatch" style="background:#0e0e15ff"></span><span class="mini-swatch" style="background:#0e0e15ff"></span><span class="mini-swatch" style="background:#161620ff"></span><span class="mini-swatch" style="background:#07070aff"></span><span class="mini-swatch" style="background:#0f0f12ff"></span><span class="mini-swatch" style="background:#0a0a0cff"></span><span class="mini-swatch" style="background:#0f0f1280"></span><span class="mini-swatch" style="background:#e1e2e520"></span></div>
+    </a>
+    <a href="slate.html" class="theme-card" style="background:#0E0E15FF;color:#a7a4afff;border-color:#91aac0ff22">
+      <div class="card-accent" style="background:#91aac0ff"></div>
+      <div class="card-name">Slate</div>
+      <div class="card-type">dark</div>
+      <div class="card-palette"><span class="mini-swatch" style="background:#0e0e15ff"></span><span class="mini-swatch" style="background:#d1d3d9ff"></span><span class="mini-swatch" style="background:#a7a4afff"></span><span class="mini-swatch" style="background:#f5e0dcff"></span><span class="mini-swatch" style="background:#91aac0ff"></span><span class="mini-swatch" style="background:#829297ff"></span><span class="mini-swatch" style="background:#767a92ff"></span><span class="mini-swatch" style="background:#527bb254"></span></div>
+    </a>
+    <a href="apathy.html" class="theme-card" style="background:#0e0b13ff;color:#cbdbe0b3;border-color:#33b3ccff22">
+      <div class="card-accent" style="background:#33b3ccff"></div>
+      <div class="card-name">Apathy</div>
+      <div class="card-type">dark</div>
+      <div class="card-palette"><span class="mini-swatch" style="background:#0e0b13ff"></span><span class="mini-swatch" style="background:#0e0a12ff"></span><span class="mini-swatch" style="background:#0c0a10ff"></span><span class="mini-swatch" style="background:#0e0b13ff"></span><span class="mini-swatch" style="background:#0f0e10ff"></span><span class="mini-swatch" style="background:#0d0b17ff"></span><span class="mini-swatch" style="background:#e3e1e8e4"></span><span class="mini-swatch" style="background:#e3e1e8c8"></span></div>
+    </a>
+    <a href="apathetic-ocean.html" class="theme-card" style="background:#0e0e15ff;color:#a7a4afff;border-color:#33b3ccff22">
+      <div class="card-accent" style="background:#33b3ccff"></div>
+      <div class="card-name">Apathetic Ocean</div>
+      <div class="card-type">dark</div>
+      <div class="card-palette"><span class="mini-swatch" style="background:#0e0e15ff"></span><span class="mini-swatch" style="background:#0f0f12ff"></span><span class="mini-swatch" style="background:#0f0f12ff"></span><span class="mini-swatch" style="background:#0f0e10ff"></span><span class="mini-swatch" style="background:#0f0f12ff"></span><span class="mini-swatch" style="background:#e1e2e5ff"></span><span class="mini-swatch" style="background:#a7a4afff"></span><span class="mini-swatch" style="background:#96a5b6ff"></span></div>
+    </a>
+    <a href="apathy-experimental.html" class="theme-card" style="background:#12121cff;color:#cbdbe0b3;border-color:#33b3ccff22">
+      <div class="card-accent" style="background:#33b3ccff"></div>
+      <div class="card-name">Apathy Experimental</div>
+      <div class="card-type">dark</div>
+      <div class="card-palette"><span class="mini-swatch" style="background:#12121cff"></span><span class="mini-swatch" style="background:#0e0b13ff"></span><span class="mini-swatch" style="background:#0c0c13ff"></span><span class="mini-swatch" style="background:#0f0e10ff"></span><span class="mini-swatch" style="background:#0d0b17ff"></span><span class="mini-swatch" style="background:#e1e2e5ff"></span><span class="mini-swatch" style="background:#e3e1e8c8"></span><span class="mini-swatch" style="background:#4D4A56ff"></span></div>
+    </a>
+  </div>
+  <div class="timestamp">Generated 2026-02-10T11:16:05.415Z</div>
+</body>
+</html>
