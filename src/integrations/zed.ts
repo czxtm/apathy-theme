@@ -255,12 +255,12 @@ function clamp(value: number, min: number, max: number): number {
 function capSaturation(color: string, maxSaturation: number): string {
 	try {
 		const maxSatPercent = clamp(maxSaturation, 0, 1) * 100;
-		const hsl = new Color(color).cv.hsl();
-		const currentSat = hsl.saturationl();
+		const hsl = new Color(color).hsl();
+		const currentSat = hsl.s;
 		if (Number.isNaN(currentSat) || currentSat <= maxSatPercent) {
-			return hsl.hexa();
+			return new Color(color).render();
 		}
-		return hsl.saturationl(maxSatPercent).hexa();
+		return Color.fromHsl({ ...hsl, s: maxSatPercent }).render();
 	} catch {
 		return color;
 	}
@@ -297,25 +297,25 @@ function capHueBand(
 	minLightness?: number,
 ): string {
 	try {
-		const hsl = new Color(color).cv.hsl();
-		const hue = hsl.hue();
-		if (Number.isNaN(hue)) return hsl.hexa();
-		if (angularDistance(hue, centerHue) > hueWindow) return hsl.hexa();
+		const hsl = new Color(color).hsl();
+		const hue = hsl.h;
+		if (Number.isNaN(hue)) return new Color(color).render();
+		if (angularDistance(hue, centerHue) > hueWindow) return new Color(color).render();
 
 		let next = hsl;
 		if (maxSaturation !== undefined) {
 			const satCap = clamp(maxSaturation, 0, 1) * 100;
-			if (next.saturationl() > satCap) {
-				next = next.saturationl(satCap);
+			if (next.s > satCap) {
+				next = { ...next, s: satCap };
 			}
 		}
 		if (minLightness !== undefined) {
 			const lightFloor = clamp(minLightness, 0, 1) * 100;
-			if (next.lightness() < lightFloor) {
-				next = next.lightness(lightFloor);
+			if (next.l < lightFloor) {
+				next = { ...next, l: lightFloor };
 			}
 		}
-		return next.hexa();
+		return Color.fromHsl(next).render();
 	} catch {
 		return color;
 	}
@@ -390,18 +390,18 @@ function buildStyle(
 		"ui.backgrounds.surface",
 	);
 	const elementHover = c(
-		"ui.elements.hover",
-		"ui.hoverWidget.background",
+		"ui.elements.hover.background",
+		"ui.elements.background",
 		"ui.menu.selectionBackground",
 		"ui.backgrounds.raised",
 	);
 	const elementActive = c(
-		"ui.elements.active",
+		"ui.elements.active.background",
 		"ui.menu.selectionBackground",
 		"ui.backgrounds.raised",
 	);
 	const elementSelected = c(
-		"ui.elements.selected",
+		"ui.elements.selected.background",
 		"ui.menu.selectionBackground",
 		"ui.backgrounds.raised",
 	);
@@ -412,24 +412,24 @@ function buildStyle(
 		"ui.backgrounds.raised",
 	);
 	const subtleElementHover = c(
-		"ui.subtleElements.hover",
-		"ui.elements.hover",
+		"ui.subtleElements.hover.background",
+		"ui.elements.hover.background",
 		"ui.backgrounds.overlay",
 	);
 	const subtleElementActive = c(
-		"ui.subtleElements.active",
-		"ui.elements.active",
+		"ui.subtleElements.active.background",
+		"ui.elements.active.background",
 		"ui.elements.selected",
 		"ui.selection.background",
 	);
 	const subtleElementSelected = c(
-		"ui.subtleElements.selected",
-		"ui.elements.selected",
+		"ui.subtleElements.selected.background",
+		"ui.elements.selected.background",
 		"ui.selection.background",
 	);
 	const subtleElementDisabled = c(
-		"ui.subtleElements.disabled",
-		"ui.elements.disabled",
+		"ui.subtleElements.disabled.background",
+		"ui.elements.disabled.background",
 		"ui.foregrounds.subtle",
 	);
 
@@ -441,19 +441,19 @@ function buildStyle(
 	const borderSubtle = c("ui.borders.subtle", "ui.borders.default");
 	const focusedBorder = c("ui.focus.border", "ui.borders.active", "ui.borders.default");
 
-	const error = c("ui.status.error");
-	const warning = c("ui.status.warning");
-	const info = c("ui.status.info");
-	const success = c("ui.status.success");
+	const error = c("ui.status.error.foreground");
+	const warning = c("ui.status.warning.foreground");
+	const info = c("ui.status.info.foreground");
+	const success = c("ui.status.success.foreground");
 
 	// Predictive/ghost text color - use parameter color for better visibility
 	const predictiveColor = get(t.tokens.variables, "parameter") || muted;
 
-	const gitAdded = c("ui.git.added", "ui.status.success");
-	const gitModified = c("ui.git.modified", "ui.status.warning");
-	const gitDeleted = c("ui.git.deleted", "ui.status.error");
+	const gitAdded = c("ui.git.added", "ui.status.success.foreground");
+	const gitModified = c("ui.git.modified", "ui.status.warning.foreground");
+	const gitDeleted = c("ui.git.deleted", "ui.status.error.foreground");
 	const gitIgnored = c("ui.git.ignored", "ui.foregrounds.muted");
-	const gitConflict = c("ui.git.conflict", "ui.status.error");
+	const gitConflict = c("ui.git.conflict", "ui.status.error.foreground");
 
 	// Terminal colors
 	const terminalBg = c(
@@ -466,10 +466,10 @@ function buildStyle(
 		"ui.foregrounds.default",
 	);
 	const ansiBlack = c("ui.overrides.terminal.ansiBlack", "ui.backgrounds.base");
-	const ansiRed = c("ui.overrides.terminal.ansiRed", "ui.status.error");
-	const ansiGreen = c("ui.overrides.terminal.ansiGreen", "ui.status.success");
-	const ansiYellow = c("ui.overrides.terminal.ansiYellow", "ui.status.warning");
-	const ansiBlue = c("ui.overrides.terminal.ansiBlue", "ui.status.info");
+	const ansiRed = c("ui.overrides.terminal.ansiRed", "ui.status.error.foreground");
+	const ansiGreen = c("ui.overrides.terminal.ansiGreen", "ui.status.success.foreground");
+	const ansiYellow = c("ui.overrides.terminal.ansiYellow", "ui.status.warning.foreground");
+	const ansiBlue = c("ui.overrides.terminal.ansiBlue", "ui.status.info.foreground");
 	const ansiMagenta = c(
 		"ui.overrides.terminal.ansiMagenta",
 		"ui.accent.primary",
@@ -485,19 +485,19 @@ function buildStyle(
 	);
 	const ansiBrightRed = c(
 		"ui.overrides.terminal.ansiBrightRed",
-		"ui.status.error",
+		"ui.status.error.foreground",
 	);
 	const ansiBrightGreen = c(
 		"ui.overrides.terminal.ansiBrightGreen",
-		"ui.status.success",
+		"ui.status.success.foreground",
 	);
 	const ansiBrightYellow = c(
 		"ui.overrides.terminal.ansiBrightYellow",
-		"ui.status.warning",
+		"ui.status.warning.foreground",
 	);
 	const ansiBrightBlue = c(
 		"ui.overrides.terminal.ansiBrightBlue",
-		"ui.status.info",
+		"ui.status.info.foreground",
 	);
 	const ansiBrightMagenta = c(
 		"ui.overrides.terminal.ansiBrightMagenta",
@@ -519,6 +519,7 @@ function buildStyle(
 		"background",
 	);
 	const editorFg = c(
+		"tokens.source",
 		"ui.overrides.editor.foreground",
 		"ui.foregrounds.default",
 	);
@@ -579,10 +580,10 @@ function buildStyle(
 	const accents = t.ui.accent.palette || [
 		c("ui.accent.primary"),
 		c("ui.accent.secondary", "ui.foregrounds.accent", "ui.accent.primary"),
-		c("ui.status.success"),
-		c("ui.status.info"),
+		c("ui.status.success.foreground"),
+		c("ui.status.info.foreground"),
 		c("ui.foregrounds.focused", "ui.foregrounds.accent", "ui.accent.primary"),
-		c("ui.status.error"),
+		c("ui.status.error.foreground"),
 	];
 
 	// Build syntax highlighting
@@ -753,12 +754,17 @@ function buildStyle(
 		0,
 		6,
 	);
-	const players: ZedPlayer[] = playerColors.map((color) => ({
+	const collaboratorSelection = c(
+		"ui.selection.collaboratorBackground",
+		"ui.selection.backgroundActive",
+		"ui.selection.background",
+	);
+	const players: ZedPlayer[] = playerColors.map((color, i) => ({
 		cursor: color,
 		background: color,
-		selection: playerSelection,
+		selection: i === 0 ? playerSelection : collaboratorSelection,
 	}));
-	const ALPHA = v =>new Color(v).alpha(0.8).hexa();
+	const ALPHA = (v: string) => v
 	return {
 		"background.appearance": "blurred",
 		accents,
@@ -768,9 +774,9 @@ function buildStyle(
 		border: c("ui.borders.default"),
 		"border.variant": borderSubtle,
 		"border.focused": focusedBorder,
-		"border.selected": focusedBorder,
-		"border.transparent": "#00000000",
-		"border.disabled": borderSubtle,
+		"border.selected": c("ui.borders.selected", "ui.focus.border", "ui.borders.active", "ui.borders.default"),
+		"border.transparent": c("ui.borders.transparent", "ui.borders.subtle", "ui.borders.default"),
+		"border.disabled": c("ui.borders.disabled", "ui.borders.subtle", "ui.borders.default"),
 
 		// Surfaces
 		"elevated_surface.background": raised,
@@ -781,8 +787,9 @@ function buildStyle(
 		"element.hover": elementHover,
 		"element.active": elementActive,
 		"element.selected": elementSelected,
-		"element.disabled": c("ui.elements.disabled", "ui.foregrounds.subtle"),
+		"element.disabled": c("ui.elements.disabled.background", "ui.foregrounds.subtle"),
 		"drop_target.background": menuBackground,
+		"element.selection_background": lineHighlight,
 		"ghost_element.background": subtleElementBackground,
 		"ghost_element.hover": subtleElementHover,
 		"ghost_element.active": subtleElementActive,
@@ -793,7 +800,7 @@ function buildStyle(
 		text: foreground,
 		"text.muted": muted,
 		"text.placeholder": c("ui.foregrounds.subtle", "ui.foregrounds.muted"),
-		"text.disabled": subtle,
+		"text.disabled": c("ui.foregrounds.disabled", "ui.foregrounds.subtle"),
 		"text.accent": accent,
 
 		// Icons
@@ -806,7 +813,7 @@ function buildStyle(
 			"ui.foregrounds.muted",
 		),
 		"icon.placeholder": c("ui.foregrounds.subtle", "ui.foregrounds.muted"),
-		"icon.accent": accent,
+		"icon.accent": c("ui.icon.accent", "ui.foregrounds.accent", "ui.accent.primary"),
 
 		// UI Components
 		"status_bar.background": statusBarBg,
@@ -818,14 +825,17 @@ function buildStyle(
 		"tab.active_background": tabActiveBg,
 		"search.match_background": findMatch,
 		"panel.background": ALPHA(panelBg),
-		"panel.focused_border": focusedBorder,
+		"panel.overlay_background": c("ui.backgrounds.overlay", "ui.backgrounds.surface", "background"),
+		"panel.focused_border": c("ui.panels.focusedBorder", "ui.focus.border", "ui.borders.active", "ui.borders.default"),
 		"pane.focused_border": focusedBorder,
 		"panel.indent_guide": c("ui.indentGuide.background", "ui.borders.subtle"),
 		"panel.indent_guide_active": c(
 			"ui.indentGuide.activeBackground",
+			"ui.ruler.foreground",
 			"ui.borders.active",
 		),
 		"panel.indent_guide_hover": c(
+			"ui.ruler.foreground",
 			"ui.indentGuide.activeBackground",
 			"ui.borders.active",
 		),
@@ -849,7 +859,8 @@ function buildStyle(
 		"editor.background": ALPHA(editorBg),
 		"editor.gutter.background": gutterBg,
 		"editor.subheader.background": c(
-			"ui.hoverWidget.background",
+			"ui.panels.titleBackground",
+			"ui.elements.background",
 			"ui.backgrounds.raised",
 			"ui.backgrounds.surface",
 		),
@@ -861,6 +872,7 @@ function buildStyle(
 		"editor.invisible": c("ui.whitespace.foreground", "ui.borders.subtle"),
 		"editor.wrap_guide": c("ui.ruler.foreground", "ui.borders.subtle"),
 		"editor.active_wrap_guide": c(
+			"ui.ruler.foreground",
 			"ui.indentGuide.activeBackground",
 			"ui.borders.active",
 		),
@@ -912,7 +924,7 @@ function buildStyle(
 		// Links & Status
 		"link_text.hover": c(
 			"ui.text.linkForeground",
-			"ui.status.info",
+			"ui.status.info.foreground",
 			"ui.foregrounds.accent",
 		),
 
@@ -920,57 +932,57 @@ function buildStyle(
 		"version_control.added": gitAdded,
 		"version_control.modified": gitModified,
 		"version_control.deleted": gitDeleted,
-		"version_control.word_added": gitAdded,
-		"version_control.word_deleted": gitDeleted,
+		"version_control.word_added": c("ui.git.wordAdded", "ui.git.added", "ui.status.success.foreground"),
+		"version_control.word_deleted": c("ui.git.wordDeleted", "ui.git.deleted", "ui.status.error.foreground"),
 		"version_control.conflict_marker.ours": success,
 		"version_control.conflict_marker.theirs": info,
 
 		conflict: gitConflict,
 		"conflict.background": gitConflict,
 		"conflict.border": gitConflict,
-		created: gitAdded,
-		"created.background": gitAdded,
-		"created.border": gitAdded,
-		deleted: gitDeleted,
-		"deleted.background": gitDeleted,
-		"deleted.border": gitDeleted,
+		created: c("ui.status.success.foreground"),
+		"created.background": c("ui.status.success.background"),
+		"created.border": c("ui.status.success.border"),
+		deleted: c("ui.status.error.foreground"),
+		"deleted.background": c("ui.status.error.background"),
+		"deleted.border": c("ui.status.error.border"),
 		error,
-		"error.background": c("ui.error.background", "ui.status.error"),
-		"error.border": error,
+		"error.background": c("ui.status.error.background", "ui.error.background"),
+		"error.border": c("ui.status.error.border"),
 		hidden: gitIgnored,
 		"hidden.background": gitIgnored,
 		"hidden.border": gitIgnored,
-		hint: info,
-		"hint.background": info,
-		"hint.border": info,
+		hint: new Color(String(t.palette.success ?? c("ui.status.success.foreground"))).saturate(0.25).darker(0.07).hexa(),
+		"hint.background": new Color(String(t.palette.info ?? c("ui.status.info.foreground"))).darker(0.9).alpha(0.64).hexa(),
+		"hint.border": c("ui.status.info.border"),
 		ignored: gitIgnored,
 		"ignored.background": gitIgnored,
 		"ignored.border": gitIgnored,
 		info,
-		"info.background": info,
-		"info.border": info,
-		modified: gitModified,
-		"modified.background": gitModified,
-		"modified.border": gitModified,
+		"info.background": c("ui.status.info.background"),
+		"info.border": c("ui.status.info.border"),
+		modified: c("ui.status.warning.foreground"),
+		"modified.background": c("ui.status.warning.background"),
+		"modified.border": c("ui.status.warning.border"),
 		predictive: predictiveColor,
 		"predictive.background": predictiveColor,
 		"predictive.border": predictiveColor,
-		renamed: c("ui.git.renamed", "ui.git.added", "ui.status.success"),
+		renamed: c("ui.git.renamed", "ui.git.added", "ui.status.success.foreground"),
 		"renamed.background": c(
 			"ui.git.renamed",
 			"ui.git.added",
-			"ui.status.success",
+			"ui.status.success.foreground",
 		),
-		"renamed.border": c("ui.git.renamed", "ui.git.added", "ui.status.success"),
-		success,
-		"success.background": success,
-		"success.border": success,
+		"renamed.border": c("ui.git.renamed", "ui.git.added", "ui.status.success.foreground"),
+		success: c("ui.status.success.foreground"),
+		"success.background": c("ui.status.success.background"),
+		"success.border": c("ui.status.success.border"),
 		unreachable: subtle,
 		"unreachable.background": subtle,
 		"unreachable.border": subtle,
-		warning,
-		"warning.background": warning,
-		"warning.border": warning,
+		warning: c("ui.status.warning.foreground"),
+		"warning.background": c("ui.status.warning.background"),
+		"warning.border": c("ui.status.warning.border"),
 
 		players,
 		syntax,
@@ -1002,22 +1014,22 @@ export function mapZed(
 
 	// Build the theme style
 	const rawStyle = buildStyle(processedTheme, c);
-	const alph = applyAlpha(rawStyle);
+	const alph = applyAlpha(rawStyle, theme.backgroundAlpha);
 	const saturatedStyle =
 		options.maxSaturation === undefined
-			? alph
-			: applySaturationCap(alph, options.maxSaturation);
+			? rawStyle
+			: applySaturationCap(rawStyle, options.maxSaturation);
 	const style =
 		options.redMaxSaturation === undefined &&
-		options.redMinLightness === undefined
+			options.redMinLightness === undefined
 			? saturatedStyle
 			: applyHueBandCap(
-					saturatedStyle,
-					options.redHueCenter ?? 0,
-					options.redHueWindow ?? 28,
-					options.redMaxSaturation,
-					options.redMinLightness,
-				);
+				saturatedStyle,
+				options.redHueCenter ?? 0,
+				options.redHueWindow ?? 28,
+				options.redMaxSaturation,
+				options.redMinLightness,
+			);
 
 	// Construct the theme file
 	const themeFile: ZedThemeFile = {
@@ -1036,19 +1048,36 @@ export function mapZed(
 	return themeFile;
 }
 
-function applyAlpha(style: ZedThemeStyle): ZedThemeStyle {
-	const out: Partial<ZedThemeStyle> = { ...style };
+function applyAlpha(style: ZedThemeStyle, backgroundAlpha: number | undefined): ZedThemeStyle {
+	if (backgroundAlpha === undefined) {
+		return style;
+	}
+	const out: Record<string, unknown> = { ...style };
 	for (const key in style) {
 		const value = style[key as keyof ZedThemeStyle];
-		if (typeof value === "object" && value !== null) {
-			out[key as keyof ZedThemeStyle] = applyAlpha(value as unknown as Partial<ZedThemeStyle>) as unknown as Partial<ZedThemeStyle>[keyof Partial<ZedThemeStyle>];
-		} else if (key.includes("background") && (value instanceof Color || typeof value === "string" && value[0] === "#")) {
-			out[key as keyof ZedThemeStyle] = new Color(value as string).alpha(0.2).hexa() as unknown as Partial<ZedThemeStyle>[keyof Partial<ZedThemeStyle>];
+		// Arrays are objects in JS; spreading an array turns it into { "0": … } and breaks JSON.
+		if (Array.isArray(value)) {
+			const arr = value as unknown[];
+			if (arr.every((v): v is string => typeof v === "string")) {
+				out[key] = [...arr];
+			} else {
+				out[key] = arr.map((item) =>
+					applyAlpha(item as unknown as ZedThemeStyle, backgroundAlpha),
+				);
+			}
+		} else if (typeof value === "object" && value !== null) {
+			out[key] = applyAlpha(value as unknown as ZedThemeStyle, backgroundAlpha);
+		} else if (
+			key.includes("background") &&
+			typeof value === "string" &&
+			value[0] === "#"
+		) {
+			out[key] = new Color(value).alpha(backgroundAlpha).hexa();
 		} else {
-			out[key as keyof ZedThemeStyle] = value as unknown as Partial<ZedThemeStyle>[keyof Partial<ZedThemeStyle>];
+			out[key] = value;
 		}
 	}
-	return out as ZedThemeStyle;
+	return out as unknown as ZedThemeStyle;
 }
 
 export default mapZed;

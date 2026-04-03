@@ -4,9 +4,14 @@
  * A dark, muted theme with warm accents focused on readability.
  */
 
-import { make, type ThemeDefinition } from "./types";
+import {
+  make,
+  type ThemeDefinition,
+  type SlimThemeDefinition,
+  normalizeTheme,
+} from "./types";
 import { SemanticTokenModifier } from "../types";
-import Color from "color";
+import { Color, mkElementColors } from "@/core/color";
 import { mix } from "./utils";
 
 // ============================================================================
@@ -15,7 +20,7 @@ import { mix } from "./utils";
 
 export enum palette {
   // Backgrounds
-  background = "#0e0b13",
+  background = "#0B0A0D",
   editorPaneBackground = "#0e0a12",
   gutterBg = "#0c0a10",
   panelBg = "#0e0b13",
@@ -110,8 +115,8 @@ export enum palette {
   widgetBorder = "#45414C",
   suggestBg = "#1B1629",
   listActive = "#2A2441",
-  focusBorder = "#a099ae14",
-  tabBorder = "#212131",
+  focusBorder = "#D1F1EC80",
+  tabBorder = "#575B6F19",
   tabActiveBorder = "#d0cfd3",
   buttonBg = "#443e5040",
   buttonFg = "#acecff7d",
@@ -151,14 +156,14 @@ export const v = (k: PaletteValue): PaletteValue => k;
 // 2. Theme Definition
 // ============================================================================
 
-export const apathy: ThemeDefinition = {
+const apathySource = {
   name: "Apathy",
   type: "dark",
   palette,
   background: palette.background,
   semanticHighlighting: true,
 
-  tokens: {
+  syntax: {
     source: palette.source,
     comments: palette.muted,
     strings: make({
@@ -172,10 +177,6 @@ export const apathy: ThemeDefinition = {
     literals: {
       default: palette.cyan,
       string: palette.wasabi,
-      number: palette.cyan,
-      boolean: palette.cyan,
-      null: palette.cyan,
-      undefined: palette.cyan,
       regex: palette.rose,
     },
 
@@ -190,42 +191,28 @@ export const apathy: ThemeDefinition = {
 
     variables: {
       default: palette.white,
-      local: palette.white,
       parameter: palette.paramPurple,
-      property: palette.white,
       global: palette.amber,
-      other: palette.white,
     },
 
     constants: {
       default: palette.cyan,
-      numeric: palette.cyan,
-      language: palette.cyan,
       userDefined: palette.white,
     },
 
     functions: {
       default: palette.gold,
       declaration: palette.seafoam,
-      call: palette.gold,
-      method: palette.gold,
-      builtin: palette.gold,
     },
 
     types: {
       default: palette.gold,
-      primitive: palette.gold,
-      class: palette.gold,
       interface: palette.ice,
-      enum: palette.gold,
       typeParameter: palette.ice,
-      namespace: palette.gold,
     },
 
     punctuation: {
       default: palette.faintGray,
-      definition: palette.faintGray,
-      delimiter: palette.faintGray,
       bracket: palette.bracketPunctuation,
       accessor: palette.accessor,
     },
@@ -233,13 +220,10 @@ export const apathy: ThemeDefinition = {
     meta: {
       default: palette.blush,
       decorator: palette.pink,
-      macro: palette.pink,
-      annotation: palette.pink,
       label: palette.softBlue,
     },
     storage: {
       default: palette.steel,
-      type: palette.steel,
     },
   },
 
@@ -276,31 +260,6 @@ export const apathy: ThemeDefinition = {
     },
   },
 
-  // Semantic overrides for fine-tuning
-  semantic: {
-    comment: palette.muted,
-    string: palette.wasabi,
-    keyword: palette.softBlue,
-    number: palette.cyan,
-    regexp: palette.rose,
-    operator: palette.crimson,
-    namespace: palette.gold,
-    type: palette.gold,
-    struct: palette.gold,
-    class: palette.gold,
-    interface: palette.ice,
-    enum: palette.gold,
-    typeParameter: palette.ice,
-    function: palette.gold,
-    method: palette.gold,
-    decorator: palette.pink,
-    macro: palette.pink,
-    variable: palette.white,
-    parameter: palette.paramPurple,
-    property: palette.white,
-    label: palette.softBlue,
-  },
-
   // Modifier handlers
   modifiers: {
     [SemanticTokenModifier.documentation]: {
@@ -316,27 +275,52 @@ export const apathy: ThemeDefinition = {
       global: { foreground: palette.gitModified },
     },
     [SemanticTokenModifier.async]: {
-      transform: (color: string) => Color(color).mix(Color(palette.softBlue), 0.1).hex(),
+      transform: (color: string) => new Color(color).mix(palette.softBlue, 0.1),
     },
   },
 
   ui: {
     backgrounds: {
-      base: palette.background,
-      surface: palette.background,
-      raised: palette.suggestBg,
-      overlay: palette.widgetBg,
+      base: "#000000",
+      surface: "#1B1A1C4f",
+      raised: "#0f0c1cd5",
+      overlay: "#07060d",
     },
     foregrounds: {
-      default: palette.uiForeground,
-      muted: palette.charcoal,
-      subtle: palette.inputBorder,
-      accent: palette.cyan,
+      default: "#dad7fc80",
+      muted: "#555174",
+      subtle: "#26244a",
+      disabled: Color.create(palette.inputBorder).set({
+        l: l => l * 1.1,
+        c: c => 0.07,
+        h: h => h - 12,
+      }),
+      accent: Color.create(palette.cyan).alpha(0.9),
     },
     borders: {
-      default: palette.widgetBorder,
-      active: palette.tabActiveBorder,
-      subtle: palette.tabBorder,
+      default: "#201a3938",
+      active: "#0B0A3C",
+      subtle: "#3B2A7C2f",
+      disabled: "#07060d",
+      transparent: "#07060d",
+      selected: "#201a39c8",
+    },
+    elements: {
+      background: "#0302045f",
+      hover: { background: "#2f294a2a" },
+      selected: { background: "#2f294a2a" },
+    },
+    subtleElements: {
+      background: "#07060bbf",
+      selected: { background: "#3c36544f" },
+      hover: { background: "#3c36544f" },
+      active: { background: "#3c36544f" },
+    },
+    panels: {
+      background: "#0B0A0C",
+      foreground: palette.uiForeground,
+      focusedBorder: "#07060d",
+      titleBackground: "#07060d",
     },
     accent: {
       primary: palette.cyan,
@@ -344,10 +328,25 @@ export const apathy: ThemeDefinition = {
       secondary: palette.gold,
     },
     status: {
-      error: palette.errorRed,
-      warning: palette.warning,
-      info: palette.info,
-      success: palette.addedGreen,
+      error: mkElementColors(palette.errorRed, { background: "#0B0A0C", foreground: palette.uiForeground }),
+      warning: mkElementColors(palette.warning, { background: "#0B0A0C", foreground: palette.uiForeground }),
+      info: {
+        ...mkElementColors(palette.info, { background: "#0B0A0C", foreground: palette.uiForeground }),
+        background: "#15142faf",
+      },
+      success: mkElementColors(palette.addedGreen, { background: "#0B0A0C", foreground: palette.uiForeground }),
+    },
+    focus: {
+      border: "#0B0A3C",
+    },
+    highlights: {
+      activeLine: {
+        background: "#07060d",
+      },
+    },
+    indentGuide: {
+      background: "#4b3a842d",
+      activeBackground: "#4b3a848d",
     },
     selection: {
       background: palette.selection,
@@ -362,190 +361,187 @@ export const apathy: ThemeDefinition = {
       ignored: "#3b4940",
       conflict: palette.orange,
     },
-    overrides: {
-      editor: {
-        background: palette.background,
-        foreground: palette.editorFg,
-        lineHighlight: palette.lineHighlight,
-        lineHighlightBorder: palette.lineHighlight,
-        selectionHighlight: palette.selectionHighlight,
-        wordHighlight: palette.wordHighlight,
-        wordHighlightStrong: palette.wordHighlightStrong,
-        findMatchHighlight: palette.findMatchHighlight,
-        findMatch: palette.findMatch,
-        rangeHighlight: "#2A244120",
-      },
-      editorGutter: {
-        background: palette.gutterBg,
-        modifiedBackground: "#E9C062",
-        addedBackground: "#A8FF60",
-        deletedBackground: "#CC6666",
-        foldingControl: palette.charcoal,
-      },
-      editorLineNumber: {
-        foreground: palette.charcoal,
-        activeForeground: palette.slate,
-      },
-      activityBar: {
-        background: palette.background,
-        foreground: palette.white,
-        inactiveForeground: "#e0dfe127",
-        border: palette.background,
-        badgeBackground: "#FF7A0000",
-        badgeForeground: palette.brightGreen,
-      },
-      sideBar: {
-        background: palette.background,
-        foreground: "#827b90cf",
-        border: palette.background,
-        sectionHeaderBackground: "#0f0e1000",
-        sectionHeaderForeground: "#e3e1e8b7",
-      },
-      panel: {
-        background: palette.background,
-        foreground: palette.white,
-        border: "#352b4655",
-        titleActiveForeground: "#e3e1e891",
-        titleInactiveForeground: "#e0e0e069",
-        titleActiveBorder: "#ffffff",
-      },
-      statusBar: {
-        background: palette.background,
-        foreground: "#7c7c7c8a",
-        border: palette.background,
-        debuggingBackground: "#1f1a38",
-        debuggingForeground: "#bd5e2b",
-        noFolderBackground: "#0B0915",
-        noFolderForeground: palette.muted,
-      },
-      tabs: {
-        activeBackground: palette.tabBg,
-        activeForeground: "#e3e1e894",
-        activeBorder: palette.tabActiveBorder,
-        activeBorderTop: palette.tabActiveBorder,
-        inactiveBackground: palette.tabBg,
-        inactiveForeground: "#b5b5b59e",
-        hoverBackground: palette.tabBg,
-        hoverForeground: palette.white,
-        unfocusedActiveBackground: palette.tabBg,
-        unfocusedActiveForeground: palette.muted,
-        modifiedBorder: palette.gold,
-      },
-      list: {
-        activeSelectionBackground: palette.listActive,
-        activeSelectionForeground: "#E6E2D1",
-        inactiveSelectionBackground: palette.suggestBg,
-        inactiveSelectionForeground: "#E6E2D1",
-        hoverBackground: "#2A244140",
-        hoverForeground: "#E6E2D1",
-        focusBackground: palette.listActive,
-        focusForeground: "#E6E2D1",
-        highlightForeground: palette.gold,
-      },
-      input: {
-        background: palette.inputBg,
-        foreground: "#E6E2D1",
-        border: palette.inputBorder,
-        placeholderForeground: "#b5b5b545",
-      },
-      button: {
-        background: palette.buttonBg,
-        foreground: palette.buttonFg,
-        hoverBackground: "#443e5053",
-        secondaryBackground: "#17161e54",
-        secondaryForeground: "#d0d5db83",
-        secondaryHoverBackground: "#2b293754",
-      },
-      dropdown: {
-        background: palette.suggestBg,
-        foreground: "#E6E2D1",
-        border: palette.widgetBorder,
-        listBackground: palette.suggestBg,
-      },
-      badge: {
-        background: "#0b0b19c9",
-        foreground: "#82aaffd4",
-      },
-      scrollbar: {
-        shadow: "#00000080",
-        sliderBackground: "#45414C40",
-        sliderHoverBackground: "#45414C80",
-        sliderActiveBackground: palette.widgetBorder,
-      },
-      minimap: {
-        background: palette.background,
-        selectionHighlight: palette.selection,
-        errorHighlight: palette.errorRed,
-        warningHighlight: palette.warning,
-        findMatchHighlight: palette.findMatch,
-      },
-      breadcrumb: {
-        background: palette.background,
-        foreground: "#e0e0e03c",
-        focusForeground: "#E6E2D1",
-        activeSelectionForeground: palette.yellow,
-      },
-      terminal: {
-        background: palette.background,
-        foreground: "#dddde8dc",
-        cursorForeground: palette.white,
-        selectionBackground: palette.selection,
-        cursor: palette.white,
-        ansiBlack: palette.ansiBlack,
-        ansiRed: palette.ansiRed,
-        ansiGreen: palette.brightGreen,
-        ansiYellow: palette.yellow,
-        ansiBlue: palette.lightBlue,
-        ansiMagenta: palette.purple,
-        ansiCyan: "#89DDFF",
-        ansiWhite: "#ECEFF4",
-        ansiBrightBlack: palette.ansiBrightBlack,
-        ansiBrightRed: palette.ansiBrightRed,
-        ansiBrightGreen: palette.brightGreen,
-        ansiBrightYellow: palette.yellow,
-        ansiBrightBlue: palette.lightBlue,
-        ansiBrightMagenta: palette.purple,
-        ansiBrightCyan: "#89DDFF",
-        ansiBrightWhite: "#FFFFFF",
-      },
-      notification: {
-        background: palette.widgetBg,
-        foreground: palette.white,
-        border: palette.widgetBorder,
-      },
-      peekView: {
-        editorBackground: "#0F0D1A",
-        editorBorder: palette.widgetBorder,
-        resultBackground: palette.suggestBg,
-        resultSelectionBackground: palette.listActive,
-        titleBackground: "#0B0915",
-        titleForeground: "#E6E2D1",
-      },
-      diffEditor: {
-        // insertedTextBackground: "#13232080",
-        insertedTextBackground: "#1b373473",
-        removedTextBackground: "#f9267213",
-        // insertedLineBackground: "#132320bd",
-        insertedLineBackground: "#1b373473",
-        removedLineBackground: "#3c152578",
-        diagonalFill: palette.widgetBorder,
-      },
-      merge: {
-        currentHeaderBackground: palette.suggestBg,
-        incomingHeaderBackground: palette.suggestBg,
-        commonHeaderBackground: palette.suggestBg,
-        currentContentBackground: mix(palette.addedGreen, palette.background, 0.3),
-        incomingContentBackground: mix(palette.gold, palette.background, 0.3),
-        commonContentBackground: mix(palette.widgetBorder, palette.background, 0.3),
-      },
+  },
+  componentOverrides: {
+    editor: {
+      background: "#08070fdf",
+      foreground: palette.editorFg,
+      lineHighlight: palette.lineHighlight,
+      lineHighlightBorder: palette.lineHighlight,
+      selectionHighlight: palette.selectionHighlight,
+      wordHighlight: palette.wordHighlight,
+      wordHighlightStrong: palette.wordHighlightStrong,
+      findMatchHighlight: palette.findMatchHighlight,
+      findMatch: palette.findMatch,
+      rangeHighlight: "#2A244120",
+    },
+    editorGutter: {
+      background: palette.gutterBg,
+      modifiedBackground: "#E9C062",
+      addedBackground: "#A8FF60",
+      deletedBackground: "#CC6666",
+      foldingControl: palette.charcoal,
+    },
+    editorLineNumber: {
+      foreground: "#45455f8f",
+      activeForeground: palette.slate,
+    },
+    activityBar: {
+      background: palette.background,
+      foreground: palette.white,
+      inactiveForeground: "#e0dfe127",
+      border: palette.background,
+      badgeBackground: "#FF7A0000",
+      badgeForeground: palette.brightGreen,
+    },
+    sideBar: {
+      background: palette.background,
+      foreground: "#827b90cf",
+      border: palette.background,
+      sectionHeaderBackground: "#0f0e1000",
+      sectionHeaderForeground: "#e3e1e8b7",
+    },
+    panel: {
+      background: palette.background,
+      foreground: palette.white,
+      border: "#352b4655",
+      titleActiveForeground: "#e3e1e891",
+      titleInactiveForeground: "#e0e0e069",
+      titleActiveBorder: "#ffffff",
+    },
+    statusBar: {
+      background: palette.background,
+      foreground: "#7c7c7c8a",
+      border: palette.background,
+      debuggingBackground: "#1f1a38",
+      debuggingForeground: "#bd5e2b",
+      noFolderBackground: "#0B0915",
+      noFolderForeground: palette.muted,
+    },
+    tabs: {
+      activeBackground: "#040305",
+      activeForeground: "#e3e1e894",
+      activeBorder: palette.tabActiveBorder,
+      activeBorderTop: palette.tabActiveBorder,
+      inactiveBackground: "#07060d",
+      inactiveForeground: "#b5b5b59e",
+      hoverBackground: palette.tabBg,
+      hoverForeground: palette.white,
+      unfocusedActiveBackground: palette.tabBg,
+      unfocusedActiveForeground: palette.muted,
+      modifiedBorder: palette.gold,
+    },
+    list: {
+      activeSelectionBackground: palette.listActive,
+      activeSelectionForeground: "#E6E2D1",
+      inactiveSelectionBackground: palette.suggestBg,
+      inactiveSelectionForeground: "#E6E2D1",
+      hoverBackground: "#2A244140",
+      hoverForeground: "#E6E2D1",
+      focusBackground: palette.listActive,
+      focusForeground: "#E6E2D1",
+      highlightForeground: palette.gold,
+    },
+    input: {
+      background: palette.inputBg,
+      foreground: "#E6E2D1",
+      border: palette.inputBorder,
+      placeholderForeground: "#b5b5b545",
+    },
+    button: {
+      background: palette.buttonBg,
+      foreground: palette.buttonFg,
+      hoverBackground: "#443e5053",
+      secondaryBackground: "#17161e54",
+      secondaryForeground: "#d0d5db83",
+      secondaryHoverBackground: "#2b293754",
+    },
+    dropdown: {
+      background: palette.suggestBg,
+      foreground: "#E6E2D1",
+      border: palette.widgetBorder,
+      listBackground: palette.suggestBg,
+    },
+    badge: {
+      background: "#0b0b19c9",
+      foreground: "#82aaffd4",
+    },
+    scrollbar: {
+      shadow: "#00000080",
+      sliderBackground: "#45418c20",
+      sliderHoverBackground: "#45414C80",
+      sliderActiveBackground: palette.widgetBorder,
+    },
+    minimap: {
+      background: palette.background,
+      selectionHighlight: palette.selection,
+      errorHighlight: palette.errorRed,
+      warningHighlight: palette.warning,
+      findMatchHighlight: palette.findMatch,
+    },
+    breadcrumb: {
+      background: palette.background,
+      foreground: "#e0e0e03c",
+      focusForeground: "#E6E2D1",
+      activeSelectionForeground: palette.yellow,
+    },
+    terminal: {
+      background: palette.background,
+      foreground: "#6464b97c",
+      cursorForeground: palette.white,
+      selectionBackground: palette.selection,
+      cursor: palette.white,
+      ansiBlack: palette.ansiBlack,
+      ansiRed: palette.ansiRed,
+      ansiGreen: palette.brightGreen,
+      ansiYellow: palette.yellow,
+      ansiBlue: palette.lightBlue,
+      ansiMagenta: palette.purple,
+      ansiCyan: "#89DDFF",
+      ansiWhite: "#ECEFF4",
+      ansiBrightBlack: palette.ansiBrightBlack,
+      ansiBrightRed: palette.ansiBrightRed,
+      ansiBrightGreen: palette.brightGreen,
+      ansiBrightYellow: palette.yellow,
+      ansiBrightBlue: palette.lightBlue,
+      ansiBrightMagenta: palette.purple,
+      ansiBrightCyan: "#89DDFF",
+      ansiBrightWhite: "#FFFFFF",
+    },
+    notification: {
+      background: palette.widgetBg,
+      foreground: palette.white,
+      border: palette.widgetBorder,
+    },
+    peekView: {
+      editorBackground: "#0F0D1A",
+      editorBorder: palette.widgetBorder,
+      resultBackground: palette.suggestBg,
+      resultSelectionBackground: palette.listActive,
+      titleBackground: "#0B0915",
+      titleForeground: "#E6E2D1",
+    },
+    diffEditor: {
+      // insertedTextBackground: "#13232080",
+      insertedTextBackground: "#1b373473",
+      removedTextBackground: "#f9267213",
+      // insertedLineBackground: "#132320bd",
+      insertedLineBackground: "#1b373473",
+      removedLineBackground: "#3c152578",
+      diagonalFill: palette.widgetBorder,
+    },
+    merge: {
+      currentHeaderBackground: palette.suggestBg,
+      incomingHeaderBackground: palette.suggestBg,
+      commonHeaderBackground: palette.suggestBg,
+      currentContentBackground: mix(palette.addedGreen, palette.background, 0.3),
+      incomingContentBackground: mix(palette.gold, palette.background, 0.3),
+      commonContentBackground: mix(palette.widgetBorder, palette.background, 0.3),
     },
   },
 
   // Extra VS Code colors not covered by structured UI
   extraColors: {
-    // Focus border override (use focusBorder not borders.active)
-    "focusBorder": palette.focusBorder,
-
     // Editor extras
     "editorPane.background": palette.editorPaneBackground,
     "editorCursor.foreground": "#da4c51",
@@ -599,6 +595,7 @@ export const apathy: ThemeDefinition = {
     "gauge.border": palette.focusBorder,
     "sash.hoverBorder": palette.focusBorder,
     "editorGroup.border": palette.focusBorder,
+    "window.activeBorder": palette.focusBorder,
 
     // Tree & separators
     "tree.indentGuidesStroke": palette.widgetBorder,
@@ -635,6 +632,8 @@ export const apathy: ThemeDefinition = {
     // Settings
     "settings.headerForeground": "#d1deea75",
   },
-};
+} satisfies SlimThemeDefinition;
+
+export const apathy: ThemeDefinition = normalizeTheme(apathySource);
 
 export default apathy;

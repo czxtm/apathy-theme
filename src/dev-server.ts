@@ -53,7 +53,8 @@ const MIME: Record<string, string> = {
 const RELOAD_SCRIPT = `
 <script>
 (function() {
-  const ws = new WebSocket("ws://" + location.host + "/__ws");
+  const wsProto = location.protocol === "https:" ? "wss://" : "ws://";
+  const ws = new WebSocket(wsProto + location.host + "/__ws");
   ws.onmessage = function(e) {
     if (e.data === "reload") location.reload();
   };

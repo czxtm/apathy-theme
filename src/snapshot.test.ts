@@ -7,7 +7,7 @@
  */
 
 import { test, expect, describe } from "bun:test";
-import Color from "color";
+import Color from "colorjs.io";
 import { mapZed } from "./integrations/zed";
 import { mapVSCode } from "./integrations/vscode";
 import { minted } from "./themes/minted";
@@ -24,45 +24,47 @@ import type { ThemeDefinition } from "./themes/types";
 
 function parseColor(hex: string) {
   try {
-    return Color(hex);
+    return new Color(hex);
   } catch {
     return null;
   }
 }
 
-function compositeOver(fg: ReturnType<typeof Color>, bg: ReturnType<typeof Color>) {
-  const fgU = fg.unitObject();
-  const bgU = bg.unitObject();
-  const fgA = fg.alpha();
-  const bgA = bg.alpha();
+function compositeOver(fg: Color, bg: Color) {
+  const fgSrgb = fg.to("srgb");
+  const bgSrgb = bg.to("srgb");
+  const [fgr = 0, fgg = 0, fgb = 0] = fgSrgb.coords;
+  const [bgr = 0, bgg = 0, bgb = 0] = bgSrgb.coords;
+  const fgA = fgSrgb.alpha ?? 1;
+  const bgA = bgSrgb.alpha ?? 1;
   const outA = fgA + bgA * (1 - fgA);
-  if (outA <= 0) return Color.rgb(0, 0, 0).alpha(0);
+  if (outA <= 0) return new Color("srgb", [0, 0, 0], 0);
   const ch = (f: number, b: number) =>
-    ((f * fgA + b * bgA * (1 - fgA)) / outA) * 255;
-  return Color.rgb(
-    Math.round(ch(fgU.r, bgU.r)),
-    Math.round(ch(fgU.g, bgU.g)),
-    Math.round(ch(fgU.b, bgU.b)),
-  ).alpha(outA);
+    (f * fgA + b * bgA * (1 - fgA)) / outA;
+  return new Color("srgb", [ch(fgr ?? 0, bgr ?? 0), ch(fgg ?? 0, bgg ?? 0), ch(fgb ?? 0, bgb ?? 0)], outA);
 }
 
 function effectiveContrast(fg: string, bg: string): number | null {
   const fgC = parseColor(fg);
   const bgC = parseColor(bg);
   if (!fgC || !bgC) return null;
-  const opaqueBg = bgC.alpha(1);
-  const visible = compositeOver(fgC, opaqueBg).alpha(1);
-  return Math.round(visible.contrast(opaqueBg) * 100) / 100;
+  const opaqueBg = bgC.clone();
+  opaqueBg.alpha = 1;
+  const visible = compositeOver(fgC, opaqueBg);
+  visible.alpha = 1;
+  return Math.round(visible.contrast(opaqueBg, "WCAG21") * 100) / 100;
 }
 
 function hsl(hex: string): { h: number; s: number; l: number; a: number } | null {
   const c = parseColor(hex);
   if (!c) return null;
+  const hslColor = c.to("hsl");
+  const [h = 0, s = 0, l = 0] = hslColor.coords;
   return {
-    h: Math.round(c.hue()),
-    s: Math.round(c.saturationl()),
-    l: Math.round(c.lightness()),
-    a: Math.round(c.alpha() * 100) / 100,
+    h: Math.round(h ?? 0),
+    s: Math.round(s ?? 0),
+    l: Math.round(l ?? 0),
+    a: Math.round((hslColor.alpha ?? 1) * 100) / 100,
   };
 }
 

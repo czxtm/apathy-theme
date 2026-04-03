@@ -1,12 +1,13 @@
 import {
 	make,
-	type UIComponents,
+	type ComponentOverrides,
+	type SyntaxDefinition,
 	type ThemeDefinition,
 	type UserInterface,
 	type ColorLike,
 } from "./types";
 import { SemanticTokenModifier } from "../types";
-import { Color, makeColors } from "../core/color";
+import { Color, mkElementColors, oklch } from "../core/color";
 import {
 	darken,
 	l10,
@@ -15,217 +16,248 @@ import {
 	transparentize,
 } from "./utils";
 
-export enum mintedBasePalette {
-	midnight = "#0c0c13",
-	midnight2 = "#0e0e15",
-	midnightLight = "#161620",
-	midnightDark = "#07070a",
+// ============================================================================
+// Seeds — the DNA of the minted palette
+// ============================================================================
 
-	black = "#0f0f12",
-	semiblack = "#0a0a0c",
-	alphaBlack = "#0f0f1280",
-	alphaWhite = "#e1e2e520",
-	"#08080c" = "#08080c",
+export const H = 285;     // surface hue (purple-blue)
+export const C = 0.015;   // surface chroma (very desaturated)
+export const L = 0.158;   // base background lightness
 
-	charcoal = "#383d51",
-	darkBlue = "#4B6672",
-	bluegray = "#6372a1",
-	"#527bb254" = "#527bb254",
-	obsidian = "#201f31",
-	taupe = "#7f8797",
-	mist = "#767b95c2",
-	steel = "#96a5b6",
-	slate = "#9aa1c7",
-	flatwhite = "#b1b1bffa",
-	devwhite = "#afd1e9cf",
-	white = "#e1e3e5",
+export const SL = 0.82;    // syntax lightness center
+export const SC = 0.09;    // syntax chroma center
 
-	wasabi = "#c3dc8f",
-	wasabi2 = "#b7d194",
-	seafoam = "#9cd6bc",
+// Syntax hues — each role's hue angle
+export const hue = {
+	string: 127,
+	function: 165,
+	type: 185,
+	literal: 214,
+	keyword: 289,
+	decorator: 50,
+	label: 334,
+	operator: 6,
+	storage: 270,
+} as const;
 
-	cyan = "#33b3cc",
-	ice = "#b3e6de",
+// ============================================================================
+// Builders
+// ============================================================================
 
-	lavender = "#998fe1cf",
-	magenta = "#fc00ff",
+/** Surface color at a given lightness. Same hue family, low chroma. */
+const bg = (l: number, c = C, h = H) => oklch(l, c, h);
 
-	peach = "#ffb389",
-	blush = "#e0a2d3",
-	crimson = "#ca175d",
-	gold = "#ffd014d4",
+/** Syntax color — distinct hue, offset from syntax band center */
+const syn = (h: number, dl = 0, dc = 1) => oklch(SL + dl, SC * dc, h);
 
-	softMist = "#585B70",
-	dimGray = "#3A4158",
-	deepGray = "#2B2F3F",
+// ============================================================================
+// Palette — all Color instances, zero hex
+// ============================================================================
 
-	nightPurple = "#201F31",
-	deletedRose = "#A63B65",
+export const p = {
+	// ── Backgrounds (lightness ramp, surface hue) ───────────────────────
+	midnight: bg(L),
+	midnight2: bg(L + 0.009),
+	midnightLight: bg(L + 0.047, C * 1.32),
+	midnightDark: bg(L - 0.028, C * 0.49),
+	black: bg(L + 0.012, C * 0.41, H + 1),
+	semiblack: bg(L - 0.012, C * 0.29, H + 1),
+	obsidian: bg(L + 0.091, C * 2.25, H + 1),
 
-	gray1 = "#5C5675",
-	gray2 = "#3e3645d2",
-	orange1 = "#FF7859",
+	// ── Foreground ramp (surface hue family, lightness varies) ──────────
+	charcoal: bg(L + 0.206, C * 2.35, H - 11),
+	darkBlue: oklch(0.493, 0.037, 227),
+	bluegray: oklch(0.559, SC * 0.84, hue.storage),
+	taupe: oklch(0.622, 0.026, H - 21),
+	softMist: oklch(0.477, 0.034, H - 6),
+	dimGray: oklch(0.379, 0.041, H - 14),
+	deepGray: oklch(0.308, 0.029, H - 11),
+	gray1: oklch(0.471, 0.050, H + 8),
+	mist: oklch(0.588, 0.040, H - 8),
+	steel: oklch(0.716, 0.030, H - 33),
+	slate: oklch(0.717, 0.056, H - 8),
+	flatwhite: oklch(0.765, 0.020, H + 1),
+	devwhite: oklch(0.844, 0.049, H - 46),
+	white: oklch(0.915, 0.004, H - 37),
 
-	"#1abdda" = "#1abdda",
-	"#88e6d6" = "#88e6d6",
-	"#C3E88D" = "#C3E88D",
-	"#ffb389" = "#ffb389",
-	"#F07178" = "#F07178",
-	"#6bffbfdb" = "#6bffbfdb",
-	"#ff9d9ddf" = "#ff9d9ddf",
-	"#efadeab0" = "#efadeab0",
+	// ── Syntax (parametric on SL, SC, hue) ──────────────────────────────
+	wasabi: syn(hue.string, +0.04, 1.16),
+	wasabi2: syn(hue.string, 0, 0.96),
+	seafoam: syn(hue.function, 0, 0.78),
+	cyan: syn(hue.literal, -0.11, 1.25),
+	ice: syn(hue.type, +0.07, 0.59),
+	lavender: syn(hue.keyword, -0.13, 1.32),
+	peach: syn(hue.decorator, 0, 1.17),
+	blush: syn(hue.label, -0.03, 1.08),
+	crimson: syn(hue.operator, -0.27, 2.32),
+	gold: syn(92, +0.05, 1.96),
+	magenta: syn(328, -0.12, 3.57),
+	orange1: syn(34, -0.09, 1.90),
+	deletedRose: syn(359, -0.31, 1.62),
 
-	cursorRed = "#da4c51",
+	// ── Status / debug ──────────────────────────────────────────────────
+	cursorRed: oklch(0.613, 0.178, 22),
+	debugInfo: syn(206, +0.02, 1.06),
+	debugError: syn(24, -0.12, 2.14),
+	debugWarning: syn(81, +0.05, 1.42),
+	listError: syn(22, -0.28, 1.32),
 
-	lineHighlight = "#1b162994",
-	wordHighlight = "#383248a5",
-	wordHighlightStrong = "#564f66ab",
+	// ── Git ─────────────────────────────────────────────────────────────
+	gitRenamed: oklch(0.648, SC * 0.96, 209),
+	gitStageDeleted: oklch(0.502, SC * 1.03, 14),
+	gitSubmodule: oklch(0.769, SC * 0.84, 247),
 
-	indentGuide = "#291e2969",
-	indentGuideActive = "#654d6569",
-	editorWhitespace = "#272636",
+	// ── UI surfaces (derived from surface ramp) ─────────────────────────
+	menuBg: bg(L + 0.058, C * 2.47, H + 10),
+	tabBorder: bg(L + 0.097, C * 2.0),
+	composerBg: bg(L + 0.038, C * 0.99, H - 18),
+	settingsInputBg: bg(L + 0.027, C * 0.67),
+	settingsInputBorder: bg(L + 0.073, C * 1.15),
+	editorWhitespace: bg(L + 0.119, C * 1.95, H + 2),
+	widgetBorder: oklch(0.383, 0.019, H + 17),
+	widgetSelection: bg(L + 0.124, C * 3.51, H + 7),
 
-	widgetBorder = "#45414C",
-	widgetSelection = "#2A2441",
-	hoverBg = "#13141bbc",
-	hoverBorder = "#131a24",
-	hoverFg = "#d4edffa7",
+	// ── Highlights (surface tones at specific alpha) ────────────────────
+	lineHighlight: bg(L + 0.058, C * 2.47, H + 10).alpha(0.58),
+	wordHighlight: oklch(0.293, 0.079, H - 12).alpha(0.2),
+	wordHighlightStrong: oklch(0.443, 0.038, H + 14).alpha(0.67),
+	indentGuide: oklch(0.245, 0.065, H + 14).alpha(0.35),
+	indentGuideActive: oklch(0.488, 0.180, H + 10).alpha(0.35),
 
-	menuBg = "#1B1629",
+	// ── Hover / focus ───────────────────────────────────────────────────
+	hoverBg: bg(L + 0.035, C * 0.95, H - 6).alpha(0.74),
+	hoverBorder: bg(L + 0.058, C * 1.49, H - 28),
+	hoverFg: oklch(0.933, 0.036, H - 46).alpha(0.65),
+	focusBorderAlpha: oklch(0.696, 0.031, H + 16).alpha(0.08),
 
-	windowBorder = "#183856ff",
+	// ── Window / buttons ────────────────────────────────────────────────
+	windowBorder: oklch(0.332, 0.065, H - 36),
+	buttonBorder: oklch(0.350, 0.032, H + 15).alpha(0.47),
+	buttonSeparator: oklch(0.441, 0.062, H + 15).alpha(0.21),
 
-	focusBorderAlpha = "#a099ae14",
+	// ── Line numbers ────────────────────────────────────────────────────
+	lineNumberFg: oklch(0.382, 0.013, H + 8).alpha(0.8),
+	lineNumberActiveFg: oklch(0.574, 0.057, H + 14),
 
-	tabBorder = "#212131",
+	// ── Icons ───────────────────────────────────────────────────────────
+	iconFg: oklch(0.509, 0.053, H - 6).alpha(0.72),
 
-	gitRenamed = "#449dab",
-	gitStageDeleted = "#914c54",
-	gitSubmodule = "#8db9e2",
+	// ── Debug bar ───────────────────────────────────────────────────────
+	debuggingBg: oklch(0.892, 0.175, 164).alpha(0.95),
+	debuggingFg: oklch(0.377, 0.196, H + 20),
+	debuggingBorder: oklch(0.827, 0.145, 168).alpha(0.95),
 
-	composerBg = "#12151c",
+	// ── Misc ────────────────────────────────────────────────────────────
+	peekMatchHighlight: oklch(0.674, 0.144, 72).alpha(0.25),
+	settingsHeaderFg: oklch(0.894, 0.022, H - 39).alpha(0.80),
+	textPreformatBg: oklch(0.153, 0.016, 180).alpha(0.94),
+	textPreformatFg: oklch(0.852, 0.099, 163).alpha(0.81),
+	errorBg: oklch(0.275, 0.113, 29).alpha(0.27),
+	prDraft: oklch(0.298, 0.097, H + 12),
+	chatRequestBg: oklch(0.129, 0.052, H - 9),
 
-	debugInfo = "#78DCE8",
-	debugError = "#ff6161",
-	debugWarning = "#FFCB6B",
+	// ── Alpha variants ──────────────────────────────────────────────────
+	alphaBlack: bg(L + 0.012, C * 0.41, H + 1).alpha(0.50),
+	alphaWhite: oklch(0.915, 0.004, H - 37).alpha(0.13),
+} as const;
 
-	debuggingBg = "#3fffbdf2",
-	debuggingFg = "#5b0092",
-	debuggingBorder = "#4be4b5f2",
+// Backward-compatible export name
+export const mintedBasePalette = p;
 
-	peekMatchHighlight = "#CC850040",
+// ============================================================================
+// Syntax Definition
+// ============================================================================
 
-	settingsHeaderFg = "#d1deeacc",
-	settingsInputBg = "#121217",
-	settingsInputBorder = "#1c1c25",
-
-	errorBg = "#52000045",
-	listError = "#a84e4e",
-
-	textPreformatBg = "#050e0cf0",
-	textPreformatFg = "#90e3bccf",
-
-	iconFg = "#5f6384b8",
-
-	prDraft = "#331f57",
-
-	chatRequestBg = "#04041b",
-
-	buttonBorder = "#3d374978",
-	buttonSeparator = "#584b7036",
-
-	lineNumberFg = "#454148",
-	lineNumberActiveFg = "#9B8FB5",
-}
-
-const colors = makeColors(mintedBasePalette);
-
-export const mintedBaseTokens: ThemeDefinition["tokens"] = {
-	source: mintedBasePalette.mist,
-	comments: mintedBasePalette.charcoal,
+export const mintedBaseSyntax: SyntaxDefinition = {
+	source: p.mist.alpha(0.76),
+	comments: p.charcoal,
 	strings: make({
-		default: mintedBasePalette.wasabi2,
-		regex: mintedBasePalette.peach,
+		default: p.wasabi2,
+		regex: p.peach,
 	}),
 	operators: {
-		default: mintedBasePalette.crimson,
+		default: p.crimson,
 	},
 	literals: {
-		default: mintedBasePalette.cyan,
-		string: mintedBasePalette.wasabi2,
-		number: mintedBasePalette.cyan,
-		boolean: mintedBasePalette.cyan,
-		null: mintedBasePalette.lavender,
-		undefined: mintedBasePalette.lavender,
-		regex: mintedBasePalette.peach,
+		default: p.cyan,
+		string: p.wasabi2,
+		number: p.cyan,
+		boolean: p.cyan,
+		null: p.lavender.alpha(0.81),
+		undefined: p.lavender.alpha(0.81),
+		regex: p.peach,
 	},
 	keywords: {
-		default: mintedBasePalette.devwhite,
-		operator: mintedBasePalette.crimson,
+		default: p.devwhite.alpha(0.81),
+		operator: p.crimson,
 	},
 	variables: {
-		default: mintedBasePalette.slate,
-		local: mintedBasePalette.slate,
-		parameter: mintedBasePalette.slate,
-		property: mintedBasePalette.taupe,
-		global: mintedBasePalette.slate,
-		other: mintedBasePalette.flatwhite,
+		default: p.slate,
+		local: p.slate,
+		parameter: p.slate,
+		property: p.taupe,
+		global: p.slate,
+		other: p.flatwhite.alpha(0.98),
 	},
 	constants: {
-		default: mintedBasePalette.mist,
-		numeric: mintedBasePalette.cyan,
-		language: mintedBasePalette.cyan,
-		userDefined: mintedBasePalette.mist,
+		default: p.mist.alpha(0.76),
+		numeric: p.cyan,
+		language: p.cyan,
+		userDefined: p.mist.alpha(0.76),
 	},
 	functions: {
-		default: mintedBasePalette.seafoam,
-		declaration: mintedBasePalette.seafoam,
-		call: mintedBasePalette.seafoam,
-		method: mintedBasePalette.seafoam,
-		builtin: mintedBasePalette.seafoam,
+		default: p.seafoam,
+		declaration: p.seafoam,
+		call: p.seafoam,
+		method: p.seafoam,
+		builtin: p.seafoam,
 	},
 	types: {
-		default: mintedBasePalette.ice,
-		primitive: mintedBasePalette.peach,
-		class: mintedBasePalette.ice,
-		interface: mintedBasePalette.ice,
-		enum: mintedBasePalette.slate,
-		typeParameter: mintedBasePalette.ice,
-		namespace: mintedBasePalette.ice,
+		default: p.ice,
+		primitive: p.peach,
+		class: p.ice,
+		interface: p.ice,
+		enum: p.slate,
+		typeParameter: p.ice,
+		namespace: p.ice,
 	},
 	punctuation: {
-		default: mintedBasePalette.mist,
-		definition: mintedBasePalette.gray2,
-		delimiter: mintedBasePalette.charcoal,
-		bracket: mintedBasePalette.charcoal,
-		accessor: mintedBasePalette.charcoal,
+		default: p.mist.alpha(0.76),
+		definition: oklch(0.355, 0.030, H + 7).alpha(0.82),
+		delimiter: p.charcoal,
+		bracket: p.charcoal,
+		accessor: p.charcoal,
 	},
 	meta: {
-		default: mintedBasePalette.peach,
-		decorator: mintedBasePalette.peach,
-		macro: mintedBasePalette.peach,
-		annotation: mintedBasePalette.peach,
-		label: mintedBasePalette.blush,
-		tag: mintedBasePalette.gray1,
+		default: p.peach,
+		decorator: p.peach,
+		macro: p.peach,
+		annotation: p.peach,
+		label: p.blush,
+		tag: p.gray1,
 	},
 	storage: {
-		default: mintedBasePalette.bluegray,
-		type: mintedBasePalette.bluegray,
+		default: p.bluegray,
+		type: p.bluegray,
 	},
 	special: {
-		jsxClass: mintedBasePalette.blush,
+		jsxClass: p.blush,
 	},
 };
 
+// ============================================================================
+// Core theme anchors
+// ============================================================================
+
 const core = {
-	background: colors.midnight,
-	foreground: colors.mist.mix(colors.midnight, 0.2),
-	accent: colors.lavender,
-	highlight: colors.peach,
-	active: colors.ice,
+	background: p.midnight,
+	foreground: p.mist.alpha(0.76).mix(p.midnight, 0.2),
+	accent: p.lavender.alpha(0.81),
+	highlight: p.peach,
+	active: p.ice,
 } as const;
 
-const overlay = colors.charcoal
+const overlay = p.charcoal
 	.saturate()
 	.lighter()
 	.transparent(0.1)
@@ -233,83 +265,87 @@ const overlay = colors.charcoal
 	.hexa();
 
 const backgrounds: UserInterface<ColorLike>["backgrounds"] = {
-	base: colors.midnight,
-	darker: colors.midnight.darker(0.2),
-	surface: colors.midnight.lighter(0.15),
-	raised: colors.obsidian.mix(colors.midnight, 0.8).saturate(0.3),
+	base: p.midnight,
+	darker: p.midnight.darker(0.2),
+	surface: p.midnight.lighter(0.15),
+	raised: p.obsidian.mix(p.midnight, 0.8).saturate(0.3),
 	overlay,
-	codeBlock: colors.midnightDark.darker(0.2),
+	codeBlock: p.midnightDark.darker(0.2),
 };
 
 const foregrounds: UserInterface<ColorLike>["foregrounds"] = {
-	default: colors.mist.mix(colors.midnight, 0.2),
-	muted: colors.mist.mix(colors.midnight, 0.5).mix(colors.charcoal, 2),
-	subtle: colors.charcoal.mix(colors.midnight, 0.3),
+	default: p.mist.alpha(0.76).mix(p.midnight, 0.2),
+	muted: p.mist.mix(p.midnight, 0.5).mix(p.charcoal, 2),
+	subtle: p.charcoal.mix(p.midnight, 0.3),
 	accent: core.accent,
-	focused: colors.peach,
+	focused: p.peach,
 };
 
-const baseBorder = colors.charcoal.mix(colors.midnight, 0.8);
+const baseBorder = p.charcoal.mix(p.midnight, 0.8);
 
 const borders: UserInterface<ColorLike>["borders"] = {
 	default: baseBorder,
 	active: core.accent.desaturate(0.1).darker(0.4).transparent(0.4),
 	subtle: baseBorder.transparent(0.9),
-	separator: colors.mist.alpha(0.1).hexa(),
+	separator: p.mist.alpha(0.1).hexa(),
 };
 
 const accent: UserInterface<ColorLike>["accent"] = {
-	primary: colors.ice,
-	primaryForeground: colors.ice,
-	secondary: colors.peach,
+	primary: p.ice,
+	primaryForeground: p.ice,
+	secondary: p.peach,
 	palette: [
-		"#88e6d6",
-		"#C3E88D",
-		"#ffb389",
-		"#F07178",
-		"#6bffbfdb",
-		"#8b00ff",
+		p.ice.rotate(-10).hexa(),
+		p.wasabi.hexa(),
+		p.peach.hexa(),
+		p.crimson.lighter(0.3).hexa(),
+		p.debuggingBg.hexa(),
+		p.debuggingFg.lighter(0.2).hexa(),
 	],
 };
 
-const mintedBaseOverrides: UIComponents<ColorLike> = {
+// ============================================================================
+// Component Overrides
+// ============================================================================
+
+export const mintedBaseComponentOverrides: ComponentOverrides<ColorLike> = {
 	editor: {
 		background: darken(backgrounds.base, 0.1),
 		foreground: foregrounds.default,
-		lineHighlight: mintedBasePalette.lineHighlight,
+		lineHighlight: p.lineHighlight,
 		lineHighlightBorder: lighten(backgrounds.base, 0.15),
 		findMatchHighlightBackground: transparentize(
-			mix(mintedBasePalette.lavender, backgrounds.base, 0.8),
+			mix(p.lavender.alpha(0.81), backgrounds.base, 0.8),
 			0.5,
 		),
 		findRangeHighlightBackground: transparentize(
-			mix(mintedBasePalette.lavender, backgrounds.base, 0.8),
+			mix(p.lavender.alpha(0.81), backgrounds.base, 0.8),
 			0.5,
 		),
 		selectionHighlightBackground: transparentize(
-			mix(mintedBasePalette.lavender, backgrounds.base, 0.8),
+			mix(p.lavender.alpha(0.81), backgrounds.base, 0.8),
 			0.5,
 		),
-		lineNumberActiveForeground: mintedBasePalette.mist,
-		lineNumberForeground: darken(mintedBasePalette.mist, 0.7),
-		selectionBackground: mix(mintedBaseTokens.source, mintedBasePalette.midnight, 0.8),
-		inactiveSelectionBackground: darken(mintedBasePalette.lavender, 0.8),
+		lineNumberActiveForeground: p.mist.alpha(0.76),
+		lineNumberForeground: darken(p.mist.alpha(0.76), 0.7),
+		selectionBackground: mix(mintedBaseSyntax.source, p.midnight, 0.8),
+		inactiveSelectionBackground: darken(p.lavender.alpha(0.81), 0.8),
 		findMatchBackground: mix(
-			mintedBasePalette.midnight,
-			mintedBasePalette["#527bb254"],
+			p.midnight,
+			oklch(0.577, 0.097, 256).alpha(0.33),
 			0.5,
 		),
 	},
 	editorGutter: {
 		background: backgrounds.darker,
-		modifiedBackground: colors.gold.transparent(),
-		addedBackground: colors.seafoam.transparent(),
-		deletedBackground: colors.crimson.transparent(),
-		foldingControl: colors.steel.transparent(),
+		modifiedBackground: p.gold.transparent(),
+		addedBackground: p.seafoam.transparent(),
+		deletedBackground: p.crimson.transparent(),
+		foldingControl: p.steel.transparent(),
 	},
 	editorLineNumber: {
-		foreground: mintedBasePalette.charcoal,
-		activeForeground: mintedBasePalette.mist,
+		foreground: p.charcoal,
+		activeForeground: p.mist.alpha(0.76),
 	},
 	editorWidget: {
 		background: backgrounds.surface,
@@ -318,172 +354,172 @@ const mintedBaseOverrides: UIComponents<ColorLike> = {
 	},
 	titleBar: {
 		inactiveBackground: backgrounds.base,
-		inactiveForeground: mintedBasePalette.mist,
-		activeBackground: mintedBasePalette.midnight,
-		activeForeground: mintedBasePalette.mist,
+		inactiveForeground: p.mist.alpha(0.76),
+		activeBackground: p.midnight,
+		activeForeground: p.mist.alpha(0.76),
 	},
 	activityBar: {
 		background: backgrounds.darker,
-		foreground: darken(mintedBasePalette.mist, 0.1),
-		inactiveForeground: darken(mintedBasePalette.mist, 0.5),
-		border: mintedBasePalette.semiblack,
-		badgeBackground: mintedBasePalette.alphaBlack,
-		badgeForeground: mintedBasePalette.wasabi,
+		foreground: darken(p.mist.alpha(0.76), 0.1),
+		inactiveForeground: darken(p.mist.alpha(0.76), 0.5),
+		border: p.semiblack,
+		badgeBackground: p.alphaBlack,
+		badgeForeground: p.wasabi,
 	},
 	sideBar: {
 		background: backgrounds.base,
-		foreground: mix(mintedBasePalette.mist, mintedBasePalette.midnight, 0.2),
+		foreground: mix(p.mist.alpha(0.76), p.midnight, 0.2),
 		border: borders.default,
-		sectionHeaderBackground: mintedBasePalette.midnight,
-		sectionHeaderForeground: mintedBasePalette.mist,
+		sectionHeaderBackground: p.midnight,
+		sectionHeaderForeground: p.mist.alpha(0.76),
 	},
 	panel: {
 		background: darken(backgrounds.base, 0.05),
-		foreground: mintedBasePalette.mist,
+		foreground: p.mist.alpha(0.76),
 		border: borders.default,
-		titleActiveForeground: mintedBasePalette.mist,
-		titleInactiveForeground: mintedBasePalette.mist,
-		titleActiveBorder: mintedBasePalette.steel,
+		titleActiveForeground: p.mist.alpha(0.76),
+		titleInactiveForeground: p.mist.alpha(0.76),
+		titleActiveBorder: p.steel,
 	},
 	statusBar: {
-		background: mintedBasePalette.midnight,
-		foreground: mintedBasePalette.mist,
+		background: p.midnight,
+		foreground: p.mist.alpha(0.76),
 		border: borders.default,
-		debuggingBackground: mintedBasePalette.seafoam,
-		debuggingForeground: colors.ice.darker(0.8),
-		noFolderBackground: mintedBasePalette.midnight,
-		noFolderForeground: mintedBasePalette.mist,
+		debuggingBackground: p.seafoam,
+		debuggingForeground: p.ice.darker(0.8),
+		noFolderBackground: p.midnight,
+		noFolderForeground: p.mist.alpha(0.76),
 	},
 	tabs: {
-		activeBackground: mintedBasePalette.midnight,
-		activeForeground: mintedBasePalette.mist,
+		activeBackground: p.midnight,
+		activeForeground: p.mist.alpha(0.76),
 		activeBorder: borders.default,
-		activeBorderTop: mintedBasePalette.steel,
-		inactiveBackground: mintedBasePalette.midnight,
-		inactiveForeground: mintedBasePalette.mist,
-		hoverBackground: mintedBasePalette.midnight,
-		hoverForeground: mintedBasePalette.mist,
-		unfocusedActiveBackground: mintedBasePalette.midnight,
-		unfocusedActiveForeground: mintedBasePalette.mist,
-		modifiedBorder: mintedBasePalette.peach,
+		activeBorderTop: p.steel,
+		inactiveBackground: p.midnight,
+		inactiveForeground: p.mist.alpha(0.76),
+		hoverBackground: p.midnight,
+		hoverForeground: p.mist.alpha(0.76),
+		unfocusedActiveBackground: p.midnight,
+		unfocusedActiveForeground: p.mist.alpha(0.76),
+		modifiedBorder: p.peach,
 	},
 	list: {
-		activeSelectionBackground: mintedBasePalette.midnight,
-		activeSelectionForeground: mintedBasePalette.mist,
-		inactiveSelectionBackground: mintedBasePalette.midnight,
-		inactiveSelectionForeground: mintedBasePalette.mist,
-		hoverBackground: mintedBasePalette.midnight,
-		hoverForeground: mintedBasePalette.mist,
-		focusBackground: mintedBasePalette.midnight,
-		focusForeground: mintedBasePalette.mist,
-		highlightForeground: mintedBasePalette.steel,
+		activeSelectionBackground: p.midnight,
+		activeSelectionForeground: p.mist.alpha(0.76),
+		inactiveSelectionBackground: p.midnight,
+		inactiveSelectionForeground: p.mist.alpha(0.76),
+		hoverBackground: p.midnight,
+		hoverForeground: p.mist.alpha(0.76),
+		focusBackground: p.midnight,
+		focusForeground: p.mist.alpha(0.76),
+		highlightForeground: p.steel,
 	},
 	input: {
 		background: backgrounds.surface,
-		foreground: lighten(mintedBasePalette.mist, 0.4),
-		placeholderForeground: darken(mintedBasePalette.mist, 0.2),
+		foreground: lighten(p.mist.alpha(0.76), 0.4),
+		placeholderForeground: darken(p.mist.alpha(0.76), 0.2),
 		border: borders.subtle,
 	},
 	button: (() => {
-		const bg = colors.midnight.mix(colors.devwhite, 0.15).rotate(15);
-		const secondaryBg = colors.midnight.transparent(0.1);
+		const btnBg = p.midnight.mix(p.devwhite.alpha(0.81), 0.15).rotate(15);
+		const secondaryBg = p.midnight.transparent(0.1);
 		return {
-			background: bg,
-			foreground: colors.white.cool(1).darker(),
-			hoverBackground: bg.lighter(),
+			background: btnBg,
+			foreground: p.white.cool(1).darker(),
+			hoverBackground: btnBg.lighter(),
 			secondaryBackground: secondaryBg,
-			secondaryForeground: colors.blush.lighter(0.1).transparent(0.9),
-			secondaryHoverBackground: colors.midnight,
-			border: bg.lighter(),
-			secondaryBorder: bg.lighter(),
+			secondaryForeground: p.blush.lighter(0.1).transparent(0.9),
+			secondaryHoverBackground: p.midnight,
+			border: btnBg.lighter(),
+			secondaryBorder: btnBg.lighter(),
 		};
 	})(),
 	dropdown: {
-		background: mintedBasePalette.midnight,
-		foreground: mintedBasePalette.mist,
-		border: darken(mintedBasePalette.steel, 0.2),
-		listBackground: mintedBasePalette.midnight,
+		background: p.midnight,
+		foreground: p.mist.alpha(0.76),
+		border: darken(p.steel, 0.2),
+		listBackground: p.midnight,
 	},
 	badge: {
-		background: mintedBasePalette.midnight,
-		foreground: mintedBasePalette.mist,
-		border: lighten(mintedBasePalette.midnight, 0.2),
+		background: p.midnight,
+		foreground: p.mist.alpha(0.76),
+		border: lighten(p.midnight, 0.2),
 	},
 	scrollbar: {
-		shadow: mintedBasePalette.midnight,
-		sliderBackground: colors.midnight.lighter(),
-		sliderHoverBackground: mintedBasePalette.midnight,
-		sliderActiveBackground: mintedBasePalette.midnight,
+		shadow: p.midnight,
+		sliderBackground: p.midnight.lighter(),
+		sliderHoverBackground: p.midnight,
+		sliderActiveBackground: p.midnight,
 	},
 	minimap: {
-		background: mintedBasePalette.midnight,
-		selectionHighlight: mintedBasePalette.mist,
-		errorHighlight: mintedBasePalette.crimson,
-		warningHighlight: mintedBasePalette.peach,
+		background: p.midnight,
+		selectionHighlight: p.mist.alpha(0.76),
+		errorHighlight: p.crimson,
+		warningHighlight: p.peach,
 		findMatchHighlight: mix(
 			backgrounds.surface,
-			mintedBasePalette.lavender,
+			p.lavender.alpha(0.81),
 			0.5,
 		),
 	},
 	breadcrumb: {
-		background: mintedBasePalette.midnight,
-		foreground: mintedBasePalette.mist,
-		focusForeground: mintedBasePalette.mist,
-		activeSelectionForeground: mintedBasePalette.mist,
+		background: p.midnight,
+		foreground: p.mist.alpha(0.76),
+		focusForeground: p.mist.alpha(0.76),
+		activeSelectionForeground: p.mist.alpha(0.76),
 	},
 	terminal: {
 		background: backgrounds.darker,
-		foreground: mintedBasePalette.mist,
-		border: mix(backgrounds.darker, mintedBasePalette.steel, 0.1),
-		cursorForeground: mintedBasePalette.mist,
-		selectionBackground: l10(mintedBasePalette.midnight),
-		cursor: mintedBasePalette.mist,
-		ansiBlack: mintedBasePalette.charcoal,
-		ansiRed: mintedBasePalette.crimson,
-		ansiGreen: mintedBasePalette.seafoam,
-		ansiYellow: mintedBasePalette.peach,
-		ansiBlue: mintedBasePalette.cyan,
-		ansiMagenta: mintedBasePalette.lavender,
-		ansiCyan: mintedBasePalette.ice,
-		ansiWhite: mintedBasePalette.white,
-		ansiBrightBlack: mintedBasePalette.steel,
-		ansiBrightRed: mintedBasePalette.crimson,
-		ansiBrightGreen: mintedBasePalette.seafoam,
-		ansiBrightYellow: mintedBasePalette.peach,
-		ansiBrightBlue: mintedBasePalette.cyan,
-		ansiBrightMagenta: mintedBasePalette.lavender,
-		ansiBrightCyan: mintedBasePalette.ice,
-		ansiBrightWhite: mintedBasePalette.flatwhite,
+		foreground: p.mist.alpha(0.76),
+		border: mix(backgrounds.darker, p.steel, 0.1),
+		cursorForeground: p.mist.alpha(0.76),
+		selectionBackground: l10(p.midnight),
+		cursor: p.mist.alpha(0.76),
+		ansiBlack: p.charcoal,
+		ansiRed: p.crimson,
+		ansiGreen: p.seafoam,
+		ansiYellow: p.peach,
+		ansiBlue: p.cyan,
+		ansiMagenta: p.lavender.alpha(0.81),
+		ansiCyan: p.ice,
+		ansiWhite: p.white,
+		ansiBrightBlack: p.steel,
+		ansiBrightRed: p.crimson,
+		ansiBrightGreen: p.seafoam,
+		ansiBrightYellow: p.peach,
+		ansiBrightBlue: p.cyan,
+		ansiBrightMagenta: p.lavender.alpha(0.81),
+		ansiBrightCyan: p.ice,
+		ansiBrightWhite: p.flatwhite.alpha(0.98),
 	},
 	notification: {
-		background: mintedBasePalette.midnight,
-		foreground: mintedBasePalette.mist,
-		border: mintedBasePalette.steel,
+		background: p.midnight,
+		foreground: p.mist.alpha(0.76),
+		border: p.steel,
 	},
 	peekView: {
-		editorBackground: mintedBasePalette.midnight,
-		editorBorder: mintedBasePalette.steel,
-		resultBackground: mintedBasePalette.midnight,
-		resultSelectionBackground: mintedBasePalette.midnight,
-		titleBackground: mintedBasePalette.midnight,
-		titleForeground: mintedBasePalette.mist,
+		editorBackground: p.midnight,
+		editorBorder: p.steel,
+		resultBackground: p.midnight,
+		resultSelectionBackground: p.midnight,
+		titleBackground: p.midnight,
+		titleForeground: p.mist.alpha(0.76),
 	},
 	diffEditor: {
-		insertedTextBackground: "#09131588",
-		removedTextBackground: "#2e060982",
-		insertedLineBackground: "#09131588",
-		removedLineBackground: "#1202049e",
-		diagonalFill: mintedBasePalette.steel,
+		insertedTextBackground: oklch(0.15, 0.02, hue.function).alpha(0.53),
+		removedTextBackground: oklch(0.15, 0.02, hue.operator).alpha(0.51),
+		insertedLineBackground: oklch(0.15, 0.02, hue.function).alpha(0.53),
+		removedLineBackground: oklch(0.12, 0.03, hue.operator).alpha(0.62),
+		diagonalFill: p.steel,
 	},
 	merge: (() => {
-		const incoming = colors.midnight
-			.mix(colors.seafoam, 0.1)
+		const incoming = p.midnight
+			.mix(p.seafoam, 0.1)
 			.saturate(1)
 			.darker(0.2);
-		const current = colors.midnight.mix(colors.cyan, 0.1).saturate(1).darker(0.2);
-		const common = colors.midnight
-			.mix(colors.peach, 0.1)
+		const current = p.midnight.mix(p.cyan, 0.1).saturate(1).darker(0.2);
+		const common = p.midnight
+			.mix(p.peach, 0.1)
 			.saturate(1)
 			.darker(0.2);
 		return {
@@ -500,180 +536,196 @@ const mintedBaseOverrides: UIComponents<ColorLike> = {
 		foreground: foregrounds.default,
 		border: borders.default,
 		surface: backgrounds.surface,
-		requestBackground: mintedBasePalette.chatRequestBg,
+		requestBackground: p.chatRequestBg,
 		codeBlockBackground: backgrounds.codeBlock,
 	},
 };
 
-export const mintedBaseUi: ThemeDefinition["ui"] = {
+// ============================================================================
+// UI Definition
+// ============================================================================
+
+export const mintedBaseUi: UserInterface<ColorLike> = {
 	backgrounds,
 	foregrounds,
 	borders,
 	accent,
 	status: {
-		error: mintedBasePalette.crimson,
-		warning: mintedBasePalette.peach,
-		info: mintedBasePalette.cyan,
-		success: mintedBasePalette.seafoam,
+		error: mkElementColors(p.crimson, { background: backgrounds.base, foreground: foregrounds.default }),
+		warning: mkElementColors(p.peach, { background: backgrounds.base, foreground: foregrounds.default }),
+		info: mkElementColors(p.cyan, { background: backgrounds.base, foreground: foregrounds.default }),
+		success: mkElementColors(p.seafoam, { background: backgrounds.base, foreground: foregrounds.default }),
 	},
 	selection: {
-		background: mix(mintedBaseTokens.source, mintedBasePalette.midnight, 0.5),
-		backgroundInactive: transparentize(mintedBasePalette.white, 0.1),
-		text: mintedBasePalette.charcoal,
-		backgroundActive: mintedBasePalette.darkBlue,
+		background: mix(mintedBaseSyntax.source, p.midnight, 0.5),
+		backgroundInactive: transparentize(p.white, 0.1),
+		text: p.charcoal,
+		backgroundActive: p.darkBlue,
 	},
 	highlights: {
 		word: {
-			background: mintedBasePalette.wordHighlight,
-			backgroundStrong: mintedBasePalette.wordHighlightStrong,
+			background: p.wordHighlight,
+			backgroundStrong: p.wordHighlightStrong,
 		},
 		selection: {
-			backgroundActive: mix(mintedBaseTokens.source, mintedBasePalette.midnight, 0.5),
-			backgroundInactive: mintedBasePalette.charcoal,
+			backgroundActive: mix(mintedBaseSyntax.source, p.midnight, 0.5),
+			backgroundInactive: p.charcoal,
 		},
 		activeLine: {
-			background: mintedBasePalette.lineHighlight,
+			background: p.lineHighlight,
 		},
 	},
 	indentGuide: {
-		background: mintedBasePalette.indentGuide,
-		activeBackground: mintedBasePalette.indentGuideActive,
+		background: p.indentGuide,
+		activeBackground: p.indentGuideActive,
 	},
 	whitespace: {
-		foreground: mintedBasePalette.editorWhitespace,
+		foreground: p.editorWhitespace,
 	},
 	ruler: {
-		foreground: core.accent.mix(colors.midnight),
+		foreground: core.accent.mix(p.midnight),
 	},
 	lineNumbers: {
-		foreground: mintedBasePalette.lineNumberFg,
-		activeForeground: mintedBasePalette.lineNumberActiveFg,
+		foreground: p.lineNumberFg,
+		activeForeground: p.lineNumberActiveFg,
 	},
-	hoverWidget: {
-		background: mintedBasePalette.hoverBg,
-		border: mintedBasePalette.hoverBorder,
-		foreground: mintedBasePalette.hoverFg,
+	elements: {
+		background: p.hoverBg,
+		selectionBackground: p.widgetSelection,
+		border: p.hoverBorder,
+		foreground: p.hoverFg,
+	},
+	subtleElements: {
+		background: p.menuBg,
+		selectionBackground: p.widgetSelection,
+		border: p.widgetBorder,
+		foreground: p.steel,
 	},
 	git: {
-		added: mintedBasePalette.seafoam,
-		modified: mintedBasePalette.bluegray,
-		deleted: mintedBasePalette.deletedRose,
-		untracked: mintedBasePalette.mist,
-		ignored: mintedBasePalette.mist,
-		conflict: mintedBasePalette.crimson,
-		renamed: mintedBasePalette.gitRenamed,
-		stageModified: mintedBasePalette.bluegray,
-		stageDeleted: mintedBasePalette.gitStageDeleted,
-		submodule: mintedBasePalette.gitSubmodule,
+		added: p.seafoam,
+		modified: p.bluegray,
+		deleted: p.deletedRose,
+		untracked: p.mist.alpha(0.76),
+		ignored: p.mist.alpha(0.76),
+		conflict: p.crimson,
+		renamed: p.gitRenamed,
+		stageModified: p.bluegray,
+		stageDeleted: p.gitStageDeleted,
+		submodule: p.gitSubmodule,
 	},
 	cursor: {
-		foreground: mintedBasePalette.cursorRed,
+		foreground: p.cursorRed,
 	},
 	window: {
-		activeBorder: mintedBasePalette.windowBorder,
+		activeBorder: p.windowBorder,
 	},
 	icon: {
-		foreground: mintedBasePalette.iconFg,
+		foreground: p.iconFg,
 	},
 	focus: {
-		border: mintedBasePalette.focusBorderAlpha,
-		contrastBorder: mintedBasePalette.focusBorderAlpha,
+		border: p.focusBorderAlpha,
+		contrastBorder: p.focusBorderAlpha,
 	},
 	menu: {
-		background: mintedBasePalette.menuBg,
-		foreground: mintedBasePalette.steel,
-		selectionBackground: mintedBasePalette.widgetSelection,
-		selectionForeground: mintedBasePalette.white,
-		separatorBackground: mintedBasePalette.widgetBorder,
+		background: p.menuBg,
+		foreground: p.steel,
+		selectionBackground: p.widgetSelection,
+		selectionForeground: p.white,
+		separatorBackground: p.widgetBorder,
 	},
 	suggestWidget: {
-		border: mintedBasePalette.widgetBorder,
-		foreground: mintedBasePalette.white,
-		selectedBackground: mintedBasePalette.widgetSelection,
+		border: p.widgetBorder,
+		foreground: p.white,
+		selectedBackground: p.widgetSelection,
 	},
 	progressBar: {
-		background: mintedBasePalette["#C3E88D"],
+		background: p.wasabi,
 	},
 	debug: {
-		infoForeground: mintedBasePalette.debugInfo,
-		warningForeground: mintedBasePalette.debugWarning,
-		errorForeground: mintedBasePalette.debugError,
-		sourceForeground: mintedBasePalette.white,
+		infoForeground: p.debugInfo,
+		warningForeground: p.debugWarning,
+		errorForeground: p.debugError,
+		sourceForeground: p.white,
 	},
 	text: {
-		linkForeground: mintedBasePalette.seafoam,
-		preformatBackground: mintedBasePalette.textPreformatBg,
-		preformatForeground: mintedBasePalette.textPreformatFg,
-		separatorForeground: transparentize(mintedBasePalette.widgetBorder, 0.5),
+		linkForeground: p.seafoam,
+		preformatBackground: p.textPreformatBg,
+		preformatForeground: p.textPreformatFg,
+		separatorForeground: transparentize(p.widgetBorder, 0.5),
 	},
 	error: {
-		background: mintedBasePalette.errorBg,
-		listForeground: mintedBasePalette.listError,
+		background: p.errorBg,
+		listForeground: p.listError,
 	},
 	peekView: {
-		matchHighlightBackground: mintedBasePalette.peekMatchHighlight,
-		titleDescriptionForeground: mintedBasePalette.flatwhite,
+		matchHighlightBackground: p.peekMatchHighlight,
+		titleDescriptionForeground: p.flatwhite.alpha(0.98),
 	},
 	panels: {
 		background: darken(backgrounds.base, 0.05),
-		foreground: mintedBasePalette.mist,
-		titleForeground: transparentize(mintedBasePalette.white, 0.5),
+		foreground: p.mist.alpha(0.76),
+		titleForeground: transparentize(p.white, 0.5),
 	},
 	inlineHints: {
 		background: backgrounds.raised,
-		foreground: lighten(mintedBasePalette.steel, 0.4),
+		foreground: lighten(p.steel, 0.4),
 		border: borders.subtle,
 	},
-	breadcrumb: mintedBaseOverrides.breadcrumb,
-	terminal: mintedBaseOverrides.terminal,
-	notification: mintedBaseOverrides.notification,
-	diffEditor: mintedBaseOverrides.diffEditor,
-	merge: mintedBaseOverrides.merge,
-	chat: mintedBaseOverrides.chat,
-	overrides: mintedBaseOverrides,
 };
+
+// ============================================================================
+// Language Overrides
+// ============================================================================
 
 export const mintedBaseLanguageOverrides: ThemeDefinition["languageOverrides"] = {
 	go: {
 		functions: {
-			default: mintedBasePalette.ice,
+			default: p.ice,
 		},
 	},
 	css: {
 		variables: {
-			default: mintedBasePalette.slate,
-			property: mintedBasePalette.darkBlue,
+			default: p.slate,
+			property: p.darkBlue,
 		},
 	},
 };
 
+// ============================================================================
+// Semantic Tokens
+// ============================================================================
+
 export const mintedBaseSemantic: NonNullable<ThemeDefinition["semantic"]> = {
-	comment: mintedBasePalette.charcoal,
-	string: mix(mintedBasePalette.wasabi2, backgrounds.base, 0.3),
-	keyword: mintedBasePalette.lavender,
-	number: mintedBasePalette.cyan,
-	regexp: mintedBasePalette.peach,
-	operator: mintedBasePalette.crimson,
-	namespace: mintedBasePalette.ice,
-	type: mintedBasePalette.ice,
-	struct: mintedBasePalette.ice,
-	class: mintedBasePalette.ice,
-	interface: mintedBasePalette.ice,
-	enum: mintedBasePalette.slate,
-	typeParameter: mintedBasePalette.ice,
-	function: mix(mintedBasePalette.seafoam, backgrounds.base, 0.3),
-	method: mintedBasePalette.seafoam,
-	decorator: mintedBasePalette.peach,
-	macro: mintedBasePalette.peach,
-	variable: mintedBasePalette.slate,
-	parameter: mintedBasePalette.slate,
-	property: mix(mintedBasePalette.taupe, backgrounds.base, 0.3),
-	label: mintedBasePalette.blush,
+	comment: p.charcoal,
+	string: mix(p.wasabi2, backgrounds.base, 0.3),
+	keyword: p.lavender.alpha(0.81),
+	number: p.cyan,
+	regexp: p.peach,
+	operator: p.crimson,
+	namespace: p.ice,
+	type: p.ice,
+	struct: p.ice,
+	class: p.ice,
+	interface: p.ice,
+	enum: p.slate,
+	typeParameter: p.ice,
+	function: mix(p.seafoam, backgrounds.base, 0.3),
+	method: p.seafoam,
+	decorator: p.peach,
+	macro: p.peach,
+	variable: p.slate,
+	parameter: p.slate,
+	property: mix(p.taupe, backgrounds.base, 0.3),
+	label: p.blush,
 };
+
+// ============================================================================
+// Modifiers
+// ============================================================================
 
 export const mintedBaseModifiers: NonNullable<ThemeDefinition["modifiers"]> = {
 	[SemanticTokenModifier.documentation]: {
-		global: { foreground: mintedBasePalette.charcoal, fontStyle: "italic" },
+		global: { foreground: p.charcoal.render(), fontStyle: "italic" },
 	},
 	[SemanticTokenModifier.static]: {
 		global: { fontStyle: "" },
@@ -683,42 +735,46 @@ export const mintedBaseModifiers: NonNullable<ThemeDefinition["modifiers"]> = {
 	},
 	[SemanticTokenModifier.async]: {
 		transform: (color: string) =>
-			new Color(color).mix(mintedBasePalette.lavender, 0.1),
+			new Color(color).mix(p.lavender.alpha(0.81), 0.1),
 	},
 	[SemanticTokenModifier.declaration]: {
 		transform: (color) => mix(color, foregrounds.default, 0.5),
 	},
 };
 
+// ============================================================================
+// Extra Colors (VS Code specific — must be string values)
+// ============================================================================
+
 export const mintedBaseExtraColors: NonNullable<ThemeDefinition["extraColors"]> = {
-	"editorPane.background": mintedBasePalette.midnight2,
-	"editor.lineHighlightBackground": mintedBasePalette.lineHighlight,
-	"editor.wordHighlightBackground": mintedBasePalette.wordHighlight,
-	"editor.wordHighlightStrongBackground": mintedBasePalette.wordHighlightStrong,
-	"editorIndentGuide.background1": mintedBasePalette.indentGuide,
-	"editorIndentGuide.activeBackground1": mintedBasePalette.indentGuideActive,
-	"editorWhitespace.foreground": mintedBasePalette.editorWhitespace,
-	"editorRuler.foreground": mintedBasePalette.indentGuide,
-	"editorLineNumber.foreground": mintedBasePalette.lineNumberFg,
-	"editorLineNumber.activeForeground": mintedBasePalette.lineNumberActiveFg,
-	"editorHoverWidget.background": mintedBasePalette.hoverBg,
-	"editorHoverWidget.border": mintedBasePalette.hoverBorder,
-	"editorHoverWidget.foreground": mintedBasePalette.hoverFg,
-	"sideBarTitle.foreground": transparentize(mintedBasePalette.white, 0.5).hexa(),
-	"statusBar.debuggingBackground": mintedBasePalette.debuggingBg,
-	"statusBar.debuggingForeground": mintedBasePalette.debuggingFg,
-	"statusBar.debuggingBorder": mintedBasePalette.debuggingBorder,
-	"tab.border": mintedBasePalette.tabBorder,
-	"editorGroupHeader.tabsBackground": mintedBasePalette.black,
-	"button.border": mintedBasePalette.buttonBorder,
-	"button.separator": mintedBasePalette.buttonSeparator,
-	"tree.indentGuidesStroke": mintedBasePalette.widgetBorder,
-	"settings.headerForeground": mintedBasePalette.settingsHeaderFg,
-	"settings.textInputBackground": mintedBasePalette.settingsInputBg,
-	"settings.textInputForeground": mintedBasePalette.steel,
-	"settings.textInputBorder": mintedBasePalette.settingsInputBorder,
-	"composerPane.background": mintedBasePalette.composerBg,
-	"pullRequests.draft": mintedBasePalette.prDraft,
-	"chat.requestBackground": mintedBasePalette.chatRequestBg,
-	"list.focusBackground": mintedBasePalette.widgetSelection,
+	"editorPane.background": p.midnight2.render(),
+	"editor.lineHighlightBackground": p.lineHighlight.render(),
+	"editor.wordHighlightBackground": p.wordHighlight.render(),
+	"editor.wordHighlightStrongBackground": p.wordHighlightStrong.render(),
+	"editorIndentGuide.background1": p.indentGuide.render(),
+	"editorIndentGuide.activeBackground1": p.indentGuideActive.render(),
+	"editorWhitespace.foreground": p.editorWhitespace.render(),
+	"editorRuler.foreground": p.indentGuide.render(),
+	"editorLineNumber.foreground": p.lineNumberFg.render(),
+	"editorLineNumber.activeForeground": p.lineNumberActiveFg.render(),
+	"editorHoverWidget.background": p.hoverBg.render(),
+	"editorHoverWidget.border": p.hoverBorder.render(),
+	"editorHoverWidget.foreground": p.hoverFg.render(),
+	"sideBarTitle.foreground": transparentize(p.white, 0.5).hexa(),
+	"statusBar.debuggingBackground": p.debuggingBg.render(),
+	"statusBar.debuggingForeground": p.debuggingFg.render(),
+	"statusBar.debuggingBorder": p.debuggingBorder.render(),
+	"tab.border": p.tabBorder.render(),
+	"editorGroupHeader.tabsBackground": p.black.render(),
+	"button.border": p.buttonBorder.render(),
+	"button.separator": p.buttonSeparator.render(),
+	"tree.indentGuidesStroke": p.widgetBorder.render(),
+	"settings.headerForeground": p.settingsHeaderFg.render(),
+	"settings.textInputBackground": p.settingsInputBg.render(),
+	"settings.textInputForeground": p.steel.render(),
+	"settings.textInputBorder": p.settingsInputBorder.render(),
+	"composerPane.background": p.composerBg.render(),
+	"pullRequests.draft": p.prDraft.render(),
+	"chat.requestBackground": p.chatRequestBg.render(),
+	"list.focusBackground": p.widgetSelection.render(),
 };

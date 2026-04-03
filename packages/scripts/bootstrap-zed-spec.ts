@@ -15,7 +15,7 @@
  *   bun packages/scripts/bootstrap-zed-spec.ts mintedTheory test/specs/minted-theory.zed.spec.ts
  */
 
-import Color from "color";
+import Color from "colorjs.io";
 import { mapZed } from "../../src/integrations/zed";
 import { mintedTheory } from "../../src/themes/mintedTheory";
 import { minted } from "../../src/themes/minted";
@@ -53,11 +53,12 @@ const HEX_RE = /^#[0-9a-fA-F]{3,8}$/;
 
 function hexToHsl(hex: string): string {
 	try {
-		const c = Color(hex);
-		const h = Math.round(c.hue());
-		const s = Math.round(c.saturationl());
-		const l = Math.round(c.lightness());
-		const a = Math.round(c.alpha() * 100) / 100;
+		const c = new Color(hex).to("hsl");
+		const [hRaw = 0, sRaw = 0, lRaw = 0] = c.coords;
+		const h = Math.round(hRaw);
+		const s = Math.round(sRaw);
+		const l = Math.round(lRaw);
+		const a = Math.round((c.alpha ?? 1) * 100) / 100;
 		if (a === 1) return `hsl(${h}, ${s}%, ${l}%)`;
 		return `hsla(${h}, ${s}%, ${l}%, ${a})`;
 	} catch {

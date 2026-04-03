@@ -7,11 +7,7 @@
 
 import * as fs from "fs";
 import type { ThemableDecorationRenderOptions } from 'vscode';
-import type {
-	ThemeDefinition,
-	ThemePath,
-	TokenAssignments,
-} from "../themes/types";
+import type { ThemeDefinition, TokenAssignments } from "../themes/types";
 import {
 	applyFilters,
 	strictColorFactory,
@@ -275,7 +271,7 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		"sideBar.border": c("ui.overrides.sideBar.border", "ui.borders.default"),
 		"sideBarSectionHeader.background": c("ui.overrides.sideBar.sectionHeaderBackground", "ui.backgrounds.raised"),
 		"sideBarSectionHeader.foreground": c("ui.overrides.sideBar.sectionHeaderForeground", "ui.foregrounds.default"),
-		"panel.border": c( "ui.borders.default"),
+		"panel.border": c("ui.borders.default"),
 		// "gauge.border": c("ui.borders.subtle"),
 		"sash.hoverBorder": c("ui.borders.active"),
 		"editorGroup.border": c("ui.borders.subtle"),
@@ -388,8 +384,8 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		// ═══════════════════════════════════════════════════════════════════════
 		"minimap.background": c("ui.overrides.minimap.background", "ui.backgrounds.surface"),
 		"minimap.selectionHighlight": c("ui.overrides.minimap.selectionHighlight", "ui.selection.background"),
-		"minimap.errorHighlight": c("ui.overrides.minimap.errorHighlight", "ui.status.error"),
-		"minimap.warningHighlight": c("ui.overrides.minimap.warningHighlight", "ui.status.warning"),
+		"minimap.errorHighlight": c("ui.overrides.minimap.errorHighlight", "ui.status.error.foreground"),
+		"minimap.warningHighlight": c("ui.overrides.minimap.warningHighlight", "ui.status.warning.foreground"),
 		"minimap.findMatchHighlight": c("ui.overrides.minimap.findMatchHighlight", "ui.foregrounds.accent"),
 
 		// ═══════════════════════════════════════════════════════════════════════
@@ -410,18 +406,18 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		"terminalCursor.foreground": c("ui.overrides.terminal.cursor", "ui.accent.primary"),
 		"terminal.selectionBackground": c("ui.overrides.terminal.selectionBackground", "ui.selection.background"),
 		"terminal.ansiBlack": c("ui.overrides.terminal.ansiBlack", "ui.backgrounds.base"),
-		"terminal.ansiRed": c("ui.overrides.terminal.ansiRed", "ui.status.error"),
-		"terminal.ansiGreen": c("ui.overrides.terminal.ansiGreen", "ui.status.success"),
-		"terminal.ansiYellow": c("ui.overrides.terminal.ansiYellow", "ui.status.warning"),
-		"terminal.ansiBlue": c("ui.overrides.terminal.ansiBlue", "ui.status.info"),
+		"terminal.ansiRed": c("ui.overrides.terminal.ansiRed", "ui.status.error.foreground"),
+		"terminal.ansiGreen": c("ui.overrides.terminal.ansiGreen", "ui.status.success.foreground"),
+		"terminal.ansiYellow": c("ui.overrides.terminal.ansiYellow", "ui.status.warning.foreground"),
+		"terminal.ansiBlue": c("ui.overrides.terminal.ansiBlue", "ui.status.info.foreground"),
 		"terminal.ansiMagenta": c("ui.overrides.terminal.ansiMagenta", "ui.accent.primary"),
 		"terminal.ansiCyan": c("ui.overrides.terminal.ansiCyan", "ui.foregrounds.accent"),
 		"terminal.ansiWhite": c("ui.overrides.terminal.ansiWhite", "ui.foregrounds.default"),
 		"terminal.ansiBrightBlack": c("ui.overrides.terminal.ansiBrightBlack", "ui.foregrounds.muted"),
-		"terminal.ansiBrightRed": c("ui.overrides.terminal.ansiBrightRed", "ui.status.error"),
-		"terminal.ansiBrightGreen": c("ui.overrides.terminal.ansiBrightGreen", "ui.status.success"),
-		"terminal.ansiBrightYellow": c("ui.overrides.terminal.ansiBrightYellow", "ui.status.warning"),
-		"terminal.ansiBrightBlue": c("ui.overrides.terminal.ansiBrightBlue", "ui.status.info"),
+		"terminal.ansiBrightRed": c("ui.overrides.terminal.ansiBrightRed", "ui.status.error.foreground"),
+		"terminal.ansiBrightGreen": c("ui.overrides.terminal.ansiBrightGreen", "ui.status.success.foreground"),
+		"terminal.ansiBrightYellow": c("ui.overrides.terminal.ansiBrightYellow", "ui.status.warning.foreground"),
+		"terminal.ansiBrightBlue": c("ui.overrides.terminal.ansiBrightBlue", "ui.status.info.foreground"),
 		"terminal.ansiBrightMagenta": c("ui.overrides.terminal.ansiBrightMagenta", "ui.accent.primary"),
 		"terminal.ansiBrightCyan": c("ui.overrides.terminal.ansiBrightCyan", "ui.foregrounds.accent"),
 		"terminal.ansiBrightWhite": c("ui.overrides.terminal.ansiBrightWhite", "ui.foregrounds.default"),
@@ -460,9 +456,9 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		// ═══════════════════════════════════════════════════════════════════════
 		// Merge
 		// ═══════════════════════════════════════════════════════════════════════
-		"merge.currentHeaderBackground": c("ui.overrides.merge.currentHeaderBackground", "ui.status.info"),
+		"merge.currentHeaderBackground": c("ui.overrides.merge.currentHeaderBackground", "ui.status.info.foreground"),
 		"merge.currentContentBackground": c("ui.overrides.merge.currentContentBackground", "ui.backgrounds.raised"),
-		"merge.incomingHeaderBackground": c("ui.overrides.merge.incomingHeaderBackground", "ui.status.success"),
+		"merge.incomingHeaderBackground": c("ui.overrides.merge.incomingHeaderBackground", "ui.status.success.foreground"),
 		"merge.incomingContentBackground": c("ui.overrides.merge.incomingContentBackground", "ui.backgrounds.raised"),
 		"merge.commonHeaderBackground": c("ui.overrides.merge.commonHeaderBackground", "ui.backgrounds.raised"),
 		"merge.commonContentBackground": c("ui.overrides.merge.commonContentBackground", "ui.backgrounds.raised"),
@@ -479,17 +475,16 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		"editorRuler.foreground": c("ui.ruler.foreground", "ui.borders.subtle"),
 		"editorLineNumber.foreground": c("ui.lineNumbers.foreground", "ui.foregrounds.muted"),
 		"editorLineNumber.activeForeground": c("ui.lineNumbers.activeForeground", "ui.foregrounds.default"),
-		"editorHoverWidget.background": c("ui.hoverWidget.background", "ui.backgrounds.overlay"),
-		"editorHoverWidget.border": c("ui.hoverWidget.border", "ui.borders.default"),
-		"editorHoverWidget.foreground": c("ui.hoverWidget.foreground", "ui.foregrounds.default"),
+		"editorHoverWidget.background": c("ui.elements.background", "ui.backgrounds.overlay"),
+		"editorHoverWidget.border": c("ui.elements.border", "ui.borders.default"),
+		"editorHoverWidget.foreground": c("ui.elements.foreground", "ui.foregrounds.default"),
 		"sideBarTitle.background": c("ui.panels.titleBackground", "ui.backgrounds.surface"),
 		"sideBarTitle.foreground": c("ui.panels.titleForeground", "ui.foregrounds.default"),
 
 		"tab.border": c("ui.borders.subtle"),
 		"editorGroupHeader.tabsBackground": c("ui.backgrounds.surface"),
-		"button.border": c("ui.borders.subtle"),
 		"button.separator": c("ui.borders.separator"),
-		"tree.indentGuidesStroke": c("ui.borders.subtle"),
+		"tree.indentGuidesStroke": c("ui.indentGuide.background", "ui.borders.subtle"),
 		"composerPane.background": c("ui.overrides.chat.background", "ui.backgrounds.surface"),
 
 		// ═══════════════════════════════════════════════════════════════════════
@@ -500,7 +495,7 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		"gitDecoration.deletedResourceForeground": c("ui.git.deleted"),
 		"gitDecoration.untrackedResourceForeground": c("ui.git.untracked", "ui.foregrounds.muted"),
 		"gitDecoration.ignoredResourceForeground": c("ui.git.ignored", "ui.foregrounds.subtle"),
-		"gitDecoration.conflictingResourceForeground": c("ui.git.conflict", "ui.status.warning"),
+		"gitDecoration.conflictingResourceForeground": c("ui.git.conflict", "ui.status.warning.foreground"),
 		"gitDecoration.renamedResourceForeground": c("ui.git.renamed", "ui.git.added"),
 		"gitDecoration.stageModifiedResourceForeground": c("ui.git.stageModified", "ui.git.modified"),
 		"gitDecoration.stageDeletedResourceForeground": c("ui.git.stageDeleted", "ui.git.deleted"),
@@ -552,9 +547,9 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		// ═══════════════════════════════════════════════════════════════════════
 		// Debug Console
 		// ═══════════════════════════════════════════════════════════════════════
-		"debugConsole.infoForeground": c("ui.debug.infoForeground", "ui.status.info"),
-		"debugConsole.warningForeground": c("ui.debug.warningForeground", "ui.status.warning"),
-		"debugConsole.errorForeground": c("ui.debug.errorForeground", "ui.status.error"),
+		"debugConsole.infoForeground": c("ui.debug.infoForeground", "ui.status.info.foreground"),
+		"debugConsole.warningForeground": c("ui.debug.warningForeground", "ui.status.warning.foreground"),
+		"debugConsole.errorForeground": c("ui.debug.errorForeground", "ui.status.error.foreground"),
 		"debugConsole.sourceForeground": c("ui.debug.sourceForeground", "ui.foregrounds.default"),
 
 		// ═══════════════════════════════════════════════════════════════════════
@@ -569,8 +564,8 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		// ═══════════════════════════════════════════════════════════════════════
 		// Error Display
 		// ═══════════════════════════════════════════════════════════════════════
-		"editorError.background": c("ui.error.background", "ui.status.error"),
-		"list.errorForeground": c("ui.error.listForeground", "ui.status.error"),
+		"editorError.background": c("ui.error.background", "ui.status.error.background"),
+		"list.errorForeground": c("ui.error.listForeground", "ui.status.error.foreground"),
 
 		// ═══════════════════════════════════════════════════════════════════════
 		// Peek View Extended
@@ -582,9 +577,9 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		// ═══════════════════════════════════════════════════════════════════════
 		// Status (errors, warnings, info)
 		// ═══════════════════════════════════════════════════════════════════════
-		"editorError.foreground": c("ui.status.error"),
-		"editorWarning.foreground": c("ui.status.warning"),
-		"editorInfo.foreground": c("ui.status.info"),
+		"editorError.foreground": c("ui.status.error.foreground"),
+		"editorWarning.foreground": c("ui.status.warning.foreground"),
+		"editorInfo.foreground": c("ui.status.info.foreground"),
 		"terminal.dropBackground": c("ui.backgrounds.raised"),
 
 		// ═══════════════════════════════════════════════════════════════════════
@@ -790,17 +785,17 @@ function generateVSCodeTheme(t: ThemeDefinition): VSCodeThemeFile {
 			tokenColor("markup.deleted.git_gutter", c("ui.git.deleted")),
 
 			// Invalid
-			tokenColor("invalid", c("ui.status.error")),
-			tokenColor("invalid.illegal", c("ui.status.error")),
+			tokenColor("invalid", c("ui.status.error.foreground")),
+			tokenColor("invalid.illegal", c("ui.status.error.foreground")),
 			tokenColor("invalid.deprecated", c("tokens.comments")),
 
 			// Special comments (TODO/FIXME/NOTE)
 			tokenColor("comment.line.todo", c("tokens.meta.annotation"), "bold"),
 			tokenColor("comment.block.todo", c("tokens.meta.annotation"), "bold"),
-			tokenColor("comment.line.fixme", c("ui.status.warning"), "bold"),
-			tokenColor("comment.block.fixme", c("ui.status.warning"), "bold"),
-			tokenColor("comment.line.note", c("ui.status.info"), "bold"),
-			tokenColor("comment.block.note", c("ui.status.info"), "bold"),
+			tokenColor("comment.line.fixme", c("ui.status.warning.foreground"), "bold"),
+			tokenColor("comment.block.fixme", c("ui.status.warning.foreground"), "bold"),
+			tokenColor("comment.line.note", c("ui.status.info.foreground"), "bold"),
+			tokenColor("comment.block.note", c("ui.status.info.foreground"), "bold"),
 
 			// Python docstrings
 			tokenColor("string.quoted.docstring", c("tokens.comments"), "italic"),

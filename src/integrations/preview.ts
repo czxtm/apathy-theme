@@ -7,21 +7,14 @@
 
 import type { ThemeDefinition, UIComponents, UserInterface, TokenAssignments, ColorLike } from "../themes/types";
 import { get } from "../themes/types";
+import { toHex } from "../core/color";
 
 // ────────────────────────────────────────────────────────────────────────────
 // Helpers
 // ────────────────────────────────────────────────────────────────────────────
 
 function hex(value: ColorLike): string {
-  if (typeof value === "string") return value;
-  try {
-    const v: any = value;
-    if (v?.hexa) return v.hexa();
-    if (v?.cv?.hexa) return v.cv.hexa();
-    if (v?.hex) return v.hex();
-    if (v?.cv?.hex) return v.cv.hex();
-  } catch { /* fallthrough */ }
-  return String(value);
+  return toHex(value);
 }
 
 function safeColor(value: ColorLike | undefined, fallback = "transparent"): string {
@@ -115,7 +108,7 @@ function uiSection(theme: ThemeDefinition): string {
     activeBorderTop: safeColor(comp?.tabs?.activeBorderTop, safeColor(ui.accent.primary)),
     inactiveBackground: safeColor(comp?.tabs?.inactiveBackground, safeColor(ui.backgrounds.base)),
     inactiveForeground: safeColor(comp?.tabs?.inactiveForeground, safeColor(ui.foregrounds.muted)),
-    modifiedBorder: safeColor(comp?.tabs?.modifiedBorder, safeColor(ui.status.warning)),
+    modifiedBorder: safeColor(comp?.tabs?.modifiedBorder, safeColor(ui.status.warning.foreground)),
   };
   const breadcrumb = {
     background: safeColor(comp?.breadcrumb?.background, safeColor(ui.backgrounds.base)),
@@ -133,10 +126,10 @@ function uiSection(theme: ThemeDefinition): string {
     background: safeColor(comp?.terminal?.background, safeColor(ui.backgrounds.darker)),
     foreground: safeColor(comp?.terminal?.foreground, safeColor(ui.foregrounds.default)),
     border: safeColor(comp?.terminal?.border, safeColor(ui.borders.default)),
-    ansiGreen: safeColor(comp?.terminal?.ansiGreen, safeColor(ui.status.success)),
-    ansiCyan: safeColor(comp?.terminal?.ansiCyan, safeColor(ui.status.info)),
-    ansiYellow: safeColor(comp?.terminal?.ansiYellow, safeColor(ui.status.warning)),
-    ansiRed: safeColor(comp?.terminal?.ansiRed, safeColor(ui.status.error)),
+    ansiGreen: safeColor(comp?.terminal?.ansiGreen, safeColor(ui.status.success.foreground)),
+    ansiCyan: safeColor(comp?.terminal?.ansiCyan, safeColor(ui.status.info.foreground)),
+    ansiYellow: safeColor(comp?.terminal?.ansiYellow, safeColor(ui.status.warning.foreground)),
+    ansiRed: safeColor(comp?.terminal?.ansiRed, safeColor(ui.status.error.foreground)),
     ansiMagenta: safeColor(comp?.terminal?.ansiMagenta, safeColor(ui.accent.primary)),
     ansiBlue: safeColor(comp?.terminal?.ansiBlue, safeColor(ui.accent.primary)),
   };
@@ -144,7 +137,7 @@ function uiSection(theme: ThemeDefinition): string {
     background: safeColor(comp?.statusBar?.background, safeColor(ui.backgrounds.base)),
     foreground: safeColor(comp?.statusBar?.foreground, safeColor(ui.foregrounds.default)),
     border: safeColor(comp?.statusBar?.border, safeColor(ui.borders.default)),
-    debuggingBackground: safeColor(comp?.statusBar?.debuggingBackground, safeColor(ui.status.success)),
+    debuggingBackground: safeColor(comp?.statusBar?.debuggingBackground, safeColor(ui.status.success.foreground)),
     debuggingForeground: safeColor(comp?.statusBar?.debuggingForeground, safeColor(ui.foregrounds.default)),
   };
 
@@ -281,7 +274,7 @@ function widgetSection(theme: ThemeDefinition): string {
   };
   const editorBg = safeColor(comp?.editor?.background, safeColor(ui.backgrounds.surface));
   const statusBarDbg = {
-    debuggingBackground: safeColor(comp?.statusBar?.debuggingBackground, safeColor(ui.status.success)),
+    debuggingBackground: safeColor(comp?.statusBar?.debuggingBackground, safeColor(ui.status.success.foreground)),
     debuggingForeground: safeColor(comp?.statusBar?.debuggingForeground, safeColor(ui.foregrounds.default)),
   };
 
@@ -317,8 +310,8 @@ function widgetSection(theme: ThemeDefinition): string {
   <div class="widget-card" style="background:${safeColor(ui.backgrounds.surface)}">
     <h4>Badge</h4>
     <span class="mock-badge" style="background:${badge.background};color:${badge.foreground};border:1px solid ${badge.border}">12</span>
-    <span class="mock-badge" style="background:${safeColor(ui.status.error)};color:#fff">3</span>
-    <span class="mock-badge" style="background:${safeColor(ui.status.warning)};color:#000">!</span>
+    <span class="mock-badge" style="background:${safeColor(ui.status.error.foreground)};color:#fff">3</span>
+    <span class="mock-badge" style="background:${safeColor(ui.status.warning.foreground)};color:#000">!</span>
   </div>
 
   <!-- Notifications -->
@@ -332,10 +325,10 @@ function widgetSection(theme: ThemeDefinition): string {
   <!-- Status colors -->
   <div class="widget-card" style="background:${safeColor(ui.backgrounds.surface)}">
     <h4>Status</h4>
-    <div class="status-row"><span class="dot" style="background:${safeColor(ui.status.error)}"></span> Error</div>
-    <div class="status-row"><span class="dot" style="background:${safeColor(ui.status.warning)}"></span> Warning</div>
-    <div class="status-row"><span class="dot" style="background:${safeColor(ui.status.info)}"></span> Info</div>
-    <div class="status-row"><span class="dot" style="background:${safeColor(ui.status.success)}"></span> Success</div>
+    <div class="status-row"><span class="dot" style="background:${safeColor(ui.status.error.foreground)}"></span> Error</div>
+    <div class="status-row"><span class="dot" style="background:${safeColor(ui.status.warning.foreground)}"></span> Warning</div>
+    <div class="status-row"><span class="dot" style="background:${safeColor(ui.status.info.foreground)}"></span> Info</div>
+    <div class="status-row"><span class="dot" style="background:${safeColor(ui.status.success.foreground)}"></span> Success</div>
   </div>
 
   <!-- Diff colors -->
@@ -393,10 +386,10 @@ function coreTokensSection(theme: ThemeDefinition): string {
     ...(ui.accent.secondary ? [{ label: "accent.secondary", value: safeColor(ui.accent.secondary), kind: "accent" as const }] : []),
 
     // Status
-    { label: "status.error",   value: safeColor(ui.status.error),   kind: "status" },
-    { label: "status.warning", value: safeColor(ui.status.warning), kind: "status" },
-    { label: "status.info",    value: safeColor(ui.status.info),    kind: "status" },
-    { label: "status.success", value: safeColor(ui.status.success), kind: "status" },
+    { label: "status.error",   value: safeColor(ui.status.error.foreground),   kind: "status" },
+    { label: "status.warning", value: safeColor(ui.status.warning.foreground), kind: "status" },
+    { label: "status.info",    value: safeColor(ui.status.info.foreground),    kind: "status" },
+    { label: "status.success", value: safeColor(ui.status.success.foreground), kind: "status" },
 
     // Selection
     { label: "selection.background", value: safeColor(ui.selection.background), kind: "bg" },
@@ -566,10 +559,10 @@ function colorPickerScript(theme: ThemeDefinition): string {
     { path: "ui.foregrounds.muted", label: "fg.muted", value: safeColor(theme.ui.foregrounds.muted) },
     { path: "ui.foregrounds.subtle", label: "fg.subtle", value: safeColor(theme.ui.foregrounds.subtle) },
     { path: "ui.accent.primary", label: "accent", value: safeColor(theme.ui.accent.primary) },
-    { path: "ui.status.error", label: "error", value: safeColor(theme.ui.status.error) },
-    { path: "ui.status.warning", label: "warning", value: safeColor(theme.ui.status.warning) },
-    { path: "ui.status.info", label: "info", value: safeColor(theme.ui.status.info) },
-    { path: "ui.status.success", label: "success", value: safeColor(theme.ui.status.success) },
+    { path: "ui.status.error.foreground", label: "error", value: safeColor(theme.ui.status.error.foreground) },
+    { path: "ui.status.warning.foreground", label: "warning", value: safeColor(theme.ui.status.warning.foreground) },
+    { path: "ui.status.info.foreground", label: "info", value: safeColor(theme.ui.status.info.foreground) },
+    { path: "ui.status.success.foreground", label: "success", value: safeColor(theme.ui.status.success.foreground) },
     { path: "ui.borders.default", label: "border", value: safeColor(theme.ui.borders.default) },
   ];
 
