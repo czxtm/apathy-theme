@@ -152,8 +152,10 @@ export enum TokenType {
 	Label = "label",
 }
 
+import type { ColorLike } from "../core/color";
+
 export type Theme = {
-	[key in TokenType]: string;
+	[key in TokenType]: ColorLike;
 };
 
 export enum SemanticTokenType {
@@ -192,7 +194,7 @@ export enum SemanticTokenModifier {
 }
 
 export type SemanticTokenColors = {
-	[key in SemanticTokenType]: string;
+	[key in SemanticTokenType]: ColorLike;
 };
 
 /**
@@ -229,7 +231,7 @@ export type ModifierConfig = {
 	 * Transform function applied per token type via `tokenType.modifier` syntax.
 	 * Receives the base token color and returns a modified color.
 	 */
-	transform?: (baseColor: string) => string;
+	transform?: (baseColor: string) => ColorLike;
 };
 
 export type SemanticModifierHandlers = {

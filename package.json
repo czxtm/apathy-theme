@@ -2,7 +2,7 @@
 	"name": "apathy-theme",
 	"displayName": "Apathy Theme",
 	"description": "A dark, sophisticated color theme with purple/black backgrounds and vibrant neon-like syntax highlighting.",
-	"version": "2.4.0",
+	"version": "3.0.0",
 	"icon": "icon.png",
 	"publisher": "coopermaruyama",
 	"engines": {
@@ -28,22 +28,27 @@
 		},
 		"themes": [
 			{
-				"label": "[apathy] minted",
+				"label": "/// minted",
 				"uiTheme": "vs-dark",
 				"path": "./dist/minted.json"
 			},
 			{
-				"label": "[apathy] classic",
+				"label": "/// theory",
+				"uiTheme": "vs-dark",
+				"path": "./dist/minted-theory.json"
+			},
+			{
+				"label": "/// apathy",
 				"uiTheme": "vs-dark",
 				"path": "./dist/apathy.json"
 			},
 			{
-				"label": "[apathy] ocean",
+				"label": "/// ocean",
 				"uiTheme": "vs-dark",
 				"path": "./dist/apathetic-ocean.json"
 			},
 			{
-				"label": "[apathy] slate",
+				"label": "/// slate",
 				"uiTheme": "vs-dark",
 				"path": "./themes/minted.json"
 			},
@@ -61,31 +66,32 @@
 	"license": "MIT",
 	"private": true,
 	"scripts": {
-		"build": "bun run src/main.ts",
+		"generate:theme-paths": "bun run packages/scripts/generate-theme-paths.ts",
+		"check:theme-paths": "bun run generate:theme-paths && test -z \"$(git status --porcelain -- src/themes/themePaths.generated.ts)\"",
+		"build": "bun run generate:theme-paths && bun run src/main.ts",
+		"dev": "portless apathy --force bun run src/dev-server.ts",
 		"watch": "bun run --watch src/main.ts",
 		"bump:patch": "bun run src/main.ts bump patch",
 		"bump:minor": "bun run src/main.ts bump minor",
 		"bump:major": "bun run src/main.ts bump major",
-		"vscode:prepublish": "npm run build",
+		"vscode:prepublish": "bun run build",
+		"release": "bunx release-it",
+		"release:ci": "bunx release-it --ci",
 		"pack": "vsce package",
 		"publish": "vsce publish"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.3.8",
 		"@types/bun": "latest",
-		"@types/vscode": "1.98.0"
+		"@types/vscode": "1.98.0",
+		"release-it": "^19.2.4"
 	},
 	"peerDependencies": {
 		"typescript": "^5"
 	},
 	"dependencies": {
-		"color": "^5.0.3",
+		"colorjs.io": "^0.6.1",
 		"tsx": "^4.20.5",
 		"vsce": "^2.15.0"
-	},
-	"release-it": {
-		"hooks": {
-			"after:version:bump": "nix run nixpkgs#toml-cli -- set packages/zed/extension.toml version ${version} > /tmp/extension.toml && mv /tmp/extension.toml packages/zed/extension.toml && git add packages/zed/extension.toml"
-		}
 	}
 }

@@ -1,5 +1,0 @@
-{
-  "hooks": {
-    "after:release": "bash packages/scripts/update-zed-submodule.sh"
-  }
-}

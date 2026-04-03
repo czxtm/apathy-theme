@@ -1,789 +1,673 @@
 /**
- * Minted theme - converted to hierarchical slate-style format
+ * Minted theme — parametric OKLCH palette, zero hex
  *
- * Since minted was flat, most values just become "default" values.
- * This preserves the exact same output while using the new system.
+ * All colors derive from seeds (H, C, L for surfaces; SL, SC for syntax).
+ * Changing a seed cascades through the entire theme.
  */
 
-import { make, UIComponents, type ThemeDefinition, type UserInterface } from "./types";
+import {
+	make,
+	UIComponents,
+	type ThemeDefinition,
+	type SlimThemeDefinition,
+	type UserInterface,
+	type ColorLike,
+	normalizeTheme,
+} from "./types";
 import { SemanticTokenModifier } from "../types";
-import Color from "color";
-import { alpha20, alpha50, darken, l10, lighten, mix, transparentize } from "./utils";
-import { makeColors } from "@/core/color";
+import { Color, mkColor, mkElementColors, oklch } from "@/core/color";
+import {
+	alpha20,
+	alpha50,
+	darken,
+	l10,
+	lighten,
+	mix,
+	transparentize,
+} from "./utils";
+import { p } from "./mintedBase";
 
 // ============================================================================
-// 1. Color Palette
+// Minted-specific palette extensions
 // ============================================================================
 
-export enum palette {
-  // Backgrounds
-  // midnight = "#0d1117",
-  midnight = "#0e0e15",
-  midnight2 = "#0e0e15",
-  midnightLight = "#161620",
-  midnightDark = "#07070a",
-
-  black = "#0f0f12",
-  semiblack = "#0a0a0c",
-  alphaBlack = "#0f0f1280",
-  alphaWhite = "#e1e2e520",
-  "#08080c" = "#08080c",
-
-  // Grays & Neutrals
-  charcoal = "#383d51",      // luminance ~62
-  darkBlue = "#4B6672",      // luminance ~95
-  bluegray = "#6372a1",      // luminance ~115
-  "#527bb254" = "#527bb254", // luminance ~117
-  taupe = "#7f8797",         // luminance ~131
-  // taupe = "#888278ff",         // luminance ~131
-  mist = "#767b95c2",        // luminance ~149 #7f8797
-  steel = "#96a5b6",         // luminance ~163
-  slate = "#9aa1c7",         // luminance ~163
-  flatwhite = "#b1b1bffa",   // luminance ~179
-  devwhite = "#afd1e9cf",    // luminance ~202
-  white = "#e1e2e5",         // luminance ~226
-
-  // Greens
-  wasabi = "#c3dc8f",
-  wasabi2 = "#b7d194",
-  // wasabi2 = "#82bfa6ff",
-  seafoam = "#7ce6bc",
-
-  // Blues & Cyans
-  cyan = "#33b3cc",
-  ice = "#b3e6de",
-
-  // Purples
-  lavender = "#998fe1cf",
-  magenta = "#fc00ff",
-
-  // Warm accents
-  peach = "#ffb389",
-  blush = "#e0a2d3",
-  crimson = "#ca175d",
-  gold = "#ffd014d4",
-
-  // UI foreground hierarchy
-  softMist = "#585B70",
-  dimGray = "#3A4158",
-  deepGray = "#2B2F3F",
-
-  // Surfaces & accents
-  nightPurple = "#201F31",
-  deletedRose = "#A63B65",
-
-  // todo
-  gray1 = "#5C5675",
-  gray2 = "#3e3645d2",
-  orange1 = "#FF7859",
-
-
-
-  // experimental
-  /* blue */
-  "#1abdda" = "#1abdda",
-  /** seafoam */
-  "#88e6d6" = "#88e6d6",
-  /** waaai */
-  "#C3E88D" = "#C3E88D",
-  /** peach */
-  "#ffb389" = "#ffb389",
-  /** crimson */
-  "#F07178" = "#F07178",
-  /** mint glow */
-  "#6bffbfdb" = "#6bffbfdb",
-  /** blush */
-  "#ff9d9ddf" = "#ff9d9ddf",
-  /** frost alpha */
-  "#efadeab0" = "#efadeab0",
-
-  // ═══════════════════════════════════════════════════════════════════════════
-  // UI Colors (from minted.jsonc reference)
-  // ═══════════════════════════════════════════════════════════════════════════
-
-  // Cursor
-  cursorRed = "#da4c51",
-
-  // Editor highlights
-  lineHighlight = "#1b162994",
-  wordHighlight = "#383248a5",
-  wordHighlightStrong = "#564f66ab",
-
-  // Indent guides
-  indentGuide = "#291e2969",
-  indentGuideActive = "#654d6569",
-  editorWhitespace = "#272636",
-
-  // Widgets
-  widgetBorder = "#45414C",
-  widgetSelection = "#2A2441",
-  hoverBg = "#13141bbc",
-  hoverBorder = "#131a24",
-  hoverFg = "#d4edffa7",
-
-  // Menu
-  menuBg = "#1B1629",
-
-  // Window
-  windowBorder = "#183856ff",
-
-  // Focus
-  focusBorderAlpha = "#a099ae14",
-
-  // Tabs
-  tabBorder = "#212131",
-
-  // Git
-  gitRenamed = "#449dab",
-
-  gitStageDeleted = "#914c54",
-  gitSubmodule = "#8db9e2",
-
-
-
-  // Composer
-  composerBg = "#12151c",
-
-  // Debug
-  debugInfo = "#78DCE8",
-  debugError = "#ff6161",
-  debugWarning = "#FFCB6B",
-
-  debuggingBg = "#3fffbdf2",
-  debuggingFg = "#5b0092",
-  debuggingBorder = "#4be4b5f2",
-
-  // Peek
-  peekMatchHighlight = "#CC850040",
-
-  // Settings
-  settingsHeaderFg = "#d1deeacc",
-  settingsInputBg = "#121217",
-  settingsInputBorder = "#1c1c25",
-
-  // Errors
-  errorBg = "#52000045",
-  listError = "#a84e4e",
-
-  // Text
-  textPreformatBg = "#050e0cf0",
-  textPreformatFg = "#90e3bccf",
-
-  // Icons
-  iconFg = "#5f6384b8",
-
-  // Pull Requests
-  prDraft = "#331f57",
-
-  // Chat
-  chatRequestBg = "#04041b",
-
-  // Button
-  buttonBorder = "#3d374978",
-  buttonSeparator = "#584b7036",
-
-  // Line numbers (reference)
-  lineNumberFg = "#454148",
-  lineNumberActiveFg = "#9B8FB5",
-}
-
-export type PaletteValue = `${palette}`;
-
-export const v = (k: PaletteValue): PaletteValue => k;
-const colors = makeColors(palette);
+const mp = {
+	...p,
+	fg: oklch(0.475, 0.052, 266).alpha(0.90),
+	fgbright: oklch(0.836, 0.019, 269).alpha(0.91),
+	fgsubtle: oklch(0.660, 0.044, 267).alpha(0.91),
+	misty: oklch(0.660, 0.044, 267).alpha(0.91),
+	uiFg: oklch(0.636, 0.062, 269).alpha(0.66),
+	uiMuted: oklch(0.530, 0.078, 285).alpha(0.67),
+} as const;
 
 // ============================================================================
-// 2. Theme Definition
+// Syntax Definition
 // ============================================================================
-const tokens: ThemeDefinition["tokens"] = {
-    source: palette.mist,
-    comments: palette.charcoal,
-    strings: make({
-      default: palette.wasabi2,
-      regex: palette.peach,
-    }),
-    operators: {
-      default: palette.crimson,
-    },
 
-    literals: {
-      default: palette.cyan,
-      string: palette.wasabi2,
-      number: palette.cyan,
-      boolean: palette.cyan,
-      null: palette.lavender,
-      undefined: palette.lavender,
-      regex: palette.peach,
-    },
+const syntax: SlimThemeDefinition["syntax"] = {
+	source: mp.fg,
+	comments: mp.charcoal,
+	strings: make({
+		default: mp.wasabi2,
+		regex: mp.peach,
+	}),
+	operators: {
+		default: mp.crimson,
+	},
 
-    keywords: {
-      default: palette.devwhite,
-      operator: palette.crimson,
-    },
+	literals: {
+		default: mp.cyan,
+		string: mp.wasabi2,
+		number: mp.cyan,
+		boolean: mp.cyan,
+		null: mp.lavender.alpha(0.81),
+		undefined: mp.lavender.alpha(0.81),
+		regex: mp.peach,
+	},
 
-    variables: {
-      default: palette.slate,
-      local: palette.slate,
-      parameter: palette.slate,
-      property: palette.taupe,
-      global: palette.slate,
-      other: palette.flatwhite,
-    },
+	keywords: {
+		default: mp.devwhite.alpha(0.81),
+		operator: mp.crimson,
+	},
 
-    constants: {
-      default: palette.mist,
-      numeric: palette.cyan,
-      language: palette.cyan,
-      userDefined: palette.mist,
-    },
+	variables: {
+		default: mp.slate,
+		local: mp.slate,
+		parameter: mp.slate,
+		property: mp.taupe,
+		global: mp.slate,
+		other: mp.flatwhite.alpha(0.98),
+	},
 
-    functions: {
-      default: palette.seafoam,
-      declaration: palette.seafoam,
-      call: palette.seafoam,
-      method: palette.seafoam,
-      builtin: palette.seafoam,
-    },
+	constants: {
+		default: mp.mist.alpha(0.76),
+		numeric: mp.cyan,
+		language: mp.cyan,
+		userDefined: mp.mist.alpha(0.76),
+	},
 
-    types: {
-      default: palette.ice,
-      primitive: palette.peach,
-      class: palette.ice,
-      interface: palette.ice,
-      enum: palette.slate,
-      typeParameter: palette.ice,
-      namespace: palette.ice,
-    },
+	functions: {
+		default: mp.seafoam,
+		declaration: mp.seafoam,
+		call: mp.seafoam,
+		method: mp.seafoam,
+		builtin: mp.seafoam,
+	},
 
-    punctuation: {
-      default: palette.mist,
-      definition: palette.gray2,
-      delimiter: palette.charcoal,
-      bracket: palette.charcoal,
-      accessor: palette.charcoal,
-    },
+	types: {
+		default: mp.ice,
+		primitive: mp.peach,
+		class: mp.ice,
+		interface: mp.ice,
+		enum: mp.slate,
+		typeParameter: mp.ice,
+		namespace: mp.ice,
+	},
 
-    meta: {
-      default: palette.peach,
-      decorator: palette.peach,
-      macro: palette.peach,
-      annotation: palette.peach,
-      label: palette.blush,
-      tag: palette.gray1,
-    },
-    storage: {
-      default: palette.bluegray,
-      type: palette.bluegray,
-    },
-    special: {
-      jsxClass: palette.blush,
-    }
-};
-const backgrounds: UserInterface<PaletteValue | string>["backgrounds"] = {
-  base: palette.midnight,
-  darker: darken(palette.midnight, 0.2),
-  surface: lighten(palette.midnight, 0.15),
-  raised: palette.nightPurple,
-  overlay: "#4240641A",
-  codeBlock: palette["#08080c"],
-}
-const foregrounds: UserInterface<PaletteValue | string>["foregrounds"] = {
-  default: "#585B70CE",
-  muted: palette.dimGray,
-  subtle: palette.deepGray,
-  accent: palette.lavender,
-  focused: lighten(palette.mist, 0.3),
-}
-const borders: UserInterface<PaletteValue | string>["borders"] = {
-  default: "#161721",
-  active: "#4335A866",
-  subtle: "#161721",
-  separator: "#767B950D",
-};
-const accent: UserInterface<PaletteValue | string>["accent"] = {
-  primary: palette.cyan,
-  primaryForeground: palette.cyan,
-  secondary: palette.peach,
-  palette: [
-    "#88e6d6",
-    "#C3E88D",
-    "#ffb389",
-    "#F07178",
-    "#6bffbfdb",
-    "#8b00ff",
-  ]
+	punctuation: {
+		default: mp.mist.alpha(0.76),
+		definition: oklch(0.355, 0.030, 292).alpha(0.82),
+		delimiter: mp.charcoal,
+		bracket: mp.charcoal,
+		accessor: mp.charcoal,
+	},
+
+	meta: {
+		default: mp.peach,
+		decorator: mp.peach,
+		macro: mp.peach,
+		annotation: mp.peach,
+		label: mp.blush,
+		tag: mp.gray1,
+	},
+	storage: {
+		default: mp.bluegray,
+		type: mp.bluegray,
+	},
+	special: {
+		jsxClass: mp.blush,
+	},
 };
 
-const ui: UserInterface<PaletteValue | string> = {
-  backgrounds,
-  foregrounds,
-  borders,
-  accent,
-  status: {
-    error: palette.crimson,
-    warning: palette.peach,
-    info: palette.cyan,
-    success: palette.seafoam,
-  },
-  selection: {
-    background: mix(tokens.source, palette.midnight, 0.5),
-    backgroundInactive: transparentize(palette.white, 0.1),
-    text: palette.charcoal,
-    backgroundActive: palette.darkBlue,
-  },
-  highlights: {
-    // wordBackground: mix(tokens.source, palette.midnight, 0.5),
-    // selectionBackgroundInactive: palette.charcoal,
-    // selectionBackgroundActive: mix(tokens.source, palette.midnight, 0.5),
-    word: {
-      background: palette.wordHighlight,
-      backgroundStrong: palette.wordHighlightStrong,
-    },
-    selection: {
-      backgroundActive: mix(tokens.source, palette.midnight, 0.5),
-      backgroundInactive: palette.charcoal,
-    },
-    activeLine: {
-      background: palette.lineHighlight
-    }
-  },
-  indentGuide: {
-    background: palette.indentGuide,
-    activeBackground: palette.indentGuideActive,
-  },
-  whitespace: {
-    foreground: palette.editorWhitespace,
-  },
-  ruler: {
-    foreground: palette.indentGuide,
-  },
-  lineNumbers: {
-    foreground: palette.lineNumberFg,
-    activeForeground: palette.lineNumberActiveFg,
-  },
-  hoverWidget: {
-    background: palette.hoverBg,
-    border: palette.hoverBorder,
-    foreground: palette.hoverFg,
-  },
+// ============================================================================
+// Core Anchors
+// ============================================================================
 
-  git: {
-    // added: mix(palette.seafoam, palette.midnight, 0.5),
-    added: palette.seafoam,
-    // modified: mix(palette.peach, palette.midnight, 0.2),
-    modified: palette.bluegray,
-    deleted: palette.deletedRose,
-    untracked: palette.mist,
-    ignored: palette.mist,
-    conflict: palette.crimson,
-    renamed: palette.gitRenamed,
-    stageModified: palette.bluegray,
-    stageDeleted: palette.gitStageDeleted,
-    submodule: palette.gitSubmodule,
-  },
-  cursor: {
-    foreground: palette.cursorRed,
-  },
-  window: {
-    activeBorder: palette.windowBorder,
-  },
-  icon: {
-    foreground: palette.iconFg,
-  },
-  focus: {
-    border: palette.focusBorderAlpha,
-    contrastBorder: palette.focusBorderAlpha,
-  },
-  menu: {
-    background: palette.menuBg,
-    foreground: palette.steel,
-    selectionBackground: palette.widgetSelection,
-    selectionForeground: palette.white,
-    separatorBackground: palette.widgetBorder,
-  },
-  suggestWidget: {
-    border: palette.widgetBorder,
-    foreground: palette.white,
-    selectedBackground: palette.widgetSelection,
-  },
-  progressBar: {
-    background: palette["#C3E88D"],
-  },
-  debug: {
-    infoForeground: palette.debugInfo,
-    warningForeground: palette.debugWarning,
-    errorForeground: palette.debugError,
-    sourceForeground: palette.white,
-  },
-  text: {
-    linkForeground: palette.seafoam,
-    preformatBackground: palette.textPreformatBg,
-    preformatForeground: palette.textPreformatFg,
-    separatorForeground: transparentize(palette.widgetBorder, 0.5),
-  },
-  error: {
-    background: palette.errorBg,
-    listForeground: palette.listError,
-  },
-  peekView: {
-    matchHighlightBackground: palette.peekMatchHighlight,
-    titleDescriptionForeground: palette.flatwhite,
-  },
-  panels: {
-    background: darken(backgrounds.base, 0.05),
-    foreground: palette.mist,
-    titleForeground: transparentize(palette.white, 0.5),
-  },
-  inlineHints: {
-    background: backgrounds.raised,
-    foreground: lighten(palette.steel, 0.4),
-    border: borders.subtle,
-  }
+const core = {
+	background: mp.midnight,
+	foreground: mp.fg.mix(mp.midnight, 0.2),
+	accent: mp.lavender.alpha(0.81),
+	highlight: mp.peach,
+	active: mp.ice,
+} as const;
+
+const overlay = mp.charcoal.set({
+	l: l => l * 1.02,
+	c: c => c * 1.05,
+	h: h => h,
+}).alpha(0.1)
+
+const backgrounds: UserInterface<ColorLike>["backgrounds"] = {
+	base: mp.midnight,
+	darker: mp.midnight.darker(0.15),
+	surface: mp.midnight.set({
+		l: l => l * 1.12,
+		c: c => c * 1.8,
+		h: h => h
+	}).alpha(0.84),
+	raised: mp.midnight.set({
+		l: l => l * 1.13,
+		c: c => c * 1.5,
+		h: h => h,
+	}),
+	overlay,
+	codeBlock: mp.midnightDark.darker(0.05),
 };
 
-const components: UIComponents<PaletteValue | string> = {
-  editor: {
-    background: darken(ui.backgrounds.base, 0.1),
-    foreground: ui.foregrounds.default,
-    lineHighlight: ui.highlights?.activeLine?.background || ui.backgrounds.overlay,
-    lineHighlightBorder: lighten(ui.backgrounds.base, 0.15),
-    findMatchHighlightBackground: transparentize(mix(palette.lavender, ui.backgrounds.base, 0.8), 0.5),
-    findRangeHighlightBackground: transparentize(mix(palette.lavender, ui.backgrounds.base, 0.8), 0.5),
-    selectionHighlightBackground: transparentize(mix(palette.lavender, ui.backgrounds.base, 0.8), 0.5),
-    lineNumberActiveForeground: palette.mist,
-    lineNumberForeground: darken(palette.mist, 0.7),
-    selectionBackground: mix(tokens.source, palette.midnight, 0.8),
-    inactiveSelectionBackground: darken(palette.lavender, 0.8),
-    findMatchBackground: mix(palette.midnight, palette['#527bb254'], 0.5),
-    // selectionHighlight: lighten(ui.backgrounds.base, 0.15),
-    // wordHighlight: transparentize(ui.foregrounds.default, 0.95),
-    // wordHighlightStrong: transparentize(ui.foregrounds.default, 0.95),
-    // findMatchHighlight: lighten(ui.backgrounds.base, 0.15),
-    // findMatch: lighten(ui.backgrounds.base, 0.15),
-    // rangeHighlight: lighten(ui.backgrounds.base, 0.15),
-    // selectionHighlight: "#1b14395c",
-    // wordHighlight: "#383248a5",
-    // wordHighlightStrong: "#52486cab",
-    // findMatchHighlight: "#18142ddc",
-    // findMatch: "#2a2540dc",
-    // rangeHighlight: "#2A244120",
-  },
-  editorGutter: {
-    background: ui.backgrounds.darker,
-    modifiedBackground: mix(palette.gold, ui.backgrounds.base, 0.6),
-    addedBackground: mix(palette.seafoam, ui.backgrounds.base, 0.6),
-    deletedBackground: mix(palette.crimson, ui.backgrounds.base, 0.6),
-    foldingControl: mix(palette.steel, ui.backgrounds.base, 0.6),
-  },
-  editorLineNumber: {
-    foreground: palette.charcoal,
-    activeForeground: palette.mist,
-  },
-  editorWidget: {
-    background: ui.backgrounds.surface,
-    foreground: ui.foregrounds.default,
-    border: ui.borders.default,
-  },
-  titleBar: {
-    inactiveBackground: ui.backgrounds.base,
-    inactiveForeground: palette.mist,
-    activeBackground: palette.midnight,
-    activeForeground: palette.mist,
-  },
-  activityBar: {
-    background: ui.backgrounds.darker,
-    foreground: darken(palette.mist, 0.1),
-    inactiveForeground: darken(palette.mist, 0.5),
-    border: palette.semiblack,
-    badgeBackground: palette.alphaBlack,
-    badgeForeground: palette.wasabi,
-  },
-  sideBar: {
-    background: ui.backgrounds.base,
-    foreground: mix(palette.mist, palette.midnight, 0.2),
-    border: ui.borders.default,
-    sectionHeaderBackground: palette.midnight,
-    sectionHeaderForeground: palette.mist,
-  },
-  panel: {
-    background: darken(ui.backgrounds.base, 0.05),
-    foreground: palette.mist,
-    border: ui.borders.default,
-    titleActiveForeground: palette.mist,
-    titleInactiveForeground: palette.mist,
-    titleActiveBorder: palette.steel,
-  },
-  statusBar: {
-    background: palette.midnight,
-    foreground: palette.mist,
-    border: ui.borders.default,
-    debuggingBackground: palette.seafoam,
-    debuggingForeground: palette.crimson,
-    noFolderBackground: palette.midnight,
-    noFolderForeground: palette.mist,
-  },
-  tabs: {
-    activeBackground: palette.midnight,
-    activeForeground: palette.mist,
-    activeBorder: ui.borders.default,
-    activeBorderTop: palette.steel,
-    inactiveBackground: palette.midnight,
-    inactiveForeground: palette.mist,
-    hoverBackground: palette.midnight,
-    hoverForeground: palette.mist,
-    unfocusedActiveBackground: palette.midnight,
-    unfocusedActiveForeground: palette.mist,
-    modifiedBorder: palette.peach,
-  },
-  list: {
-    activeSelectionBackground: palette.midnight,
-    activeSelectionForeground: palette.mist,
-    inactiveSelectionBackground: palette.midnight,
-    inactiveSelectionForeground: palette.mist,
-    hoverBackground: palette.midnight,
-    hoverForeground: palette.mist,
-    focusBackground: palette.midnight,
-    focusForeground: palette.mist,
-    highlightForeground: palette.steel,
-  },
-  input: {
-    background: ui.backgrounds.surface,
-    foreground: lighten(palette.mist, 0.4),
-    placeholderForeground: darken(palette.mist, 0.2),
-    border: ui.borders.subtle,
-  },
-  button: {
-    background: palette.midnight,
-    foreground: palette.mist,
-    hoverBackground: palette.midnight,
-    secondaryBackground: palette.midnight,
-    secondaryForeground: palette.mist,
-    secondaryHoverBackground: palette.midnight,
-  },
-  dropdown: {
-    background: palette.midnight,
-    foreground: palette.mist,
-    border: darken(palette.steel, 0.2),
-    listBackground: palette.midnight,
-  },
-  badge: {
-    background: palette.midnight,
-    foreground: palette.mist,
-    border: lighten(palette.midnight, 0.2),
-  },
-  scrollbar: {
-    shadow: palette.midnight,
-    sliderBackground: colors.midnight.lighter().hex(),
-    sliderHoverBackground: palette.midnight,
-    sliderActiveBackground: palette.midnight,
-  },
-  minimap: {
-    background: palette.midnight,
-    selectionHighlight: palette.mist,
-    errorHighlight: palette.crimson,
-    warningHighlight: palette.peach,
-    findMatchHighlight: mix(ui.backgrounds.surface, palette.lavender, 0.5),
-  },
-  breadcrumb: {
-    background: palette.midnight,
-    foreground: palette.mist,
-    focusForeground: palette.mist,
-    activeSelectionForeground: palette.mist,
-  },
-  terminal: {
-    background: ui.backgrounds.darker,
-    foreground: palette.mist,
-    border: mix(ui.backgrounds.darker, palette.steel, 0.1),
-    cursorForeground: palette.mist,
-    selectionBackground: l10(palette.midnight),
-    cursor: palette.mist,
-    ansiBlack: palette.charcoal,
-    ansiRed: palette.crimson,
-    ansiGreen: palette.seafoam,
-    ansiYellow: palette.peach,
-    ansiBlue: palette.cyan,
-    ansiMagenta: palette.lavender,
-    ansiCyan: palette.ice,
-    ansiWhite: palette.white,
-    ansiBrightBlack: palette.steel,
-    ansiBrightRed: palette.crimson,
-    ansiBrightGreen: palette.seafoam,
-    ansiBrightYellow: palette.peach,
-    ansiBrightBlue: palette.cyan,
-    ansiBrightMagenta: palette.lavender,
-    ansiBrightCyan: palette.ice,
-    ansiBrightWhite: palette.flatwhite,
-  },
-  notification: {
-    background: palette.midnight,
-    foreground: palette.mist,
-    border: palette.steel,
-  },
-  peekView: {
-    editorBackground: palette.midnight,
-    editorBorder: palette.steel,
-    resultBackground: palette.midnight,
-    resultSelectionBackground: palette.midnight,
-    titleBackground: palette.midnight,
-    titleForeground: palette.mist,
-  },
-  diffEditor: {
-    insertedTextBackground: "#09131588",
-    removedTextBackground: "#2e060982",
-    insertedLineBackground: "#09131588",
-    removedLineBackground: "#1202049e",
-    diagonalFill: palette.steel,
-  },
-  merge: {
-    currentHeaderBackground: palette.midnight,
-    incomingHeaderBackground: palette.midnight,
-    commonHeaderBackground: palette.midnight,
-    currentContentBackground: mix(palette.seafoam, palette.midnight, 0.3),
-    incomingContentBackground: palette.peach,
-    commonContentBackground: mix(palette.steel, palette.midnight, 0.3),
-  },
-  chat: {
-    background: ui.backgrounds.darker,
-    foreground: ui.foregrounds.default,
-    border: ui.borders.default,
-    surface: ui.backgrounds.surface,
-    requestBackground: palette.chatRequestBg,
-    codeBlockBackground: ui.backgrounds.codeBlock,
-  },
-}
-
-export const minted: ThemeDefinition = {
-  name: "Minted",
-  type: "dark",
-  palette,
-  background: ui.backgrounds.base,
-
-  tokens,
-
-  languageOverrides: {
-    go: {
-      functions: {
-        default: palette.ice
-      }
-    },
-    css: {
-      variables: {
-        default: palette.slate,
-        property: palette.darkBlue
-      }
-    }
-  },
-
-  // Semantic overrides for fine-tuning
-  semantic: {
-    comment: palette.charcoal,
-    string: mix(palette.wasabi2, ui.backgrounds.base, 0.3),
-    keyword: palette.lavender,
-    number: palette.cyan,
-    regexp: palette.peach,
-    operator: palette.crimson,
-    namespace: palette.ice,
-    type: palette.ice,
-    struct: palette.ice,
-    class: palette.ice,
-    interface: palette.ice,
-    enum: palette.slate,
-    typeParameter: palette.ice,
-    function: mix(palette.seafoam, ui.backgrounds.base, 0.3),
-    method: palette.seafoam,
-    decorator: palette.peach,
-    macro: palette.peach,
-    variable: palette.slate,
-    parameter: palette.slate,
-    property: mix(palette.taupe, ui.backgrounds.base, 0.3),
-    label: palette.blush,
-  },
-
-  // Modifier handlers
-  modifiers: {
-    [SemanticTokenModifier.documentation]: {
-      global: { foreground: palette.charcoal, fontStyle: "italic" },
-    },
-    [SemanticTokenModifier.static]: {
-      global: { fontStyle: "" },
-    },
-    [SemanticTokenModifier.deprecated]: {
-      global: { fontStyle: "strikethrough" },
-    },
-
-    [SemanticTokenModifier.async]: {
-      transform: (color: string) => Color(color).mix(Color(palette.lavender), 0.1).hex(),
-    },
-    [SemanticTokenModifier.declaration]: {
-      transform: c => mix(c, ui.foregrounds.default, 0.5),
-    }
-  },
-
-  // Extra VS Code colors that don't fit the structured UI definition
-  extraColors: {
-    // Editor pane (VS Code specific - secondary editor background)
-    "editorPane.background": palette.midnight2,
-
-    // Editor highlights (VS Code specific numbered variants)
-    "editor.lineHighlightBackground": palette.lineHighlight,
-    "editor.wordHighlightBackground": palette.wordHighlight,
-    "editor.wordHighlightStrongBackground": palette.wordHighlightStrong,
-
-    // Indent guides (VS Code specific numbered variants)
-    "editorIndentGuide.background1": palette.indentGuide,
-    "editorIndentGuide.activeBackground1": palette.indentGuideActive,
-    "editorWhitespace.foreground": palette.editorWhitespace,
-    "editorRuler.foreground": palette.indentGuide,
-
-    // Line numbers (VS Code specific - overrides component)
-    "editorLineNumber.foreground": palette.lineNumberFg,
-    "editorLineNumber.activeForeground": palette.lineNumberActiveFg,
-
-    // Hover widget (VS Code specific styling)
-    "editorHoverWidget.background": palette.hoverBg,
-    "editorHoverWidget.border": palette.hoverBorder,
-    "editorHoverWidget.foreground": palette.hoverFg,
-
-    // Sidebar title (VS Code specific)
-    "sideBarTitle.foreground": transparentize(palette.white, 0.5),
-
-    // Status bar debugging (VS Code specific states)
-    "statusBar.debuggingBackground": palette.debuggingBg,
-    "statusBar.debuggingForeground": palette.debuggingFg,
-    "statusBar.debuggingBorder": palette.debuggingBorder,
-
-    // Tab border & group header (VS Code specific)
-    "tab.border": palette.tabBorder,
-    "editorGroupHeader.tabsBackground": palette.black,
-
-    // Button extended (VS Code specific)
-    "button.border": palette.buttonBorder,
-    "button.separator": palette.buttonSeparator,
-
-    // Tree indent guides (VS Code specific)
-    "tree.indentGuidesStroke": palette.widgetBorder,
-
-    // Settings (VS Code specific)
-    "settings.headerForeground": palette.settingsHeaderFg,
-    "settings.textInputBackground": palette.settingsInputBg,
-    "settings.textInputForeground": palette.steel,
-    "settings.textInputBorder": palette.settingsInputBorder,
-
-    // VS Code extensions (Composer, PR, Chat)
-    "composerPane.background": palette.composerBg,
-    "pullRequests.draft": palette.prDraft,
-    "chat.requestBackground": palette.chatRequestBg,
-
-    // List focus (VS Code specific override)
-    "list.focusBackground": palette.widgetSelection,
-  },
-
-  ui: {
-    ...ui,
-    overrides: components
-  }
+const focusColor = mp.peach;
+const foregrounds: UserInterface<ColorLike>["foregrounds"] = {
+	default: mp.uiFg,
+	muted: mp.uiMuted,
+	subtle: oklch(0.311, 0.057, 278),
+	accent: oklch(0.701, 0.141, 287).alpha(0.81),
+	focused: focusColor,
 };
+
+const borders: UserInterface<ColorLike>["borders"] = {
+	default: oklch(0.483, 0.116, 279).alpha(0.08),
+	active: core.accent.desaturate(0.1).darker(0.4).transparent(0.4),
+	subtle: oklch(0.199, 0.018, 280).alpha(0.90),
+	separator: mp.mist.alpha(0.1).hexa(),
+	transparent: oklch(0.199, 0.018, 280).alpha(0.33),
+};
+
+const accent: UserInterface<ColorLike>["accent"] = {
+	primary: mp.ice,
+	primaryForeground: mp.ice,
+	secondary: mp.peach,
+	palette: [
+		"#75E353FF",
+		"#5EE578FF",
+		"#69E7B8FF",
+		"#74E1E8FF",
+		"#7FB5EAFF",
+		"#8A91ECFF",
+	],
+};
+
+// ============================================================================
+// UI
+// ============================================================================
+
+const ui: UserInterface<ColorLike> = {
+	backgrounds,
+	foregrounds,
+	borders,
+	accent,
+	status: {
+		error: mkElementColors(mp.crimson, { background: backgrounds.base, foreground: foregrounds.default }),
+		warning: {
+			...mkElementColors(mp.peach, { background: backgrounds.base, foreground: foregrounds.default }),
+			foreground: oklch(0.914, 0.041, 208).hexa(),
+		},
+		info: mkElementColors(mp.bluegray, { background: backgrounds.base, foreground: foregrounds.default }),
+		success: {
+			...mkElementColors(mp.seafoam, { background: backgrounds.base, foreground: foregrounds.default }),
+			foreground: oklch(0.915, 0.098, 131).hexa(),
+		},
+	},
+	selection: {
+		background: mix(syntax.source, mp.midnight, 0.5),
+		backgroundInactive: transparentize(mp.white, 0.1),
+		text: mp.charcoal,
+		backgroundActive: oklch(0.244, 0.038, 290).alpha(0.33),
+		collaboratorBackground: oklch(0.493, 0.037, 227),
+	},
+	highlights: {
+		word: {
+			background: mp.wordHighlight,
+			backgroundStrong: mp.wordHighlightStrong,
+		},
+		selection: {
+			backgroundActive: mix(syntax.source, mp.midnight, 0.5),
+			backgroundInactive: mp.charcoal,
+		},
+		activeLine: {
+			background: oklch(0.220, 0.052, 286).alpha(0.33),
+		},
+	},
+	indentGuide: {
+		background: oklch(0.190, 0.030, 283).alpha(0.80),
+		activeBackground: oklch(0.37, 0.098, 281).alpha(0.60),
+	},
+	whitespace: {
+		foreground: mp.editorWhitespace,
+	},
+	ruler: {
+		foreground: oklch(0.272, 0.093, 284).alpha(0.23),
+	},
+	lineNumbers: {
+		foreground: mp.lineNumberFg,
+		activeForeground: mp.lineNumberActiveFg,
+	},
+	elements: {
+		background: oklch(0.216, 0.037, 295),
+		border: mp.hoverBorder,
+		foreground: mp.hoverFg,
+		selected: {
+			background: oklch(0.269, 0.057, 282).alpha(0.67),
+		},
+	},
+
+	git: {
+		added: oklch(0.577, 0.063, 182).alpha(0.27),
+		modified: Color.create(accent.primaryForeground).set({
+			l: l => l * 0.63,
+			c: (c) => c * 1.47,
+			h: h => h + 84
+		}).alpha(0.33),
+		deleted: mp.deletedRose.alpha(0.30),
+		wordAdded: oklch(0.450, 0.070, 258).alpha(0.21),
+		wordDeleted: mp.deletedRose.alpha(0.27),
+		untracked: mp.mist.alpha(0.76),
+		ignored: mp.mist.alpha(0.76),
+		conflict: mp.crimson,
+		renamed: mp.gitRenamed,
+		stageModified: mp.bluegray,
+		stageDeleted: mp.gitStageDeleted,
+		submodule: mp.gitSubmodule,
+	},
+	cursor: {
+		foreground: mp.cursorRed,
+	},
+	window: {
+		activeBorder: mp.windowBorder,
+	},
+	icon: {
+		foreground: oklch(0.952, 0.034, 185),
+		muted: oklch(0.108, 0.005, 280),
+		accent: oklch(0.935, 0.088, 158).alpha(0.83),
+	},
+	focus: {
+		border: mp.focusBorderAlpha,
+		contrastBorder: mp.focusBorderAlpha,
+	},
+	menu: {
+		background: mp.menuBg,
+		foreground: mp.steel,
+		selectionBackground: mp.widgetSelection,
+		selectionForeground: mp.white,
+		separatorBackground: mp.widgetBorder,
+	},
+	suggestWidget: {
+		border: mp.widgetBorder,
+		foreground: mp.white,
+		selectedBackground: mp.widgetSelection,
+	},
+	progressBar: {
+		background: mp.wasabi,
+	},
+	debug: {
+		infoForeground: mp.debugInfo,
+		warningForeground: mp.debugWarning,
+		errorForeground: mp.debugError,
+		sourceForeground: mp.white,
+	},
+	text: {
+		linkForeground: mp.seafoam,
+		preformatBackground: mp.textPreformatBg,
+		preformatForeground: mp.textPreformatFg,
+		separatorForeground: transparentize(mp.widgetBorder, 0.5),
+	},
+	error: {
+		background: mp.errorBg,
+		listForeground: mp.listError,
+	},
+	peekView: {
+		matchHighlightBackground: mp.peekMatchHighlight,
+		titleDescriptionForeground: mp.flatwhite.alpha(0.98),
+	},
+	panels: {
+		background: darken(backgrounds.base, 0.05),
+		foreground: mp.mist.alpha(0.76),
+		titleForeground: transparentize(mp.white, 0.5),
+		titleBackground: Color.create(backgrounds.raised).set({
+			l: l => l * 0.95,
+			c: c => c * 0.95,
+			h: h => h,
+		}).alpha(0.7),
+	},
+	inlineHints: {
+		background: backgrounds.raised,
+		foreground: lighten(mp.steel, 0.4),
+		border: borders.subtle,
+	},
+
+	subtleElements: {
+		background: oklch(0.118, 0.013, 280).alpha(0.52),
+		selected: {
+			background: oklch(0.259, 0.067, 288).alpha(0.23),
+		},
+	}
+};
+
+// ============================================================================
+// Components
+// ============================================================================
+
+const components = {
+	editor: {
+		background: darken(ui.backgrounds.base, 0.1),
+		foreground: oklch(0.482, 0.056, 274).alpha(0.90),
+		lineHighlight:
+			ui.highlights?.activeLine?.background || ui.backgrounds.overlay,
+		lineHighlightBorder: lighten(ui.backgrounds.base, 0.15),
+		findMatchHighlightBackground: transparentize(
+			mix(mp.lavender.alpha(0.81), ui.backgrounds.base, 0.8),
+			0.5,
+		),
+		findRangeHighlightBackground: transparentize(
+			mix(mp.lavender.alpha(0.81), ui.backgrounds.base, 0.8),
+			0.5,
+		),
+		selectionHighlightBackground: transparentize(
+			mix(mp.lavender.alpha(0.81), ui.backgrounds.base, 0.8),
+			0.5,
+		),
+		lineNumberActiveForeground: mp.mist.alpha(0.76),
+		lineNumberForeground: darken(mp.mist.alpha(0.76), 0.7),
+		selectionBackground: mix(syntax.source, mp.midnight, 0.8),
+		inactiveSelectionBackground: darken(mp.lavender.alpha(0.81), 0.8),
+		findMatchBackground: mix(mp.midnight, oklch(0.577, 0.097, 256).alpha(0.33), 0.5),
+	},
+	editorGutter: {
+		background: ui.backgrounds.darker,
+		modifiedBackground: mp.gold.transparent(),
+		addedBackground: oklch(0.10, 0.01, 165),
+		deletedBackground: oklch(0.12, 0.01, 6),
+		foldingControl: mp.steel.transparent(),
+	},
+	editorLineNumber: {
+		foreground: mp.charcoal,
+		activeForeground: mp.mist.alpha(0.76),
+	},
+	editorWidget: {
+		background: ui.backgrounds.surface,
+		foreground: ui.foregrounds.default,
+		border: ui.borders.default,
+	},
+	titleBar: {
+		inactiveBackground: ui.backgrounds.base,
+		inactiveForeground: mp.mist.alpha(0.76),
+		activeBackground: mp.midnight,
+		activeForeground: mp.mist.alpha(0.76),
+	},
+	activityBar: {
+		background: ui.backgrounds.darker,
+		foreground: darken(mp.mist.alpha(0.76), 0.1),
+		inactiveForeground: darken(mp.mist.alpha(0.76), 0.5),
+		border: mp.semiblack,
+		badgeBackground: mp.alphaBlack,
+		badgeForeground: mp.wasabi,
+	},
+	sideBar: {
+		background: backgrounds.base,
+		foreground: mix(mp.mist.alpha(0.76), mp.midnight, 0.2),
+		border: ui.borders.default,
+		sectionHeaderBackground: mp.midnight,
+		sectionHeaderForeground: mp.mist.alpha(0.76),
+	},
+	panel: {
+		background: darken(ui.backgrounds.base, 0.05),
+		foreground: mp.mist.alpha(0.76),
+		border: ui.borders.default,
+		titleActiveForeground: mp.mist.alpha(0.76),
+		titleInactiveForeground: mp.mist.alpha(0.76),
+		titleActiveBorder: mp.steel,
+	},
+	statusBar: {
+		background: mp.midnight,
+		foreground: mp.mist.alpha(0.76),
+		border: ui.borders.default,
+		debuggingBackground: mp.seafoam,
+		debuggingForeground: mp.ice.darker(0.8),
+		noFolderBackground: mp.midnight,
+		noFolderForeground: mp.mist.alpha(0.76),
+	},
+	tabs: {
+		activeBackground: mp.midnight.set({ l: l => l * 0.96, c: c => c * 1.6 }),
+		activeForeground: mp.mist.alpha(0.76),
+		activeBorder: ui.borders.default,
+		activeBorderTop: mp.steel,
+		inactiveBackground: mp.midnight,
+		inactiveForeground: mp.mist.alpha(0.76),
+		hoverBackground: mp.midnight,
+		hoverForeground: mp.mist.alpha(0.76),
+		unfocusedActiveBackground: mp.midnight,
+		unfocusedActiveForeground: mp.mist.alpha(0.76),
+		modifiedBorder: mp.peach,
+	},
+	list: {
+		activeSelectionBackground: mp.midnight,
+		activeSelectionForeground: mp.mist.alpha(0.76),
+		inactiveSelectionBackground: mp.midnight,
+		inactiveSelectionForeground: mp.mist.alpha(0.76),
+		hoverBackground: mp.midnight,
+		hoverForeground: mp.mist.alpha(0.76),
+		focusBackground: mp.midnight,
+		focusForeground: mp.mist.alpha(0.76),
+		highlightForeground: mp.steel,
+	},
+	input: {
+		background: ui.backgrounds.surface,
+		foreground: lighten(mp.mist.alpha(0.76), 0.4),
+		placeholderForeground: darken(mp.mist.alpha(0.76), 0.2),
+		border: ui.borders.subtle,
+	},
+	button: (() => {
+		const btnBg = mp.midnight.mix(mp.devwhite.alpha(0.81), 0.15).rotate(15);
+		const secondaryBg = mp.midnight.transparent(0.1);
+		return {
+			background: btnBg,
+			foreground: mp.white.cool(1).darker(),
+			hoverBackground: btnBg.lighter(),
+			secondaryBackground: secondaryBg,
+			secondaryForeground: mp.blush.lighter(0.1).transparent(0.9),
+			secondaryHoverBackground: mp.midnight,
+			border: btnBg.lighter(),
+			secondaryBorder: btnBg.lighter(),
+		};
+	})(),
+	dropdown: {
+		background: mp.midnight,
+		foreground: mp.mist.alpha(0.76),
+		border: darken(mp.steel, 0.2),
+		listBackground: mp.midnight,
+	},
+	badge: {
+		background: mp.midnight,
+		foreground: mp.mist.alpha(0.76),
+		border: lighten(mp.midnight, 0.2),
+	},
+	scrollbar: {
+		shadow: mp.midnight,
+		sliderBackground: oklch(0.237, 0.051, 282).alpha(0.30),
+		sliderHoverBackground: mp.midnight,
+		sliderActiveBackground: mp.midnight,
+	},
+	minimap: {
+		background: mp.midnight,
+		selectionHighlight: mp.mist.alpha(0.76),
+		errorHighlight: mp.crimson,
+		warningHighlight: mp.peach,
+		findMatchHighlight: mix(ui.backgrounds.surface, mp.lavender.alpha(0.81), 0.5),
+	},
+	breadcrumb: {
+		background: mp.midnight,
+		foreground: mp.mist.alpha(0.76),
+		focusForeground: mp.mist.alpha(0.76),
+		activeSelectionForeground: mp.mist.alpha(0.76),
+	},
+	terminal: {
+		background: Color.create(ui.backgrounds.darker).set({ c: c => c * 0.8 }),
+		foreground: oklch(0.540, 0.066, 279).alpha(0.76),
+		border: mix(ui.backgrounds.darker, mp.steel, 0.1),
+		cursorForeground: mp.mist.alpha(0.76),
+		selectionBackground: l10(mp.midnight),
+		cursor: mp.mist.alpha(0.76),
+		ansiBlack: mp.charcoal,
+		ansiRed: mp.crimson,
+		ansiGreen: mp.seafoam,
+		ansiYellow: mp.peach,
+		ansiBlue: mp.cyan,
+		ansiMagenta: mp.lavender.alpha(0.81),
+		ansiCyan: mp.ice,
+		ansiWhite: mp.white,
+		ansiBrightBlack: mp.steel,
+		ansiBrightRed: mp.crimson,
+		ansiBrightGreen: mp.seafoam,
+		ansiBrightYellow: mp.peach,
+		ansiBrightBlue: mp.cyan,
+		ansiBrightMagenta: mp.lavender.alpha(0.81),
+		ansiBrightCyan: mp.ice,
+		ansiBrightWhite: mp.flatwhite.alpha(0.98),
+	},
+	notification: {
+		background: mp.midnight,
+		foreground: mp.mist.alpha(0.76),
+		border: mp.steel,
+	},
+	peekView: {
+		editorBackground: mp.midnight,
+		editorBorder: mp.steel,
+		resultBackground: mp.midnight,
+		resultSelectionBackground: mp.midnight,
+		titleBackground: mp.midnight,
+		titleForeground: mp.mist.alpha(0.76),
+	},
+	diffEditor: {
+		insertedTextBackground: oklch(0.10, 0.01, 165),   // function hue
+		removedTextBackground: oklch(0.12, 0.01, 6),      // operator hue
+		insertedLineBackground: oklch(0.10, 0.01, 165),
+		removedLineBackground: oklch(0.12, 0.01, 6),
+		diagonalFill: mp.alphaWhite,
+	},
+	merge: (() => {
+		const incoming = mp.midnight
+			.mix(mp.seafoam, 0.1)
+			.saturate(1)
+			.darker(0.2);
+		const current = mp.midnight
+			.mix(mp.cyan, 0.1)
+			.saturate(1)
+			.darker(0.2);
+		const common = mp.midnight
+			.mix(mp.peach, 0.1)
+			.saturate(1)
+			.darker(0.2);
+		return {
+			currentHeaderBackground: current.darker(0.1),
+			currentContentBackground: current.darker(0.2),
+			incomingHeaderBackground: incoming.darker(0.1),
+			incomingContentBackground: incoming.darker(0.2),
+			commonHeaderBackground: common.darker(0.1),
+			commonContentBackground: common.darker(0.2),
+		};
+	})(),
+	chat: {
+		background: ui.backgrounds.darker,
+		foreground: ui.foregrounds.default,
+		border: ui.borders.default,
+		surface: ui.backgrounds.surface,
+		requestBackground: mp.chatRequestBg,
+		codeBlockBackground: ui.backgrounds.codeBlock,
+	},
+
+};
+
+// ============================================================================
+// Theme Assembly
+// ============================================================================
+
+const mintedSource = {
+	name: "Minted",
+	type: "dark",
+	palette: {},
+	background: ui.backgrounds.base,
+	syntax,
+
+	languageOverrides: {
+		go: {
+			functions: {
+				default: mp.ice,
+			},
+		},
+		css: {
+			variables: {
+				default: mp.slate,
+				property: mp.darkBlue,
+			},
+		},
+	},
+
+	modifiers: {
+		[SemanticTokenModifier.documentation]: {
+			global: { foreground: mp.charcoal.render(), fontStyle: "italic" },
+		},
+		[SemanticTokenModifier.static]: {
+			global: { fontStyle: "" },
+		},
+		[SemanticTokenModifier.deprecated]: {
+			global: { fontStyle: "strikethrough" },
+		},
+
+		[SemanticTokenModifier.async]: {
+			transform: (color: string) => new Color(color).mix(mp.lavender.alpha(0.81), 0.1),
+		},
+		[SemanticTokenModifier.declaration]: {
+			transform: (c) => mix(c, ui.foregrounds.default, 0.5),
+		},
+	},
+
+	extraColors: {
+		"editorPane.background": mp.midnight2.render(),
+		"editor.lineHighlightBackground": mp.lineHighlight.render(),
+		"editor.wordHighlightBackground": mp.wordHighlight.render(),
+		"editor.wordHighlightStrongBackground": mp.wordHighlightStrong.render(),
+		"editorIndentGuide.background1": mp.indentGuide.render(),
+		"editorIndentGuide.activeBackground1": mp.indentGuideActive.render(),
+		"editorWhitespace.foreground": mp.editorWhitespace.render(),
+		"editorRuler.foreground": mp.indentGuide.render(),
+		"editorLineNumber.foreground": mp.lineNumberFg.render(),
+		"editorLineNumber.activeForeground": mp.lineNumberActiveFg.render(),
+		"editorHoverWidget.background": mp.hoverBg.render(),
+		"editorHoverWidget.border": mp.hoverBorder.render(),
+		"editorHoverWidget.foreground": mp.hoverFg.render(),
+		"sideBarTitle.foreground": transparentize(mp.white, 0.5).hexa(),
+		"statusBar.debuggingBackground": mp.debuggingBg.render(),
+		"statusBar.debuggingForeground": mp.debuggingFg.render(),
+		"statusBar.debuggingBorder": mp.debuggingBorder.render(),
+		"tab.border": mp.tabBorder.render(),
+		"editorGroupHeader.tabsBackground": mp.black.render(),
+		"button.border": mp.buttonBorder.render(),
+		"button.separator": mp.buttonSeparator.render(),
+		"tree.indentGuidesStroke": Color.create(ui.indentGuide.activeBackground).render(),
+		"tree.inactiveIndentGuidesStroke": oklch(0.19, 0.02, 280).alpha(0.87).render(),
+		"settings.headerForeground": mp.settingsHeaderFg.render(),
+		"settings.textInputBackground": mp.settingsInputBg.render(),
+		"settings.textInputForeground": mp.steel.render(),
+		"settings.textInputBorder": mp.settingsInputBorder.render(),
+		"composerPane.background": mp.composerBg.render(),
+		"pullRequests.draft": mp.prDraft.render(),
+		"chat.requestBackground": mp.chatRequestBg.render(),
+		"list.focusBackground": mp.widgetSelection.render(),
+	},
+
+	ui,
+	componentOverrides: components,
+} satisfies SlimThemeDefinition;
+
+export const minted: ThemeDefinition = normalizeTheme(mintedSource);
 
 export default minted;
-
-// rgb(144 230 201 / 95%)

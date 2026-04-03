@@ -1,0 +1,164 @@
+/**
+ * Minted Theme for Obsidian
+ *
+ * Generated from Apathy theme tokens.
+ * Designed to work well with Obsidian and layout snippets like
+ * https://github.com/efemkay/obsidian-modular-css-layout
+ */
+
+.theme-dark.apathy-theme-minted,
+body.theme-dark.apathy-theme-minted,
+.theme-dark {
+  --background-primary: #0c0c13ff;
+  --background-primary-alt: #07070eff;
+  --background-secondary: #100f1cd6;
+  --background-secondary-alt: #10101bff;
+  --background-modifier-cover: #3a3f541a;
+  --background-modifier-hover: #10101bff;
+  --background-modifier-active-hover: #2d3143f3;
+  --background-modifier-border: #52559e14;
+  --background-modifier-border-hover: #4b3f8166;
+  --background-modifier-border-focus: #292931ff;
+  --background-modifier-form-field: #100f1cd6;
+  --text-normal: #7b8ab1a8;
+  --text-muted: #676597ab;
+  --text-faint: #2a2d4dff;
+  --text-accent: #9a8ff1cf;
+  --text-accent-hover: #a59afdcf;
+  --interactive-normal: #100f1cd6;
+  --interactive-hover: #10101bff;
+  --interactive-accent: #9a8ff1cf;
+  --interactive-accent-hover: #a59afdcf;
+  --interactive-success: #ccf1acff;
+  --interactive-warning: #c4ebf1ff;
+  --interactive-accent-rgb: 154, 143, 241;
+  --text-highlight-bg: #2d3143f3;
+  --text-selection: #2d3143f3;
+  --titlebar-background: #07070eff;
+  --titlebar-background-focused: #0c0c13ff;
+  --titlebar-text-color: #676597ab;
+  --titlebar-text-color-focused: #7b8ab1a8;
+  --nav-item-background-hover: #10101bff;
+  --nav-item-background-active: #2d3143f3;
+  --nav-item-color: #676597ab;
+  --nav-item-color-hover: #7b8ab1a8;
+  --nav-item-color-active: #7b8ab1a8;
+  --tab-background-active: #0c0c13ff;
+  --tab-background-inactive: #07070eff;
+  --tab-text-color: #676597ab;
+  --tab-text-color-active: #7b8ab1a8;
+  --tab-outline-color: #52559e14;
+  --tab-divider-color: #14151ee6;
+  --icon-color: #676597ab;
+  --icon-color-hover: #7b8ab1a8;
+  --icon-color-focused: #9a8ff1cf;
+  --code-background: #060609ff;
+  --code-normal: #545c7ee6;
+  --code-comment: #383d51ff;
+  --code-function: #99d3b9ff;
+  --code-keyword: #afd1e9cf;
+  --code-string: #b5cf92ff;
+  --code-value: #33b3ccff;
+  --code-operator: #cb195fff;
+  --blockquote-background-color: #10101bff;
+  --blockquote-border-color: #52559e14;
+  --hr-color: #14151ee6;
+  --prompt-border-color: #52559e14;
+  --prompt-results-background: #100f1cd6;
+  --prompt-results-border-color: #52559e14;
+  --caret-color: #9a8ff1cf;
+  --cursor-line-background: #19163154;
+  --editor-background: #090910ff;
+  --editor-foreground: #545c7ee6;
+  --input-shadow: none;
+  --text-error: #c52b61ff;
+  --text-warning: #c4ebf1ff;
+  --text-success: #ccf1acff;
+  --text-on-accent: #b4e7dfff;
+  --color-red-rgb: 197, 43, 97;
+  --color-orange-rgb: 196, 235, 241;
+  --color-cyan-rgb: 99, 114, 160;
+  --color-green-rgb: 204, 241, 172;
+  --callout-border-width: 1px;
+  --callout-radius: 8px;
+  --metadata-label-text-color: #2a2d4dff;
+  --metadata-input-background: #100f1cd6;
+  --metadata-input-text-color: #a8adc9c2;
+  --metadata-input-text-color-active: #a8adc9c2;
+  --metadata-input-text-color-placeholder: #555972c2;
+  --metadata-input-background-hover: #10101bff;
+  --metadata-input-border-color: #52559e14;
+}
+
+.theme-dark .callout[data-callout="note"] {
+  --callout-color: 180, 231, 223;
+}
+.theme-dark .callout[data-callout="abstract"] {
+  --callout-color: 180, 231, 223;
+}
+.theme-dark .callout[data-callout="summary"] {
+  --callout-color: 180, 231, 223;
+}
+.theme-dark .callout[data-callout="tldr"] {
+  --callout-color: 180, 231, 223;
+}
+.theme-dark .callout[data-callout="info"] {
+  --callout-color: 99, 114, 160;
+}
+.theme-dark .callout[data-callout="todo"] {
+  --callout-color: 99, 114, 160;
+}
+.theme-dark .callout[data-callout="tip"] {
+  --callout-color: 204, 241, 172;
+}
+.theme-dark .callout[data-callout="success"] {
+  --callout-color: 204, 241, 172;
+}
+.theme-dark .callout[data-callout="check"] {
+  --callout-color: 204, 241, 172;
+}
+.theme-dark .callout[data-callout="done"] {
+  --callout-color: 204, 241, 172;
+}
+.theme-dark .callout[data-callout="question"] {
+  --callout-color: 196, 235, 241;
+}
+.theme-dark .callout[data-callout="help"] {
+  --callout-color: 196, 235, 241;
+}
+.theme-dark .callout[data-callout="faq"] {
+  --callout-color: 196, 235, 241;
+}
+.theme-dark .callout[data-callout="warning"] {
+  --callout-color: 196, 235, 241;
+}
+.theme-dark .callout[data-callout="caution"] {
+  --callout-color: 196, 235, 241;
+}
+.theme-dark .callout[data-callout="attention"] {
+  --callout-color: 196, 235, 241;
+}
+.theme-dark .callout[data-callout="failure"] {
+  --callout-color: 197, 43, 97;
+}
+.theme-dark .callout[data-callout="fail"] {
+  --callout-color: 197, 43, 97;
+}
+.theme-dark .callout[data-callout="missing"] {
+  --callout-color: 197, 43, 97;
+}
+.theme-dark .callout[data-callout="danger"] {
+  --callout-color: 197, 43, 97;
+}
+.theme-dark .callout[data-callout="error"] {
+  --callout-color: 197, 43, 97;
+}
+.theme-dark .callout[data-callout="bug"] {
+  --callout-color: 197, 43, 97;
+}
+.theme-dark .callout[data-callout="example"] {
+  --callout-color: 180, 231, 223;
+}
+.theme-dark .callout[data-callout="quote"] {
+  --callout-color: 103, 101, 151;
+}

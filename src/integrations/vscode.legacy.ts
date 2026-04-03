@@ -6,11 +6,7 @@
  */
 
 import * as fs from "fs";
-import type {
-	ThemeDefinition,
-	ThemePath,
-	TokenAssignments,
-} from "../themes/types";
+import type { ThemeDefinition, TokenAssignments } from "../themes/types";
 import {
 	applyFilters,
 	colorFactory,
@@ -21,7 +17,6 @@ import {
 } from "../themes/types";
 import { applyFiltersToTheme, type ThemeFilters } from "../filters";
 import { SemanticTokenModifier, SemanticTokenType } from "../types";
-import Color from "color";
 
 // ============================================================================
 // VS Code Theme Output Types
@@ -199,8 +194,11 @@ function generateVSCodeTheme(t: ThemeDefinition): VSCodeThemeFile {
 	const c = colorFactory(t);
 	const s = semanticFactory(t);
 
-	// Use editor foreground from ui.overrides if available, otherwise fallback to tokens.source
-	const editorForeground = t.ui?.overrides?.editor?.foreground ?? t.tokens.source;
+	// Use editor foreground from ui.overrides if available, otherwise fallback to tokens.source.
+	const editorForeground =
+		getThemeValue(t, "ui.overrides.editor.foreground") ??
+		getThemeValue(t, "tokens.source") ??
+		c("tokens.source");
 
 	return {
 		name: t.name,
@@ -209,7 +207,7 @@ function generateVSCodeTheme(t: ThemeDefinition): VSCodeThemeFile {
 
 		// Editor colors - direct mapping from theme
 		colors: {
-			"editor.background": t.background,
+			"editor.background": c("background"),
 			"editor.foreground": editorForeground,
 			// ... add more editor colors as needed
 		},
@@ -360,17 +358,17 @@ function generateVSCodeTheme(t: ThemeDefinition): VSCodeThemeFile {
 			tokenColor("markup.deleted.git_gutter", c("ui.git.deleted")),
 
 			// Invalid
-			tokenColor("invalid", c("ui.status.error")),
-			tokenColor("invalid.illegal", c("ui.status.error")),
+			tokenColor("invalid", c("ui.status.error.foreground")),
+			tokenColor("invalid.illegal", c("ui.status.error.foreground")),
 			tokenColor("invalid.deprecated", c("tokens.comments")),
 
 			// Special comments (TODO/FIXME/NOTE)
 			tokenColor("comment.line.todo", c("tokens.meta.annotation"), "bold"),
 			tokenColor("comment.block.todo", c("tokens.meta.annotation"), "bold"),
-			tokenColor("comment.line.fixme", c("ui.status.warning"), "bold"),
-			tokenColor("comment.block.fixme", c("ui.status.warning"), "bold"),
-			tokenColor("comment.line.note", c("ui.status.info"), "bold"),
-			tokenColor("comment.block.note", c("ui.status.info"), "bold"),
+			tokenColor("comment.line.fixme", c("ui.status.warning.foreground"), "bold"),
+			tokenColor("comment.block.fixme", c("ui.status.warning.foreground"), "bold"),
+			tokenColor("comment.line.note", c("ui.status.info.foreground"), "bold"),
+			tokenColor("comment.block.note", c("ui.status.info.foreground"), "bold"),
 
 			// Python docstrings
 			tokenColor("string.quoted.docstring", c("tokens.comments"), "italic"),

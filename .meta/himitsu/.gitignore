@@ -1,0 +1,3 @@
+.keys/
+vars/.*\.json
+!vars/*.sops.json
