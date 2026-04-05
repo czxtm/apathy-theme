@@ -1,13 +1,13 @@
 /**
- * Minted Theme for Obsidian
+ * apathy /// minted Theme for Obsidian
  *
  * Generated from Apathy theme tokens.
  * Designed to work well with Obsidian and layout snippets like
  * https://github.com/efemkay/obsidian-modular-css-layout
  */
 
-.theme-dark.apathy-theme-minted,
-body.theme-dark.apathy-theme-minted,
+.theme-dark.apathy-theme-apathy-minted,
+body.theme-dark.apathy-theme-apathy-minted,
 .theme-dark {
   --background-primary: #0c0c13ff;
   --background-primary-alt: #07070eff;

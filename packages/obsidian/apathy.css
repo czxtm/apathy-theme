@@ -1,5 +1,5 @@
 /**
- * Apathy Theme for Obsidian
+ * apathy Theme for Obsidian
  *
  * Generated from Apathy theme tokens.
  * Designed to work well with Obsidian and layout snippets like
@@ -16,7 +16,7 @@ body.theme-dark.apathy-theme-apathy,
   --background-modifier-cover: #07060dff;
   --background-modifier-hover: #1b1629ff;
   --background-modifier-active-hover: #2d22476b;
-  --background-modifier-border: #3a3448ff;
+  --background-modifier-border: #8079ce23;
   --background-modifier-border-hover: #0b0a3cff;
   --background-modifier-border-focus: #1b162994;
   --background-modifier-form-field: #110f12ff;
@@ -47,8 +47,8 @@ body.theme-dark.apathy-theme-apathy,
   --tab-background-inactive: #0e0b13ff;
   --tab-text-color: #555174ff;
   --tab-text-color-active: #dad7fc80;
-  --tab-outline-color: #3a3448ff;
-  --tab-divider-color: #4a3f60ff;
+  --tab-outline-color: #8079ce23;
+  --tab-divider-color: #33333333;
   --icon-color: #555174ff;
   --icon-color-hover: #dad7fc80;
   --icon-color-focused: #33b3cce6;
@@ -61,11 +61,11 @@ body.theme-dark.apathy-theme-apathy,
   --code-value: #33b3ccff;
   --code-operator: #e60063ff;
   --blockquote-background-color: #1b1629ff;
-  --blockquote-border-color: #3a3448ff;
-  --hr-color: #4a3f60ff;
-  --prompt-border-color: #3a3448ff;
+  --blockquote-border-color: #8079ce23;
+  --hr-color: #33333333;
+  --prompt-border-color: #8079ce23;
   --prompt-results-background: #0e0b13ff;
-  --prompt-results-border-color: #3a3448ff;
+  --prompt-results-border-color: #8079ce23;
   --caret-color: #33b3cce6;
   --cursor-line-background: #1b162994;
   --editor-background: #08070fdf;
@@ -87,7 +87,7 @@ body.theme-dark.apathy-theme-apathy,
   --metadata-input-text-color-active: #e6e2d1ff;
   --metadata-input-text-color-placeholder: #b5b5b545;
   --metadata-input-background-hover: #1b1629ff;
-  --metadata-input-border-color: #3a3448ff;
+  --metadata-input-border-color: #8079ce23;
 }
 
 .theme-dark .callout[data-callout="note"] {

@@ -28,34 +28,24 @@
 		},
 		"themes": [
 			{
-				"label": "/// minted",
+				"label": "apathy /// minted",
 				"uiTheme": "vs-dark",
 				"path": "./dist/minted.json"
 			},
 			{
-				"label": "/// theory",
+				"label": "apathy /// theory",
 				"uiTheme": "vs-dark",
 				"path": "./dist/minted-theory.json"
 			},
 			{
-				"label": "/// apathy",
+				"label": "apathy",
 				"uiTheme": "vs-dark",
 				"path": "./dist/apathy.json"
 			},
 			{
-				"label": "/// ocean",
+				"label": "apathy /// storm",
 				"uiTheme": "vs-dark",
 				"path": "./dist/apathetic-ocean.json"
-			},
-			{
-				"label": "/// slate",
-				"uiTheme": "vs-dark",
-				"path": "./themes/minted.json"
-			},
-			{
-				"label": "Apathy",
-				"uiTheme": "vs-dark",
-				"path": "./dist/minted.json"
 			}
 		]
 	},

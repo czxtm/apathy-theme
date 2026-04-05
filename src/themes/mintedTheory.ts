@@ -262,7 +262,7 @@ const tempoverrides: Record<string, string> = {
 	"#AB5726E0": "#AB5726E0",
 } as const;
 const mintedTheorySource = {
-	name: "Minted Theory",
+	name: "apathy /// theory",
 	type: "dark",
 	palette: {
 		...mintedBasePalette,

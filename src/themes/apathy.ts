@@ -159,7 +159,7 @@ export const v = (k: PaletteValue): PaletteValue => k;
 // ============================================================================
 
 const apathySource = {
-  name: "Apathy",
+  name: "apathy",
   type: "dark",
   palette,
   background: palette.background,
@@ -303,9 +303,9 @@ const apathySource = {
       accent: Color.create(palette.cyan).alpha(0.9),
     },
     borders: {
-      default: "#3a3448",
+      default: "#8079ce23",
       active: "#0B0A3C",
-      subtle: "#4a3f60",
+      subtle: "#33333333",
       disabled: "#07060dff",
       transparent: "#07060dff",
       selected: "#3d3558",
@@ -606,7 +606,6 @@ const apathySource = {
     // Workbench shell — VS Code only (Zed does not merge extraColors).
     "panel.background": palette.panelBg,
     "statusBar.background": palette.panelBg,
-    "statusBar.border": palette.panelBg,
 
     "tab.activeBackground": palette.tabBg,
     "tab.inactiveBackground": palette.tabBg,
@@ -624,7 +623,6 @@ const apathySource = {
 
     // Editor hints
     "editorHint.foreground": "#404970",
-    "editorHint.border": palette.findMatch,
     "editorInlayHint.background": palette.findMatch,
     "editorInlayHint.foreground": "#404970",
     "editorInlayHint.parameterBackground": "#2a5b7edc",
@@ -658,16 +656,11 @@ const apathySource = {
     "editorStickyScroll.shadow": "#00000080",
 
     // Focus borders
-    "focusBorder": palette.focusBorder,
     "gauge.border": palette.focusBorder,
     "sash.hoverBorder": palette.focusBorder,
-    "editorGroup.border": palette.focusBorder,
-    "window.activeBorder": palette.focusBorder,
 
     // Tree & separators
-    "tree.indentGuidesStroke": palette.widgetBorder,
     "textSeparator.foreground": "#45414c",
-    "contrastBorder": palette.focusBorder,
 
     // Progress bar (use brightGreen C3E88D per original theme)
     "progressBar.background": palette.brightGreen,
@@ -680,7 +673,6 @@ const apathySource = {
     "menu.separatorBackground": palette.widgetBorder,
 
     // Button extras
-    "button.border": palette.buttonBorder,
     "button.separator": "#6053786e",
 
     // Peek view extras
@@ -698,6 +690,39 @@ const apathySource = {
 
     // Settings
     "settings.headerForeground": "#d1deea75",
+    "editorGroup.border": "#8079ce23",
+    "tab.border": "#11002243",
+    "panel.border": "#55447723",
+    "focusBorder": "#8079ce23",
+    "menu.border": "#8079ce23",
+    "editorGroupHeader.border": "#33333333",
+    "tab.activeBorder": "#00000000",
+    "sideBar.border": "#90797e13",
+    "titleBar.border": "#00000000",
+    "statusBar.border": "#8079ce23",
+    "widget.border": "#8079ce23",
+    "button.border": "#8079ce13",
+    "terminal.border": "#8079ce13",
+    "panelSection.border": "#8079ce23",
+    "window.activeBorder": "#8079ce23",
+    "input.border": "#30334e43",
+    "merge.border": "#8079ce23",
+    "contrastBorder": "#30334e43",
+    "checkbox.border": "#8079ce23",
+    "dropdown.border": "#8079ce23",
+    "peekView.border": "#8079ce23",
+    "peekViewEditor.background": "#8079ce23",
+    "tab.hoverBorder": "#8079ce23",
+    "panel.dropBorder": "#8079ce23",
+    "diffEditor.border": "#8079ce23",
+    "editorHint.border": "#2a2540dc",
+    "editorInfo.border": "#8079ce23",
+    "panelInput.border": "#26242a",
+    "panelTitle.border": "#00001153",
+    "activityBar.border": "#8079ce23",
+    "sideBarTitle.border": "#8079ce23",
+    "editorGroupHeader.tabsBorder": "#00000044",
+    "tree.indentGuidesStroke": "#40395e53"
   },
 } satisfies SlimThemeDefinition;
 
