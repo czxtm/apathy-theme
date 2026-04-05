@@ -6,7 +6,10 @@ import { minted } from "../../src/themes/minted";
 import { mintedTheory } from "../../src/themes/mintedTheory";
 import { slate } from "../../src/themes/slate";
 
-const outputPath = new URL("../../src/themes/themePaths.generated.ts", import.meta.url);
+const outputPath = new URL(
+	"../../src/themes/themePaths.generated.ts",
+	import.meta.url,
+);
 
 const themeSources = [
 	apathy,
@@ -17,9 +20,7 @@ const themeSources = [
 	slate,
 ];
 
-const additionalObjectPaths = [
-	"ui.window",
-] as const;
+const additionalObjectPaths = ["ui.window"] as const;
 
 const additionalLeafPaths = [
 	"tokens.operators.arithmetic",

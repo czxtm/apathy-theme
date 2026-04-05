@@ -1,5 +1,4 @@
 import { expect, test } from "bun:test";
-import { minted } from "./minted";
 import { p } from "./mintedBase";
 import { getThemeValue, toHex } from "./types";
 

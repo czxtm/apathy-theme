@@ -13,22 +13,15 @@
  *   }
  */
 
-import type {
-	SemanticTokenType,
-	SemanticTokenModifier,
-	ModifierConfig,
-	Semantic,
-} from "../types";
+import { Color, type ColorLike, toHex } from "../core/color";
 import type { ThemeFilters } from "../filters";
 import type {
-	ThemePath,
-	UIPath,
-} from "./themePaths.generated";
-import {
-	type ColorLike,
-	toHex,
-	Color,
-} from "../core/color";
+	ModifierConfig,
+	Semantic,
+	SemanticTokenModifier,
+	SemanticTokenType,
+} from "../types";
+import type { ThemePath, UIPath } from "./themePaths.generated";
 
 // ============================================================================
 // Color Palette
@@ -693,12 +686,14 @@ export interface StatusColor<ColorValue extends ColorLike = ColorLike> {
 export type InteractiveElementState<ColorValue extends ColorLike = ColorLike> =
 	| ColorValue
 	| {
-		background?: ColorValue;
-		foreground?: ColorValue;
-		border?: ColorValue;
-	};
+			background?: ColorValue;
+			foreground?: ColorValue;
+			border?: ColorValue;
+	  };
 
-export interface InteractiveElementColors<ColorValue extends ColorLike = ColorLike> {
+export interface InteractiveElementColors<
+	ColorValue extends ColorLike = ColorLike,
+> {
 	background: ColorValue;
 	selectionBackground?: ColorValue;
 	foreground?: ColorValue;
@@ -1110,7 +1105,7 @@ export interface UserInterface<ColorValue extends ColorLike> {
 
 	/** Override specific components when primitives aren't enough */
 	overrides?: UIComponents<ColorValue>;
-};
+}
 
 // ============================================================================
 // Semantic Token Overrides (optional layer on top)
@@ -1127,12 +1122,12 @@ export interface SemanticTokens {
 	parameter?: ColorLike;
 	variable?: ColorLike | { default: ColorLike; readonly?: ColorLike };
 	property?:
-	| ColorLike
-	| { default: ColorLike; declaration?: ColorLike; readonly?: ColorLike };
+		| ColorLike
+		| { default: ColorLike; declaration?: ColorLike; readonly?: ColorLike };
 	function?: ColorLike | { default: ColorLike; declaration?: ColorLike };
 	method?:
-	| ColorLike
-	| { default: ColorLike; declaration?: ColorLike; static?: ColorLike };
+		| ColorLike
+		| { default: ColorLike; declaration?: ColorLike; static?: ColorLike };
 	decorator?: ColorLike;
 	macro?: ColorLike;
 }
@@ -1145,7 +1140,7 @@ export interface LanguageSpecificTokens {
 
 export interface SemanticOverrides
 	extends SemanticTokens,
-	LanguageSpecificTokens { }
+		LanguageSpecificTokens {}
 
 // ============================================================================
 // Complete Theme Definition
@@ -1218,10 +1213,8 @@ export interface SyntaxDefinition {
 	special?: Partial<TokenAssignments["special"]>;
 }
 
-export type ComponentOverrides<ColorValue extends ColorLike = ColorLike> = Record<
-	string,
-	unknown
->;
+export type ComponentOverrides<_ColorValue extends ColorLike = ColorLike> =
+	Record<string, unknown>;
 
 export interface SlimThemeDefinition<ColorValue extends ColorLike = ColorLike> {
 	name: string;
@@ -1270,8 +1263,14 @@ function normalizeSyntax(syntax: SyntaxDefinition): TokenAssignments {
 		stringsDefault,
 		source,
 	) as ColorLike;
-	const keywordsDefault = firstDefined(syntax.keywords?.default, source) as ColorLike;
-	const variablesDefault = firstDefined(syntax.variables?.default, source) as ColorLike;
+	const keywordsDefault = firstDefined(
+		syntax.keywords?.default,
+		source,
+	) as ColorLike;
+	const variablesDefault = firstDefined(
+		syntax.variables?.default,
+		source,
+	) as ColorLike;
 	const constantsDefault = firstDefined(
 		syntax.constants?.default,
 		syntax.literals?.default,
@@ -1308,16 +1307,37 @@ function normalizeSyntax(syntax: SyntaxDefinition): TokenAssignments {
 		comments,
 		operators: {
 			default: operatorsDefault,
-			arithmetic: firstDefined(syntax.operators?.arithmetic, operatorsDefault) as ColorLike,
-			assignment: firstDefined(syntax.operators?.assignment, operatorsDefault) as ColorLike,
-			comparison: firstDefined(syntax.operators?.comparison, operatorsDefault) as ColorLike,
-			logical: firstDefined(syntax.operators?.logical, operatorsDefault) as ColorLike,
-			bitwise: firstDefined(syntax.operators?.bitwise, operatorsDefault) as ColorLike,
-			wordlike: firstDefined(syntax.operators?.wordlike, operatorsDefault) as ColorLike,
+			arithmetic: firstDefined(
+				syntax.operators?.arithmetic,
+				operatorsDefault,
+			) as ColorLike,
+			assignment: firstDefined(
+				syntax.operators?.assignment,
+				operatorsDefault,
+			) as ColorLike,
+			comparison: firstDefined(
+				syntax.operators?.comparison,
+				operatorsDefault,
+			) as ColorLike,
+			logical: firstDefined(
+				syntax.operators?.logical,
+				operatorsDefault,
+			) as ColorLike,
+			bitwise: firstDefined(
+				syntax.operators?.bitwise,
+				operatorsDefault,
+			) as ColorLike,
+			wordlike: firstDefined(
+				syntax.operators?.wordlike,
+				operatorsDefault,
+			) as ColorLike,
 		},
 		literals: {
 			default: literalsDefault,
-			string: firstDefined(syntax.literals?.string, stringsDefault) as ColorLike,
+			string: firstDefined(
+				syntax.literals?.string,
+				stringsDefault,
+			) as ColorLike,
 			number: firstDefined(
 				syntax.literals?.number,
 				syntax.constants?.numeric,
@@ -1346,18 +1366,33 @@ function normalizeSyntax(syntax: SyntaxDefinition): TokenAssignments {
 		},
 		keywords: {
 			default: keywordsDefault,
-			control: firstDefined(syntax.keywords?.control, keywordsDefault) as ColorLike,
+			control: firstDefined(
+				syntax.keywords?.control,
+				keywordsDefault,
+			) as ColorLike,
 			declaration: firstDefined(
 				syntax.keywords?.declaration,
 				keywordsDefault,
 			) as ColorLike,
-			import: firstDefined(syntax.keywords?.import, keywordsDefault) as ColorLike,
-			modifier: firstDefined(syntax.keywords?.modifier, keywordsDefault) as ColorLike,
-			operator: firstDefined(syntax.keywords?.operator, operatorsDefault) as ColorLike,
+			import: firstDefined(
+				syntax.keywords?.import,
+				keywordsDefault,
+			) as ColorLike,
+			modifier: firstDefined(
+				syntax.keywords?.modifier,
+				keywordsDefault,
+			) as ColorLike,
+			operator: firstDefined(
+				syntax.keywords?.operator,
+				operatorsDefault,
+			) as ColorLike,
 		},
 		variables: {
 			default: variablesDefault,
-			local: firstDefined(syntax.variables?.local, variablesDefault) as ColorLike,
+			local: firstDefined(
+				syntax.variables?.local,
+				variablesDefault,
+			) as ColorLike,
 			parameter: firstDefined(
 				syntax.variables?.parameter,
 				syntax.variables?.local,
@@ -1417,7 +1452,10 @@ function normalizeSyntax(syntax: SyntaxDefinition): TokenAssignments {
 		},
 		types: {
 			default: typesDefault,
-			primitive: firstDefined(syntax.types?.primitive, typesDefault) as ColorLike,
+			primitive: firstDefined(
+				syntax.types?.primitive,
+				typesDefault,
+			) as ColorLike,
 			class: firstDefined(syntax.types?.class, typesDefault) as ColorLike,
 			interface: firstDefined(
 				syntax.types?.interface,
@@ -1429,7 +1467,10 @@ function normalizeSyntax(syntax: SyntaxDefinition): TokenAssignments {
 				syntax.types?.typeParameter,
 				typesDefault,
 			) as ColorLike,
-			namespace: firstDefined(syntax.types?.namespace, typesDefault) as ColorLike,
+			namespace: firstDefined(
+				syntax.types?.namespace,
+				typesDefault,
+			) as ColorLike,
 		},
 		punctuation: {
 			default: punctuationDefault,
@@ -1493,29 +1534,50 @@ function deriveSemantic(tokens: TokenAssignments): Semantic {
 		comment: tokens.comments,
 		string: tokens.strings.default,
 		keyword: tokens.keywords.default,
-		number: firstDefined(tokens.literals.number, tokens.literals.default) as ColorLike,
-		regexp: firstDefined(tokens.strings.regex, tokens.strings.default) as ColorLike,
+		number: firstDefined(
+			tokens.literals.number,
+			tokens.literals.default,
+		) as ColorLike,
+		regexp: firstDefined(
+			tokens.strings.regex,
+			tokens.strings.default,
+		) as ColorLike,
 		operator: tokens.operators.default,
-		namespace: firstDefined(tokens.types.namespace, tokens.types.default) as ColorLike,
+		namespace: firstDefined(
+			tokens.types.namespace,
+			tokens.types.default,
+		) as ColorLike,
 		type: tokens.types.default,
 		struct: firstDefined(tokens.types.class, tokens.types.default) as ColorLike,
 		class: firstDefined(tokens.types.class, tokens.types.default) as ColorLike,
-		interface: firstDefined(tokens.types.interface, tokens.types.default) as ColorLike,
+		interface: firstDefined(
+			tokens.types.interface,
+			tokens.types.default,
+		) as ColorLike,
 		enum: firstDefined(tokens.types.enum, tokens.types.default) as ColorLike,
 		typeParameter: firstDefined(
 			tokens.types.typeParameter,
 			tokens.types.default,
 		) as ColorLike,
 		function: tokens.functions.default,
-		method: firstDefined(tokens.functions.method, tokens.functions.default) as ColorLike,
-		decorator: firstDefined(tokens.meta.decorator, tokens.meta.default) as ColorLike,
+		method: firstDefined(
+			tokens.functions.method,
+			tokens.functions.default,
+		) as ColorLike,
+		decorator: firstDefined(
+			tokens.meta.decorator,
+			tokens.meta.default,
+		) as ColorLike,
 		macro: firstDefined(tokens.meta.macro, tokens.meta.default) as ColorLike,
 		variable: tokens.variables.default,
 		parameter: firstDefined(
 			tokens.variables.parameter,
 			tokens.variables.default,
 		) as ColorLike,
-		property: firstDefined(tokens.variables.property, tokens.variables.default) as ColorLike,
+		property: firstDefined(
+			tokens.variables.property,
+			tokens.variables.default,
+		) as ColorLike,
 		label: firstDefined(tokens.meta.label, tokens.meta.default) as ColorLike,
 	};
 }
@@ -1525,7 +1587,9 @@ export function normalizeTheme<ColorValue extends ColorLike>(
 ): ThemeDefinition<ColorValue> {
 	const tokens = normalizeSyntax(source.syntax);
 	const componentOverrides =
-		(source.componentOverrides as Partial<UIComponents<ColorValue>> | undefined) ?? {};
+		(source.componentOverrides as
+			| Partial<UIComponents<ColorValue>>
+			| undefined) ?? {};
 	const semantic = {
 		...deriveSemantic(tokens),
 		...(source.semantic ?? {}),
@@ -1570,7 +1634,7 @@ export function get<T extends { default: ColorLike }>(
 export function semantic(
 	value:
 		| ColorLike
-		| { default: ColorLike;[key: string]: ColorLike | undefined }
+		| { default: ColorLike; [key: string]: ColorLike | undefined }
 		| undefined,
 	variant?: string,
 ): string | undefined {
@@ -1586,8 +1650,11 @@ export function semantic(
 }
 
 function isColor(value: unknown): value is ColorLike {
-	return value instanceof Color
-		|| (typeof value === "string" && /^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(value));
+	return (
+		value instanceof Color ||
+		(typeof value === "string" &&
+			/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(value))
+	);
 }
 /**
  * Get a value from a theme definition using a dot-notation path.
@@ -1673,21 +1740,10 @@ export function applyFilters(c: ColorLike, filters: ThemeFilters): string {
 		const contrast = filters.contrast;
 		const factor = (259 * (contrast + 255)) / (255 * (259 - contrast));
 		const base = new Color(color);
-		const r = Math.min(
-			255,
-			Math.max(0, factor * (base.red() - 128) + 128),
-		);
-		const g = Math.min(
-			255,
-			Math.max(0, factor * (base.green() - 128) + 128),
-		);
-		const b = Math.min(
-			255,
-			Math.max(0, factor * (base.blue() - 128) + 128),
-		);
-		color = new Color(`rgb(${r}, ${g}, ${b})`)
-			.alpha(base.oklch().alpha)
-			.hexa();
+		const r = Math.min(255, Math.max(0, factor * (base.red() - 128) + 128));
+		const g = Math.min(255, Math.max(0, factor * (base.green() - 128) + 128));
+		const b = Math.min(255, Math.max(0, factor * (base.blue() - 128) + 128));
+		color = new Color(`rgb(${r}, ${g}, ${b})`).alpha(base.oklch().alpha).hexa();
 	}
 	return color;
 }
@@ -1742,7 +1798,7 @@ type ThemePathTransform = {
 	c?: (c: number) => number;
 	h?: (h: number) => number;
 	alpha?: (alpha: number) => number;
-}
+};
 
 function isThemePathTransform(value: unknown): value is ThemePathTransform {
 	return typeof value === "object" && value !== null && "themePath" in value;
@@ -1765,7 +1821,9 @@ export function strictColorFactory<T extends ThemeDefinition>(t: T) {
 	return function sc(...paths: Descriptor[]): string {
 		// Try exact matches for all paths except the last
 		for (let i = 0; i < paths.length - 1; i++) {
-			const path = isThemePathTransform(paths[i]) ? (paths[i] as ThemePathTransform).themePath : paths[i] as ThemePath;
+			const path = isThemePathTransform(paths[i])
+				? (paths[i] as ThemePathTransform).themePath
+				: (paths[i] as ThemePath);
 			const v = getExactValue(t, path);
 			if (v !== null) {
 				if (isColor(v)) return applyFilters(v, t.filters || {});
@@ -1773,7 +1831,11 @@ export function strictColorFactory<T extends ThemeDefinition>(t: T) {
 			}
 		}
 		// Final path uses colorFactory (with CSS-like cascading defaults)
-		return c(isThemePathTransform(paths[paths.length - 1]) ? (paths[paths.length - 1] as ThemePathTransform).themePath : paths[paths.length - 1] as ThemePath);
+		return c(
+			isThemePathTransform(paths[paths.length - 1])
+				? (paths[paths.length - 1] as ThemePathTransform).themePath
+				: (paths[paths.length - 1] as ThemePath),
+		);
 	};
 }
 
@@ -1819,7 +1881,7 @@ export function getComponentColor(
 	const [component, prop] = parts;
 	const override =
 		theme.ui.overrides?.[component]?.[
-		prop as keyof UIComponents[typeof component]
+			prop as keyof UIComponents[typeof component]
 		];
 	if (override) return toHex(override);
 

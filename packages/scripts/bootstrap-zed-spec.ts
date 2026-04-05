@@ -15,17 +15,17 @@
  *   bun packages/scripts/bootstrap-zed-spec.ts mintedTheory test/specs/minted-theory.zed.spec.ts
  */
 
+import { writeFileSync } from "node:fs";
+import { resolve } from "node:path";
 import Color from "colorjs.io";
 import { mapZed } from "../../src/integrations/zed";
-import { mintedTheory } from "../../src/themes/mintedTheory";
-import { minted } from "../../src/themes/minted";
-import { slate } from "../../src/themes/slate";
-import { apathy } from "../../src/themes/apathy";
 import { apatheticOcean } from "../../src/themes/apatheticOcean";
+import { apathy } from "../../src/themes/apathy";
 import { apathyExperimental } from "../../src/themes/apathyExperimental";
+import { minted } from "../../src/themes/minted";
+import { mintedTheory } from "../../src/themes/mintedTheory";
+import { slate } from "../../src/themes/slate";
 import type { ThemeDefinition } from "../../src/themes/types";
-import { writeFileSync } from "fs";
-import { resolve } from "path";
 
 const themes: Record<string, ThemeDefinition> = {
 	mintedTheory,
@@ -91,7 +91,9 @@ function convertColors(value: unknown): unknown {
 const themeName = process.argv[2] ?? "mintedTheory";
 const theme = themes[themeName];
 if (!theme) {
-	console.error(`Unknown theme "${themeName}". Available: ${Object.keys(themes).join(", ")}`);
+	console.error(
+		`Unknown theme "${themeName}". Available: ${Object.keys(themes).join(", ")}`,
+	);
 	process.exit(1);
 }
 

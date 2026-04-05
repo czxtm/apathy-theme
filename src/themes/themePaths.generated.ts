@@ -955,8 +955,7 @@ export type ThemePath =
 	| "ui.window"
 	| "ui.window.activeBorder"
 	| "ui.window.borders"
-	| "ui.window.inactiveBorder"
-;
+	| "ui.window.inactiveBorder";
 
 export type ThemeColorPath =
 	| "background"
@@ -1767,8 +1766,7 @@ export type ThemeColorPath =
 	| "ui.whitespace.foreground"
 	| "ui.window.activeBorder"
 	| "ui.window.borders"
-	| "ui.window.inactiveBorder"
-;
+	| "ui.window.inactiveBorder";
 
 export type UIPath =
 	| "accent"
@@ -2353,5 +2351,4 @@ export type UIPath =
 	| "window"
 	| "window.activeBorder"
 	| "window.borders"
-	| "window.inactiveBorder"
-;
+	| "window.inactiveBorder";

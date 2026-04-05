@@ -1,7 +1,13 @@
 import * as bun from "bun";
-import { theme as mintedTheme, vscodeTheme as mintedVSCodeTheme } from "./themes/minted";
-import { theme as apathyTheme, vscodeTheme as apathyVSCodeTheme } from "./themes/apathy";
 import { buildVSCodeTheme } from "./integrations/vscode";
+import {
+	theme as apathyTheme,
+	vscodeTheme as apathyVSCodeTheme,
+} from "./themes/apathy";
+import {
+	theme as mintedTheme,
+	vscodeTheme as mintedVSCodeTheme,
+} from "./themes/minted";
 
 async function bumpversion(part: "patch" | "minor" | "major") {
 	const bumpType = part;
@@ -53,7 +59,7 @@ const themes: ThemeConfig[] = [
 
 async function main() {
 	const args = bun.argv.slice(2);
-	
+
 	if (args.includes("bump")) {
 		const part = args[args.indexOf("bump") + 1] as "patch" | "minor" | "major";
 		if (!part || !["patch", "minor", "major"].includes(part)) {
@@ -73,7 +79,7 @@ async function main() {
 
 		await bun.write(config.outputPath, JSON.stringify(themeFile, null, "\t"));
 		console.log(`Built theme: ${config.name} -> ${config.outputPath}`);
-		
+
 		if (config.basePath) {
 			console.log(`  (migrated from ${config.basePath})`);
 		}

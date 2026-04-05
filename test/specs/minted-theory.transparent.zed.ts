@@ -1,8 +1,8 @@
 export const expectedZed = {
-	"name": "Minted Theory (Transparent)",
-	"appearance": "dark",
-	"style": {
-		"background": "#010108aa",
+	name: "Minted Theory (Transparent)",
+	appearance: "dark",
+	style: {
+		background: "#010108aa",
 		"editor.background": "#03030844",
 		"status_bar.background": "#010105dd",
 		"title_bar.background": "#010105dd",
@@ -15,24 +15,24 @@ export const expectedZed = {
 		// "ghost_element.selected": "#51506F2B",
 		// "ghost_element.background": "#0B0B1284",
 		// "element.selected": "#6B6AAC24",
-		"text": "#575B6FFF",
+		text: "#575B6FFF",
 		"text.muted": "#3A4159FF",
 		"text.placeholder": "#2B2E3EFF",
 		"text.disabled": "#2B2E3E9E",
 		"text.accent": "#D1F1ECFF",
-		"icon": "#96a5b6",
+		icon: "#96a5b6",
 		"icon.muted": "#3A4159FF",
 		"icon.disabled": "#2B2E3E9E",
 		"icon.placeholder": "#2B2E3E45",
 		"icon.accent": "#D1F1ECD4",
 		"surface.background": "#101018ff",
-		"modified": "#F3E6DFFF",
-		"created": "#a1dfb8dF",
-		"border": "#575B6F19",
+		modified: "#F3E6DFFF",
+		created: "#a1dfb8dF",
+		border: "#575B6F19",
 		"border.focused": "#7C999420",
 		"project_panel.": "#7C9994f0",
 		"panel.focused_border": "#7C999420",
-		"focused_border": "#7C999420",
+		focused_border: "#7C999420",
 		"elevated_surface.background": "#13141bbc",
 		"element.background": "#05050a1f",
 		"element.hover": "#141426F0",
@@ -81,31 +81,31 @@ export const expectedZed = {
 		"version_control.added": "#51ADA17D",
 		"version_control.modified": "#34347054",
 		"version_control.deleted": "#80123CDE",
-		"error": "#D93D7CE6",
+		error: "#D93D7CE6",
 		"error.background": "#3D0F1D33",
-		"hidden": "#767B954F",
-		"hint": "#89CCC0FF",
+		hidden: "#767B954F",
+		hint: "#89CCC0FF",
 		"hint.background": "#07131CA3",
 		"ignored.background": "#767C9529",
 		"info.background": "#4669990D",
-		"unreachable": "#2B2E3E80",
+		unreachable: "#2B2E3E80",
 		"warning.background": "#4D3B3252",
 		"warning.border": "#AB5726E0",
 		"version_control.conflict": "#70125BFF",
 		"element.selection_background": "#151529BA",
-		"syntax": {
-			"variable": {
-				"color": "#575B6FCE",
+		syntax: {
+			variable: {
+				color: "#575B6FCE",
 			},
-			"property": {
-				"color": "#818093D8",
+			property: {
+				color: "#818093D8",
 			},
-			"namespace": {
-				"color": "#575B6FCE",
+			namespace: {
+				color: "#575B6FCE",
 			},
-			"primary": {
-				"color": "#575B6FCE",
+			primary: {
+				color: "#575B6FCE",
 			},
 		},
-	}
+	},
 };

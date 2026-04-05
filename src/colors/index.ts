@@ -3,13 +3,16 @@
  * Auto-generated color maps with descriptive names
  */
 
-export { ApatheticOceanColors, type ApatheticOceanColor } from './ApatheticOcean';
-export { ApathyColors, type ApathyColor } from './Apathy';
-export { ApathyExperimentalColors, type ApathyExperimentalColor } from './ApathyExperimental';
-
 // Re-export all colors for convenience
-export * from './ApatheticOcean';
-export * from './Apathy';
-export * from './ApathyExperimental';
-
-
+export * from "./ApatheticOcean";
+export {
+	type ApatheticOceanColor,
+	ApatheticOceanColors,
+} from "./ApatheticOcean";
+export * from "./Apathy";
+export { type ApathyColor, ApathyColors } from "./Apathy";
+export * from "./ApathyExperimental";
+export {
+	type ApathyExperimentalColor,
+	ApathyExperimentalColors,
+} from "./ApathyExperimental";

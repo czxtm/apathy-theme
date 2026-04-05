@@ -5,21 +5,28 @@
  * theme's UI components and syntax tokens look while developing.
  */
 
-import type { ThemeDefinition, UIComponents, UserInterface, TokenAssignments, ColorLike } from "../themes/types";
-import { get } from "../themes/types";
 import { toHex } from "../core/color";
+import type {
+	ColorLike,
+	ThemeDefinition,
+	TokenAssignments,
+} from "../themes/types";
+import { get } from "../themes/types";
 
 // ────────────────────────────────────────────────────────────────────────────
 // Helpers
 // ────────────────────────────────────────────────────────────────────────────
 
 function hex(value: ColorLike): string {
-  return toHex(value);
+	return toHex(value);
 }
 
-function safeColor(value: ColorLike | undefined, fallback = "transparent"): string {
-  if (!value) return fallback;
-  return hex(value);
+function safeColor(
+	value: ColorLike | undefined,
+	fallback = "transparent",
+): string {
+	if (!value) return fallback;
+	return hex(value);
 }
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -27,29 +34,29 @@ function safeColor(value: ColorLike | undefined, fallback = "transparent"): stri
 // ────────────────────────────────────────────────────────────────────────────
 
 function syntaxBlock(t: TokenAssignments): string {
-  const c = (val: string) => val; // passthrough; we use inline styles below
-  return `
+	const _c = (val: string) => val; // passthrough; we use inline styles below
+	return `
 <div class="code-block">
-  <div class="code-line"><span style="color:${get(t.keywords, 'declaration')}">import</span> <span style="color:${get(t.types, 'class')}">React</span><span style="color:${get(t.punctuation, 'delimiter')}">,</span> <span style="color:${get(t.punctuation, 'bracket')}">{</span> <span style="color:${get(t.types, 'interface')}">useState</span> <span style="color:${get(t.punctuation, 'bracket')}">}</span> <span style="color:${get(t.keywords, 'declaration')}">from</span> <span style="color:${get(t.strings, 'default')}">'react'</span><span style="color:${get(t.punctuation, 'delimiter')}">;</span></div>
+  <div class="code-line"><span style="color:${get(t.keywords, "declaration")}">import</span> <span style="color:${get(t.types, "class")}">React</span><span style="color:${get(t.punctuation, "delimiter")}">,</span> <span style="color:${get(t.punctuation, "bracket")}">{</span> <span style="color:${get(t.types, "interface")}">useState</span> <span style="color:${get(t.punctuation, "bracket")}">}</span> <span style="color:${get(t.keywords, "declaration")}">from</span> <span style="color:${get(t.strings, "default")}">'react'</span><span style="color:${get(t.punctuation, "delimiter")}">;</span></div>
   <div class="code-line"></div>
   <div class="code-line"><span style="color:${t.comments}">// A simple counter component</span></div>
-  <div class="code-line"><span style="color:${get(t.keywords, 'declaration')}">export</span> <span style="color:${get(t.keywords, 'declaration')}">function</span> <span style="color:${get(t.functions, 'declaration')}">Counter</span><span style="color:${get(t.punctuation, 'bracket')}">(</span><span style="color:${get(t.variables, 'parameter')}">props</span><span style="color:${get(t.punctuation, 'delimiter')}">:</span> <span style="color:${get(t.punctuation, 'bracket')}">{</span> <span style="color:${get(t.variables, 'property')}">initial</span><span style="color:${get(t.punctuation, 'delimiter')}">:</span> <span style="color:${get(t.types, 'primitive')}">number</span> <span style="color:${get(t.punctuation, 'bracket')}">}</span><span style="color:${get(t.punctuation, 'bracket')}">)</span> <span style="color:${get(t.punctuation, 'bracket')}">{</span></div>
-  <div class="code-line">  <span style="color:${get(t.keywords, 'declaration')}">const</span> <span style="color:${get(t.punctuation, 'bracket')}">[</span><span style="color:${get(t.variables, 'local')}">count</span><span style="color:${get(t.punctuation, 'delimiter')}">,</span> <span style="color:${get(t.functions, 'call')}">setCount</span><span style="color:${get(t.punctuation, 'bracket')}">]</span> <span style="color:${get(t.operators, 'assignment')}">=</span> <span style="color:${get(t.functions, 'call')}">useState</span><span style="color:${get(t.punctuation, 'bracket')}">(</span><span style="color:${get(t.variables, 'property')}">props</span><span style="color:${get(t.punctuation, 'accessor')}">.</span><span style="color:${get(t.variables, 'property')}">initial</span><span style="color:${get(t.punctuation, 'bracket')}">)</span><span style="color:${get(t.punctuation, 'delimiter')}">;</span></div>
-  <div class="code-line">  <span style="color:${get(t.keywords, 'declaration')}">const</span> <span style="color:${get(t.variables, 'local')}">MAX</span> <span style="color:${get(t.operators, 'assignment')}">=</span> <span style="color:${get(t.literals, 'number')}">100</span><span style="color:${get(t.punctuation, 'delimiter')}">;</span></div>
-  <div class="code-line">  <span style="color:${get(t.keywords, 'declaration')}">const</span> <span style="color:${get(t.variables, 'local')}">isEven</span> <span style="color:${get(t.operators, 'assignment')}">=</span> <span style="color:${get(t.variables, 'local')}">count</span> <span style="color:${get(t.operators, 'arithmetic')}">%</span> <span style="color:${get(t.literals, 'number')}">2</span> <span style="color:${get(t.operators, 'comparison')}">===</span> <span style="color:${get(t.literals, 'number')}">0</span><span style="color:${get(t.punctuation, 'delimiter')}">;</span></div>
+  <div class="code-line"><span style="color:${get(t.keywords, "declaration")}">export</span> <span style="color:${get(t.keywords, "declaration")}">function</span> <span style="color:${get(t.functions, "declaration")}">Counter</span><span style="color:${get(t.punctuation, "bracket")}">(</span><span style="color:${get(t.variables, "parameter")}">props</span><span style="color:${get(t.punctuation, "delimiter")}">:</span> <span style="color:${get(t.punctuation, "bracket")}">{</span> <span style="color:${get(t.variables, "property")}">initial</span><span style="color:${get(t.punctuation, "delimiter")}">:</span> <span style="color:${get(t.types, "primitive")}">number</span> <span style="color:${get(t.punctuation, "bracket")}">}</span><span style="color:${get(t.punctuation, "bracket")}">)</span> <span style="color:${get(t.punctuation, "bracket")}">{</span></div>
+  <div class="code-line">  <span style="color:${get(t.keywords, "declaration")}">const</span> <span style="color:${get(t.punctuation, "bracket")}">[</span><span style="color:${get(t.variables, "local")}">count</span><span style="color:${get(t.punctuation, "delimiter")}">,</span> <span style="color:${get(t.functions, "call")}">setCount</span><span style="color:${get(t.punctuation, "bracket")}">]</span> <span style="color:${get(t.operators, "assignment")}">=</span> <span style="color:${get(t.functions, "call")}">useState</span><span style="color:${get(t.punctuation, "bracket")}">(</span><span style="color:${get(t.variables, "property")}">props</span><span style="color:${get(t.punctuation, "accessor")}">.</span><span style="color:${get(t.variables, "property")}">initial</span><span style="color:${get(t.punctuation, "bracket")}">)</span><span style="color:${get(t.punctuation, "delimiter")}">;</span></div>
+  <div class="code-line">  <span style="color:${get(t.keywords, "declaration")}">const</span> <span style="color:${get(t.variables, "local")}">MAX</span> <span style="color:${get(t.operators, "assignment")}">=</span> <span style="color:${get(t.literals, "number")}">100</span><span style="color:${get(t.punctuation, "delimiter")}">;</span></div>
+  <div class="code-line">  <span style="color:${get(t.keywords, "declaration")}">const</span> <span style="color:${get(t.variables, "local")}">isEven</span> <span style="color:${get(t.operators, "assignment")}">=</span> <span style="color:${get(t.variables, "local")}">count</span> <span style="color:${get(t.operators, "arithmetic")}">%</span> <span style="color:${get(t.literals, "number")}">2</span> <span style="color:${get(t.operators, "comparison")}">===</span> <span style="color:${get(t.literals, "number")}">0</span><span style="color:${get(t.punctuation, "delimiter")}">;</span></div>
   <div class="code-line"></div>
-  <div class="code-line">  <span style="color:${get(t.keywords, 'control')}">if</span> <span style="color:${get(t.punctuation, 'bracket')}">(</span><span style="color:${get(t.variables, 'local')}">count</span> <span style="color:${get(t.operators, 'comparison')}">&gt;</span> <span style="color:${get(t.variables, 'local')}">MAX</span><span style="color:${get(t.punctuation, 'bracket')}">)</span> <span style="color:${get(t.punctuation, 'bracket')}">{</span></div>
-  <div class="code-line">    <span style="color:${get(t.keywords, 'control')}">return</span> <span style="color:${get(t.literals, 'null')}">&lt;<span style="color:${get(t.meta, 'tag')}">span</span>&gt;</span><span style="color:${get(t.strings, 'default')}">Limit reached</span><span style="color:${get(t.literals, 'null')}">&lt;/<span style="color:${get(t.meta, 'tag')}">span</span>&gt;</span><span style="color:${get(t.punctuation, 'delimiter')}">;</span></div>
-  <div class="code-line">  <span style="color:${get(t.punctuation, 'bracket')}">}</span></div>
+  <div class="code-line">  <span style="color:${get(t.keywords, "control")}">if</span> <span style="color:${get(t.punctuation, "bracket")}">(</span><span style="color:${get(t.variables, "local")}">count</span> <span style="color:${get(t.operators, "comparison")}">&gt;</span> <span style="color:${get(t.variables, "local")}">MAX</span><span style="color:${get(t.punctuation, "bracket")}">)</span> <span style="color:${get(t.punctuation, "bracket")}">{</span></div>
+  <div class="code-line">    <span style="color:${get(t.keywords, "control")}">return</span> <span style="color:${get(t.literals, "null")}">&lt;<span style="color:${get(t.meta, "tag")}">span</span>&gt;</span><span style="color:${get(t.strings, "default")}">Limit reached</span><span style="color:${get(t.literals, "null")}">&lt;/<span style="color:${get(t.meta, "tag")}">span</span>&gt;</span><span style="color:${get(t.punctuation, "delimiter")}">;</span></div>
+  <div class="code-line">  <span style="color:${get(t.punctuation, "bracket")}">}</span></div>
   <div class="code-line"></div>
-  <div class="code-line">  <span style="color:${get(t.keywords, 'control')}">return</span> <span style="color:${get(t.punctuation, 'bracket')}">(</span></div>
-  <div class="code-line">    <span style="color:${get(t.literals, 'null')}">&lt;<span style="color:${get(t.meta, 'tag')}">div</span>&gt;</span></div>
-  <div class="code-line">      <span style="color:${get(t.literals, 'null')}">&lt;<span style="color:${get(t.meta, 'tag')}">p</span>&gt;</span><span style="color:${get(t.strings, 'default')}">Count: </span><span style="color:${get(t.punctuation, 'bracket')}">{</span><span style="color:${get(t.variables, 'local')}">count</span><span style="color:${get(t.punctuation, 'bracket')}">}</span><span style="color:${get(t.literals, 'null')}">&lt;/<span style="color:${get(t.meta, 'tag')}">p</span>&gt;</span></div>
-  <div class="code-line">      <span style="color:${get(t.literals, 'null')}">&lt;<span style="color:${get(t.meta, 'tag')}">p</span>&gt;</span><span style="color:${get(t.strings, 'default')}">Even: </span><span style="color:${get(t.punctuation, 'bracket')}">{</span><span style="color:${get(t.variables, 'local')}">isEven</span> <span style="color:${get(t.operators, 'logical')}">?</span> <span style="color:${get(t.strings, 'default')}">"yes"</span> <span style="color:${get(t.operators, 'logical')}">:</span> <span style="color:${get(t.strings, 'default')}">"no"</span><span style="color:${get(t.punctuation, 'bracket')}">}</span><span style="color:${get(t.literals, 'null')}">&lt;/<span style="color:${get(t.meta, 'tag')}">p</span>&gt;</span></div>
-  <div class="code-line">      <span style="color:${get(t.literals, 'null')}">&lt;<span style="color:${get(t.meta, 'tag')}">button</span> <span style="color:${get(t.variables, 'property')}">onClick</span>=<span style="color:${get(t.punctuation, 'bracket')}">{</span><span style="color:${get(t.punctuation, 'bracket')}">(</span><span style="color:${get(t.punctuation, 'bracket')}">)</span> <span style="color:${get(t.operators, 'default')}">=&gt;</span> <span style="color:${get(t.functions, 'call')}">setCount</span><span style="color:${get(t.punctuation, 'bracket')}">(</span><span style="color:${get(t.variables, 'local')}">count</span> <span style="color:${get(t.operators, 'arithmetic')}">+</span> <span style="color:${get(t.literals, 'number')}">1</span><span style="color:${get(t.punctuation, 'bracket')}">)</span><span style="color:${get(t.punctuation, 'bracket')}">}</span>&gt;</span><span style="color:${get(t.strings, 'default')}">Increment</span><span style="color:${get(t.literals, 'null')}">&lt;/<span style="color:${get(t.meta, 'tag')}">button</span>&gt;</span></div>
-  <div class="code-line">    <span style="color:${get(t.literals, 'null')}">&lt;/<span style="color:${get(t.meta, 'tag')}">div</span>&gt;</span></div>
-  <div class="code-line">  <span style="color:${get(t.punctuation, 'bracket')}">)</span><span style="color:${get(t.punctuation, 'delimiter')}">;</span></div>
-  <div class="code-line"><span style="color:${get(t.punctuation, 'bracket')}">}</span></div>
+  <div class="code-line">  <span style="color:${get(t.keywords, "control")}">return</span> <span style="color:${get(t.punctuation, "bracket")}">(</span></div>
+  <div class="code-line">    <span style="color:${get(t.literals, "null")}">&lt;<span style="color:${get(t.meta, "tag")}">div</span>&gt;</span></div>
+  <div class="code-line">      <span style="color:${get(t.literals, "null")}">&lt;<span style="color:${get(t.meta, "tag")}">p</span>&gt;</span><span style="color:${get(t.strings, "default")}">Count: </span><span style="color:${get(t.punctuation, "bracket")}">{</span><span style="color:${get(t.variables, "local")}">count</span><span style="color:${get(t.punctuation, "bracket")}">}</span><span style="color:${get(t.literals, "null")}">&lt;/<span style="color:${get(t.meta, "tag")}">p</span>&gt;</span></div>
+  <div class="code-line">      <span style="color:${get(t.literals, "null")}">&lt;<span style="color:${get(t.meta, "tag")}">p</span>&gt;</span><span style="color:${get(t.strings, "default")}">Even: </span><span style="color:${get(t.punctuation, "bracket")}">{</span><span style="color:${get(t.variables, "local")}">isEven</span> <span style="color:${get(t.operators, "logical")}">?</span> <span style="color:${get(t.strings, "default")}">"yes"</span> <span style="color:${get(t.operators, "logical")}">:</span> <span style="color:${get(t.strings, "default")}">"no"</span><span style="color:${get(t.punctuation, "bracket")}">}</span><span style="color:${get(t.literals, "null")}">&lt;/<span style="color:${get(t.meta, "tag")}">p</span>&gt;</span></div>
+  <div class="code-line">      <span style="color:${get(t.literals, "null")}">&lt;<span style="color:${get(t.meta, "tag")}">button</span> <span style="color:${get(t.variables, "property")}">onClick</span>=<span style="color:${get(t.punctuation, "bracket")}">{</span><span style="color:${get(t.punctuation, "bracket")}">(</span><span style="color:${get(t.punctuation, "bracket")}">)</span> <span style="color:${get(t.operators, "default")}">=&gt;</span> <span style="color:${get(t.functions, "call")}">setCount</span><span style="color:${get(t.punctuation, "bracket")}">(</span><span style="color:${get(t.variables, "local")}">count</span> <span style="color:${get(t.operators, "arithmetic")}">+</span> <span style="color:${get(t.literals, "number")}">1</span><span style="color:${get(t.punctuation, "bracket")}">)</span><span style="color:${get(t.punctuation, "bracket")}">}</span>&gt;</span><span style="color:${get(t.strings, "default")}">Increment</span><span style="color:${get(t.literals, "null")}">&lt;/<span style="color:${get(t.meta, "tag")}">button</span>&gt;</span></div>
+  <div class="code-line">    <span style="color:${get(t.literals, "null")}">&lt;/<span style="color:${get(t.meta, "tag")}">div</span>&gt;</span></div>
+  <div class="code-line">  <span style="color:${get(t.punctuation, "bracket")}">)</span><span style="color:${get(t.punctuation, "delimiter")}">;</span></div>
+  <div class="code-line"><span style="color:${get(t.punctuation, "bracket")}">}</span></div>
 </div>`;
 }
 
@@ -58,90 +65,240 @@ function syntaxBlock(t: TokenAssignments): string {
 // ────────────────────────────────────────────────────────────────────────────
 
 function uiSection(theme: ThemeDefinition): string {
-  const ui = theme.ui;
-  const comp = ui.overrides;
+	const ui = theme.ui;
+	const comp = ui.overrides;
 
-  // Build fallback accessors — safely read from overrides, then fall back to ui primitives
-  const editor = {
-    background: safeColor(comp?.editor?.background, safeColor(ui.backgrounds.surface)),
-    foreground: safeColor(comp?.editor?.foreground, safeColor(ui.foregrounds.default)),
-    lineHighlight: safeColor(comp?.editor?.lineHighlight, safeColor(ui.highlights?.activeLine?.background)),
-    lineHighlightBorder: safeColor(comp?.editor?.lineHighlightBorder, safeColor(ui.borders.subtle)),
-    lineNumberForeground: safeColor(comp?.editor?.lineNumberForeground, safeColor(ui.lineNumbers?.foreground)),
-    lineNumberActiveForeground: safeColor(comp?.editor?.lineNumberActiveForeground, safeColor(ui.lineNumbers?.activeForeground)),
-    selectionBackground: safeColor(comp?.editor?.selectionBackground, safeColor(ui.selection.background)),
-    findMatchBackground: safeColor(comp?.editor?.findMatchBackground, safeColor(ui.highlights?.word?.background)),
-    findMatchHighlightBackground: safeColor(comp?.editor?.findMatchHighlightBackground, safeColor(ui.highlights?.word?.backgroundStrong)),
-  };
-  const gutter = {
-    background: safeColor(comp?.editorGutter?.background, safeColor(ui.backgrounds.darker)),
-  };
-  const titleBar = {
-    activeBackground: safeColor(comp?.titleBar?.activeBackground, safeColor(ui.backgrounds.base)),
-    activeForeground: safeColor(comp?.titleBar?.activeForeground, safeColor(ui.foregrounds.default)),
-  };
-  const activityBar = {
-    background: safeColor(comp?.activityBar?.background, safeColor(ui.backgrounds.darker)),
-    foreground: safeColor(comp?.activityBar?.foreground, safeColor(ui.foregrounds.default)),
-    inactiveForeground: safeColor(comp?.activityBar?.inactiveForeground, safeColor(ui.foregrounds.muted)),
-    border: safeColor(comp?.activityBar?.border, safeColor(ui.borders.default)),
-    badgeBackground: safeColor(comp?.activityBar?.badgeBackground, safeColor(ui.accent.primary)),
-    badgeForeground: safeColor(comp?.activityBar?.badgeForeground, safeColor(ui.foregrounds.default)),
-  };
-  const sideBar = {
-    background: safeColor(comp?.sideBar?.background, safeColor(ui.backgrounds.base)),
-    foreground: safeColor(comp?.sideBar?.foreground, safeColor(ui.foregrounds.default)),
-    border: safeColor(comp?.sideBar?.border, safeColor(ui.borders.default)),
-    sectionHeaderBackground: safeColor(comp?.sideBar?.sectionHeaderBackground, safeColor(ui.backgrounds.surface)),
-    sectionHeaderForeground: safeColor(comp?.sideBar?.sectionHeaderForeground, safeColor(ui.foregrounds.default)),
-  };
-  const list = {
-    hoverBackground: safeColor(comp?.list?.hoverBackground, safeColor(ui.backgrounds.surface)),
-    hoverForeground: safeColor(comp?.list?.hoverForeground, safeColor(ui.foregrounds.default)),
-    activeSelectionBackground: safeColor(comp?.list?.activeSelectionBackground, safeColor(ui.selection.background)),
-    activeSelectionForeground: safeColor(comp?.list?.activeSelectionForeground, safeColor(ui.foregrounds.default)),
-  };
-  const tabs = {
-    activeBackground: safeColor(comp?.tabs?.activeBackground, safeColor(ui.backgrounds.surface)),
-    activeForeground: safeColor(comp?.tabs?.activeForeground, safeColor(ui.foregrounds.default)),
-    activeBorder: safeColor(comp?.tabs?.activeBorder, safeColor(ui.borders.default)),
-    activeBorderTop: safeColor(comp?.tabs?.activeBorderTop, safeColor(ui.accent.primary)),
-    inactiveBackground: safeColor(comp?.tabs?.inactiveBackground, safeColor(ui.backgrounds.base)),
-    inactiveForeground: safeColor(comp?.tabs?.inactiveForeground, safeColor(ui.foregrounds.muted)),
-    modifiedBorder: safeColor(comp?.tabs?.modifiedBorder, safeColor(ui.status.warning.foreground)),
-  };
-  const breadcrumb = {
-    background: safeColor(comp?.breadcrumb?.background, safeColor(ui.backgrounds.base)),
-    foreground: safeColor(comp?.breadcrumb?.foreground, safeColor(ui.foregrounds.muted)),
-    activeSelectionForeground: safeColor(comp?.breadcrumb?.activeSelectionForeground, safeColor(ui.foregrounds.default)),
-  };
-  const panel = {
-    background: safeColor(comp?.panel?.background, safeColor(ui.panels?.background, safeColor(ui.backgrounds.base))),
-    border: safeColor(comp?.panel?.border, safeColor(ui.borders.default)),
-    titleActiveForeground: safeColor(comp?.panel?.titleActiveForeground, safeColor(ui.foregrounds.default)),
-    titleInactiveForeground: safeColor(comp?.panel?.titleInactiveForeground, safeColor(ui.foregrounds.muted)),
-    titleActiveBorder: safeColor(comp?.panel?.titleActiveBorder, safeColor(ui.accent.primary)),
-  };
-  const terminal = {
-    background: safeColor(comp?.terminal?.background, safeColor(ui.backgrounds.darker)),
-    foreground: safeColor(comp?.terminal?.foreground, safeColor(ui.foregrounds.default)),
-    border: safeColor(comp?.terminal?.border, safeColor(ui.borders.default)),
-    ansiGreen: safeColor(comp?.terminal?.ansiGreen, safeColor(ui.status.success.foreground)),
-    ansiCyan: safeColor(comp?.terminal?.ansiCyan, safeColor(ui.status.info.foreground)),
-    ansiYellow: safeColor(comp?.terminal?.ansiYellow, safeColor(ui.status.warning.foreground)),
-    ansiRed: safeColor(comp?.terminal?.ansiRed, safeColor(ui.status.error.foreground)),
-    ansiMagenta: safeColor(comp?.terminal?.ansiMagenta, safeColor(ui.accent.primary)),
-    ansiBlue: safeColor(comp?.terminal?.ansiBlue, safeColor(ui.accent.primary)),
-  };
-  const statusBar = {
-    background: safeColor(comp?.statusBar?.background, safeColor(ui.backgrounds.base)),
-    foreground: safeColor(comp?.statusBar?.foreground, safeColor(ui.foregrounds.default)),
-    border: safeColor(comp?.statusBar?.border, safeColor(ui.borders.default)),
-    debuggingBackground: safeColor(comp?.statusBar?.debuggingBackground, safeColor(ui.status.success.foreground)),
-    debuggingForeground: safeColor(comp?.statusBar?.debuggingForeground, safeColor(ui.foregrounds.default)),
-  };
+	// Build fallback accessors — safely read from overrides, then fall back to ui primitives
+	const editor = {
+		background: safeColor(
+			comp?.editor?.background,
+			safeColor(ui.backgrounds.surface),
+		),
+		foreground: safeColor(
+			comp?.editor?.foreground,
+			safeColor(ui.foregrounds.default),
+		),
+		lineHighlight: safeColor(
+			comp?.editor?.lineHighlight,
+			safeColor(ui.highlights?.activeLine?.background),
+		),
+		lineHighlightBorder: safeColor(
+			comp?.editor?.lineHighlightBorder,
+			safeColor(ui.borders.subtle),
+		),
+		lineNumberForeground: safeColor(
+			comp?.editor?.lineNumberForeground,
+			safeColor(ui.lineNumbers?.foreground),
+		),
+		lineNumberActiveForeground: safeColor(
+			comp?.editor?.lineNumberActiveForeground,
+			safeColor(ui.lineNumbers?.activeForeground),
+		),
+		selectionBackground: safeColor(
+			comp?.editor?.selectionBackground,
+			safeColor(ui.selection.background),
+		),
+		findMatchBackground: safeColor(
+			comp?.editor?.findMatchBackground,
+			safeColor(ui.highlights?.word?.background),
+		),
+		findMatchHighlightBackground: safeColor(
+			comp?.editor?.findMatchHighlightBackground,
+			safeColor(ui.highlights?.word?.backgroundStrong),
+		),
+	};
+	const gutter = {
+		background: safeColor(
+			comp?.editorGutter?.background,
+			safeColor(ui.backgrounds.darker),
+		),
+	};
+	const titleBar = {
+		activeBackground: safeColor(
+			comp?.titleBar?.activeBackground,
+			safeColor(ui.backgrounds.base),
+		),
+		activeForeground: safeColor(
+			comp?.titleBar?.activeForeground,
+			safeColor(ui.foregrounds.default),
+		),
+	};
+	const activityBar = {
+		background: safeColor(
+			comp?.activityBar?.background,
+			safeColor(ui.backgrounds.darker),
+		),
+		foreground: safeColor(
+			comp?.activityBar?.foreground,
+			safeColor(ui.foregrounds.default),
+		),
+		inactiveForeground: safeColor(
+			comp?.activityBar?.inactiveForeground,
+			safeColor(ui.foregrounds.muted),
+		),
+		border: safeColor(comp?.activityBar?.border, safeColor(ui.borders.default)),
+		badgeBackground: safeColor(
+			comp?.activityBar?.badgeBackground,
+			safeColor(ui.accent.primary),
+		),
+		badgeForeground: safeColor(
+			comp?.activityBar?.badgeForeground,
+			safeColor(ui.foregrounds.default),
+		),
+	};
+	const sideBar = {
+		background: safeColor(
+			comp?.sideBar?.background,
+			safeColor(ui.backgrounds.base),
+		),
+		foreground: safeColor(
+			comp?.sideBar?.foreground,
+			safeColor(ui.foregrounds.default),
+		),
+		border: safeColor(comp?.sideBar?.border, safeColor(ui.borders.default)),
+		sectionHeaderBackground: safeColor(
+			comp?.sideBar?.sectionHeaderBackground,
+			safeColor(ui.backgrounds.surface),
+		),
+		sectionHeaderForeground: safeColor(
+			comp?.sideBar?.sectionHeaderForeground,
+			safeColor(ui.foregrounds.default),
+		),
+	};
+	const list = {
+		hoverBackground: safeColor(
+			comp?.list?.hoverBackground,
+			safeColor(ui.backgrounds.surface),
+		),
+		hoverForeground: safeColor(
+			comp?.list?.hoverForeground,
+			safeColor(ui.foregrounds.default),
+		),
+		activeSelectionBackground: safeColor(
+			comp?.list?.activeSelectionBackground,
+			safeColor(ui.selection.background),
+		),
+		activeSelectionForeground: safeColor(
+			comp?.list?.activeSelectionForeground,
+			safeColor(ui.foregrounds.default),
+		),
+	};
+	const tabs = {
+		activeBackground: safeColor(
+			comp?.tabs?.activeBackground,
+			safeColor(ui.backgrounds.surface),
+		),
+		activeForeground: safeColor(
+			comp?.tabs?.activeForeground,
+			safeColor(ui.foregrounds.default),
+		),
+		activeBorder: safeColor(
+			comp?.tabs?.activeBorder,
+			safeColor(ui.borders.default),
+		),
+		activeBorderTop: safeColor(
+			comp?.tabs?.activeBorderTop,
+			safeColor(ui.accent.primary),
+		),
+		inactiveBackground: safeColor(
+			comp?.tabs?.inactiveBackground,
+			safeColor(ui.backgrounds.base),
+		),
+		inactiveForeground: safeColor(
+			comp?.tabs?.inactiveForeground,
+			safeColor(ui.foregrounds.muted),
+		),
+		modifiedBorder: safeColor(
+			comp?.tabs?.modifiedBorder,
+			safeColor(ui.status.warning.foreground),
+		),
+	};
+	const breadcrumb = {
+		background: safeColor(
+			comp?.breadcrumb?.background,
+			safeColor(ui.backgrounds.base),
+		),
+		foreground: safeColor(
+			comp?.breadcrumb?.foreground,
+			safeColor(ui.foregrounds.muted),
+		),
+		activeSelectionForeground: safeColor(
+			comp?.breadcrumb?.activeSelectionForeground,
+			safeColor(ui.foregrounds.default),
+		),
+	};
+	const panel = {
+		background: safeColor(
+			comp?.panel?.background,
+			safeColor(ui.panels?.background, safeColor(ui.backgrounds.base)),
+		),
+		border: safeColor(comp?.panel?.border, safeColor(ui.borders.default)),
+		titleActiveForeground: safeColor(
+			comp?.panel?.titleActiveForeground,
+			safeColor(ui.foregrounds.default),
+		),
+		titleInactiveForeground: safeColor(
+			comp?.panel?.titleInactiveForeground,
+			safeColor(ui.foregrounds.muted),
+		),
+		titleActiveBorder: safeColor(
+			comp?.panel?.titleActiveBorder,
+			safeColor(ui.accent.primary),
+		),
+	};
+	const terminal = {
+		background: safeColor(
+			comp?.terminal?.background,
+			safeColor(ui.backgrounds.darker),
+		),
+		foreground: safeColor(
+			comp?.terminal?.foreground,
+			safeColor(ui.foregrounds.default),
+		),
+		border: safeColor(comp?.terminal?.border, safeColor(ui.borders.default)),
+		ansiGreen: safeColor(
+			comp?.terminal?.ansiGreen,
+			safeColor(ui.status.success.foreground),
+		),
+		ansiCyan: safeColor(
+			comp?.terminal?.ansiCyan,
+			safeColor(ui.status.info.foreground),
+		),
+		ansiYellow: safeColor(
+			comp?.terminal?.ansiYellow,
+			safeColor(ui.status.warning.foreground),
+		),
+		ansiRed: safeColor(
+			comp?.terminal?.ansiRed,
+			safeColor(ui.status.error.foreground),
+		),
+		ansiMagenta: safeColor(
+			comp?.terminal?.ansiMagenta,
+			safeColor(ui.accent.primary),
+		),
+		ansiBlue: safeColor(comp?.terminal?.ansiBlue, safeColor(ui.accent.primary)),
+	};
+	const statusBar = {
+		background: safeColor(
+			comp?.statusBar?.background,
+			safeColor(ui.backgrounds.base),
+		),
+		foreground: safeColor(
+			comp?.statusBar?.foreground,
+			safeColor(ui.foregrounds.default),
+		),
+		border: safeColor(comp?.statusBar?.border, safeColor(ui.borders.default)),
+		debuggingBackground: safeColor(
+			comp?.statusBar?.debuggingBackground,
+			safeColor(ui.status.success.foreground),
+		),
+		debuggingForeground: safeColor(
+			comp?.statusBar?.debuggingForeground,
+			safeColor(ui.foregrounds.default),
+		),
+	};
 
-  return `
+	return `
 <!-- ═══ Activity Bar + Sidebar ═══ -->
 <div class="ide-shell">
   <div class="activity-bar" style="background:${activityBar.background};border-right:1px solid ${activityBar.border}">
@@ -193,9 +350,9 @@ function uiSection(theme: ThemeDefinition): string {
     <div class="editor" style="background:${editor.background};color:${editor.foreground}">
       <div class="gutter" style="background:${gutter.background}">
         ${Array.from({ length: 20 }, (_, i) => {
-          const isCurrent = i === 5;
-          return `<div class="ln${isCurrent ? " active" : ""}" style="color:${isCurrent ? editor.lineNumberActiveForeground : editor.lineNumberForeground}">${i + 1}</div>`;
-        }).join("\n        ")}
+					const isCurrent = i === 5;
+					return `<div class="ln${isCurrent ? " active" : ""}" style="color:${isCurrent ? editor.lineNumberActiveForeground : editor.lineNumberForeground}">${i + 1}</div>`;
+				}).join("\n        ")}
       </div>
       <div class="code-area" style="color:${editor.foreground}">
         <div class="current-line" style="background:${editor.lineHighlight}">
@@ -238,47 +395,104 @@ function uiSection(theme: ThemeDefinition): string {
 // ────────────────────────────────────────────────────────────────────────────
 
 function widgetSection(theme: ThemeDefinition): string {
-  const ui = theme.ui;
-  const comp = ui.overrides;
+	const ui = theme.ui;
+	const comp = ui.overrides;
 
-  const input = {
-    background: safeColor(comp?.input?.background, safeColor(ui.backgrounds.surface)),
-    foreground: safeColor(comp?.input?.foreground, safeColor(ui.foregrounds.default)),
-    border: safeColor(comp?.input?.border, safeColor(ui.borders.default)),
-    placeholderForeground: safeColor(comp?.input?.placeholderForeground, safeColor(ui.foregrounds.subtle)),
-  };
-  const button = {
-    background: safeColor(comp?.button?.background, safeColor(ui.accent.primary)),
-    foreground: safeColor(comp?.button?.foreground, safeColor(ui.foregrounds.default)),
-    secondaryBackground: safeColor(comp?.button?.secondaryBackground, safeColor(ui.backgrounds.surface)),
-    secondaryForeground: safeColor(comp?.button?.secondaryForeground, safeColor(ui.foregrounds.default)),
-  };
-  const dropdown = {
-    background: safeColor(comp?.dropdown?.background, safeColor(ui.backgrounds.surface)),
-    foreground: safeColor(comp?.dropdown?.foreground, safeColor(ui.foregrounds.default)),
-    border: safeColor(comp?.dropdown?.border, safeColor(ui.borders.default)),
-  };
-  const badge = {
-    background: safeColor(comp?.badge?.background, safeColor(ui.accent.primary)),
-    foreground: safeColor(comp?.badge?.foreground, safeColor(ui.foregrounds.default)),
-    border: safeColor(comp?.badge?.border, safeColor(ui.borders.default)),
-  };
-  const notification = {
-    background: safeColor(comp?.notification?.background, safeColor(ui.backgrounds.raised)),
-    foreground: safeColor(comp?.notification?.foreground, safeColor(ui.foregrounds.default)),
-    border: safeColor(comp?.notification?.border, safeColor(ui.borders.default)),
-  };
-  const diffEditor = {
-    insertedLineBackground: safeColor(comp?.diffEditor?.insertedLineBackground, "#09131588"),
-    removedLineBackground: safeColor(comp?.diffEditor?.removedLineBackground, "#2e060982"),
-  };
-  const editorBg = safeColor(comp?.editor?.background, safeColor(ui.backgrounds.surface));
-  const statusBarDbg = {
-    debuggingBackground: safeColor(comp?.statusBar?.debuggingBackground, safeColor(ui.status.success.foreground)),
-    debuggingForeground: safeColor(comp?.statusBar?.debuggingForeground, safeColor(ui.foregrounds.default)),
-  };
+	const input = {
+		background: safeColor(
+			comp?.input?.background,
+			safeColor(ui.backgrounds.surface),
+		),
+		foreground: safeColor(
+			comp?.input?.foreground,
+			safeColor(ui.foregrounds.default),
+		),
+		border: safeColor(comp?.input?.border, safeColor(ui.borders.default)),
+		placeholderForeground: safeColor(
+			comp?.input?.placeholderForeground,
+			safeColor(ui.foregrounds.subtle),
+		),
+	};
+	const button = {
+		background: safeColor(
+			comp?.button?.background,
+			safeColor(ui.accent.primary),
+		),
+		foreground: safeColor(
+			comp?.button?.foreground,
+			safeColor(ui.foregrounds.default),
+		),
+		secondaryBackground: safeColor(
+			comp?.button?.secondaryBackground,
+			safeColor(ui.backgrounds.surface),
+		),
+		secondaryForeground: safeColor(
+			comp?.button?.secondaryForeground,
+			safeColor(ui.foregrounds.default),
+		),
+	};
+	const dropdown = {
+		background: safeColor(
+			comp?.dropdown?.background,
+			safeColor(ui.backgrounds.surface),
+		),
+		foreground: safeColor(
+			comp?.dropdown?.foreground,
+			safeColor(ui.foregrounds.default),
+		),
+		border: safeColor(comp?.dropdown?.border, safeColor(ui.borders.default)),
+	};
+	const badge = {
+		background: safeColor(
+			comp?.badge?.background,
+			safeColor(ui.accent.primary),
+		),
+		foreground: safeColor(
+			comp?.badge?.foreground,
+			safeColor(ui.foregrounds.default),
+		),
+		border: safeColor(comp?.badge?.border, safeColor(ui.borders.default)),
+	};
+	const notification = {
+		background: safeColor(
+			comp?.notification?.background,
+			safeColor(ui.backgrounds.raised),
+		),
+		foreground: safeColor(
+			comp?.notification?.foreground,
+			safeColor(ui.foregrounds.default),
+		),
+		border: safeColor(
+			comp?.notification?.border,
+			safeColor(ui.borders.default),
+		),
+	};
+	const diffEditor = {
+		insertedLineBackground: safeColor(
+			comp?.diffEditor?.insertedLineBackground,
+			"#09131588",
+		),
+		removedLineBackground: safeColor(
+			comp?.diffEditor?.removedLineBackground,
+			"#2e060982",
+		),
+	};
+	const editorBg = safeColor(
+		comp?.editor?.background,
+		safeColor(ui.backgrounds.surface),
+	);
+	const statusBarDbg = {
+		debuggingBackground: safeColor(
+			comp?.statusBar?.debuggingBackground,
+			safeColor(ui.status.success.foreground),
+		),
+		debuggingForeground: safeColor(
+			comp?.statusBar?.debuggingForeground,
+			safeColor(ui.foregrounds.default),
+		),
+	};
 
-  return `
+	return `
 <div class="widgets-grid">
   <!-- Input -->
   <div class="widget-card" style="background:${safeColor(ui.backgrounds.surface)}">
@@ -354,120 +568,232 @@ function widgetSection(theme: ThemeDefinition): string {
 // ────────────────────────────────────────────────────────────────────────────
 
 function coreTokensSection(theme: ThemeDefinition): string {
-  const ui = theme.ui;
+	const ui = theme.ui;
 
-  type TokenRow = { label: string; value: string; kind: "bg" | "fg" | "border" | "accent" | "status" };
+	type TokenRow = {
+		label: string;
+		value: string;
+		kind: "bg" | "fg" | "border" | "accent" | "status";
+	};
 
-  const rows: TokenRow[] = [
-    // Backgrounds
-    { label: "backgrounds.base",      value: safeColor(ui.backgrounds.base),      kind: "bg" },
-    { label: "backgrounds.darker",    value: safeColor(ui.backgrounds.darker),    kind: "bg" },
-    { label: "backgrounds.surface",   value: safeColor(ui.backgrounds.surface),   kind: "bg" },
-    { label: "backgrounds.raised",    value: safeColor(ui.backgrounds.raised),    kind: "bg" },
-    { label: "backgrounds.overlay",   value: safeColor(ui.backgrounds.overlay),   kind: "bg" },
-    { label: "backgrounds.codeBlock", value: safeColor(ui.backgrounds.codeBlock), kind: "bg" },
+	const rows: TokenRow[] = [
+		// Backgrounds
+		{
+			label: "backgrounds.base",
+			value: safeColor(ui.backgrounds.base),
+			kind: "bg",
+		},
+		{
+			label: "backgrounds.darker",
+			value: safeColor(ui.backgrounds.darker),
+			kind: "bg",
+		},
+		{
+			label: "backgrounds.surface",
+			value: safeColor(ui.backgrounds.surface),
+			kind: "bg",
+		},
+		{
+			label: "backgrounds.raised",
+			value: safeColor(ui.backgrounds.raised),
+			kind: "bg",
+		},
+		{
+			label: "backgrounds.overlay",
+			value: safeColor(ui.backgrounds.overlay),
+			kind: "bg",
+		},
+		{
+			label: "backgrounds.codeBlock",
+			value: safeColor(ui.backgrounds.codeBlock),
+			kind: "bg",
+		},
 
-    // Foregrounds
-    { label: "foregrounds.default", value: safeColor(ui.foregrounds.default), kind: "fg" },
-    { label: "foregrounds.muted",   value: safeColor(ui.foregrounds.muted),   kind: "fg" },
-    { label: "foregrounds.subtle",  value: safeColor(ui.foregrounds.subtle),  kind: "fg" },
-    { label: "foregrounds.accent",  value: safeColor(ui.foregrounds.accent),  kind: "fg" },
-    { label: "foregrounds.focused", value: safeColor(ui.foregrounds.focused), kind: "fg" },
+		// Foregrounds
+		{
+			label: "foregrounds.default",
+			value: safeColor(ui.foregrounds.default),
+			kind: "fg",
+		},
+		{
+			label: "foregrounds.muted",
+			value: safeColor(ui.foregrounds.muted),
+			kind: "fg",
+		},
+		{
+			label: "foregrounds.subtle",
+			value: safeColor(ui.foregrounds.subtle),
+			kind: "fg",
+		},
+		{
+			label: "foregrounds.accent",
+			value: safeColor(ui.foregrounds.accent),
+			kind: "fg",
+		},
+		{
+			label: "foregrounds.focused",
+			value: safeColor(ui.foregrounds.focused),
+			kind: "fg",
+		},
 
-    // Borders
-    { label: "borders.default",   value: safeColor(ui.borders.default),   kind: "border" },
-    { label: "borders.active",    value: safeColor(ui.borders.active),    kind: "border" },
-    { label: "borders.subtle",    value: safeColor(ui.borders.subtle),    kind: "border" },
-    { label: "borders.separator", value: safeColor(ui.borders.separator), kind: "border" },
+		// Borders
+		{
+			label: "borders.default",
+			value: safeColor(ui.borders.default),
+			kind: "border",
+		},
+		{
+			label: "borders.active",
+			value: safeColor(ui.borders.active),
+			kind: "border",
+		},
+		{
+			label: "borders.subtle",
+			value: safeColor(ui.borders.subtle),
+			kind: "border",
+		},
+		{
+			label: "borders.separator",
+			value: safeColor(ui.borders.separator),
+			kind: "border",
+		},
 
-    // Accent
-    { label: "accent.primary",           value: safeColor(ui.accent.primary),           kind: "accent" },
-    { label: "accent.primaryForeground", value: safeColor(ui.accent.primaryForeground), kind: "accent" },
-    ...(ui.accent.secondary ? [{ label: "accent.secondary", value: safeColor(ui.accent.secondary), kind: "accent" as const }] : []),
+		// Accent
+		{
+			label: "accent.primary",
+			value: safeColor(ui.accent.primary),
+			kind: "accent",
+		},
+		{
+			label: "accent.primaryForeground",
+			value: safeColor(ui.accent.primaryForeground),
+			kind: "accent",
+		},
+		...(ui.accent.secondary
+			? [
+					{
+						label: "accent.secondary",
+						value: safeColor(ui.accent.secondary),
+						kind: "accent" as const,
+					},
+				]
+			: []),
 
-    // Status
-    { label: "status.error",   value: safeColor(ui.status.error.foreground),   kind: "status" },
-    { label: "status.warning", value: safeColor(ui.status.warning.foreground), kind: "status" },
-    { label: "status.info",    value: safeColor(ui.status.info.foreground),    kind: "status" },
-    { label: "status.success", value: safeColor(ui.status.success.foreground), kind: "status" },
+		// Status
+		{
+			label: "status.error",
+			value: safeColor(ui.status.error.foreground),
+			kind: "status",
+		},
+		{
+			label: "status.warning",
+			value: safeColor(ui.status.warning.foreground),
+			kind: "status",
+		},
+		{
+			label: "status.info",
+			value: safeColor(ui.status.info.foreground),
+			kind: "status",
+		},
+		{
+			label: "status.success",
+			value: safeColor(ui.status.success.foreground),
+			kind: "status",
+		},
 
-    // Selection
-    { label: "selection.background", value: safeColor(ui.selection.background), kind: "bg" },
+		// Selection
+		{
+			label: "selection.background",
+			value: safeColor(ui.selection.background),
+			kind: "bg",
+		},
 
-    // Highlights
-    { label: "highlights.activeLine",   value: safeColor(ui.highlights?.activeLine?.background), kind: "bg" },
-    { label: "highlights.word",         value: safeColor(ui.highlights?.word?.background),       kind: "bg" },
-    { label: "highlights.wordStrong",   value: safeColor(ui.highlights?.word?.backgroundStrong), kind: "bg" },
-  ];
+		// Highlights
+		{
+			label: "highlights.activeLine",
+			value: safeColor(ui.highlights?.activeLine?.background),
+			kind: "bg",
+		},
+		{
+			label: "highlights.word",
+			value: safeColor(ui.highlights?.word?.background),
+			kind: "bg",
+		},
+		{
+			label: "highlights.wordStrong",
+			value: safeColor(ui.highlights?.word?.backgroundStrong),
+			kind: "bg",
+		},
+	];
 
-  const kindLabels: Record<string, string> = {
-    bg: "Background",
-    fg: "Foreground",
-    border: "Border",
-    accent: "Accent",
-    status: "Status",
-  };
+	const kindLabels: Record<string, string> = {
+		bg: "Background",
+		fg: "Foreground",
+		border: "Border",
+		accent: "Accent",
+		status: "Status",
+	};
 
-  const grouped = new Map<string, TokenRow[]>();
-  for (const r of rows) {
-    const arr = grouped.get(r.kind) ?? [];
-    arr.push(r);
-    grouped.set(r.kind, arr);
-  }
+	const grouped = new Map<string, TokenRow[]>();
+	for (const r of rows) {
+		const arr = grouped.get(r.kind) ?? [];
+		arr.push(r);
+		grouped.set(r.kind, arr);
+	}
 
-  const baseBg = safeColor(ui.backgrounds.base);
-  const surfaceBg = safeColor(ui.backgrounds.surface);
-  const defaultFg = safeColor(ui.foregrounds.default);
-  const subtleBorder = safeColor(ui.borders.subtle);
+	const baseBg = safeColor(ui.backgrounds.base);
+	const surfaceBg = safeColor(ui.backgrounds.surface);
+	const defaultFg = safeColor(ui.foregrounds.default);
+	const subtleBorder = safeColor(ui.borders.subtle);
 
-  let html = `<div class="core-tokens">`;
-  for (const [kind, items] of grouped.entries()) {
-    html += `<div class="core-tokens-group">`;
-    html += `<h4>${kindLabels[kind] ?? kind}</h4>`;
-    html += `<div class="core-tokens-list">`;
-    for (const item of items) {
-      if (kind === "bg") {
-        // Show as a filled rectangle with the label on top
-        html += `
+	let html = `<div class="core-tokens">`;
+	for (const [kind, items] of grouped.entries()) {
+		html += `<div class="core-tokens-group">`;
+		html += `<h4>${kindLabels[kind] ?? kind}</h4>`;
+		html += `<div class="core-tokens-list">`;
+		for (const item of items) {
+			if (kind === "bg") {
+				// Show as a filled rectangle with the label on top
+				html += `
         <div class="core-token-item">
           <div class="core-token-swatch bg" style="background:${item.value};border:1px solid ${subtleBorder}">
             <span class="core-token-swatch-text" style="color:${defaultFg}">${item.label}</span>
           </div>
           <code class="core-token-hex">${item.value}</code>
         </div>`;
-      } else if (kind === "fg") {
-        // Show text rendered in that color
-        html += `
+			} else if (kind === "fg") {
+				// Show text rendered in that color
+				html += `
         <div class="core-token-item">
           <div class="core-token-swatch fg" style="background:${baseBg};border:1px solid ${subtleBorder}">
             <span style="color:${item.value}">${item.label}</span>
           </div>
           <code class="core-token-hex">${item.value}</code>
         </div>`;
-      } else if (kind === "border") {
-        // Show a box with that border color
-        html += `
+			} else if (kind === "border") {
+				// Show a box with that border color
+				html += `
         <div class="core-token-item">
           <div class="core-token-swatch border-demo" style="background:${surfaceBg};border:2px solid ${item.value}">
             <span style="color:${defaultFg}">${item.label}</span>
           </div>
           <code class="core-token-hex">${item.value}</code>
         </div>`;
-      } else {
-        // Accent / status — colored pill
-        html += `
+			} else {
+				// Accent / status — colored pill
+				html += `
         <div class="core-token-item">
           <div class="core-token-swatch pill" style="background:${item.value};border:1px solid ${subtleBorder}">
             <span class="core-token-swatch-text" style="color:${kind === "status" ? "#000" : defaultFg}">${item.label}</span>
           </div>
           <code class="core-token-hex">${item.value}</code>
         </div>`;
-      }
-    }
-    html += `</div></div>`;
-  }
-  html += `</div>`;
-  return html;
+			}
+		}
+		html += `</div></div>`;
+	}
+	html += `</div>`;
+	return html;
 }
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -475,13 +801,15 @@ function coreTokensSection(theme: ThemeDefinition): string {
 // ────────────────────────────────────────────────────────────────────────────
 
 function paletteSection(theme: ThemeDefinition): string {
-  const entries = Object.entries(theme.palette);
-  const swatches = entries.map(([name, color]) => {
-    const c = String(color);
-    return `<div class="swatch" title="${name}: ${c}"><div class="swatch-color" style="background:${c}"></div><div class="swatch-label">${name}</div></div>`;
-  }).join("\n    ");
+	const entries = Object.entries(theme.palette);
+	const swatches = entries
+		.map(([name, color]) => {
+			const c = String(color);
+			return `<div class="swatch" title="${name}: ${c}"><div class="swatch-color" style="background:${c}"></div><div class="swatch-label">${name}</div></div>`;
+		})
+		.join("\n    ");
 
-  return `
+	return `
 <div class="palette-grid">
   ${swatches}
 </div>`;
@@ -492,49 +820,169 @@ function paletteSection(theme: ThemeDefinition): string {
 // ────────────────────────────────────────────────────────────────────────────
 
 function tokenTable(tokens: TokenAssignments): string {
-  const categories = [
-    { name: "Source", color: tokens.source, sample: "identifier" },
-    { name: "Comments", color: tokens.comments, sample: "// comment" },
-    { name: "String", color: get(tokens.strings, "default"), sample: '"hello world"' },
-    { name: "Regex", color: get(tokens.strings, "regex"), sample: "/pattern/g" },
-    { name: "Operator", color: get(tokens.operators, "default"), sample: "= + - * /" },
-    { name: "Number", color: get(tokens.literals, "number"), sample: "42  3.14  0xFF" },
-    { name: "Boolean", color: get(tokens.literals, "boolean"), sample: "true  false" },
-    { name: "Null", color: get(tokens.literals, "null"), sample: "null  undefined" },
-    { name: "Keyword (ctrl)", color: get(tokens.keywords, "control"), sample: "if  else  return  for" },
-    { name: "Keyword (decl)", color: get(tokens.keywords, "declaration"), sample: "const  let  function  class" },
-    { name: "Keyword (import)", color: get(tokens.keywords, "import"), sample: "import  export  from" },
-    { name: "Keyword (mod)", color: get(tokens.keywords, "modifier"), sample: "async  static  public" },
-    { name: "Variable", color: get(tokens.variables, "local"), sample: "count  data  result" },
-    { name: "Parameter", color: get(tokens.variables, "parameter"), sample: "props  args  event" },
-    { name: "Property", color: get(tokens.variables, "property"), sample: "obj.key  this.value" },
-    { name: "Function (decl)", color: get(tokens.functions, "declaration"), sample: "function myFn()" },
-    { name: "Function (call)", color: get(tokens.functions, "call"), sample: "myFn()  doStuff()" },
-    { name: "Method", color: get(tokens.functions, "method"), sample: "arr.map()  str.trim()" },
-    { name: "Built-in fn", color: get(tokens.functions, "builtin"), sample: "console.log  parseInt" },
-    { name: "Type/Class", color: get(tokens.types, "class"), sample: "MyClass  React  Map" },
-    { name: "Interface", color: get(tokens.types, "interface"), sample: "IProps  Readable" },
-    { name: "Enum", color: get(tokens.types, "enum"), sample: "Status  Direction" },
-    { name: "Primitive type", color: get(tokens.types, "primitive"), sample: "string  number  boolean" },
-    { name: "Type param", color: get(tokens.types, "typeParameter"), sample: "<T>  <K, V>" },
-    { name: "Namespace", color: get(tokens.types, "namespace"), sample: "React  fs  path" },
-    { name: "Decorator", color: get(tokens.meta, "decorator"), sample: "@Injectable  @override" },
-    { name: "Macro", color: get(tokens.meta, "macro"), sample: "macro!  #define" },
-    { name: "Tag", color: get(tokens.meta, "tag"), sample: "<div>  <span>" },
-    { name: "Bracket", color: get(tokens.punctuation, "bracket"), sample: "( ) [ ] { }" },
-    { name: "Delimiter", color: get(tokens.punctuation, "delimiter"), sample: ", ; :" },
-    { name: "Accessor", color: get(tokens.punctuation, "accessor"), sample: ". ?. ::" },
-    { name: "Storage", color: get(tokens.storage, "type"), sample: "let  const  var" },
-  ];
+	const categories = [
+		{ name: "Source", color: tokens.source, sample: "identifier" },
+		{ name: "Comments", color: tokens.comments, sample: "// comment" },
+		{
+			name: "String",
+			color: get(tokens.strings, "default"),
+			sample: '"hello world"',
+		},
+		{
+			name: "Regex",
+			color: get(tokens.strings, "regex"),
+			sample: "/pattern/g",
+		},
+		{
+			name: "Operator",
+			color: get(tokens.operators, "default"),
+			sample: "= + - * /",
+		},
+		{
+			name: "Number",
+			color: get(tokens.literals, "number"),
+			sample: "42  3.14  0xFF",
+		},
+		{
+			name: "Boolean",
+			color: get(tokens.literals, "boolean"),
+			sample: "true  false",
+		},
+		{
+			name: "Null",
+			color: get(tokens.literals, "null"),
+			sample: "null  undefined",
+		},
+		{
+			name: "Keyword (ctrl)",
+			color: get(tokens.keywords, "control"),
+			sample: "if  else  return  for",
+		},
+		{
+			name: "Keyword (decl)",
+			color: get(tokens.keywords, "declaration"),
+			sample: "const  let  function  class",
+		},
+		{
+			name: "Keyword (import)",
+			color: get(tokens.keywords, "import"),
+			sample: "import  export  from",
+		},
+		{
+			name: "Keyword (mod)",
+			color: get(tokens.keywords, "modifier"),
+			sample: "async  static  public",
+		},
+		{
+			name: "Variable",
+			color: get(tokens.variables, "local"),
+			sample: "count  data  result",
+		},
+		{
+			name: "Parameter",
+			color: get(tokens.variables, "parameter"),
+			sample: "props  args  event",
+		},
+		{
+			name: "Property",
+			color: get(tokens.variables, "property"),
+			sample: "obj.key  this.value",
+		},
+		{
+			name: "Function (decl)",
+			color: get(tokens.functions, "declaration"),
+			sample: "function myFn()",
+		},
+		{
+			name: "Function (call)",
+			color: get(tokens.functions, "call"),
+			sample: "myFn()  doStuff()",
+		},
+		{
+			name: "Method",
+			color: get(tokens.functions, "method"),
+			sample: "arr.map()  str.trim()",
+		},
+		{
+			name: "Built-in fn",
+			color: get(tokens.functions, "builtin"),
+			sample: "console.log  parseInt",
+		},
+		{
+			name: "Type/Class",
+			color: get(tokens.types, "class"),
+			sample: "MyClass  React  Map",
+		},
+		{
+			name: "Interface",
+			color: get(tokens.types, "interface"),
+			sample: "IProps  Readable",
+		},
+		{
+			name: "Enum",
+			color: get(tokens.types, "enum"),
+			sample: "Status  Direction",
+		},
+		{
+			name: "Primitive type",
+			color: get(tokens.types, "primitive"),
+			sample: "string  number  boolean",
+		},
+		{
+			name: "Type param",
+			color: get(tokens.types, "typeParameter"),
+			sample: "<T>  <K, V>",
+		},
+		{
+			name: "Namespace",
+			color: get(tokens.types, "namespace"),
+			sample: "React  fs  path",
+		},
+		{
+			name: "Decorator",
+			color: get(tokens.meta, "decorator"),
+			sample: "@Injectable  @override",
+		},
+		{
+			name: "Macro",
+			color: get(tokens.meta, "macro"),
+			sample: "macro!  #define",
+		},
+		{ name: "Tag", color: get(tokens.meta, "tag"), sample: "<div>  <span>" },
+		{
+			name: "Bracket",
+			color: get(tokens.punctuation, "bracket"),
+			sample: "( ) [ ] { }",
+		},
+		{
+			name: "Delimiter",
+			color: get(tokens.punctuation, "delimiter"),
+			sample: ", ; :",
+		},
+		{
+			name: "Accessor",
+			color: get(tokens.punctuation, "accessor"),
+			sample: ". ?. ::",
+		},
+		{
+			name: "Storage",
+			color: get(tokens.storage, "type"),
+			sample: "let  const  var",
+		},
+	];
 
-  const rows = categories.map(({ name, color, sample }) => `
+	const rows = categories
+		.map(
+			({ name, color, sample }) => `
     <tr>
       <td>${name}</td>
       <td><span class="swatch-inline" style="background:${color}"></span> <code>${color}</code></td>
       <td style="color:${color}"><code>${sample}</code></td>
-    </tr>`).join("");
+    </tr>`,
+		)
+		.join("");
 
-  return `<table class="token-table">
+	return `<table class="token-table">
   <thead><tr><th>Token</th><th>Color</th><th>Sample</th></tr></thead>
   <tbody>${rows}</tbody>
 </table>`;
@@ -545,32 +993,80 @@ function tokenTable(tokens: TokenAssignments): string {
 // ────────────────────────────────────────────────────────────────────────────
 
 function colorPickerScript(theme: ThemeDefinition): string {
-  const paletteEntries = Object.entries(theme.palette).map(([name, color]) => ({
-    path: `palette.${name}`,
-    label: name,
-    value: safeColor(color as any),
-  }));
+	const paletteEntries = Object.entries(theme.palette).map(([name, color]) => ({
+		path: `palette.${name}`,
+		label: name,
+		value: safeColor(color as any),
+	}));
 
-  const uiEntries = [
-    { path: "ui.backgrounds.base", label: "bg.base", value: safeColor(theme.ui.backgrounds.base) },
-    { path: "ui.backgrounds.surface", label: "bg.surface", value: safeColor(theme.ui.backgrounds.surface) },
-    { path: "ui.backgrounds.raised", label: "bg.raised", value: safeColor(theme.ui.backgrounds.raised) },
-    { path: "ui.foregrounds.default", label: "fg.default", value: safeColor(theme.ui.foregrounds.default) },
-    { path: "ui.foregrounds.muted", label: "fg.muted", value: safeColor(theme.ui.foregrounds.muted) },
-    { path: "ui.foregrounds.subtle", label: "fg.subtle", value: safeColor(theme.ui.foregrounds.subtle) },
-    { path: "ui.accent.primary", label: "accent", value: safeColor(theme.ui.accent.primary) },
-    { path: "ui.status.error.foreground", label: "error", value: safeColor(theme.ui.status.error.foreground) },
-    { path: "ui.status.warning.foreground", label: "warning", value: safeColor(theme.ui.status.warning.foreground) },
-    { path: "ui.status.info.foreground", label: "info", value: safeColor(theme.ui.status.info.foreground) },
-    { path: "ui.status.success.foreground", label: "success", value: safeColor(theme.ui.status.success.foreground) },
-    { path: "ui.borders.default", label: "border", value: safeColor(theme.ui.borders.default) },
-  ];
+	const uiEntries = [
+		{
+			path: "ui.backgrounds.base",
+			label: "bg.base",
+			value: safeColor(theme.ui.backgrounds.base),
+		},
+		{
+			path: "ui.backgrounds.surface",
+			label: "bg.surface",
+			value: safeColor(theme.ui.backgrounds.surface),
+		},
+		{
+			path: "ui.backgrounds.raised",
+			label: "bg.raised",
+			value: safeColor(theme.ui.backgrounds.raised),
+		},
+		{
+			path: "ui.foregrounds.default",
+			label: "fg.default",
+			value: safeColor(theme.ui.foregrounds.default),
+		},
+		{
+			path: "ui.foregrounds.muted",
+			label: "fg.muted",
+			value: safeColor(theme.ui.foregrounds.muted),
+		},
+		{
+			path: "ui.foregrounds.subtle",
+			label: "fg.subtle",
+			value: safeColor(theme.ui.foregrounds.subtle),
+		},
+		{
+			path: "ui.accent.primary",
+			label: "accent",
+			value: safeColor(theme.ui.accent.primary),
+		},
+		{
+			path: "ui.status.error.foreground",
+			label: "error",
+			value: safeColor(theme.ui.status.error.foreground),
+		},
+		{
+			path: "ui.status.warning.foreground",
+			label: "warning",
+			value: safeColor(theme.ui.status.warning.foreground),
+		},
+		{
+			path: "ui.status.info.foreground",
+			label: "info",
+			value: safeColor(theme.ui.status.info.foreground),
+		},
+		{
+			path: "ui.status.success.foreground",
+			label: "success",
+			value: safeColor(theme.ui.status.success.foreground),
+		},
+		{
+			path: "ui.borders.default",
+			label: "border",
+			value: safeColor(theme.ui.borders.default),
+		},
+	];
 
-  const allEntries = [...uiEntries, ...paletteEntries];
-  const entriesJson = JSON.stringify(allEntries);
-  const themeName = theme.name;
+	const allEntries = [...uiEntries, ...paletteEntries];
+	const entriesJson = JSON.stringify(allEntries);
+	const themeName = theme.name;
 
-  return `
+	return `
 <style>
   .color-picker-panel {
     position: fixed;
@@ -844,12 +1340,12 @@ function colorPickerScript(theme: ThemeDefinition): string {
 // ────────────────────────────────────────────────────────────────────────────
 
 export function generatePreviewHTML(theme: ThemeDefinition): string {
-  const bg = safeColor(theme.ui.backgrounds.base, "#0f0f15");
-  const fg = safeColor(theme.ui.foregrounds.default, "#e1e2e5");
-  const surface = safeColor(theme.ui.backgrounds.surface, "#1a1a24");
-  const accent = safeColor(theme.ui.accent.primary, "#33b3cc");
+	const bg = safeColor(theme.ui.backgrounds.base, "#0f0f15");
+	const fg = safeColor(theme.ui.foregrounds.default, "#e1e2e5");
+	const _surface = safeColor(theme.ui.backgrounds.surface, "#1a1a24");
+	const accent = safeColor(theme.ui.accent.primary, "#33b3cc");
 
-  return `<!DOCTYPE html>
+	return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">

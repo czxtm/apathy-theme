@@ -8,21 +8,21 @@
  * - split complements for contrast accents
  */
 
-import type { SlimThemeDefinition, ThemeDefinition } from "./types";
-import { normalizeTheme } from "./types";
-import { mix, transparentize } from "./utils";
-import { c, Color, lch, mkColor, mkElementColors, oklch } from "../core/color";
 import type { MkColorOptions } from "../core/color";
+import { Color, c, mkColor, mkElementColors, oklch } from "../core/color";
 import { SemanticTokenModifier } from "../types";
 import {
-	mintedBaseExtraColors,
 	mintedBaseComponentOverrides,
+	mintedBaseExtraColors,
 	mintedBaseLanguageOverrides,
 	mintedBaseModifiers,
 	mintedBasePalette,
 	mintedBaseSyntax,
 	mintedBaseUi,
 } from "./mintedBase";
+import type { SlimThemeDefinition, ThemeDefinition } from "./types";
+import { normalizeTheme } from "./types";
+import { mix, transparentize } from "./utils";
 
 const baseAccent = "#B3E6DEFF";
 const baseError = "#b13564";
@@ -203,41 +203,41 @@ const baseOverrides = mintedBaseComponentOverrides as {
 	};
 };
 
-const terminalOverrides = mintedBaseComponentOverrides.terminal
+const _terminalOverrides = mintedBaseComponentOverrides.terminal
 	? {
-		...mintedBaseComponentOverrides.terminal,
-		background: "#0A0A0FFF",
-		foreground: mix(palette.foreground, palette.analogousGreen, 0.18),
-		ansiBlack: "#0B0A0FFF",
-		ansiRed: new Color(palette.error).rotate(18).darker(0.4).hexa(),
-		ansiGreen: new Color(palette.analogousBlue)
-			.darker(0.22)
-			.mix(new Color(palette.splitGold).darker(0.22), 0.55)
-			.hexa(),
-		ansiYellow: new Color(palette.splitGold)
-			.darker(0.18)
-			.mix(new Color(palette.analogousBlue).darker(0.55), 0.2)
-			.hexa(),
-		ansiBlue: new Color(palette.analogousGreen)
-			.darker(0.55)
-			.mix(new Color(palette.splitViolet).darker(0.45), 0.35)
-			.hexa(),
-		ansiMagenta: palette.error,
-		ansiCyan: new Color(palette.primary).darker(0.18).hexa(),
-		ansiBrightRed: new Color(palette.error)
-			.rotate(12)
-			.lighter(0.1)
-			.saturate(0.32)
-			.hexa(),
-		ansiBrightYellow: new Color(palette.splitGold)
-			.darker(0.32)
-			.mix(new Color(palette.analogousBlue).darker(0.48), 0.16)
-			.hexa(),
-		ansiBrightMagenta: new Color(palette.error)
-			.lighter(0.28)
-			.saturate(0.18)
-			.hexa(),
-	}
+			...mintedBaseComponentOverrides.terminal,
+			background: "#0A0A0FFF",
+			foreground: mix(palette.foreground, palette.analogousGreen, 0.18),
+			ansiBlack: "#0B0A0FFF",
+			ansiRed: new Color(palette.error).rotate(18).darker(0.4).hexa(),
+			ansiGreen: new Color(palette.analogousBlue)
+				.darker(0.22)
+				.mix(new Color(palette.splitGold).darker(0.22), 0.55)
+				.hexa(),
+			ansiYellow: new Color(palette.splitGold)
+				.darker(0.18)
+				.mix(new Color(palette.analogousBlue).darker(0.55), 0.2)
+				.hexa(),
+			ansiBlue: new Color(palette.analogousGreen)
+				.darker(0.55)
+				.mix(new Color(palette.splitViolet).darker(0.45), 0.35)
+				.hexa(),
+			ansiMagenta: palette.error,
+			ansiCyan: new Color(palette.primary).darker(0.18).hexa(),
+			ansiBrightRed: new Color(palette.error)
+				.rotate(12)
+				.lighter(0.1)
+				.saturate(0.32)
+				.hexa(),
+			ansiBrightYellow: new Color(palette.splitGold)
+				.darker(0.32)
+				.mix(new Color(palette.analogousBlue).darker(0.48), 0.16)
+				.hexa(),
+			ansiBrightMagenta: new Color(palette.error)
+				.lighter(0.28)
+				.saturate(0.18)
+				.hexa(),
+		}
 	: undefined;
 const tempoverrides: Record<string, string> = {
 	"#1E434ACC": "#1E434AAB",
@@ -307,11 +307,14 @@ const mintedTheorySource = {
 		},
 
 		subtleElements: (() => {
-			const bg = "#0B0B1284"
+			const bg = "#0B0B1284";
 			const hover = new Color("#0B0B12").lighter(0.1).hexa();
 			const active = new Color("#0B0B12").lighter(0.2).hexa();
 			const selected = "#51506F2B";
-			const disabled = new Color("#0B0B12").desaturate(0.5).transparent(0.5).hexa();
+			const disabled = new Color("#0B0B12")
+				.desaturate(0.5)
+				.transparent(0.5)
+				.hexa();
 			return {
 				background: bg,
 				selectionBackground: selected,
@@ -333,10 +336,10 @@ const mintedTheorySource = {
 				},
 				foreground: palette.foreground,
 				border: transparentize(palette.subtle, 0.7),
-			}
+			};
 		})(),
 		elements: (() => {
-			const bg = "#191629"
+			const bg = "#191629";
 			const hover = new Color(bg).lighter(0.1).hexa();
 			const active = new Color(bg).lighter(0.2).hexa();
 			const selected = "#6B6AAC24";
@@ -361,7 +364,7 @@ const mintedTheorySource = {
 				},
 				foreground: palette.foreground,
 				border: transparentize(palette.subtle, 0.7),
-			}
+			};
 		})(),
 		panels: {
 			background: palette.background,
@@ -386,25 +389,54 @@ const mintedTheorySource = {
 		},
 		status: {
 			info: {
-				...mkElementColors(palette.info, { background: palette.background, foreground: palette.foreground }),
-				background: new Color(palette.info).darker(0.35).desaturate(0.15).alpha(0.05).hexa(),
+				...mkElementColors(palette.info, {
+					background: palette.background,
+					foreground: palette.foreground,
+				}),
+				background: new Color(palette.info)
+					.darker(0.35)
+					.desaturate(0.15)
+					.alpha(0.05)
+					.hexa(),
 			},
 			success: {
-				...mkElementColors(palette.success, { background: palette.background, foreground: palette.foreground }),
+				...mkElementColors(palette.success, {
+					background: palette.background,
+					foreground: palette.foreground,
+				}),
 				foreground: oklch(0.851, 0.083, 157).alpha(0.87).hexa(),
 			},
 			warning: {
-				...mkElementColors(palette.warning, { background: palette.background, foreground: palette.foreground }),
+				...mkElementColors(palette.warning, {
+					background: palette.background,
+					foreground: palette.foreground,
+				}),
 				foreground: oklch(0.933, 0.017, 50).hexa(),
-				background: new Color(palette.warning).darker(0.7).desaturate(0.8).alpha(0.32).hexa(),
-				border: new Color(palette.warning).darker(0.55).desaturate(0.35).alpha(0.88).hexa(),
+				background: new Color(palette.warning)
+					.darker(0.7)
+					.desaturate(0.8)
+					.alpha(0.32)
+					.hexa(),
+				border: new Color(palette.warning)
+					.darker(0.55)
+					.desaturate(0.35)
+					.alpha(0.88)
+					.hexa(),
 			},
 			error: {
 				...mkElementColors(
 					new Color(palette.error).saturate(0.31).lighter(0.16).hex(),
-					{ background: palette.background, foreground: palette.foreground, fg: { saturationBlend: 0, alpha: 0.9 } },
+					{
+						background: palette.background,
+						foreground: palette.foreground,
+						fg: { saturationBlend: 0, alpha: 0.9 },
+					},
 				),
-				background: new Color(palette.error).darker(0.8).desaturate(0.1).alpha(0.76).hexa(),
+				background: new Color(palette.error)
+					.darker(0.8)
+					.desaturate(0.1)
+					.alpha(0.76)
+					.hexa(),
 			},
 		},
 		git: {
@@ -451,19 +483,19 @@ const mintedTheorySource = {
 		// },
 		"quickInputList.focusBackground": oklch(0.2466, 0.02518, 274.34, 0.4549),
 		quickInputList: {
-			"focusBackground": oklch(0.2466, 0.02518, 274.34, 0.4549),
+			focusBackground: oklch(0.2466, 0.02518, 274.34, 0.4549),
 		},
 		editor: {
 			background: "#0a0a10",
-			selectionBackground: oklch(0.244, 0.02083, 285, 0.513)
+			selectionBackground: oklch(0.244, 0.02083, 285, 0.513),
 		},
 		input: {
-			background: oklch(0.17, 0.0082, 285, 0.3725)
+			background: oklch(0.17, 0.0082, 285, 0.3725),
 		},
 		"editor.background": "#0a0a10",
 		overrides: {
-			"background": "#0a0a10"
-		}
+			background: "#0a0a10",
+		},
 		// ...(terminalOverrides ? { terminal: terminalOverrides } : {}),
 	},
 } satisfies SlimThemeDefinition;

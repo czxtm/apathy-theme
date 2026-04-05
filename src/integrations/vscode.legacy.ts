@@ -5,18 +5,10 @@
  * It reads from ThemeDefinition and produces VS Code JSON.
  */
 
-import * as fs from "fs";
-import type { ThemeDefinition, TokenAssignments } from "../themes/types";
-import {
-	applyFilters,
-	colorFactory,
-	get,
-	getThemeValue,
-	semantic,
-	semanticFactory,
-} from "../themes/types";
+import * as fs from "node:fs";
 import { applyFiltersToTheme, type ThemeFilters } from "../filters";
-import { SemanticTokenModifier, SemanticTokenType } from "../types";
+import type { ThemeDefinition, TokenAssignments } from "../themes/types";
+import { colorFactory, getThemeValue, semanticFactory } from "../themes/types";
 
 // ============================================================================
 // VS Code Theme Output Types
@@ -192,7 +184,7 @@ function _buildTokenColors(
  */
 function generateVSCodeTheme(t: ThemeDefinition): VSCodeThemeFile {
 	const c = colorFactory(t);
-	const s = semanticFactory(t);
+	const _s = semanticFactory(t);
 
 	// Use editor foreground from ui.overrides if available, otherwise fallback to tokens.source.
 	const editorForeground =
@@ -221,7 +213,11 @@ function generateVSCodeTheme(t: ThemeDefinition): VSCodeThemeFile {
 
 			// Comments
 			tokenColor("comment", c("tokens.comments"), "italic"),
-			tokenColor("punctuation.definition.comment", c("tokens.comments"), "italic"),
+			tokenColor(
+				"punctuation.definition.comment",
+				c("tokens.comments"),
+				"italic",
+			),
 
 			// Strings (string.quoted.* inherits from string)
 			tokenColor("string", c("tokens.strings")),
@@ -253,9 +249,18 @@ function generateVSCodeTheme(t: ThemeDefinition): VSCodeThemeFile {
 			tokenColor("keyword.control.export", c("tokens.keywords.import")),
 			tokenColor("keyword.operator", c("tokens.operators")),
 			tokenColor("keyword.operator.logical", c("tokens.operators.logical")),
-			tokenColor("keyword.operator.assignment", c("tokens.operators.assignment")),
-			tokenColor("keyword.operator.arithmetic", c("tokens.operators.arithmetic")),
-			tokenColor("keyword.operator.comparison", c("tokens.operators.comparison")),
+			tokenColor(
+				"keyword.operator.assignment",
+				c("tokens.operators.assignment"),
+			),
+			tokenColor(
+				"keyword.operator.arithmetic",
+				c("tokens.operators.arithmetic"),
+			),
+			tokenColor(
+				"keyword.operator.comparison",
+				c("tokens.operators.comparison"),
+			),
 			tokenColor("keyword.operator.wordlike", c("tokens.operators.wordlike")),
 
 			// Storage
@@ -275,8 +280,16 @@ function generateVSCodeTheme(t: ThemeDefinition): VSCodeThemeFile {
 				"italic",
 			),
 			tokenColor("variable.language", c("tokens.variables.global"), "italic"),
-			tokenColor("variable.language.this", c("tokens.variables.global"), "italic"),
-			tokenColor("variable.language.super", c("tokens.variables.global"), "italic"),
+			tokenColor(
+				"variable.language.this",
+				c("tokens.variables.global"),
+				"italic",
+			),
+			tokenColor(
+				"variable.language.super",
+				c("tokens.variables.global"),
+				"italic",
+			),
 
 			// Functions
 			tokenColor("entity.name.function", c("tokens.functions")),
@@ -310,7 +323,10 @@ function generateVSCodeTheme(t: ThemeDefinition): VSCodeThemeFile {
 			tokenColor("variable.other.property", c("tokens.variables.property")),
 
 			// CSS
-			tokenColor("support.type.property-name.css", c("tokens.variables.property")),
+			tokenColor(
+				"support.type.property-name.css",
+				c("tokens.variables.property"),
+			),
 			tokenColor("meta.property-name", c("tokens.variables.property")),
 			tokenColor("support.constant.property-value", c("tokens.literals")),
 			tokenColor("constant.other.color", c("tokens.literals")),
@@ -345,7 +361,10 @@ function generateVSCodeTheme(t: ThemeDefinition): VSCodeThemeFile {
 			tokenColor("markup.bold", c("tokens.keywords"), "bold"),
 			tokenColor("markup.italic", c("tokens.strings"), "italic"),
 			tokenColor("markup.inline.raw", c("tokens.literals.string")),
-			tokenColor("markup.fenced_code.block.markdown", c("tokens.literals.string")),
+			tokenColor(
+				"markup.fenced_code.block.markdown",
+				c("tokens.literals.string"),
+			),
 			tokenColor("markup.quote", c("tokens.comments"), "italic"),
 			tokenColor("markup.underline.link", c("tokens.functions"), "underline"),
 
@@ -365,15 +384,31 @@ function generateVSCodeTheme(t: ThemeDefinition): VSCodeThemeFile {
 			// Special comments (TODO/FIXME/NOTE)
 			tokenColor("comment.line.todo", c("tokens.meta.annotation"), "bold"),
 			tokenColor("comment.block.todo", c("tokens.meta.annotation"), "bold"),
-			tokenColor("comment.line.fixme", c("ui.status.warning.foreground"), "bold"),
-			tokenColor("comment.block.fixme", c("ui.status.warning.foreground"), "bold"),
+			tokenColor(
+				"comment.line.fixme",
+				c("ui.status.warning.foreground"),
+				"bold",
+			),
+			tokenColor(
+				"comment.block.fixme",
+				c("ui.status.warning.foreground"),
+				"bold",
+			),
 			tokenColor("comment.line.note", c("ui.status.info.foreground"), "bold"),
 			tokenColor("comment.block.note", c("ui.status.info.foreground"), "bold"),
 
 			// Python docstrings
 			tokenColor("string.quoted.docstring", c("tokens.comments"), "italic"),
-			tokenColor("string.quoted.docstring.multi.python", c("tokens.comments"), "italic"),
-			tokenColor("string.quoted.docstring.raw.multi.python", c("tokens.comments"), "italic"),
+			tokenColor(
+				"string.quoted.docstring.multi.python",
+				c("tokens.comments"),
+				"italic",
+			),
+			tokenColor(
+				"string.quoted.docstring.raw.multi.python",
+				c("tokens.comments"),
+				"italic",
+			),
 
 			// YAML
 			tokenColor("source.yaml", c("tokens.source")),
@@ -382,8 +417,14 @@ function generateVSCodeTheme(t: ThemeDefinition): VSCodeThemeFile {
 			tokenColor("string.quoted.single.yaml", c("tokens.strings")),
 
 			// JSON
-			tokenColor("meta.structure.dictionary.key.json", c("tokens.variables.property")),
-			tokenColor("support.type.property-name.json", c("tokens.variables.property")),
+			tokenColor(
+				"meta.structure.dictionary.key.json",
+				c("tokens.variables.property"),
+			),
+			tokenColor(
+				"support.type.property-name.json",
+				c("tokens.variables.property"),
+			),
 			tokenColor("meta.structure.dictionary.value.json", c("tokens.strings")),
 		],
 

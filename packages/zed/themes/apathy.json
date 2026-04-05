@@ -54,7 +54,7 @@
 				"tab_bar.background": "#0b0a0dff",
 				"tab.inactive_background": "#07060dff",
 				"tab.active_background": "#040305ff",
-				"search.match_background": "#cbdbe0b3",
+				"search.match_background": "#52486cab",
 				"panel.background": "#0b0a0dff",
 				"panel.overlay_background": "#07060dff",
 				"panel.focused_border": "#07060dff",
@@ -341,7 +341,7 @@
 						"color": "#ffb547ff"
 					}
 				},
-				"search.active_match_background": "#cbdbe0b3"
+				"search.active_match_background": "#52486cab"
 			}
 		}
 	]

@@ -5,29 +5,29 @@
  * token mapping and expose the subset Shiki needs.
  */
 
-import type { ThemeDefinition } from "../themes/types";
 import type { ThemeFilters } from "../filters";
+import type { ThemeDefinition } from "../themes/types";
 import { mapVSCode } from "./vscode";
 
 export interface ShikiThemeTokenColor {
-  name?: string;
-  scope: string | string[];
-  settings: {
-    foreground?: string;
-    fontStyle?: string;
-  };
+	name?: string;
+	scope: string | string[];
+	settings: {
+		foreground?: string;
+		fontStyle?: string;
+	};
 }
 
 export interface ShikiThemeFile {
-  name: string;
-  type: "dark" | "light";
-  colors: Record<string, string>;
-  tokenColors: ShikiThemeTokenColor[];
+	name: string;
+	type: "dark" | "light";
+	colors: Record<string, string>;
+	tokenColors: ShikiThemeTokenColor[];
 }
 
 export interface BuildOptions {
-  /** Override filters (will merge with/override theme.filters) */
-  filters?: ThemeFilters;
+	/** Override filters (will merge with/override theme.filters) */
+	filters?: ThemeFilters;
 }
 
 /**
@@ -35,19 +35,19 @@ export interface BuildOptions {
  * Shiki supports the same TextMate structure used by VS Code themes.
  */
 export function mapShiki(
-  theme: ThemeDefinition,
-  options?: BuildOptions,
+	theme: ThemeDefinition,
+	options?: BuildOptions,
 ): ShikiThemeFile {
-  const vscodeTheme = mapVSCode(theme, {
-    filters: options?.filters,
-  });
+	const vscodeTheme = mapVSCode(theme, {
+		filters: options?.filters,
+	});
 
-  return {
-    name: theme.name,
-    type: theme.type,
-    colors: vscodeTheme.colors,
-    tokenColors: vscodeTheme.tokenColors,
-  };
+	return {
+		name: theme.name,
+		type: theme.type,
+		colors: vscodeTheme.colors,
+		tokenColors: vscodeTheme.tokenColors,
+	};
 }
 
 export default mapShiki;

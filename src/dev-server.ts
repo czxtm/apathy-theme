@@ -12,25 +12,25 @@
  * Usage:  bun run dev          (or: bun run src/dev-server.ts)
  */
 
-import { watch, type FSWatcher } from "fs";
-import { join, extname } from "path";
-import { spawn, type Subprocess } from "bun";
+import { type FSWatcher, watch } from "node:fs";
+import { extname, join } from "node:path";
+import { type Subprocess, spawn } from "bun";
 import { generatePreviewHTML } from "./integrations/preview";
-import type { ThemeDefinition } from "./themes/types";
+import { apatheticOcean } from "./themes/apatheticOcean";
+import { apathy } from "./themes/apathy";
+import { apathyExperimental } from "./themes/apathyExperimental";
 import { minted } from "./themes/minted";
 import { mintedTheory } from "./themes/mintedTheory";
 import { slate } from "./themes/slate";
-import { apathy } from "./themes/apathy";
-import { apatheticOcean } from "./themes/apatheticOcean";
-import { apathyExperimental } from "./themes/apathyExperimental";
+import type { ThemeDefinition } from "./themes/types";
 
 const themeMap: Record<string, ThemeDefinition> = {
-  "Minted": minted,
-  "Minted Theory": mintedTheory,
-  "Slate": slate,
-  "Apathy": apathy,
-  "Apathetic Ocean": apatheticOcean,
-  "Apathy Experimental": apathyExperimental,
+	Minted: minted,
+	"Minted Theory": mintedTheory,
+	Slate: slate,
+	Apathy: apathy,
+	"Apathetic Ocean": apatheticOcean,
+	"Apathy Experimental": apathyExperimental,
 };
 
 // ── Config ──────────────────────────────────────────────────────────────────
@@ -40,13 +40,13 @@ const SRC_DIR = join(import.meta.dir);
 const ROOT = join(import.meta.dir, "..");
 
 const MIME: Record<string, string> = {
-  ".html": "text/html; charset=utf-8",
-  ".css": "text/css; charset=utf-8",
-  ".js": "application/javascript; charset=utf-8",
-  ".json": "application/json; charset=utf-8",
-  ".png": "image/png",
-  ".svg": "image/svg+xml",
-  ".ico": "image/x-icon",
+	".html": "text/html; charset=utf-8",
+	".css": "text/css; charset=utf-8",
+	".js": "application/javascript; charset=utf-8",
+	".json": "application/json; charset=utf-8",
+	".png": "image/png",
+	".svg": "image/svg+xml",
+	".ico": "image/x-icon",
 };
 
 // ── Live-reload snippet injected before </body> ────────────────────────────
@@ -71,9 +71,13 @@ const RELOAD_SCRIPT = `
 const clients = new Set<any>();
 
 function broadcast(msg: string) {
-  for (const ws of clients) {
-    try { ws.send(msg); } catch { clients.delete(ws); }
-  }
+	for (const ws of clients) {
+		try {
+			ws.send(msg);
+		} catch {
+			clients.delete(ws);
+		}
+	}
 }
 
 // ── Build runner ────────────────────────────────────────────────────────────
@@ -81,162 +85,191 @@ let building = false;
 let queued = false;
 
 async function runBuild() {
-  if (building) { queued = true; return; }
-  building = true;
-  const start = performance.now();
+	if (building) {
+		queued = true;
+		return;
+	}
+	building = true;
+	const start = performance.now();
 
-  console.log("\x1b[36m⟳ rebuilding…\x1b[0m");
+	console.log("\x1b[36m⟳ rebuilding…\x1b[0m");
 
-  const proc: Subprocess = spawn(["bun", "run", "src/main.ts"], {
-    cwd: ROOT,
-    stdout: "inherit",
-    stderr: "inherit",
-  });
-  await proc.exited;
+	const proc: Subprocess = spawn(["bun", "run", "src/main.ts"], {
+		cwd: ROOT,
+		stdout: "inherit",
+		stderr: "inherit",
+	});
+	await proc.exited;
 
-  const elapsed = (performance.now() - start).toFixed(0);
-  if (proc.exitCode === 0) {
-    console.log(`\x1b[32m✓ built in ${elapsed}ms\x1b[0m`);
-    broadcast("reload");
-  } else {
-    console.log(`\x1b[31m✗ build failed (${elapsed}ms)\x1b[0m`);
-  }
+	const elapsed = (performance.now() - start).toFixed(0);
+	if (proc.exitCode === 0) {
+		console.log(`\x1b[32m✓ built in ${elapsed}ms\x1b[0m`);
+		broadcast("reload");
+	} else {
+		console.log(`\x1b[31m✗ build failed (${elapsed}ms)\x1b[0m`);
+	}
 
-  building = false;
-  if (queued) { queued = false; runBuild(); }
+	building = false;
+	if (queued) {
+		queued = false;
+		runBuild();
+	}
 }
 
 // ── Color override handler ───────────────────────────────────────────────────
 
-function cloneContainer<T extends Record<string, unknown> | unknown[]>(value: T): T {
-  if (Array.isArray(value)) return [...value] as T;
-  return { ...value } as T;
+function cloneContainer<T extends Record<string, unknown> | unknown[]>(
+	value: T,
+): T {
+	if (Array.isArray(value)) return [...value] as T;
+	return { ...value } as T;
 }
 
-function applyOverrides<T extends Record<string, unknown>>(base: T, overrides: Record<string, string>): T {
-  const root = cloneContainer(base);
+function applyOverrides<T extends Record<string, unknown>>(
+	base: T,
+	overrides: Record<string, string>,
+): T {
+	const root = cloneContainer(base);
 
-  for (const [path, value] of Object.entries(overrides)) {
-    const parts = path.split(".");
-    let sourceCursor: unknown = base;
-    let targetCursor: Record<string, unknown> = root;
+	for (const [path, value] of Object.entries(overrides)) {
+		const parts = path.split(".");
+		let sourceCursor: unknown = base;
+		let targetCursor: Record<string, unknown> = root;
 
-    for (let i = 0; i < parts.length - 1; i++) {
-      const key = parts[i];
-      const nextSource =
-        sourceCursor && typeof sourceCursor === "object"
-          ? (sourceCursor as Record<string, unknown>)[key]
-          : undefined;
+		for (let i = 0; i < parts.length - 1; i++) {
+			const key = parts[i];
+			const nextSource =
+				sourceCursor && typeof sourceCursor === "object"
+					? (sourceCursor as Record<string, unknown>)[key]
+					: undefined;
 
-      const nextTarget =
-        nextSource && typeof nextSource === "object"
-          ? cloneContainer(nextSource as Record<string, unknown> | unknown[])
-          : {};
+			const nextTarget =
+				nextSource && typeof nextSource === "object"
+					? cloneContainer(nextSource as Record<string, unknown> | unknown[])
+					: {};
 
-      targetCursor[key] = nextTarget;
-      targetCursor = nextTarget as Record<string, unknown>;
-      sourceCursor = nextSource;
-    }
+			targetCursor[key] = nextTarget;
+			targetCursor = nextTarget as Record<string, unknown>;
+			sourceCursor = nextSource;
+		}
 
-    targetCursor[parts[parts.length - 1]] = value;
-  }
+		targetCursor[parts[parts.length - 1]] = value;
+	}
 
-  return root;
+	return root;
 }
 
-function handleColorOverride(ws: any, data: { theme: string; overrides: Record<string, string> }) {
-  const base = themeMap[data.theme];
-  if (!base) {
-    console.log(`\x1b[33m⚠ Unknown theme: ${data.theme}\x1b[0m`);
-    return;
-  }
+function handleColorOverride(
+	ws: any,
+	data: { theme: string; overrides: Record<string, string> },
+) {
+	const base = themeMap[data.theme];
+	if (!base) {
+		console.log(`\x1b[33m⚠ Unknown theme: ${data.theme}\x1b[0m`);
+		return;
+	}
 
-  const start = performance.now();
-  const patched = applyOverrides(base as Record<string, unknown>, data.overrides);
+	const start = performance.now();
+	const patched = applyOverrides(
+		base as Record<string, unknown>,
+		data.overrides,
+	);
 
-  try {
-    const html = generatePreviewHTML(patched as ThemeDefinition);
-    const elapsed = (performance.now() - start).toFixed(0);
-    console.log(`\x1b[35m🎨 color override rebuilt ${data.theme} in ${elapsed}ms\x1b[0m`);
-    ws.send(JSON.stringify({ type: "preview_update", html }));
-  } catch (err) {
-    console.log(`\x1b[31m✗ color override rebuild failed: ${err}\x1b[0m`);
-  }
+	try {
+		const html = generatePreviewHTML(patched as ThemeDefinition);
+		const elapsed = (performance.now() - start).toFixed(0);
+		console.log(
+			`\x1b[35m🎨 color override rebuilt ${data.theme} in ${elapsed}ms\x1b[0m`,
+		);
+		ws.send(JSON.stringify({ type: "preview_update", html }));
+	} catch (err) {
+		console.log(`\x1b[31m✗ color override rebuild failed: ${err}\x1b[0m`);
+	}
 }
 
 // ── File watcher on src/ ────────────────────────────────────────────────────
 let debounce: ReturnType<typeof setTimeout> | null = null;
 
 function startWatcher(): FSWatcher {
-  return watch(SRC_DIR, { recursive: true }, (_event, filename) => {
-    if (!filename) return;
-    // skip dotfiles, node_modules, dist
-    if (filename.startsWith(".") || filename.includes("node_modules")) return;
+	return watch(SRC_DIR, { recursive: true }, (_event, filename) => {
+		if (!filename) return;
+		// skip dotfiles, node_modules, dist
+		if (filename.startsWith(".") || filename.includes("node_modules")) return;
 
-    if (debounce) clearTimeout(debounce);
-    debounce = setTimeout(() => {
-      console.log(`\x1b[90m  changed: ${filename}\x1b[0m`);
-      runBuild();
-    }, 100);
-  });
+		if (debounce) clearTimeout(debounce);
+		debounce = setTimeout(() => {
+			console.log(`\x1b[90m  changed: ${filename}\x1b[0m`);
+			runBuild();
+		}, 100);
+	});
 }
 
 // ── HTTP + WS server ────────────────────────────────────────────────────────
 const server = Bun.serve({
-  port: PORT,
+	port: PORT,
 
-  async fetch(req, server) {
-    const url = new URL(req.url);
+	async fetch(req, server) {
+		const url = new URL(req.url);
 
-    // WebSocket upgrade
-    if (url.pathname === "/__ws") {
-      if (server.upgrade(req)) return;
-      return new Response("WebSocket upgrade failed", { status: 400 });
-    }
+		// WebSocket upgrade
+		if (url.pathname === "/__ws") {
+			if (server.upgrade(req)) return;
+			return new Response("WebSocket upgrade failed", { status: 400 });
+		}
 
-    // Resolve file path (default to index.html)
-    let pathname = url.pathname;
-    if (pathname === "/") pathname = "/index.html";
+		// Resolve file path (default to index.html)
+		let pathname = url.pathname;
+		if (pathname === "/") pathname = "/index.html";
 
-    const filePath = join(PREVIEW_DIR, pathname);
-    const file = Bun.file(filePath);
+		const filePath = join(PREVIEW_DIR, pathname);
+		const file = Bun.file(filePath);
 
-    if (!(await file.exists())) {
-      return new Response("404 — Not Found", { status: 404 });
-    }
+		if (!(await file.exists())) {
+			return new Response("404 — Not Found", { status: 404 });
+		}
 
-    const ext = extname(filePath);
-    const contentType = MIME[ext] || "application/octet-stream";
+		const ext = extname(filePath);
+		const contentType = MIME[ext] || "application/octet-stream";
 
-    // For HTML files, inject the live-reload script
-    if (ext === ".html") {
-      let html = await file.text();
-      html = html.replace("</body>", `${RELOAD_SCRIPT}\n</body>`);
-      return new Response(html, {
-        headers: {
-          "content-type": contentType,
-          "cache-control": "no-store",
-        },
-      });
-    }
+		// For HTML files, inject the live-reload script
+		if (ext === ".html") {
+			let html = await file.text();
+			html = html.replace("</body>", `${RELOAD_SCRIPT}\n</body>`);
+			return new Response(html, {
+				headers: {
+					"content-type": contentType,
+					"cache-control": "no-store",
+				},
+			});
+		}
 
-    return new Response(file, {
-      headers: { "content-type": contentType },
-    });
-  },
+		return new Response(file, {
+			headers: { "content-type": contentType },
+		});
+	},
 
-  websocket: {
-    open(ws) { clients.add(ws); },
-    close(ws) { clients.delete(ws); },
-    message(ws, message) {
-      try {
-        const data = JSON.parse(typeof message === "string" ? message : new TextDecoder().decode(message as ArrayBuffer));
-        if (data.type === "color_override") {
-          handleColorOverride(ws, data);
-        }
-      } catch { /* ignore non-JSON messages */ }
-    },
-  },
+	websocket: {
+		open(ws) {
+			clients.add(ws);
+		},
+		close(ws) {
+			clients.delete(ws);
+		},
+		message(ws, message) {
+			try {
+				const data = JSON.parse(
+					typeof message === "string"
+						? message
+						: new TextDecoder().decode(message as ArrayBuffer),
+				);
+				if (data.type === "color_override") {
+					handleColorOverride(ws, data);
+				}
+			} catch {
+				/* ignore non-JSON messages */
+			}
+		},
+	},
 });
 
 // ── Start ───────────────────────────────────────────────────────────────────
@@ -257,7 +290,7 @@ const watcher = startWatcher();
 
 // Graceful shutdown
 process.on("SIGINT", () => {
-  watcher.close();
-  server.stop();
-  process.exit(0);
+	watcher.close();
+	server.stop();
+	process.exit(0);
 });

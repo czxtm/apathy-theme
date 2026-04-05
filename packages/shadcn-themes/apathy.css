@@ -1,85 +1,85 @@
 /**
  * Apathy Theme for shadcn/ui
- * 
+ *
  * A dark, muted theme with warm accents focused on readability.
  * Ported from the Apathy VS Code theme.
- * 
+ *
  * Usage: Copy the CSS variables into your globals.css or tailwind.css file.
  */
 
 @layer base {
-  :root {
-    /* Light mode - inverted version */
-    --radius: 0.625rem;
-    --background: oklch(0.985 0.005 285);
-    --foreground: oklch(0.18 0.02 285);
-    --card: oklch(0.975 0.005 285);
-    --card-foreground: oklch(0.18 0.02 285);
-    --popover: oklch(0.975 0.005 285);
-    --popover-foreground: oklch(0.18 0.02 285);
-    --primary: oklch(0.55 0.15 330); /* crimson accent */
-    --primary-foreground: oklch(0.98 0.005 285);
-    --secondary: oklch(0.93 0.01 285);
-    --secondary-foreground: oklch(0.25 0.02 285);
-    --muted: oklch(0.93 0.01 285);
-    --muted-foreground: oklch(0.5 0.02 285);
-    --accent: oklch(0.65 0.12 195); /* cyan accent */
-    --accent-foreground: oklch(0.18 0.02 285);
-    --destructive: oklch(0.55 0.22 25);
-    --destructive-foreground: oklch(0.98 0.005 285);
-    --border: oklch(0.88 0.01 285);
-    --input: oklch(0.88 0.01 285);
-    --ring: oklch(0.55 0.15 330);
-    --chart-1: oklch(0.55 0.15 330); /* crimson */
-    --chart-2: oklch(0.75 0.12 175); /* mint */
-    --chart-3: oklch(0.65 0.12 195); /* cyan */
-    --chart-4: oklch(0.65 0.12 285); /* lavender */
-    --chart-5: oklch(0.75 0.15 85);  /* gold */
-    --sidebar: oklch(0.97 0.005 285);
-    --sidebar-foreground: oklch(0.18 0.02 285);
-    --sidebar-primary: oklch(0.55 0.15 330);
-    --sidebar-primary-foreground: oklch(0.98 0.005 285);
-    --sidebar-accent: oklch(0.93 0.01 285);
-    --sidebar-accent-foreground: oklch(0.25 0.02 285);
-    --sidebar-border: oklch(0.88 0.01 285);
-    --sidebar-ring: oklch(0.55 0.15 330);
-  }
+	:root {
+		/* Light mode - inverted version */
+		--radius: 0.625rem;
+		--background: oklch(0.985 0.005 285);
+		--foreground: oklch(0.18 0.02 285);
+		--card: oklch(0.975 0.005 285);
+		--card-foreground: oklch(0.18 0.02 285);
+		--popover: oklch(0.975 0.005 285);
+		--popover-foreground: oklch(0.18 0.02 285);
+		--primary: oklch(0.55 0.15 330); /* crimson accent */
+		--primary-foreground: oklch(0.98 0.005 285);
+		--secondary: oklch(0.93 0.01 285);
+		--secondary-foreground: oklch(0.25 0.02 285);
+		--muted: oklch(0.93 0.01 285);
+		--muted-foreground: oklch(0.5 0.02 285);
+		--accent: oklch(0.65 0.12 195); /* cyan accent */
+		--accent-foreground: oklch(0.18 0.02 285);
+		--destructive: oklch(0.55 0.22 25);
+		--destructive-foreground: oklch(0.98 0.005 285);
+		--border: oklch(0.88 0.01 285);
+		--input: oklch(0.88 0.01 285);
+		--ring: oklch(0.55 0.15 330);
+		--chart-1: oklch(0.55 0.15 330); /* crimson */
+		--chart-2: oklch(0.75 0.12 175); /* mint */
+		--chart-3: oklch(0.65 0.12 195); /* cyan */
+		--chart-4: oklch(0.65 0.12 285); /* lavender */
+		--chart-5: oklch(0.75 0.15 85); /* gold */
+		--sidebar: oklch(0.97 0.005 285);
+		--sidebar-foreground: oklch(0.18 0.02 285);
+		--sidebar-primary: oklch(0.55 0.15 330);
+		--sidebar-primary-foreground: oklch(0.98 0.005 285);
+		--sidebar-accent: oklch(0.93 0.01 285);
+		--sidebar-accent-foreground: oklch(0.25 0.02 285);
+		--sidebar-border: oklch(0.88 0.01 285);
+		--sidebar-ring: oklch(0.55 0.15 330);
+	}
 
-  .dark {
-    /* Dark mode - primary theme */
-    --background: oklch(0.14 0.02 285); /* #0e0b13 */
-    --foreground: oklch(0.9 0.015 285); /* #e3e1e8 */
-    --card: oklch(0.16 0.025 285); /* slightly elevated surface */
-    --card-foreground: oklch(0.9 0.015 285);
-    --popover: oklch(0.15 0.025 285);
-    --popover-foreground: oklch(0.9 0.015 285);
-    --primary: oklch(0.55 0.2 340); /* #e60063 crimson */
-    --primary-foreground: oklch(0.95 0.01 285);
-    --secondary: oklch(0.22 0.03 285); /* #1b1629 dusk */
-    --secondary-foreground: oklch(0.85 0.015 285);
-    --muted: oklch(0.35 0.02 285); /* #4D4A56 */
-    --muted-foreground: oklch(0.55 0.02 285); /* #7d7a8b */
-    --accent: oklch(0.65 0.12 195); /* #33b3cc cyan */
-    --accent-foreground: oklch(0.95 0.01 285);
-    --destructive: oklch(0.5 0.2 25); /* #b70b24 */
-    --destructive-foreground: oklch(0.95 0.01 285);
-    --border: oklch(0.28 0.03 285); /* purple-tinted border */
-    --input: oklch(0.25 0.025 285);
-    --ring: oklch(0.55 0.2 340); /* crimson */
-    --chart-1: oklch(0.55 0.2 340);  /* crimson */
-    --chart-2: oklch(0.78 0.15 175); /* #A1EFE4 mint */
-    --chart-3: oklch(0.65 0.12 195); /* #33b3cc cyan */
-    --chart-4: oklch(0.7 0.1 300);   /* #C792EA lavender */
-    --chart-5: oklch(0.78 0.15 85);  /* #ffb547 gold */
-    --sidebar: oklch(0.13 0.02 285); /* #0d0b17 */
-    --sidebar-foreground: oklch(0.9 0.015 285);
-    --sidebar-primary: oklch(0.55 0.2 340);
-    --sidebar-primary-foreground: oklch(0.95 0.01 285);
-    --sidebar-accent: oklch(0.22 0.03 285);
-    --sidebar-accent-foreground: oklch(0.85 0.015 285);
-    --sidebar-border: oklch(1 0 0 / 8%);
-    --sidebar-ring: oklch(0.55 0.2 340);
-  }
+	.dark {
+		/* Dark mode - primary theme */
+		--background: oklch(0.14 0.02 285); /* #0e0b13 */
+		--foreground: oklch(0.9 0.015 285); /* #e3e1e8 */
+		--card: oklch(0.16 0.025 285); /* slightly elevated surface */
+		--card-foreground: oklch(0.9 0.015 285);
+		--popover: oklch(0.15 0.025 285);
+		--popover-foreground: oklch(0.9 0.015 285);
+		--primary: oklch(0.55 0.2 340); /* #e60063 crimson */
+		--primary-foreground: oklch(0.95 0.01 285);
+		--secondary: oklch(0.22 0.03 285); /* #1b1629 dusk */
+		--secondary-foreground: oklch(0.85 0.015 285);
+		--muted: oklch(0.35 0.02 285); /* #4D4A56 */
+		--muted-foreground: oklch(0.55 0.02 285); /* #7d7a8b */
+		--accent: oklch(0.65 0.12 195); /* #33b3cc cyan */
+		--accent-foreground: oklch(0.95 0.01 285);
+		--destructive: oklch(0.5 0.2 25); /* #b70b24 */
+		--destructive-foreground: oklch(0.95 0.01 285);
+		--border: oklch(0.28 0.03 285); /* purple-tinted border */
+		--input: oklch(0.25 0.025 285);
+		--ring: oklch(0.55 0.2 340); /* crimson */
+		--chart-1: oklch(0.55 0.2 340); /* crimson */
+		--chart-2: oklch(0.78 0.15 175); /* #A1EFE4 mint */
+		--chart-3: oklch(0.65 0.12 195); /* #33b3cc cyan */
+		--chart-4: oklch(0.7 0.1 300); /* #C792EA lavender */
+		--chart-5: oklch(0.78 0.15 85); /* #ffb547 gold */
+		--sidebar: oklch(0.13 0.02 285); /* #0d0b17 */
+		--sidebar-foreground: oklch(0.9 0.015 285);
+		--sidebar-primary: oklch(0.55 0.2 340);
+		--sidebar-primary-foreground: oklch(0.95 0.01 285);
+		--sidebar-accent: oklch(0.22 0.03 285);
+		--sidebar-accent-foreground: oklch(0.85 0.015 285);
+		--sidebar-border: oklch(1 0 0 / 8%);
+		--sidebar-ring: oklch(0.55 0.2 340);
+	}
 }
 
 /* Tailwind v4 theme mapping */

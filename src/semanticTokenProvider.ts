@@ -1,45 +1,45 @@
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
 
 /**
  * Semantic token legend defining token types and modifiers
  */
 const tokenTypes = [
-	'namespace',
-	'class',
-	'enum',
-	'interface',
-	'struct',
-	'typeParameter',
-	'type',
-	'parameter',
-	'variable',
-	'property',
-	'enumMember',
-	'decorator',
-	'event',
-	'function',
-	'method',
-	'macro',
-	'label',
-	'comment',
-	'string',
-	'keyword',
-	'number',
-	'regexp',
-	'operator'
+	"namespace",
+	"class",
+	"enum",
+	"interface",
+	"struct",
+	"typeParameter",
+	"type",
+	"parameter",
+	"variable",
+	"property",
+	"enumMember",
+	"decorator",
+	"event",
+	"function",
+	"method",
+	"macro",
+	"label",
+	"comment",
+	"string",
+	"keyword",
+	"number",
+	"regexp",
+	"operator",
 ];
 
 const tokenModifiers = [
-	'declaration',
-	'definition',
-	'readonly',
-	'static',
-	'deprecated',
-	'abstract',
-	'async',
-	'modification',
-	'documentation',
-	'defaultLibrary'
+	"declaration",
+	"definition",
+	"readonly",
+	"static",
+	"deprecated",
+	"abstract",
+	"async",
+	"modification",
+	"documentation",
+	"defaultLibrary",
 ];
 
 const legend = new vscode.SemanticTokensLegend(tokenTypes, tokenModifiers);
@@ -49,10 +49,12 @@ const legend = new vscode.SemanticTokensLegend(tokenTypes, tokenModifiers);
  * This provides semantic highlighting information for language features.
  * You'll need to implement the actual token parsing logic based on your language.
  */
-export class ApathySemanticTokensProvider implements vscode.DocumentSemanticTokensProvider {
+export class ApathySemanticTokensProvider
+	implements vscode.DocumentSemanticTokensProvider
+{
 	async provideDocumentSemanticTokens(
 		document: vscode.TextDocument,
-		token: vscode.CancellationToken
+		_token: vscode.CancellationToken,
 	): Promise<vscode.SemanticTokens> {
 		const tokensBuilder = new vscode.SemanticTokensBuilder(legend);
 
@@ -69,8 +71,8 @@ export class ApathySemanticTokensProvider implements vscode.DocumentSemanticToke
 				const startPos = match.index + 6; // After "class "
 				tokensBuilder.push(
 					new vscode.Range(i, startPos, i, startPos + match[1].length),
-					'class',
-					['declaration']
+					"class",
+					["declaration"],
 				);
 			}
 
@@ -80,8 +82,8 @@ export class ApathySemanticTokensProvider implements vscode.DocumentSemanticToke
 				const startPos = match.index + 9; // After "function "
 				tokensBuilder.push(
 					new vscode.Range(i, startPos, i, startPos + match[1].length),
-					'function',
-					['declaration']
+					"function",
+					["declaration"],
 				);
 			}
 		}

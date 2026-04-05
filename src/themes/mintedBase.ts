@@ -1,31 +1,25 @@
+import { Color, mkElementColors, oklch } from "../core/color";
+import { SemanticTokenModifier } from "../types";
 import {
-	make,
+	type ColorLike,
 	type ComponentOverrides,
+	make,
 	type SyntaxDefinition,
 	type ThemeDefinition,
 	type UserInterface,
-	type ColorLike,
 } from "./types";
-import { SemanticTokenModifier } from "../types";
-import { Color, mkElementColors, oklch } from "../core/color";
-import {
-	darken,
-	l10,
-	lighten,
-	mix,
-	transparentize,
-} from "./utils";
+import { darken, l10, lighten, mix, transparentize } from "./utils";
 
 // ============================================================================
 // Seeds — the DNA of the minted palette
 // ============================================================================
 
-export const H = 285;     // surface hue (purple-blue)
-export const C = 0.015;   // surface chroma (very desaturated)
-export const L = 0.158;   // base background lightness
+export const H = 285; // surface hue (purple-blue)
+export const C = 0.015; // surface chroma (very desaturated)
+export const L = 0.158; // base background lightness
 
-export const SL = 0.82;    // syntax lightness center
-export const SC = 0.09;    // syntax chroma center
+export const SL = 0.82; // syntax lightness center
+export const SC = 0.09; // syntax chroma center
 
 // Syntax hues — each role's hue angle
 export const hue = {
@@ -72,11 +66,11 @@ export const p = {
 	softMist: oklch(0.477, 0.034, H - 6),
 	dimGray: oklch(0.379, 0.041, H - 14),
 	deepGray: oklch(0.308, 0.029, H - 11),
-	gray1: oklch(0.471, 0.050, H + 8),
-	mist: oklch(0.588, 0.040, H - 8),
-	steel: oklch(0.716, 0.030, H - 33),
+	gray1: oklch(0.471, 0.05, H + 8),
+	mist: oklch(0.588, 0.04, H - 8),
+	steel: oklch(0.716, 0.03, H - 33),
 	slate: oklch(0.717, 0.056, H - 8),
-	flatwhite: oklch(0.765, 0.020, H + 1),
+	flatwhite: oklch(0.765, 0.02, H + 1),
 	devwhite: oklch(0.844, 0.049, H - 46),
 	white: oklch(0.915, 0.004, H - 37),
 
@@ -92,7 +86,7 @@ export const p = {
 	crimson: syn(hue.operator, -0.27, 2.32),
 	gold: syn(92, +0.05, 1.96),
 	magenta: syn(328, -0.12, 3.57),
-	orange1: syn(34, -0.09, 1.90),
+	orange1: syn(34, -0.09, 1.9),
 	deletedRose: syn(359, -0.31, 1.62),
 
 	// ── Status / debug ──────────────────────────────────────────────────
@@ -122,7 +116,7 @@ export const p = {
 	wordHighlight: oklch(0.293, 0.079, H - 12).alpha(0.2),
 	wordHighlightStrong: oklch(0.443, 0.038, H + 14).alpha(0.67),
 	indentGuide: oklch(0.245, 0.065, H + 14).alpha(0.35),
-	indentGuideActive: oklch(0.488, 0.180, H + 10).alpha(0.35),
+	indentGuideActive: oklch(0.488, 0.18, H + 10).alpha(0.35),
 
 	// ── Hover / focus ───────────────────────────────────────────────────
 	hoverBg: bg(L + 0.035, C * 0.95, H - 6).alpha(0.74),
@@ -132,7 +126,7 @@ export const p = {
 
 	// ── Window / buttons ────────────────────────────────────────────────
 	windowBorder: oklch(0.332, 0.065, H - 36),
-	buttonBorder: oklch(0.350, 0.032, H + 15).alpha(0.47),
+	buttonBorder: oklch(0.35, 0.032, H + 15).alpha(0.47),
 	buttonSeparator: oklch(0.441, 0.062, H + 15).alpha(0.21),
 
 	// ── Line numbers ────────────────────────────────────────────────────
@@ -149,7 +143,7 @@ export const p = {
 
 	// ── Misc ────────────────────────────────────────────────────────────
 	peekMatchHighlight: oklch(0.674, 0.144, 72).alpha(0.25),
-	settingsHeaderFg: oklch(0.894, 0.022, H - 39).alpha(0.80),
+	settingsHeaderFg: oklch(0.894, 0.022, H - 39).alpha(0.8),
 	textPreformatBg: oklch(0.153, 0.016, 180).alpha(0.94),
 	textPreformatFg: oklch(0.852, 0.099, 163).alpha(0.81),
 	errorBg: oklch(0.275, 0.113, 29).alpha(0.27),
@@ -157,7 +151,7 @@ export const p = {
 	chatRequestBg: oklch(0.129, 0.052, H - 9),
 
 	// ── Alpha variants ──────────────────────────────────────────────────
-	alphaBlack: bg(L + 0.012, C * 0.41, H + 1).alpha(0.50),
+	alphaBlack: bg(L + 0.012, C * 0.41, H + 1).alpha(0.5),
 	alphaWhite: oklch(0.915, 0.004, H - 37).alpha(0.13),
 } as const;
 
@@ -223,7 +217,7 @@ export const mintedBaseSyntax: SyntaxDefinition = {
 	},
 	punctuation: {
 		default: p.mist.alpha(0.76),
-		definition: oklch(0.355, 0.030, H + 7).alpha(0.82),
+		definition: oklch(0.355, 0.03, H + 7).alpha(0.82),
 		delimiter: p.charcoal,
 		bracket: p.charcoal,
 		accessor: p.charcoal,
@@ -456,11 +450,7 @@ export const mintedBaseComponentOverrides: ComponentOverrides<ColorLike> = {
 		selectionHighlight: p.mist.alpha(0.76),
 		errorHighlight: p.crimson,
 		warningHighlight: p.peach,
-		findMatchHighlight: mix(
-			backgrounds.surface,
-			p.lavender.alpha(0.81),
-			0.5,
-		),
+		findMatchHighlight: mix(backgrounds.surface, p.lavender.alpha(0.81), 0.5),
 	},
 	breadcrumb: {
 		background: p.midnight,
@@ -513,15 +503,9 @@ export const mintedBaseComponentOverrides: ComponentOverrides<ColorLike> = {
 		diagonalFill: p.steel,
 	},
 	merge: (() => {
-		const incoming = p.midnight
-			.mix(p.seafoam, 0.1)
-			.saturate(1)
-			.darker(0.2);
+		const incoming = p.midnight.mix(p.seafoam, 0.1).saturate(1).darker(0.2);
 		const current = p.midnight.mix(p.cyan, 0.1).saturate(1).darker(0.2);
-		const common = p.midnight
-			.mix(p.peach, 0.1)
-			.saturate(1)
-			.darker(0.2);
+		const common = p.midnight.mix(p.peach, 0.1).saturate(1).darker(0.2);
 		return {
 			currentHeaderBackground: current.darker(0.1),
 			currentContentBackground: current.darker(0.2),
@@ -551,10 +535,22 @@ export const mintedBaseUi: UserInterface<ColorLike> = {
 	borders,
 	accent,
 	status: {
-		error: mkElementColors(p.crimson, { background: backgrounds.base, foreground: foregrounds.default }),
-		warning: mkElementColors(p.peach, { background: backgrounds.base, foreground: foregrounds.default }),
-		info: mkElementColors(p.cyan, { background: backgrounds.base, foreground: foregrounds.default }),
-		success: mkElementColors(p.seafoam, { background: backgrounds.base, foreground: foregrounds.default }),
+		error: mkElementColors(p.crimson, {
+			background: backgrounds.base,
+			foreground: foregrounds.default,
+		}),
+		warning: mkElementColors(p.peach, {
+			background: backgrounds.base,
+			foreground: foregrounds.default,
+		}),
+		info: mkElementColors(p.cyan, {
+			background: backgrounds.base,
+			foreground: foregrounds.default,
+		}),
+		success: mkElementColors(p.seafoam, {
+			background: backgrounds.base,
+			foreground: foregrounds.default,
+		}),
 	},
 	selection: {
 		background: mix(mintedBaseSyntax.source, p.midnight, 0.5),
@@ -677,19 +673,20 @@ export const mintedBaseUi: UserInterface<ColorLike> = {
 // Language Overrides
 // ============================================================================
 
-export const mintedBaseLanguageOverrides: ThemeDefinition["languageOverrides"] = {
-	go: {
-		functions: {
-			default: p.ice,
+export const mintedBaseLanguageOverrides: ThemeDefinition["languageOverrides"] =
+	{
+		go: {
+			functions: {
+				default: p.ice,
+			},
 		},
-	},
-	css: {
-		variables: {
-			default: p.slate,
-			property: p.darkBlue,
+		css: {
+			variables: {
+				default: p.slate,
+				property: p.darkBlue,
+			},
 		},
-	},
-};
+	};
 
 // ============================================================================
 // Semantic Tokens
@@ -746,7 +743,9 @@ export const mintedBaseModifiers: NonNullable<ThemeDefinition["modifiers"]> = {
 // Extra Colors (VS Code specific — must be string values)
 // ============================================================================
 
-export const mintedBaseExtraColors: NonNullable<ThemeDefinition["extraColors"]> = {
+export const mintedBaseExtraColors: NonNullable<
+	ThemeDefinition["extraColors"]
+> = {
 	"editorPane.background": p.midnight2.render(),
 	"editor.lineHighlightBackground": p.lineHighlight.render(),
 	"editor.wordHighlightBackground": p.wordHighlight.render(),

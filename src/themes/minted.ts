@@ -5,27 +5,18 @@
  * Changing a seed cascades through the entire theme.
  */
 
-import {
-	make,
-	UIComponents,
-	type ThemeDefinition,
-	type SlimThemeDefinition,
-	type UserInterface,
-	type ColorLike,
-	normalizeTheme,
-} from "./types";
+import { Color, mkElementColors, oklch } from "@/core/color";
 import { SemanticTokenModifier } from "../types";
-import { Color, mkColor, mkElementColors, oklch } from "@/core/color";
-import {
-	alpha20,
-	alpha50,
-	darken,
-	l10,
-	lighten,
-	mix,
-	transparentize,
-} from "./utils";
 import { p } from "./mintedBase";
+import {
+	type ColorLike,
+	make,
+	normalizeTheme,
+	type SlimThemeDefinition,
+	type ThemeDefinition,
+	type UserInterface,
+} from "./types";
+import { darken, l10, lighten, mix, transparentize } from "./utils";
 
 // ============================================================================
 // Minted-specific palette extensions
@@ -33,12 +24,12 @@ import { p } from "./mintedBase";
 
 const mp = {
 	...p,
-	fg: oklch(0.475, 0.052, 266).alpha(0.90),
+	fg: oklch(0.475, 0.052, 266).alpha(0.9),
 	fgbright: oklch(0.836, 0.019, 269).alpha(0.91),
-	fgsubtle: oklch(0.660, 0.044, 267).alpha(0.91),
-	misty: oklch(0.660, 0.044, 267).alpha(0.91),
+	fgsubtle: oklch(0.66, 0.044, 267).alpha(0.91),
+	misty: oklch(0.66, 0.044, 267).alpha(0.91),
 	uiFg: oklch(0.636, 0.062, 269).alpha(0.71),
-	uiMuted: oklch(0.530, 0.078, 285).alpha(0.67),
+	uiMuted: oklch(0.53, 0.078, 285).alpha(0.67),
 } as const;
 
 // ============================================================================
@@ -107,7 +98,7 @@ const syntax: SlimThemeDefinition["syntax"] = {
 
 	punctuation: {
 		default: mp.mist.alpha(0.76),
-		definition: oklch(0.355, 0.030, 292).alpha(0.82),
+		definition: oklch(0.355, 0.03, 292).alpha(0.82),
 		delimiter: mp.charcoal,
 		bracket: mp.charcoal,
 		accessor: mp.charcoal,
@@ -142,24 +133,28 @@ const core = {
 	active: mp.ice,
 } as const;
 
-const overlay = mp.charcoal.set({
-	l: l => l * 1.02,
-	c: c => c * 1.05,
-	h: h => h,
-}).alpha(0.1)
+const overlay = mp.charcoal
+	.set({
+		l: (l) => l * 1.02,
+		c: (c) => c * 1.05,
+		h: (h) => h,
+	})
+	.alpha(0.1);
 
 const backgrounds: UserInterface<ColorLike>["backgrounds"] = {
 	base: mp.midnight,
 	darker: mp.midnight.darker(0.15),
-	surface: mp.midnight.set({
-		l: l => l * 1.12,
-		c: c => c * 1.8,
-		h: h => h
-	}).alpha(0.84),
+	surface: mp.midnight
+		.set({
+			l: (l) => l * 1.12,
+			c: (c) => c * 1.8,
+			h: (h) => h,
+		})
+		.alpha(0.84),
 	raised: mp.midnight.set({
-		l: l => l * 1.13,
-		c: c => c * 1.5,
-		h: h => h,
+		l: (l) => l * 1.13,
+		c: (c) => c * 1.5,
+		h: (h) => h,
 	}),
 	overlay,
 	codeBlock: mp.midnightDark.darker(0.05),
@@ -177,7 +172,7 @@ const foregrounds: UserInterface<ColorLike>["foregrounds"] = {
 const borders: UserInterface<ColorLike>["borders"] = {
 	default: oklch(0.483, 0.116, 279).alpha(0.08),
 	active: core.accent.desaturate(0.1).darker(0.4).transparent(0.4),
-	subtle: oklch(0.199, 0.018, 280).alpha(0.90),
+	subtle: oklch(0.199, 0.018, 280).alpha(0.9),
 	separator: mp.mist.alpha(0.1).hexa(),
 	transparent: oklch(0.199, 0.018, 280).alpha(0.33),
 };
@@ -206,14 +201,26 @@ const ui: UserInterface<ColorLike> = {
 	borders,
 	accent,
 	status: {
-		error: mkElementColors(mp.crimson, { background: backgrounds.base, foreground: foregrounds.default }),
+		error: mkElementColors(mp.crimson, {
+			background: backgrounds.base,
+			foreground: foregrounds.default,
+		}),
 		warning: {
-			...mkElementColors(mp.peach, { background: backgrounds.base, foreground: foregrounds.default }),
+			...mkElementColors(mp.peach, {
+				background: backgrounds.base,
+				foreground: foregrounds.default,
+			}),
 			foreground: oklch(0.914, 0.041, 208).hexa(),
 		},
-		info: mkElementColors(mp.bluegray, { background: backgrounds.base, foreground: foregrounds.default }),
+		info: mkElementColors(mp.bluegray, {
+			background: backgrounds.base,
+			foreground: foregrounds.default,
+		}),
 		success: {
-			...mkElementColors(mp.seafoam, { background: backgrounds.base, foreground: foregrounds.default }),
+			...mkElementColors(mp.seafoam, {
+				background: backgrounds.base,
+				foreground: foregrounds.default,
+			}),
 			foreground: oklch(0.915, 0.098, 131).hexa(),
 		},
 	},
@@ -234,12 +241,12 @@ const ui: UserInterface<ColorLike> = {
 			backgroundInactive: mp.charcoal,
 		},
 		activeLine: {
-			background: oklch(0.220, 0.052, 286).alpha(0.33),
+			background: oklch(0.22, 0.052, 286).alpha(0.33),
 		},
 	},
 	indentGuide: {
-		background: oklch(0.190, 0.030, 283).alpha(0.80),
-		activeBackground: oklch(0.37, 0.098, 281).alpha(0.60),
+		background: oklch(0.19, 0.03, 283).alpha(0.8),
+		activeBackground: oklch(0.37, 0.098, 281).alpha(0.6),
 	},
 	whitespace: {
 		foreground: mp.editorWhitespace,
@@ -262,13 +269,15 @@ const ui: UserInterface<ColorLike> = {
 
 	git: {
 		added: oklch(0.577, 0.063, 182).alpha(0.27),
-		modified: Color.create(accent.primaryForeground).set({
-			l: l => l * 0.63,
-			c: (c) => c * 1.47,
-			h: h => h + 84
-		}).alpha(0.33),
-		deleted: mp.deletedRose.alpha(0.30),
-		wordAdded: oklch(0.450, 0.070, 258).alpha(0.21),
+		modified: Color.create(accent.primaryForeground)
+			.set({
+				l: (l) => l * 0.63,
+				c: (c) => c * 1.47,
+				h: (h) => h + 84,
+			})
+			.alpha(0.33),
+		deleted: mp.deletedRose.alpha(0.3),
+		wordAdded: oklch(0.45, 0.07, 258).alpha(0.21),
 		wordDeleted: mp.deletedRose.alpha(0.27),
 		untracked: mp.mist.alpha(0.76),
 		ignored: mp.mist.alpha(0.76),
@@ -332,11 +341,13 @@ const ui: UserInterface<ColorLike> = {
 		background: darken(backgrounds.base, 0.05),
 		foreground: mp.mist.alpha(0.76),
 		titleForeground: transparentize(mp.white, 0.5),
-		titleBackground: Color.create(backgrounds.raised).set({
-			l: l => l * 0.95,
-			c: c => c * 0.95,
-			h: h => h,
-		}).alpha(0.7),
+		titleBackground: Color.create(backgrounds.raised)
+			.set({
+				l: (l) => l * 0.95,
+				c: (c) => c * 0.95,
+				h: (h) => h,
+			})
+			.alpha(0.7),
 	},
 	inlineHints: {
 		background: backgrounds.raised,
@@ -350,7 +361,7 @@ const ui: UserInterface<ColorLike> = {
 		selected: {
 			background: oklch(0.259, 0.067, 288).alpha(0.23),
 		},
-	}
+	},
 };
 
 // ============================================================================
@@ -360,7 +371,7 @@ const ui: UserInterface<ColorLike> = {
 const components = {
 	editor: {
 		background: darken(ui.backgrounds.base, 0.1),
-		foreground: oklch(0.482, 0.056, 274).alpha(0.90),
+		foreground: oklch(0.482, 0.056, 274).alpha(0.9),
 		lineHighlight:
 			ui.highlights?.activeLine?.background || ui.backgrounds.overlay,
 		lineHighlightBorder: lighten(ui.backgrounds.base, 0.15),
@@ -380,12 +391,16 @@ const components = {
 		lineNumberForeground: darken(mp.mist.alpha(0.76), 0.7),
 		selectionBackground: mix(syntax.source, mp.midnight, 0.8),
 		inactiveSelectionBackground: darken(mp.lavender.alpha(0.81), 0.8),
-		findMatchBackground: mix(mp.midnight, oklch(0.577, 0.097, 256).alpha(0.33), 0.5),
+		findMatchBackground: mix(
+			mp.midnight,
+			oklch(0.577, 0.097, 256).alpha(0.33),
+			0.5,
+		),
 	},
 	editorGutter: {
 		background: ui.backgrounds.darker,
 		modifiedBackground: mp.gold.transparent(),
-		addedBackground: oklch(0.10, 0.01, 165),
+		addedBackground: oklch(0.1, 0.01, 165),
 		deletedBackground: oklch(0.12, 0.01, 6),
 		foldingControl: mp.steel.transparent(),
 	},
@@ -437,7 +452,10 @@ const components = {
 		noFolderForeground: mp.mist.alpha(0.76),
 	},
 	tabs: {
-		activeBackground: mp.midnight.set({ l: l => l * 0.96, c: c => c * 1.6 }),
+		activeBackground: mp.midnight.set({
+			l: (l) => l * 0.96,
+			c: (c) => c * 1.6,
+		}),
 		activeForeground: mp.mist.alpha(0.76),
 		activeBorder: ui.borders.default,
 		activeBorderTop: mp.steel,
@@ -493,7 +511,7 @@ const components = {
 	},
 	scrollbar: {
 		shadow: mp.midnight,
-		sliderBackground: oklch(0.237, 0.051, 282).alpha(0.30),
+		sliderBackground: oklch(0.237, 0.051, 282).alpha(0.3),
 		sliderHoverBackground: mp.midnight,
 		sliderActiveBackground: mp.midnight,
 	},
@@ -502,7 +520,11 @@ const components = {
 		selectionHighlight: mp.mist.alpha(0.76),
 		errorHighlight: mp.crimson,
 		warningHighlight: mp.peach,
-		findMatchHighlight: mix(ui.backgrounds.surface, mp.lavender.alpha(0.81), 0.5),
+		findMatchHighlight: mix(
+			ui.backgrounds.surface,
+			mp.lavender.alpha(0.81),
+			0.5,
+		),
 	},
 	breadcrumb: {
 		background: mp.midnight,
@@ -511,8 +533,8 @@ const components = {
 		activeSelectionForeground: mp.mist.alpha(0.76),
 	},
 	terminal: {
-		background: Color.create(ui.backgrounds.darker).set({ c: c => c * 0.8 }),
-		foreground: oklch(0.540, 0.066, 279).alpha(0.76),
+		background: Color.create(ui.backgrounds.darker).set({ c: (c) => c * 0.8 }),
+		foreground: oklch(0.54, 0.066, 279).alpha(0.76),
 		border: mix(ui.backgrounds.darker, mp.steel, 0.1),
 		cursorForeground: mp.mist.alpha(0.76),
 		selectionBackground: l10(mp.midnight),
@@ -548,25 +570,16 @@ const components = {
 		titleForeground: mp.mist.alpha(0.76),
 	},
 	diffEditor: {
-		insertedTextBackground: oklch(0.10, 0.01, 165),   // function hue
-		removedTextBackground: oklch(0.12, 0.01, 6),      // operator hue
-		insertedLineBackground: oklch(0.10, 0.01, 165),
+		insertedTextBackground: oklch(0.1, 0.01, 165), // function hue
+		removedTextBackground: oklch(0.12, 0.01, 6), // operator hue
+		insertedLineBackground: oklch(0.1, 0.01, 165),
 		removedLineBackground: oklch(0.12, 0.01, 6),
 		diagonalFill: mp.alphaWhite,
 	},
 	merge: (() => {
-		const incoming = mp.midnight
-			.mix(mp.seafoam, 0.1)
-			.saturate(1)
-			.darker(0.2);
-		const current = mp.midnight
-			.mix(mp.cyan, 0.1)
-			.saturate(1)
-			.darker(0.2);
-		const common = mp.midnight
-			.mix(mp.peach, 0.1)
-			.saturate(1)
-			.darker(0.2);
+		const incoming = mp.midnight.mix(mp.seafoam, 0.1).saturate(1).darker(0.2);
+		const current = mp.midnight.mix(mp.cyan, 0.1).saturate(1).darker(0.2);
+		const common = mp.midnight.mix(mp.peach, 0.1).saturate(1).darker(0.2);
 		return {
 			currentHeaderBackground: current.darker(0.1),
 			currentContentBackground: current.darker(0.2),
@@ -584,7 +597,6 @@ const components = {
 		requestBackground: mp.chatRequestBg,
 		codeBlockBackground: ui.backgrounds.codeBlock,
 	},
-
 };
 
 // ============================================================================
@@ -624,7 +636,8 @@ const mintedSource = {
 		},
 
 		[SemanticTokenModifier.async]: {
-			transform: (color: string) => new Color(color).mix(mp.lavender.alpha(0.81), 0.1),
+			transform: (color: string) =>
+				new Color(color).mix(mp.lavender.alpha(0.81), 0.1),
 		},
 		[SemanticTokenModifier.declaration]: {
 			transform: (c) => mix(c, ui.foregrounds.default, 0.5),
@@ -653,8 +666,12 @@ const mintedSource = {
 		"editorGroupHeader.tabsBackground": mp.black.render(),
 		"button.border": mp.buttonBorder.render(),
 		"button.separator": mp.buttonSeparator.render(),
-		"tree.indentGuidesStroke": Color.create(ui.indentGuide.activeBackground).render(),
-		"tree.inactiveIndentGuidesStroke": oklch(0.19, 0.02, 280).alpha(0.87).render(),
+		"tree.indentGuidesStroke": Color.create(
+			ui.indentGuide.activeBackground,
+		).render(),
+		"tree.inactiveIndentGuidesStroke": oklch(0.19, 0.02, 280)
+			.alpha(0.87)
+			.render(),
 		"settings.headerForeground": mp.settingsHeaderFg.render(),
 		"settings.textInputBackground": mp.settingsInputBg.render(),
 		"settings.textInputForeground": mp.steel.render(),
