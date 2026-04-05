@@ -11,8 +11,9 @@ import {
   normalizeTheme,
 } from "./types";
 import { SemanticTokenModifier } from "../types";
-import { Color, mkElementColors } from "@/core/color";
+import { Color, mkElementColors, oklch } from "@/core/color";
 import { mix } from "./utils";
+import hsl from "colorjs.io/src/spaces/hsl.js";
 
 // ============================================================================
 // 1. Color Palette
@@ -115,7 +116,8 @@ export enum palette {
   widgetBorder = "#45414C",
   suggestBg = "#1B1629",
   listActive = "#2A2441",
-  focusBorder = "#D1F1EC80",
+  /** Opaque workbench focus / sash / group chrome (avoids washed glass look). */
+  focusBorder = "#a099ae",
   tabBorder = "#575B6F19",
   tabActiveBorder = "#d0cfd3",
   buttonBg = "#443e5040",
@@ -282,14 +284,17 @@ const apathySource = {
   ui: {
     backgrounds: {
       base: "#000000",
-      surface: "#1B1A1C4f",
-      raised: "#0f0c1cd5",
-      overlay: "#07060d",
+      /** Solid shell surface (was translucent #1B1A1C4f — looked like frosted glass). */
+      surface: palette.panelBg,
+      /** Dropdowns, inputs, raised cards — match suggestBg, fully opaque. */
+      raised: palette.suggestBg,
+      overlay: "#07060dff",
     },
     foregrounds: {
       default: "#dad7fc80",
       muted: "#555174",
       subtle: "#26244a",
+      focused: palette.uiForeground,
       disabled: Color.create(palette.inputBorder).set({
         l: l => l * 1.1,
         c: c => 0.07,
@@ -298,23 +303,24 @@ const apathySource = {
       accent: Color.create(palette.cyan).alpha(0.9),
     },
     borders: {
-      default: "#201a3938",
+      default: "#3a3448",
       active: "#0B0A3C",
-      subtle: "#3B2A7C2f",
-      disabled: "#07060d",
-      transparent: "#07060d",
-      selected: "#201a39c8",
+      subtle: "#4a3f60",
+      disabled: "#07060dff",
+      transparent: "#07060dff",
+      selected: "#3d3558",
     },
     elements: {
-      background: "#0302045f",
-      hover: { background: "#2f294a2a" },
-      selected: { background: "#2f294a2a" },
+      background: "#0c0a12",
+      hover: { background: "#2f294a44" },
+      selected: { background: "#2f294a55" },
     },
     subtleElements: {
-      background: "#07060bbf",
-      selected: { background: "#3c36544f" },
-      hover: { background: "#3c36544f" },
-      active: { background: "#3c36544f" },
+      background: "#07060dff",
+      selectionBackground: "#07060dff",
+      selected: { background: "#3c365466" },
+      hover: { background: "#3c365466" },
+      active: { background: "#3c365466" },
     },
     panels: {
       background: "#0B0A0C",
@@ -335,13 +341,40 @@ const apathySource = {
         background: "#15142faf",
       },
       success: mkElementColors(palette.addedGreen, { background: "#0B0A0C", foreground: palette.uiForeground }),
+      hint: {
+        ...mkElementColors(palette.info, { background: "#0B0A0C", foreground: palette.uiForeground }),
+        background: "#15142faf",
+        foreground: palette.info,
+      },
+      conflict: {
+        ...mkElementColors(palette.orange, { background: "#0B0A0C", foreground: palette.uiForeground }),
+        background: "#15142faf",
+        border: oklch(0.713, 0.127, 151).alpha(0.07),
+        foreground: palette.orange,
+      },
+      created: {
+        ...mkElementColors(Color.create(palette.addedGreen).set({
+          l: l => l + 3,
+          c: c => c * 1.1,
+          h: h => h - 12,
+        }), { background: "#0B0A0C", foreground: palette.uiForeground }),
+        foreground: oklch(0.911, 0.14, 140).alpha(0.8),
+      },
     },
     focus: {
       border: "#0B0A3C",
     },
     highlights: {
       activeLine: {
-        background: "#07060d",
+        background: oklch(0.15, 0.03, 281),
+      },
+      word: {
+        background: palette.wordHighlight,
+        backgroundStrong: palette.wordHighlightStrong,
+      },
+      selection: {
+        backgroundInactive: palette.inactiveSelection,
+        backgroundActive: palette.selection,
       },
     },
     indentGuide: {
@@ -359,21 +392,40 @@ const apathySource = {
       deleted: palette.deletedRed,
       untracked: "#e1d9e79e",
       ignored: "#3b4940",
-      conflict: palette.orange,
+      conflict: Color.create(palette.orange).alpha(0.9),
     },
   },
   componentOverrides: {
     editor: {
       background: "#08070fdf",
       foreground: palette.editorFg,
+      selectionBackground: palette.selection,
+      selectionHighlightBackground: palette.uiForeground,
+      inactiveSelectionBackground: palette.inactiveSelection,
+      findMatchBackground: palette.uiForeground,
+      findMatchHighlightBackground: palette.uiForeground,
+      findRangeHighlightBackground: palette.uiForeground,
       lineHighlight: palette.lineHighlight,
       lineHighlightBorder: palette.lineHighlight,
-      selectionHighlight: palette.selectionHighlight,
-      wordHighlight: palette.wordHighlight,
-      wordHighlightStrong: palette.wordHighlightStrong,
-      findMatchHighlight: palette.findMatchHighlight,
-      findMatch: palette.findMatch,
-      rangeHighlight: "#2A244120",
+      lineNumberForeground: "#45455f8f",
+      lineNumberActiveForeground: palette.slate,
+    },
+    quickInput: {
+      background: palette.panelBg,
+      foreground: palette.uiForeground,
+      listFocusBackground: palette.widgetBg,
+      listFocusForeground: palette.uiForeground,
+    },
+    editorGroupHeader: {
+      tabsBackground: palette.tabHeaderBg,
+      tabsBorder: palette.widgetBorder,
+      noTabsBackground: palette.tabHeaderBg,
+      border: palette.widgetBorder,
+    },
+    editorWidget: {
+      background: palette.widgetBg,
+      foreground: palette.uiForeground,
+      border: palette.widgetBorder,
     },
     editorGutter: {
       background: palette.gutterBg,
@@ -387,29 +439,31 @@ const apathySource = {
       activeForeground: palette.slate,
     },
     activityBar: {
-      background: palette.background,
+      background: palette.panelBg,
       foreground: palette.white,
       inactiveForeground: "#e0dfe127",
-      border: palette.background,
+      border: palette.panelBg,
       badgeBackground: "#FF7A0000",
       badgeForeground: palette.brightGreen,
     },
     sideBar: {
-      background: palette.background,
+      background: palette.panelBg,
       foreground: "#827b90cf",
-      border: palette.background,
+      border: palette.panelBg,
       sectionHeaderBackground: "#0f0e1000",
       sectionHeaderForeground: "#e3e1e8b7",
     },
     panel: {
+      // Zed reads this path; VS Code uses extraColors.panel.background for shell tint.
       background: palette.background,
       foreground: palette.white,
-      border: "#352b4655",
+      border: palette.widgetBorder,
       titleActiveForeground: "#e3e1e891",
       titleInactiveForeground: "#e0e0e069",
       titleActiveBorder: "#ffffff",
     },
     statusBar: {
+      // Zed title bar / tab bar / toolbar follow this; VS Code uses extraColors.
       background: palette.background,
       foreground: "#7c7c7c8a",
       border: palette.background,
@@ -430,14 +484,16 @@ const apathySource = {
       unfocusedActiveBackground: palette.tabBg,
       unfocusedActiveForeground: palette.muted,
       modifiedBorder: palette.gold,
+      border: "#212131",
+      // tabBarBackground: "#07060d44",
     },
     list: {
       activeSelectionBackground: palette.listActive,
       activeSelectionForeground: "#E6E2D1",
       inactiveSelectionBackground: palette.suggestBg,
       inactiveSelectionForeground: "#E6E2D1",
-      hoverBackground: "#2A244140",
-      hoverForeground: "#E6E2D1",
+      hoverBackground: palette.widgetBg,
+      hoverForeground: palette.uiForeground,
       focusBackground: palette.listActive,
       focusForeground: "#E6E2D1",
       highlightForeground: palette.gold,
@@ -473,21 +529,23 @@ const apathySource = {
       sliderActiveBackground: palette.widgetBorder,
     },
     minimap: {
-      background: palette.background,
+      background: palette.panelBg,
       selectionHighlight: palette.selection,
       errorHighlight: palette.errorRed,
       warningHighlight: palette.warning,
       findMatchHighlight: palette.findMatch,
     },
     breadcrumb: {
-      background: palette.background,
+      background: palette.panelBg,
       foreground: "#e0e0e03c",
       focusForeground: "#E6E2D1",
       activeSelectionForeground: palette.yellow,
     },
     terminal: {
-      background: palette.background,
+      // Slightly darker than main shell; Zed reads this path (no extraColors merge).
+      background: "#050408ff",
       foreground: "#6464b97c",
+      border: palette.widgetBorder,
       cursorForeground: palette.white,
       selectionBackground: palette.selection,
       cursor: palette.white,
@@ -513,6 +571,9 @@ const apathySource = {
       foreground: palette.white,
       border: palette.widgetBorder,
     },
+    ruler: {
+      foreground: oklch(0.355, 0.134, 288).alpha(0.18),
+    },
     peekView: {
       editorBackground: "#0F0D1A",
       editorBorder: palette.widgetBorder,
@@ -534,18 +595,31 @@ const apathySource = {
       currentHeaderBackground: palette.suggestBg,
       incomingHeaderBackground: palette.suggestBg,
       commonHeaderBackground: palette.suggestBg,
-      currentContentBackground: mix(palette.addedGreen, palette.background, 0.3),
-      incomingContentBackground: mix(palette.gold, palette.background, 0.3),
-      commonContentBackground: mix(palette.widgetBorder, palette.background, 0.3),
+      currentContentBackground: mix(palette.addedGreen, palette.panelBg, 0.3),
+      incomingContentBackground: mix(palette.gold, palette.panelBg, 0.3),
+      commonContentBackground: mix(palette.widgetBorder, palette.panelBg, 0.3),
     },
   },
 
   // Extra VS Code colors not covered by structured UI
   extraColors: {
+    // Workbench shell — VS Code only (Zed does not merge extraColors).
+    "panel.background": palette.panelBg,
+    "statusBar.background": palette.panelBg,
+    "statusBar.border": palette.panelBg,
+
+    "tab.activeBackground": palette.tabBg,
+    "tab.inactiveBackground": palette.tabBg,
+    "tab.hoverBackground": palette.tabBg,
+    "tab.unfocusedActiveBackground": palette.tabBg,
+
+    "terminal.background": palette.panelBg,
+
     // Editor extras
     "editorPane.background": palette.editorPaneBackground,
     "editorCursor.foreground": "#da4c51",
     "editor.selectionBackground": palette.selection,
+    "editor.background": "#0a0a10",
     "editor.inactiveSelectionBackground": palette.inactiveSelection,
 
     // Editor hints
@@ -564,30 +638,23 @@ const apathySource = {
     "editorWhitespace.foreground": palette.whitespace,
     "editorRuler.foreground": palette.ruler,
 
-    // Editor widgets
-    "editorWidget.background": palette.widgetBg,
-    "editorWidget.border": palette.widgetBorder,
     "editorSuggestWidget.background": palette.suggestBg,
     "editorSuggestWidget.border": palette.widgetBorder,
     "editorSuggestWidget.foreground": "#E6E2D1",
     "editorSuggestWidget.selectedBackground": palette.listActive,
 
     // Sidebar extras
-    "sideBarTitle.foreground": "#e3e1e880",
+    "sideBarTitle.foreground": "#e3e1e8d0",
 
     // Title bar
-    "titleBar.activeBackground": palette.background,
+    "titleBar.activeBackground": palette.panelBg,
     "titleBar.activeForeground": "#e3e1e887",
-    "titleBar.inactiveBackground": palette.background,
+    "titleBar.inactiveBackground": palette.panelBg,
     "titleBar.inactiveForeground": "#8d8d8d90",
 
-    // Tabs extras
-    "tab.border": palette.tabBorder,
-    "editorGroupHeader.tabsBackground": palette.tabHeaderBg,
-
-    // Sticky scroll
-    "editorStickyScroll.background": "#0f0b1581",
-    "editorStickyScroll.border": "#10091814",
+    // Sticky scroll (solid bar — no glass)
+    "editorStickyScroll.background": "#0d0b12",
+    "editorStickyScroll.border": "#2a2635",
     "editorStickyScroll.shadow": "#00000080",
 
     // Focus borders
@@ -599,7 +666,7 @@ const apathySource = {
 
     // Tree & separators
     "tree.indentGuidesStroke": palette.widgetBorder,
-    "textSeparator.foreground": "#45414c6b",
+    "textSeparator.foreground": "#45414c",
     "contrastBorder": palette.focusBorder,
 
     // Progress bar (use brightGreen C3E88D per original theme)

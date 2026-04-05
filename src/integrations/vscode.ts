@@ -198,7 +198,9 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		// ═══════════════════════════════════════════════════════════════════════
 		// Editor
 		// ═══════════════════════════════════════════════════════════════════════
-		"editor.background": c("ui.overrides.editor.background", "ui.backgrounds.surface", "background"),
+		"editor.background": c(
+			"ui.editor.background",
+			"ui.overrides.editor.background", "ui.backgrounds.surface", "background"),
 		"editor.foreground": c("ui.overrides.editor.foreground", "ui.foregrounds.default"),
 		"editor.hoverHighlightBackground": c("ui.overrides.editor.lineHighlight", "ui.selection.background"),
 		"editor.selectionHighlightBorder": c("ui.overrides.editor.lineHighlightBorder", "ui.borders.active"),
@@ -232,13 +234,22 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		"editorGutter.addedBackground": c("ui.overrides.editorGutter.addedBackground", "ui.git.added"),
 		// @ts-ignore
 		"editorGutter.deletedBackground": c("ui.overrides.editorGutter.deletedBackground", "ui.git.deleted"),
-		"quickInput.background": c("ui.backgrounds.surface"),
-		"quickInput.foreground": c("ui.foregrounds.default"),
-		"quickInputList.focusBackground": c("ui.backgrounds.overlay"),
-		"quickInputList.focusForeground": c("ui.foregrounds.focused"),
-		"list.hoverBackground": c("ui.backgrounds.overlay"),
-		"list.hoverForeground": c("ui.foregrounds.focused"),
-		"quickInput.list.focusBackground": c("ui.backgrounds.overlay"),
+		"quickInput.background": c("ui.overrides.quickInput.background", "ui.backgrounds.surface"),
+		"quickInput.foreground": c("ui.overrides.quickInput.foreground", "ui.foregrounds.default"),
+		"quickInputList.focusBackground": c(
+			"ui.overrides.quickInput.listFocusBackground",
+			"ui.backgrounds.overlay",
+		),
+		"quickInputList.focusForeground": c(
+			"ui.overrides.quickInput.listFocusForeground",
+			"ui.foregrounds.focused",
+		),
+		"list.hoverBackground": c("ui.overrides.list.hoverBackground", "ui.backgrounds.overlay"),
+		"list.hoverForeground": c("ui.overrides.list.hoverForeground", "ui.foregrounds.focused"),
+		"quickInput.list.focusBackground": c(
+			"ui.overrides.quickInput.listFocusBackground",
+			"ui.backgrounds.overlay",
+		),
 
 		// ═══════════════════════════════════════════════════════════════════════
 		// Editor Line Number
@@ -270,7 +281,7 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		"sideBar.border": c("ui.overrides.sideBar.border", "ui.borders.default"),
 		"sideBarSectionHeader.background": c("ui.overrides.sideBar.sectionHeaderBackground", "ui.backgrounds.raised"),
 		"sideBarSectionHeader.foreground": c("ui.overrides.sideBar.sectionHeaderForeground", "ui.foregrounds.default"),
-		"panel.border": c("ui.borders.default"),
+		"panel.border": c("ui.overrides.panel.border", "ui.borders.default"),
 		// "gauge.border": c("ui.borders.subtle"),
 		"sash.hoverBorder": c("ui.borders.active"),
 		"editorGroup.border": c("ui.borders.subtle"),
@@ -280,6 +291,7 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		"editorWidget.border": c("ui.overrides.editorWidget.border", "ui.borders.default"),
 		"editorWidget.foreground": c("ui.overrides.editorWidget.foreground", "ui.foregrounds.default"),
 		"input.border": c("ui.overrides.input.border", "ui.borders.default"),
+		"panelInput.border": c("ui.overrides.input.border", "ui.borders.default"),
 		// @ts-ignore
 		"diffEditorGutter.insertedLineBackground": c("ui.overrides.editorGutter.addedBackground", "ui.git.added"),
 		// @ts-ignore
@@ -324,6 +336,20 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		"tab.unfocusedActiveBackground": c("ui.overrides.tabs.unfocusedActiveBackground", "ui.backgrounds.surface"),
 		"tab.unfocusedActiveForeground": c("ui.overrides.tabs.unfocusedActiveForeground", "ui.foregrounds.muted"),
 		"tab.lastPinnedBorder": c("ui.overrides.tabs.modifiedBorder", "ui.accent.primary"),
+		"editorGroupHeader.tabsBackground": c(
+			"ui.overrides.editorGroupHeader.tabsBackground",
+			"ui.backgrounds.surface",
+		),
+		"editorGroupHeader.tabsBorder": c(
+			"ui.overrides.editorGroupHeader.tabsBorder",
+			"ui.borders.subtle",
+		),
+		"editorGroupHeader.noTabsBackground": c(
+			"ui.overrides.editorGroupHeader.noTabsBackground",
+			"ui.overrides.editorGroupHeader.tabsBackground",
+			"ui.backgrounds.surface",
+		),
+		"editorGroupHeader.border": c("ui.overrides.editorGroupHeader.border", "ui.borders.default"),
 
 		// ═══════════════════════════════════════════════════════════════════════
 		// List
@@ -482,8 +508,7 @@ function buildColors(t: ThemeDefinition, c: ReturnType<typeof strictColorFactory
 		"sideBarTitle.background": c("ui.panels.titleBackground", "ui.backgrounds.surface"),
 		"sideBarTitle.foreground": c("ui.panels.titleForeground", "ui.foregrounds.default"),
 
-		"tab.border": c("ui.borders.subtle"),
-		"editorGroupHeader.tabsBackground": c("ui.backgrounds.surface"),
+		"tab.border": c("ui.overrides.tabs.border", "ui.borders.subtle"),
 		"button.separator": c("ui.borders.separator"),
 		"tree.indentGuidesStroke": c("ui.indentGuide.background", "ui.borders.subtle"),
 		"composerPane.background": c("ui.overrides.chat.background", "ui.backgrounds.surface"),

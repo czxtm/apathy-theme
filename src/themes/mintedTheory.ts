@@ -454,11 +454,16 @@ const mintedTheorySource = {
 			"focusBackground": oklch(0.2466, 0.02518, 274.34, 0.4549),
 		},
 		editor: {
+			background: "#0a0a10",
 			selectionBackground: oklch(0.244, 0.02083, 285, 0.513)
 		},
 		input: {
 			background: oklch(0.17, 0.0082, 285, 0.3725)
 		},
+		"editor.background": "#0a0a10",
+		overrides: {
+			"background": "#0a0a10"
+		}
 		// ...(terminalOverrides ? { terminal: terminalOverrides } : {}),
 	},
 } satisfies SlimThemeDefinition;

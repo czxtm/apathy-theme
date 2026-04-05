@@ -1,22 +1,27 @@
 {
-  "compilerOptions": {
-    "module": "ESNext",
-    "target": "ES2020",
-    "outDir": "out",
-    "lib": ["ES2020"],
-    "sourceMap": true,
-    "rootDir": "src",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "bundler",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    },
-    "incremental": true
-  },
-  "include": ["src/**/*"],
+	"compilerOptions": {
+		"module": "ESNext",
+		"target": "ES2020",
+		"outDir": "out",
+		"lib": ["ES2020"],
+		"sourceMap": true,
+		"rootDir": "src",
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"moduleResolution": "bundler",
+		"paths": {
+			"@/*": ["./src/*"],
+			"*": ["./*"]
+		},
+		"incremental": true,
+		"plugins": [
+			{
+				"name": "@effect/language-service"
+			}
+		]
+	},
+	"include": ["src/**/*"],
 	"exclude": ["node_modules", ".vscode-test", "out", "src/archive"]
 }

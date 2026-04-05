@@ -108,7 +108,7 @@ export const p = {
 	gitSubmodule: oklch(0.769, SC * 0.84, 247),
 
 	// ── UI surfaces (derived from surface ramp) ─────────────────────────
-	menuBg: bg(L + 0.058, C * 2.47, H + 10),
+	menuBg: bg(L + 0.032, C * 1.47, H + 10),
 	tabBorder: bg(L + 0.097, C * 2.0),
 	composerBg: bg(L + 0.038, C * 0.99, H - 18),
 	settingsInputBg: bg(L + 0.027, C * 0.67),

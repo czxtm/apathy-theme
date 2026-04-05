@@ -25,183 +25,497 @@ export interface ZedPlayer {
 	background: string;
 	selection: string;
 }
+export type AppearanceContent = "light" | "dark"
+export type AccentContent = string | null
+/**
+ * The background appearance of the window.
+ */
+export type WindowBackgroundContent = "opaque" | "transparent" | "blurred"
+export type FontStyleContent = "normal" | "italic" | "oblique"
 
-export interface ZedThemeStyle {
-	"background.appearance": "opaque" | "blurred";
-	accents: string[];
-	background: string;
+/**
+ * The content of a serialized theme family.
+ */
+export interface ThemeFamilyContent {
+	author: string
+	name: string
+	themes: ThemeContent[]
+	[k: string]: unknown
+}
+/**
+ * The content of a serialized theme.
+ */
+export interface ThemeContent {
+	appearance: AppearanceContent
+	name: string
+	style: ThemeStyleContent
+	[k: string]: unknown
+}
+/**
+ * The content of a serialized theme.
+ */
+export interface ThemeStyleContent {
+	accents?: AccentContent[]
+	/**
+	 * Background Color. Used for the app background and blank panels or windows.
+	 */
+	background?: string | null
+	"background.appearance"?: WindowBackgroundContent | null
+	/**
+	 * Border color. Used for most borders, is usually a high contrast color.
+	 */
+	border?: string | null
+	/**
+	 * Border color. Used for disabled elements, like a disabled input or button.
+	 */
+	"border.disabled"?: string | null
+	/**
+	 * Border color. Used for focused elements, like keyboard focused list item.
+	 */
+	"border.focused"?: string | null
+	/**
+	 * Border color. Used for selected elements, like an active search filter or selected checkbox.
+	 */
+	"border.selected"?: string | null
+	/**
+	 * Border color. Used for transparent borders. Used for placeholder borders when an element gains a border on state change.
+	 */
+	"border.transparent"?: string | null
+	/**
+	 * Border color. Used for deemphasized borders, like a visual divider between two sections
+	 */
+	"border.variant"?: string | null
+	/**
+	 * Indicates some kind of conflict, like a file changed on disk while it was open, or merge conflicts in a Git repository.
+	 */
+	conflict?: string | null
+	"conflict.background"?: string | null
+	"conflict.border"?: string | null
+	/**
+	 * Indicates something new, like a new file added to a Git repository.
+	 */
+	created?: string | null
+	"created.background"?: string | null
+	"created.border"?: string | null
+	/**
+	 * Indicates that something no longer exists, like a deleted file.
+	 */
+	deleted?: string | null
+	"deleted.background"?: string | null
+	"deleted.border"?: string | null
+	/**
+	 * Background Color. Used for the area that shows where a dragged element will be dropped.
+	 */
+	"drop_target.background"?: string | null
+	"editor.active_line.background"?: string | null
+	/**
+	 * Text Color. Used for the text of the line number in the editor gutter when the line is highlighted.
+	 */
+	"editor.active_line_number"?: string | null
+	"editor.active_wrap_guide"?: string | null
+	"editor.background"?: string | null
+	/**
+	 * Highlighted brackets background color.
+	 *
+	 * Matching brackets in the cursor scope are highlighted with this background color.
+	 */
+	"editor.document_highlight.bracket_background"?: string | null
+	/**
+	 * Read-access of a symbol, like reading a variable.
+	 *
+	 * A document highlight is a range inside a text document which deserves special attention. Usually a document highlight is visualized by changing the background color of its range.
+	 */
+	"editor.document_highlight.read_background"?: string | null
+	/**
+	 * Read-access of a symbol, like reading a variable.
+	 *
+	 * A document highlight is a range inside a text document which deserves special attention. Usually a document highlight is visualized by changing the background color of its range.
+	 */
+	"editor.document_highlight.write_background"?: string | null
+	"editor.foreground"?: string | null
+	"editor.gutter.background"?: string | null
+	"editor.highlighted_line.background"?: string | null
+	"editor.indent_guide"?: string | null
+	"editor.indent_guide_active"?: string | null
+	/**
+	 * Text Color. Used to mark invisible characters in the editor.
+	 *
+	 * Example: spaces, tabs, carriage returns, etc.
+	 */
+	"editor.invisible"?: string | null
+	/**
+	 * Text Color. Used for the text of the line number in the editor gutter.
+	 */
+	"editor.line_number"?: string | null
+	"editor.subheader.background"?: string | null
+	"editor.wrap_guide"?: string | null
+	/**
+	 * Background Color. Used for the active state of an element that should have a different background than the surface it's on.
+	 *
+	 * Active states are triggered by the mouse button being pressed down on an element, or the Return button or other activator being pressd.
+	 */
+	"element.active"?: string | null
+	/**
+	 * Background Color. Used for the background of an element that should have a different background than the surface it's on.
+	 *
+	 * Elements might include: Buttons, Inputs, Checkboxes, Radio Buttons...
+	 *
+	 * For an element that should have the same background as the surface it's on, use `ghost_element_background`.
+	 */
+	"element.background"?: string | null
+	/**
+	 * Background Color. Used for the disabled state of an element that should have a different background than the surface it's on.
+	 *
+	 * Disabled states are shown when a user cannot interact with an element, like a disabled button or input.
+	 */
+	"element.disabled"?: string | null
+	/**
+	 * Background Color. Used for the hover state of an element that should have a different background than the surface it's on.
+	 *
+	 * Hover states are triggered by the mouse entering an element, or a finger touching an element on a touch screen.
+	 */
+	"element.hover"?: string | null
+	/**
+	 * Background Color. Used for the selected state of an element that should have a different background than the surface it's on.
+	 *
+	 * Selected states are triggered by the element being selected (or "activated") by the user.
+	 *
+	 * This could include a selected checkbox, a toggleable button that is toggled on, etc.
+	 */
+	"element.selected"?: string | null
+	/**
+	 * Background color. Used for elevated surfaces, like a context menu, popup, or dialog.
+	 */
+	"elevated_surface.background"?: string | null
+	/**
+	 * Indicates a system error, a failed operation or a diagnostic error.
+	 */
+	error?: string | null
+	"error.background"?: string | null
+	"error.border"?: string | null
+	/**
+	 * Background Color. Used for the active state of a ghost element that should have the same background as the surface it's on.
+	 *
+	 * Active states are triggered by the mouse button being pressed down on an element, or the Return button or other activator being pressd.
+	 */
+	"ghost_element.active"?: string | null
+	/**
+	 * Used for the background of a ghost element that should have the same background as the surface it's on.
+	 *
+	 * Elements might include: Buttons, Inputs, Checkboxes, Radio Buttons...
+	 *
+	 * For an element that should have a different background than the surface it's on, use `element_background`.
+	 */
+	"ghost_element.background"?: string | null
+	/**
+	 * Background Color. Used for the disabled state of a ghost element that should have the same background as the surface it's on.
+	 *
+	 * Disabled states are shown when a user cannot interact with an element, like a disabled button or input.
+	 */
+	"ghost_element.disabled"?: string | null
+	/**
+	 * Background Color. Used for the hover state of a ghost element that should have the same background as the surface it's on.
+	 *
+	 * Hover states are triggered by the mouse entering an element, or a finger touching an element on a touch screen.
+	 */
+	"ghost_element.hover"?: string | null
+	/**
+	 * Background Color. Used for the selected state of a ghost element that should have the same background as the surface it's on.
+	 *
+	 * Selected states are triggered by the element being selected (or "activated") by the user.
+	 *
+	 * This could include a selected checkbox, a toggleable button that is toggled on, etc.
+	 */
+	"ghost_element.selected"?: string | null
+	/**
+	 * Represents a hidden status, such as a file being hidden in a file tree.
+	 */
+	hidden?: string | null
+	"hidden.background"?: string | null
+	"hidden.border"?: string | null
+	/**
+	 * Indicates a hint or some kind of additional information.
+	 */
+	hint?: string | null
+	"hint.background"?: string | null
+	"hint.border"?: string | null
+	/**
+	 * Fill Color. Used for the default fill color of an icon.
+	 */
+	icon?: string | null
+	/**
+	 * Fill Color. Used for the accent fill color of an icon.
+	 *
+	 * This might be used to show when a toggleable icon button is selected.
+	 */
+	"icon.accent"?: string | null
+	/**
+	 * Fill Color. Used for the disabled fill color of an icon.
+	 *
+	 * Disabled states are shown when a user cannot interact with an element, like a icon button.
+	 */
+	"icon.disabled"?: string | null
+	/**
+	 * Fill Color. Used for the muted or deemphasized fill color of an icon.
+	 *
+	 * This might be used to show an icon in an inactive pane, or to demphasize a series of icons to give them less visual weight.
+	 */
+	"icon.muted"?: string | null
+	/**
+	 * Fill Color. Used for the placeholder fill color of an icon.
+	 *
+	 * This might be used to show an icon in an input that disappears when the user enters text.
+	 */
+	"icon.placeholder"?: string | null
+	/**
+	 * Indicates that something is deliberately ignored, such as a file or operation ignored by Git.
+	 */
+	ignored?: string | null
+	"ignored.background"?: string | null
+	"ignored.border"?: string | null
+	/**
+	 * Represents informational status updates or messages.
+	 */
+	info?: string | null
+	"info.background"?: string | null
+	"info.border"?: string | null
+	"link_text.hover"?: string | null
+	/**
+	 * Indicates a changed or altered status, like a file that has been edited.
+	 */
+	modified?: string | null
+	"modified.background"?: string | null
+	"modified.border"?: string | null
+	"pane.focused_border"?: string | null
+	"pane_group.border"?: string | null
+	"panel.background"?: string | null
+	"panel.focused_border"?: string | null
+	"panel.indent_guide"?: string | null
+	"panel.indent_guide_active"?: string | null
+	"panel.indent_guide_hover"?: string | null
+	players?: PlayerColorContent[]
+	/**
+	 * Indicates something that is predicted, like automatic code completion, or generated code.
+	 */
+	predictive?: string | null
+	"predictive.background"?: string | null
+	"predictive.border"?: string | null
+	/**
+	 * Represents a renamed status, such as a file that has been renamed.
+	 */
+	renamed?: string | null
+	"renamed.background"?: string | null
+	"renamed.border"?: string | null
+	/**
+	 * The color of the scrollbar thumb.
+	 */
+	"scrollbar.thumb.background"?: string | null
+	/**
+	 * The border color of the scrollbar thumb.
+	 */
+	"scrollbar.thumb.border"?: string | null
+	/**
+	 * The color of the scrollbar thumb when hovered over.
+	 */
+	"scrollbar.thumb.hover_background"?: string | null
+	/**
+	 * The background color of the scrollbar track.
+	 */
+	"scrollbar.track.background"?: string | null
+	/**
+	 * The border color of the scrollbar track.
+	 */
+	"scrollbar.track.border"?: string | null
+	"search.match_background"?: string | null
+	"status_bar.background"?: string | null
+	/**
+	 * Indicates a successful operation or task completion.
+	 */
+	success?: string | null
+	"success.background"?: string | null
+	"success.border"?: string | null
+	/**
+	 * Background Color. Used for grounded surfaces like a panel or tab.
+	 */
+	"surface.background"?: string | null
+	/**
+	 * The styles for syntax nodes.
+	 */
+	syntax?: {
+		[k: string]: HighlightStyleContent
+	}
+	"tab.active_background"?: string | null
+	"tab.inactive_background"?: string | null
+	"tab_bar.background"?: string | null
+	/**
+	 * Terminal ANSI background color.
+	 */
+	"terminal.ansi.background"?: string | null
+	/**
+	 * Black ANSI terminal color.
+	 */
+	"terminal.ansi.black"?: string | null
+	/**
+	 * Blue ANSI terminal color.
+	 */
+	"terminal.ansi.blue"?: string | null
+	/**
+	 * Bright black ANSI terminal color.
+	 */
+	"terminal.ansi.bright_black"?: string | null
+	/**
+	 * Bright blue ANSI terminal color.
+	 */
+	"terminal.ansi.bright_blue"?: string | null
+	/**
+	 * Bright cyan ANSI terminal color.
+	 */
+	"terminal.ansi.bright_cyan"?: string | null
+	/**
+	 * Bright green ANSI terminal color.
+	 */
+	"terminal.ansi.bright_green"?: string | null
+	/**
+	 * Bright magenta ANSI terminal color.
+	 */
+	"terminal.ansi.bright_magenta"?: string | null
+	/**
+	 * Bright red ANSI terminal color.
+	 */
+	"terminal.ansi.bright_red"?: string | null
+	/**
+	 * Bright white ANSI terminal color.
+	 */
+	"terminal.ansi.bright_white"?: string | null
+	/**
+	 * Bright yellow ANSI terminal color.
+	 */
+	"terminal.ansi.bright_yellow"?: string | null
+	/**
+	 * Cyan ANSI terminal color.
+	 */
+	"terminal.ansi.cyan"?: string | null
+	/**
+	 * Dim black ANSI terminal color.
+	 */
+	"terminal.ansi.dim_black"?: string | null
+	/**
+	 * Dim blue ANSI terminal color.
+	 */
+	"terminal.ansi.dim_blue"?: string | null
+	/**
+	 * Dim cyan ANSI terminal color.
+	 */
+	"terminal.ansi.dim_cyan"?: string | null
+	/**
+	 * Dim green ANSI terminal color.
+	 */
+	"terminal.ansi.dim_green"?: string | null
+	/**
+	 * Dim magenta ANSI terminal color.
+	 */
+	"terminal.ansi.dim_magenta"?: string | null
+	/**
+	 * Dim red ANSI terminal color.
+	 */
+	"terminal.ansi.dim_red"?: string | null
+	/**
+	 * Dim white ANSI terminal color.
+	 */
+	"terminal.ansi.dim_white"?: string | null
+	/**
+	 * Dim yellow ANSI terminal color.
+	 */
+	"terminal.ansi.dim_yellow"?: string | null
+	/**
+	 * Green ANSI terminal color.
+	 */
+	"terminal.ansi.green"?: string | null
+	/**
+	 * Magenta ANSI terminal color.
+	 */
+	"terminal.ansi.magenta"?: string | null
+	/**
+	 * Red ANSI terminal color.
+	 */
+	"terminal.ansi.red"?: string | null
+	/**
+	 * White ANSI terminal color.
+	 */
+	"terminal.ansi.white"?: string | null
+	/**
+	 * Yellow ANSI terminal color.
+	 */
+	"terminal.ansi.yellow"?: string | null
+	/**
+	 * Terminal background color.
+	 */
+	"terminal.background"?: string | null
+	/**
+	 * Bright terminal foreground color.
+	 */
+	"terminal.bright_foreground"?: string | null
+	/**
+	 * Dim terminal foreground color.
+	 */
+	"terminal.dim_foreground"?: string | null
+	/**
+	 * Terminal foreground color.
+	 */
+	"terminal.foreground"?: string | null
+	/**
+	 * Text Color. Default text color used for most text.
+	 */
+	text?: string | null
+	/**
+	 * Text Color. Color used for emphasis or highlighting certain text, like an active filter or a matched character in a search.
+	 */
+	"text.accent"?: string | null
+	/**
+	 * Text Color. Color used for text denoting disabled elements. Typically, the color is faded or grayed out to emphasize the disabled state.
+	 */
+	"text.disabled"?: string | null
+	/**
+	 * Text Color. Color of muted or deemphasized text. It is a subdued version of the standard text color.
+	 */
+	"text.muted"?: string | null
+	/**
+	 * Text Color. Color of the placeholder text typically shown in input fields to guide the user to enter valid data.
+	 */
+	"text.placeholder"?: string | null
+	"title_bar.background"?: string | null
+	"title_bar.inactive_background"?: string | null
+	"toolbar.background"?: string | null
+	/**
+	 * Indicates some kind of unreachable status, like a block of code that can never be reached.
+	 */
+	unreachable?: string | null
+	"unreachable.background"?: string | null
+	"unreachable.border"?: string | null
+	/**
+	 * Represents a warning status, like an operation that is about to fail.
+	 */
+	warning?: string | null
+	"warning.background"?: string | null
+	"warning.border"?: string | null
+	[k: string]: unknown
+}
+export interface PlayerColorContent {
+	background?: string | null
+	cursor?: string | null
+	selection?: string | null
+	[k: string]: unknown
+}
+export interface HighlightStyleContent {
+	background_color?: string | null
+	color?: string | null
+	font_style?: FontStyleContent | null
+	font_weight?: (100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900) | null
+	[k: string]: unknown
+}
 
-	// Borders
-	border: string;
-	"border.variant": string;
-	"border.focused": string;
-	"border.selected": string;
-	"border.transparent": string;
-	"border.disabled": string;
+export interface ZedThemeStyle extends ThemeStyleContent {
 
-	// Surfaces
-	"elevated_surface.background": string;
-	"surface.background": string;
-
-	// Elements
-	"element.background": string;
-	"element.hover": string;
-	"element.active": string;
-	"element.selected": string;
-	"element.disabled": string;
-	"drop_target.background": string;
-	"ghost_element.background": string;
-	"ghost_element.hover": string;
-	"ghost_element.active": string;
-	"ghost_element.selected": string;
-	"ghost_element.disabled": string;
-
-	// Text
-	text: string;
-	"text.muted": string;
-	"text.placeholder": string;
-	"text.disabled": string;
-	"text.accent": string;
-
-	// Icons
-	icon: string;
-	"icon.muted": string;
-	"icon.disabled": string;
-	"icon.placeholder": string;
-	"icon.accent": string;
-
-	// UI Components
-	"status_bar.background": string;
-	"title_bar.background": string;
-	"title_bar.inactive_background": string;
-	"toolbar.background": string;
-	"tab_bar.background": string;
-	"tab.inactive_background": string;
-	"tab.active_background": string;
-	"search.match_background": string;
-	"search.active_match_background": string;
-	"panel.background": string;
-	"panel.focused_border": string | null;
-	"panel.indent_guide": string;
-	"panel.indent_guide_active": string;
-	"panel.indent_guide_hover": string;
-	"pane.focused_border": string | null;
-	"pane_group.border": string;
-
-	// Scrollbar
-	"scrollbar.thumb.background": string;
-	"scrollbar.thumb.hover_background": string;
-	"scrollbar.thumb.border": string;
-	"scrollbar.track.background": string;
-	"scrollbar.track.border": string;
-
-	// Editor
-	"editor.foreground": string;
-	"editor.background": string;
-	"editor.gutter.background": string;
-	"editor.subheader.background": string;
-	"editor.active_line.background": string;
-	"editor.highlighted_line.background": string;
-	"editor.line_number": string;
-	"editor.active_line_number": string;
-	"editor.hover_line_number": string;
-	"editor.invisible": string;
-	"editor.wrap_guide": string;
-	"editor.active_wrap_guide": string;
-	"editor.indent_guide": string;
-	"editor.indent_guide_active": string;
-	"editor.document_highlight.read_background": string;
-	"editor.document_highlight.write_background": string;
-	"editor.document_highlight.bracket_background": string;
-
-	// Terminal
-	"terminal.background": string;
-	"terminal.ansi.background": string;
-	"terminal.foreground": string;
-	"terminal.bright_foreground": string;
-	"terminal.dim_foreground": string;
-	"terminal.ansi.black": string;
-	"terminal.ansi.bright_black": string;
-	"terminal.ansi.dim_black": string;
-	"terminal.ansi.red": string;
-	"terminal.ansi.bright_red": string;
-	"terminal.ansi.dim_red": string;
-	"terminal.ansi.green": string;
-	"terminal.ansi.bright_green": string;
-	"terminal.ansi.dim_green": string;
-	"terminal.ansi.yellow": string;
-	"terminal.ansi.bright_yellow": string;
-	"terminal.ansi.dim_yellow": string;
-	"terminal.ansi.blue": string;
-	"terminal.ansi.bright_blue": string;
-	"terminal.ansi.dim_blue": string;
-	"terminal.ansi.magenta": string;
-	"terminal.ansi.bright_magenta": string;
-	"terminal.ansi.dim_magenta": string;
-	"terminal.ansi.cyan": string;
-	"terminal.ansi.bright_cyan": string;
-	"terminal.ansi.dim_cyan": string;
-	"terminal.ansi.white": string;
-	"terminal.ansi.bright_white": string;
-	"terminal.ansi.dim_white": string;
-
-	// Links & Status
-	"link_text.hover": string;
-
-	// Version Control
-	"version_control.added": string;
-	"version_control.modified": string;
-	"version_control.deleted": string;
-	"version_control.word_added": string;
-	"version_control.word_deleted": string;
-	"version_control.conflict_marker.ours": string;
-	"version_control.conflict_marker.theirs": string;
-
-	conflict: string;
-	"conflict.background": string;
-	"conflict.border": string;
-	created: string;
-	"created.background": string;
-	"created.border": string;
-	deleted: string;
-	"deleted.background": string;
-	"deleted.border": string;
-	error: string;
-	"error.background": string;
-	"error.border": string;
-	hidden: string;
-	"hidden.background": string;
-	"hidden.border": string;
-	hint: string;
-	"hint.background": string;
-	"hint.border": string;
-	ignored: string;
-	"ignored.background": string;
-	"ignored.border": string;
-	info: string;
-	"info.background": string;
-	"info.border": string;
-	modified: string;
-	"modified.background": string;
-	"modified.border": string;
-	predictive: string;
-	"predictive.background": string;
-	"predictive.border": string;
-	renamed: string;
-	"renamed.background": string;
-	"renamed.border": string;
-	success: string;
-	"success.background": string;
-	"success.border": string;
-	unreachable: string;
-	"unreachable.background": string;
-	"unreachable.border": string;
-	warning: string;
-	"warning.background": string;
-	"warning.border": string;
-
-	players: ZedPlayer[];
-	syntax: Record<string, ZedSyntaxStyle>;
 }
 
 export interface ZedTheme {
@@ -373,11 +687,6 @@ function buildStyle(
 	// Get colors from theme
 	const background = c("ui.backgrounds.base", "background");
 	const surface = c("ui.backgrounds.surface", "background");
-	const raised = c(
-		"ui.backgrounds.raised",
-		"ui.backgrounds.surface",
-		"background",
-	);
 	const menuBackground = c(
 		"ui.menu.background",
 		"ui.backgrounds.raised",
@@ -401,6 +710,12 @@ function buildStyle(
 		"ui.backgrounds.raised",
 	);
 	const elementSelected = c(
+		"ui.elements.selected.background",
+		"ui.menu.selectionBackground",
+		"ui.backgrounds.raised",
+	);
+	const elementSelectionChrome = c(
+		"ui.subtleElements.selectionBackground",
 		"ui.elements.selected.background",
 		"ui.menu.selectionBackground",
 		"ui.backgrounds.raised",
@@ -557,6 +872,12 @@ function buildStyle(
 
 	// Status bar, tabs, etc.
 	const statusBarBg = c(
+		"ui.overrides.statusBar.background",
+		"ui.backgrounds.base",
+		"background",
+	);
+	const tabBarBg = c(
+		"ui.overrides.tabs.tabBarBackground",
 		"ui.overrides.statusBar.background",
 		"ui.backgrounds.base",
 		"background",
@@ -778,8 +1099,13 @@ function buildStyle(
 		"border.transparent": c("ui.borders.transparent", "ui.borders.subtle", "ui.borders.default"),
 		"border.disabled": c("ui.borders.disabled", "ui.borders.subtle", "ui.borders.default"),
 
-		// Surfaces
-		"elevated_surface.background": raised,
+		// Surfaces — prefer menu layer (true “elevated” in theme defs) over raised
+		"elevated_surface.background": c(
+			"ui.menu.background",
+			"ui.backgrounds.raised",
+			"ui.backgrounds.surface",
+			"background",
+		),
 		"surface.background": ALPHA(surface),
 
 		// Elements
@@ -789,7 +1115,7 @@ function buildStyle(
 		"element.selected": elementSelected,
 		"element.disabled": c("ui.elements.disabled.background", "ui.foregrounds.subtle"),
 		"drop_target.background": menuBackground,
-		"element.selection_background": lineHighlight,
+		"element.selection.background": elementSelectionChrome,
 		"ghost_element.background": subtleElementBackground,
 		"ghost_element.hover": subtleElementHover,
 		"ghost_element.active": subtleElementActive,
@@ -820,7 +1146,7 @@ function buildStyle(
 		"title_bar.background": statusBarBg,
 		"title_bar.inactive_background": statusBarBg,
 		"toolbar.background": statusBarBg,
-		"tab_bar.background": statusBarBg,
+		"tab_bar.background": tabBarBg,
 		"tab.inactive_background": tabBg,
 		"tab.active_background": tabActiveBg,
 		"search.match_background": findMatch,
@@ -856,8 +1182,8 @@ function buildStyle(
 
 		// Editor
 		"editor.foreground": editorFg,
-		"editor.background": ALPHA(editorBg),
-		"editor.gutter.background": gutterBg,
+		"editor.background": c("ui.overrides.editor.background", "ui.backgrounds.surface", "background"),
+		"editor.gutter.background": c("ui.overrides.editorGutter.background", "ui.backgrounds.surface", "background"),
 		"editor.subheader.background": c(
 			"ui.panels.titleBackground",
 			"ui.elements.background",
@@ -934,15 +1260,15 @@ function buildStyle(
 		"version_control.deleted": gitDeleted,
 		"version_control.word_added": c("ui.git.wordAdded", "ui.git.added", "ui.status.success.foreground"),
 		"version_control.word_deleted": c("ui.git.wordDeleted", "ui.git.deleted", "ui.status.error.foreground"),
-		"version_control.conflict_marker.ours": success,
+		"version_control.conflict_marker.ours": c("ui.status.conflict.border", "ui.git.conflict"),
 		"version_control.conflict_marker.theirs": info,
 
 		conflict: gitConflict,
 		"conflict.background": gitConflict,
 		"conflict.border": gitConflict,
-		created: c("ui.status.success.foreground"),
-		"created.background": c("ui.status.success.background"),
-		"created.border": c("ui.status.success.border"),
+		created: c("ui.status.created.foreground", "ui.status.success.foreground"),
+		"created.background": c("ui.status.created.background", "ui.status.success.background"),
+		"created.border": c("ui.status.created.border", "ui.status.success.border"),
 		deleted: c("ui.status.error.foreground"),
 		"deleted.background": c("ui.status.error.background"),
 		"deleted.border": c("ui.status.error.border"),
@@ -952,18 +1278,21 @@ function buildStyle(
 		hidden: gitIgnored,
 		"hidden.background": gitIgnored,
 		"hidden.border": gitIgnored,
-		hint: new Color(String(t.palette.success ?? c("ui.status.success.foreground"))).saturate(0.25).darker(0.07).hexa(),
-		"hint.background": new Color(String(t.palette.info ?? c("ui.status.info.foreground"))).darker(0.9).alpha(0.64).hexa(),
-		"hint.border": c("ui.status.info.border"),
+		hint: c("ui.status.hint.foreground", {
+			themePath: "ui.status.info.foreground",
+			h: (h) => h + 24,
+		}),
+		"hint.background": c("ui.status.hint.background", "ui.status.info.background"),
+		"hint.border": c("ui.status.hint.border", "ui.status.info.border"),
 		ignored: gitIgnored,
 		"ignored.background": gitIgnored,
 		"ignored.border": gitIgnored,
 		info,
 		"info.background": c("ui.status.info.background"),
 		"info.border": c("ui.status.info.border"),
-		modified: c("ui.status.warning.foreground"),
-		"modified.background": c("ui.status.warning.background"),
-		"modified.border": c("ui.status.warning.border"),
+		modified: c("ui.status.modified.foreground", "ui.status.warning.foreground"),
+		"modified.background": c("ui.status.modified.background", "ui.status.warning.background"),
+		"modified.border": c("ui.status.modified.border", "ui.status.warning.border"),
 		predictive: predictiveColor,
 		"predictive.background": predictiveColor,
 		"predictive.border": predictiveColor,
