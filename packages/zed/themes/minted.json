@@ -1,10 +1,10 @@
 {
 	"$schema": "https://zed.dev/schema/themes/v0.2.0.json",
-	"name": "Minted Theme Family",
+	"name": "apathy /// minted Theme Family",
 	"author": "Cooper Maruyama",
 	"themes": [
 		{
-			"name": "Minted",
+			"name": "apathy /// minted",
 			"appearance": "dark",
 			"style": {
 				"background.appearance": "blurred",

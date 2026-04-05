@@ -295,7 +295,7 @@ success → background                           7.97    +51    +39 142/39/51 a1
 success.bg → background                        1.72    +54    +41 141/41/54 a0.32        #5ABA7C52    #000000FF   
 hint → background                             13.20    +69    +71 186/71/69 a1           #78DCE8FF    #000000FF   
 hint.bg → background                           1.10    +13    +40 242/40/13 a0.69        #15142FAF    #000000FF   
-border → background                            1.76    +24    +16 258/16/24 a1           #3A3448FF    #000000FF   
+border → background                            1.12    +64    +46 245/46/64 a0.14        #8079CE23    #000000FF   
 border.focused → background                    1.12    +14    +71 241/71/14 a1           #0B0A3CFF    #000000FF   
 error.border → background                      2.61    +42    +65 357/65/42 a0.88        #AF252DE0    #000000FF   
 info.border → background                       5.74    +53    +29 187/29/53 a0.88        #64A2AAE0    #000000FF   

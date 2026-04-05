@@ -1,10 +1,10 @@
 {
 	"$schema": "https://zed.dev/schema/themes/v0.2.0.json",
-	"name": "Apathy Theme Family",
+	"name": "apathy Theme Family",
 	"author": "Cooper Maruyama",
 	"themes": [
 		{
-			"name": "Apathy",
+			"name": "apathy",
 			"appearance": "dark",
 			"style": {
 				"background.appearance": "blurred",
@@ -17,8 +17,8 @@
 					"#af252dff"
 				],
 				"background": "#000000ff",
-				"border": "#3a3448ff",
-				"border.variant": "#4a3f60ff",
+				"border": "#8079ce23",
+				"border.variant": "#33333333",
 				"border.focused": "#0b0a3cff",
 				"border.selected": "#3d3558ff",
 				"border.transparent": "#07060dff",
@@ -62,7 +62,7 @@
 				"panel.indent_guide": "#4b3a842d",
 				"panel.indent_guide_active": "#4b3a848d",
 				"panel.indent_guide_hover": "#3c297c2e",
-				"pane_group.border": "#4a3f60ff",
+				"pane_group.border": "#33333333",
 				"scrollbar.thumb.background": "#45418c20",
 				"scrollbar.thumb.hover_background": "#45414c80",
 				"scrollbar.thumb.border": "#00000000",
@@ -77,7 +77,7 @@
 				"editor.line_number": "#45455f8f",
 				"editor.active_line_number": "#9b8fb5ff",
 				"editor.hover_line_number": "#9b8fb5ff",
-				"editor.invisible": "#4a3f60ff",
+				"editor.invisible": "#33333333",
 				"editor.wrap_guide": "#3c297c2e",
 				"editor.active_wrap_guide": "#3c297c2e",
 				"editor.indent_guide": "#4b3a842d",

@@ -789,7 +789,7 @@ const overrides = {
 };
 
 const apatheticOceanSource = {
-  name: "Apathetic Ocean",
+  name: "apathy /// storm",
   type: "dark",
   palette,
   background: palette.background,

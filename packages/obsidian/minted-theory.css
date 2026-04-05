@@ -1,13 +1,13 @@
 /**
- * Minted Theory Theme for Obsidian
+ * apathy /// theory Theme for Obsidian
  *
  * Generated from Apathy theme tokens.
  * Designed to work well with Obsidian and layout snippets like
  * https://github.com/efemkay/obsidian-modular-css-layout
  */
 
-.theme-dark.apathy-theme-minted-theory,
-body.theme-dark.apathy-theme-minted-theory,
+.theme-dark.apathy-theme-apathy-theory,
+body.theme-dark.apathy-theme-apathy-theory,
 .theme-dark {
   --background-primary: #0c0c13ff;
   --background-primary-alt: #030204ff;

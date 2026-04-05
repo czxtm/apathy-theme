@@ -592,7 +592,7 @@ const components = {
 // ============================================================================
 
 const mintedSource = {
-	name: "Minted",
+	name: "apathy /// minted",
 	type: "dark",
 	palette: {},
 	background: ui.backgrounds.base,
