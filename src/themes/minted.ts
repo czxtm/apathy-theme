@@ -37,7 +37,7 @@ const mp = {
 	fgbright: oklch(0.836, 0.019, 269).alpha(0.91),
 	fgsubtle: oklch(0.660, 0.044, 267).alpha(0.91),
 	misty: oklch(0.660, 0.044, 267).alpha(0.91),
-	uiFg: oklch(0.636, 0.062, 269).alpha(0.66),
+	uiFg: oklch(0.636, 0.062, 269).alpha(0.71),
 	uiMuted: oklch(0.530, 0.078, 285).alpha(0.67),
 } as const;
 
@@ -346,6 +346,7 @@ const ui: UserInterface<ColorLike> = {
 
 	subtleElements: {
 		background: oklch(0.118, 0.013, 280).alpha(0.52),
+		selectionBackground: "#19163154",
 		selected: {
 			background: oklch(0.259, 0.067, 288).alpha(0.23),
 		},

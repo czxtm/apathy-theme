@@ -414,6 +414,20 @@ export interface UIComponents<ColorValue extends ColorLike = ColorLike> {
 		unfocusedActiveForeground: ColorValue;
 		/** Border for tabs with unsaved changes */
 		modifiedBorder: ColorValue;
+		/** Border between tabs (VS Code `tab.border`) */
+		border?: ColorValue;
+		/** Tab strip background (e.g. Zed `tab_bar.background`). Falls back to status bar when unset. */
+		tabBarBackground?: ColorValue;
+	};
+
+	/**
+	 * Editor group header — tab strip chrome (VS Code).
+	 */
+	editorGroupHeader?: {
+		tabsBackground?: ColorValue;
+		tabsBorder?: ColorValue;
+		noTabsBackground?: ColorValue;
+		border?: ColorValue;
 	};
 
 	/**
@@ -606,6 +620,18 @@ export interface UIComponents<ColorValue extends ColorLike = ColorLike> {
 	};
 
 	/**
+	 * Quick pick / command palette (VS Code only). Optional; falls back to generic surfaces.
+	 */
+	quickInput?: {
+		background?: ColorValue;
+		foreground?: ColorValue;
+		/** Maps to `quickInputList.focusBackground` */
+		listFocusBackground?: ColorValue;
+		/** Maps to `quickInputList.focusForeground` */
+		listFocusForeground?: ColorValue;
+	};
+
+	/**
 	 * AI chat interface (Copilot Chat, etc.).
 	 * @example VS Code: `chat.requestBackground`, `chat.codeBlockBackground`
 	 */
@@ -787,6 +813,15 @@ export interface UserInterface<ColorValue extends ColorLike> {
 		info: StatusColor<ColorValue>;
 		/** Success state - completion, positive feedback */
 		success: StatusColor<ColorValue>;
+		hint?: StatusColor<ColorValue>;
+		predictive?: StatusColor<ColorValue>;
+		conflict?: StatusColor<ColorValue>;
+		created?: StatusColor<ColorValue>;
+		deleted?: StatusColor<ColorValue>;
+		modified?: StatusColor<ColorValue>;
+		renamed?: StatusColor<ColorValue>;
+		ignored?: StatusColor<ColorValue>;
+		hidden?: StatusColor<ColorValue>;
 	};
 
 	/**
@@ -1701,6 +1736,20 @@ function getExactValue(theme: ThemeDefinition, path: string): string | null {
 	return toHex(current);
 }
 
+type ThemePathTransform = {
+	themePath: ThemePath;
+	l?: (l: number) => number;
+	c?: (c: number) => number;
+	h?: (h: number) => number;
+	alpha?: (alpha: number) => number;
+}
+
+function isThemePathTransform(value: unknown): value is ThemePathTransform {
+	return typeof value === "object" && value !== null && "themePath" in value;
+}
+
+type Descriptor = ThemePath | ThemePathTransform;
+
 export function strictColorFactory<T extends ThemeDefinition>(t: T) {
 	const c = colorFactory(t);
 
@@ -1713,17 +1762,18 @@ export function strictColorFactory<T extends ThemeDefinition>(t: T) {
 	 * sc("ui.overrides.editor.background", "ui.backgrounds.surface")
 	 * // Tries exact match on each path, last one uses colorFactory (with cascading)
 	 */
-	return function sc(...paths: ThemePath[]): string {
+	return function sc(...paths: Descriptor[]): string {
 		// Try exact matches for all paths except the last
 		for (let i = 0; i < paths.length - 1; i++) {
-			const v = getExactValue(t, paths[i]);
+			const path = isThemePathTransform(paths[i]) ? (paths[i] as ThemePathTransform).themePath : paths[i] as ThemePath;
+			const v = getExactValue(t, path);
 			if (v !== null) {
 				if (isColor(v)) return applyFilters(v, t.filters || {});
 				if (typeof v === "string") return v;
 			}
 		}
 		// Final path uses colorFactory (with CSS-like cascading defaults)
-		return c(paths[paths.length - 1]);
+		return c(isThemePathTransform(paths[paths.length - 1]) ? (paths[paths.length - 1] as ThemePathTransform).themePath : paths[paths.length - 1] as ThemePath);
 	};
 }
 

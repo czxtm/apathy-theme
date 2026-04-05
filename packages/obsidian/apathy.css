@@ -10,13 +10,13 @@
 body.theme-dark.apathy-theme-apathy,
 .theme-dark {
   --background-primary: #000000ff;
-  --background-primary-alt: #1b1a1c4f;
-  --background-secondary: #1b1a1c4f;
-  --background-secondary-alt: #0f0c1cd5;
+  --background-primary-alt: #0e0b13ff;
+  --background-secondary: #0e0b13ff;
+  --background-secondary-alt: #1b1629ff;
   --background-modifier-cover: #07060dff;
-  --background-modifier-hover: #0f0c1cd5;
+  --background-modifier-hover: #1b1629ff;
   --background-modifier-active-hover: #2d22476b;
-  --background-modifier-border: #201a3938;
+  --background-modifier-border: #3a3448ff;
   --background-modifier-border-hover: #0b0a3cff;
   --background-modifier-border-focus: #1b162994;
   --background-modifier-form-field: #110f12ff;
@@ -25,8 +25,8 @@ body.theme-dark.apathy-theme-apathy,
   --text-faint: #26244aff;
   --text-accent: #33b3cce6;
   --text-accent-hover: #42bed7e6;
-  --interactive-normal: #1b1a1c4f;
-  --interactive-hover: #0f0c1cd5;
+  --interactive-normal: #0e0b13ff;
+  --interactive-hover: #1b1629ff;
   --interactive-accent: #33b3cce6;
   --interactive-accent-hover: #42bed7e6;
   --interactive-success: #51b274ff;
@@ -34,25 +34,25 @@ body.theme-dark.apathy-theme-apathy,
   --interactive-accent-rgb: 51, 179, 204;
   --text-highlight-bg: #2d22476b;
   --text-selection: #2d22476b;
-  --titlebar-background: #1b1a1c4f;
+  --titlebar-background: #0e0b13ff;
   --titlebar-background-focused: #000000ff;
   --titlebar-text-color: #555174ff;
   --titlebar-text-color-focused: #dad7fc80;
-  --nav-item-background-hover: #0f0c1cd5;
+  --nav-item-background-hover: #1b1629ff;
   --nav-item-background-active: #2d22476b;
   --nav-item-color: #555174ff;
   --nav-item-color-hover: #dad7fc80;
   --nav-item-color-active: #dad7fc80;
   --tab-background-active: #000000ff;
-  --tab-background-inactive: #1b1a1c4f;
+  --tab-background-inactive: #0e0b13ff;
   --tab-text-color: #555174ff;
   --tab-text-color-active: #dad7fc80;
-  --tab-outline-color: #201a3938;
-  --tab-divider-color: #3b2a7c2f;
+  --tab-outline-color: #3a3448ff;
+  --tab-divider-color: #4a3f60ff;
   --icon-color: #555174ff;
   --icon-color-hover: #dad7fc80;
   --icon-color-focused: #33b3cce6;
-  --code-background: #1b1a1c4f;
+  --code-background: #0e0b13ff;
   --code-normal: #6e6a7bff;
   --code-comment: #4d4a56ff;
   --code-function: #ffb547ff;
@@ -60,12 +60,12 @@ body.theme-dark.apathy-theme-apathy,
   --code-string: #b1d36dff;
   --code-value: #33b3ccff;
   --code-operator: #e60063ff;
-  --blockquote-background-color: #0f0c1cd5;
-  --blockquote-border-color: #201a3938;
-  --hr-color: #3b2a7c2f;
-  --prompt-border-color: #201a3938;
-  --prompt-results-background: #1b1a1c4f;
-  --prompt-results-border-color: #201a3938;
+  --blockquote-background-color: #1b1629ff;
+  --blockquote-border-color: #3a3448ff;
+  --hr-color: #4a3f60ff;
+  --prompt-border-color: #3a3448ff;
+  --prompt-results-background: #0e0b13ff;
+  --prompt-results-border-color: #3a3448ff;
   --caret-color: #33b3cce6;
   --cursor-line-background: #1b162994;
   --editor-background: #08070fdf;
@@ -86,8 +86,8 @@ body.theme-dark.apathy-theme-apathy,
   --metadata-input-text-color: #e6e2d1ff;
   --metadata-input-text-color-active: #e6e2d1ff;
   --metadata-input-text-color-placeholder: #b5b5b545;
-  --metadata-input-background-hover: #0f0c1cd5;
-  --metadata-input-border-color: #201a3938;
+  --metadata-input-background-hover: #1b1629ff;
+  --metadata-input-border-color: #3a3448ff;
 }
 
 .theme-dark .callout[data-callout="note"] {

@@ -39,7 +39,7 @@ const tests: Test[] = [
 
 
 	{
-		label: "Storm",
+		label: "Ocean",
 		generate: () => mapVSCode(apatheticOcean),
 		expected: expectedStorm
 	},

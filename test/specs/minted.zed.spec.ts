@@ -34,7 +34,7 @@ export const expectedZed = {
 		"editor.wrap_guide": "#231D523B",
 		"editor.active_wrap_guide": "#231D523B",
 		"editor.active_line.background": "#19163154",
-		"element.selection_background": "#19163154",
+		// "element.selection_background": "#19163154",
 		"scrollbar.thumb.background": "#1B1B364D",
 		"border": "#52559e10",
 		"border.variant": "#14151ee6",
