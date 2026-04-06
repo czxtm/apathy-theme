@@ -25,7 +25,7 @@ export enum palette {
 	gutterBg = "#0c0a10",
 	panelBg = "#0e0b13",
 	tabBg = "#0f0e10",
-	tabHeaderBg = "#0d0b17",
+	tabHeaderBg = "#0f0e10",
 
 	// Grays & Neutrals
 	white = "#e3e1e8e4",
@@ -122,7 +122,7 @@ export enum palette {
 	buttonBg = "#443e5040",
 	buttonFg = "#acecff7d",
 	buttonBorder = "#60537836",
-	inputBg = "#110f12",
+	inputBg = "#0e0e16",
 	inputBorder = "#26242a",
 
 	// Misc
@@ -563,7 +563,7 @@ const apathySource = {
 		},
 		terminal: {
 			// Slightly darker than main shell; Zed reads this path (no extraColors merge).
-			background: "#050408ff",
+			background: "#09090d",
 			foreground: "#6464b97c",
 			border: palette.widgetBorder,
 			cursorForeground: palette.white,
@@ -743,6 +743,8 @@ const apathySource = {
 		"sideBarTitle.border": "#8079ce23",
 		"editorGroupHeader.tabsBorder": "#00000044",
 		"tree.indentGuidesStroke": "#40395e53",
+		"activityBarBadge.background": "#a3d3dc",
+		"composerPane.background": "#0e0a12",
 	},
 } satisfies SlimThemeDefinition;
 

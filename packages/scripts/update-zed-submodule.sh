@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# This script clones coopmoney/zed-extensions, finds the submodule
-# that references this repo (by matching "apathy-theme"), updates it
-# to point at the current release's tag or commit, commits, pushes a
-# branch and opens a PR.
+# Updates the apathy-theme submodule in czxtm/zed-extensions (fork),
+# bumps the version in extensions.toml, pushes, and opens a PR to
+# the upstream zed-industries/extensions repo.
 
-REPO="coopmoney/zed-extensions"
+FORK_REPO="czxtm/zed-extensions"
+UPSTREAM_REPO="zed-industries/extensions"
 TMPDIR=$(mktemp -d)
 
 echo "Determining source ref (tag or commit) from current repo..."
-# Capture source refs before changing directories
 SRC_TOPLEVEL=$(git rev-parse --show-toplevel 2>/dev/null || echo "")
 if [ -z "$SRC_TOPLEVEL" ]; then
   echo "Not in a git repository. Exiting."
@@ -25,18 +24,45 @@ else
   REF="$SRC_COMMIT"
 fi
 
-echo "Using ref: $REF"
+EXT_VERSION=$(sed -n 's/^version = "\(.*\)"/\1/p' "$SRC_TOPLEVEL/packages/zed/extension.toml")
+if [ -z "$EXT_VERSION" ]; then
+  echo "Could not read version from packages/zed/extension.toml"
+  exit 1
+fi
 
-echo "Cloning ${REPO} into ${TMPDIR}..."
+echo "Using ref: $REF, extension version: $EXT_VERSION"
+
+echo "Cloning ${FORK_REPO} into ${TMPDIR}..."
 if [ -n "${GITHUB_TOKEN-}" ]; then
-  git clone "https://x-access-token:${GITHUB_TOKEN}@github.com/${REPO}.git" "$TMPDIR"
+  git clone "https://x-access-token:${GITHUB_TOKEN}@github.com/${FORK_REPO}.git" "$TMPDIR"
 else
-  git clone "git@github.com:${REPO}.git" "$TMPDIR"
+  git clone "git@github.com:${FORK_REPO}.git" "$TMPDIR"
 fi
 
 cd "$TMPDIR"
+
+# Sync fork with upstream before branching
+if [ -n "${GITHUB_TOKEN-}" ]; then
+  git remote add upstream "https://x-access-token:${GITHUB_TOKEN}@github.com/${UPSTREAM_REPO}.git"
+else
+  git remote add upstream "git@github.com:${UPSTREAM_REPO}.git"
+fi
+git fetch upstream main
+git checkout -B main upstream/main
+
 BRANCH="update/apathy-theme-${REF//[^a-zA-Z0-9._-]/_}"
 git checkout -b "$BRANCH"
+
+# Update version in extensions.toml under the [apathy-theme] section
+awk -v ver="$EXT_VERSION" '
+  /^\[apathy-theme\]/ { in_section=1 }
+  in_section && /^version = / { $0 = "version = \"" ver "\""; in_section=0 }
+  in_section && /^\[/ && !/^\[apathy-theme\]/ { in_section=0 }
+  { print }
+' extensions.toml > extensions.toml.tmp && mv extensions.toml.tmp extensions.toml
+
+echo "Updated extensions.toml:"
+grep -A2 '\[apathy-theme\]' extensions.toml
 
 echo "Searching .gitmodules for a submodule referencing 'apathy-theme'..."
 submodule_key=$(git config -f .gitmodules --get-regexp 'submodule\..*\.url' | awk '/apathy-theme/{print $1; exit}' || true)
@@ -61,33 +87,32 @@ git fetch origin --tags || true
 if git rev-parse --verify "$REF" >/dev/null 2>&1; then
   git checkout "$REF"
 else
-  # try fetching tags/branches then checkout
   git fetch --all || true
   git checkout "$REF" || { echo "Failed to checkout ${REF} in submodule"; exit 1; }
 fi
 popd >/dev/null
 
-git add "$submodule_path"
-if git commit -m "chore(submodule): update apathy-theme to ${REF}"; then
-  echo "Committed submodule update"
+git add "$submodule_path" extensions.toml
+if git commit -m "chore: update apathy-theme to ${REF}"; then
+  echo "Committed submodule + version update"
 else
-  echo "No submodule changes to commit"
+  echo "No changes to commit"
   exit 0
 fi
 
-echo "Pushing branch ${BRANCH}..."
+echo "Pushing branch ${BRANCH} to ${FORK_REPO}..."
 if [ -n "${GITHUB_TOKEN-}" ]; then
-  git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${REPO}.git" "$BRANCH"
+  git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${FORK_REPO}.git" "$BRANCH"
 else
-  git push --set-upstream origin "$BRANCH"
+  git push "git@github.com:${FORK_REPO}.git" "$BRANCH"
 fi
 
-PR_TITLE="chore: update apathy-theme submodule to ${REF}"
-PR_BODY="Automated update of the apathy-theme submodule to ${REF}."
+PR_TITLE="chore: update apathy-theme to ${REF}"
+PR_BODY="Automated update of the apathy-theme extension to ${REF} (version ${EXT_VERSION})."
 
 if command -v gh >/dev/null 2>&1; then
-  echo "Creating PR using gh..."
-  gh pr create --repo "${REPO}" --title "$PR_TITLE" --body "$PR_BODY" --base main --head "$BRANCH"
+  echo "Creating PR to upstream..."
+  gh pr create --repo "${UPSTREAM_REPO}" --title "$PR_TITLE" --body "$PR_BODY" --base main --head "czxtm:${BRANCH}"
 else
   echo "gh CLI not found; attempting GitHub API PR creation"
   if [ -z "${GITHUB_TOKEN-}" ]; then
@@ -95,11 +120,13 @@ else
     exit 0
   fi
   if ! command -v jq >/dev/null 2>&1; then
-    echo "jq not found; installing or run manually to create PR. Branch pushed: ${BRANCH}"
+    echo "jq not found; branch pushed: ${BRANCH}"
     exit 0
   fi
-  data=$(jq -n --arg title "$PR_TITLE" --arg head "$BRANCH" --arg base "main" --arg body "$PR_BODY" '{title: $title, head: $head, base: $base, body: $body}')
-  resp=$(curl -s -X POST -H "Authorization: token ${GITHUB_TOKEN}" -H "Content-Type: application/json" -d "$data" "https://api.github.com/repos/${REPO}/pulls")
+  data=$(jq -n --arg title "$PR_TITLE" --arg head "czxtm:${BRANCH}" --arg base "main" --arg body "$PR_BODY" \
+    '{title: $title, head: $head, base: $base, body: $body}')
+  resp=$(curl -s -X POST -H "Authorization: token ${GITHUB_TOKEN}" -H "Content-Type: application/json" \
+    -d "$data" "https://api.github.com/repos/${UPSTREAM_REPO}/pulls")
   echo "$resp" | jq -r '.html_url'
 fi
 

@@ -19,7 +19,7 @@ body.theme-dark.apathy-theme-apathy,
   --background-modifier-border: #8079ce23;
   --background-modifier-border-hover: #0b0a3cff;
   --background-modifier-border-focus: #1b162994;
-  --background-modifier-form-field: #110f12ff;
+  --background-modifier-form-field: #0e0e16ff;
   --text-normal: #dad7fc80;
   --text-muted: #555174ff;
   --text-faint: #26244aff;
@@ -82,7 +82,7 @@ body.theme-dark.apathy-theme-apathy,
   --callout-border-width: 1px;
   --callout-radius: 8px;
   --metadata-label-text-color: #26244aff;
-  --metadata-input-background: #110f12ff;
+  --metadata-input-background: #0e0e16ff;
   --metadata-input-text-color: #e6e2d1ff;
   --metadata-input-text-color-active: #e6e2d1ff;
   --metadata-input-text-color-placeholder: #b5b5b545;

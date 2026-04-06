@@ -278,7 +278,11 @@ const mintedTheorySource = {
 			transform: (color) => new Color(color).lighter(0.05).hexa(),
 		},
 	},
-	extraColors: mintedBaseExtraColors,
+	extraColors: {
+		...mintedBaseExtraColors,
+		"activityBarBadge.background": "#a3d3dc",
+		"composerPane.background": "#0e0a12",
+	},
 	ui: {
 		...mintedBaseUi,
 		backgrounds: {
