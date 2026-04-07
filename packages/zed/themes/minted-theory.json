@@ -9,12 +9,12 @@
 			"style": {
 				"background.appearance": "blurred",
 				"accents": [
-					"#75E353FF",
-					"#5EE578FF",
-					"#69E7B8FF",
-					"#74E1E8FF",
-					"#7FB5EAFF",
-					"#8A91ECFF"
+					"#75e353ff",
+					"#5ee578ff",
+					"#69e7b8ff",
+					"#74e1e8ff",
+					"#7fb5eaff",
+					"#8a91ecff"
 				],
 				"background": "#0c0c13ff",
 				"border": "#1b1c28ff",

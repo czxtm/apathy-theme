@@ -1487,8 +1487,9 @@ function applyAlpha(
 					applyAlpha(item as unknown as ZedThemeStyle, backgroundAlpha),
 				);
 			}
-		} else if (typeof value === "object" && value !== null) {
-			out[key] = applyAlpha(value as unknown as ZedThemeStyle, backgroundAlpha);
+		} else if (typeof value === "object" && value !== null && Object.getPrototypeOf(value) === Object.getPrototypeOf) {
+
+		out[key] = applyAlpha(value as unknown as ZedThemeStyle, backgroundAlpha);
 		} else if (
 			key.includes("background") &&
 			typeof value === "string" &&
