@@ -782,7 +782,7 @@ export interface UserInterface<ColorValue extends ColorLike> {
 		primaryForeground: ColorValue;
 		/** Secondary accent for less prominent actions */
 		secondary?: ColorValue;
-		palette?: string[];
+		palette?: ColorValue[];
 	};
 
 	panels: {
@@ -1230,7 +1230,7 @@ export interface SlimThemeDefinition<ColorValue extends ColorLike = ColorLike> {
 	modifiers?: ThemeDefinition<ColorValue>["modifiers"];
 	filters?: ThemeFilters;
 	semanticHighlighting?: boolean;
-	extraColors?: Record<string, string>;
+	extraColors?: Record<string, ColorLike>;
 }
 
 function firstDefined<T>(...values: Array<T | undefined>): T | undefined {

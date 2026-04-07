@@ -138,12 +138,12 @@ syntax.boolean → editor.bg                    14.94    +76    +35 170/58/81 a1
 syntax.comment → editor.bg                     1.47    +16     -5 231/18/21 a1           #2B2E3EFF    #0A0A10FF   
 syntax.comment.doc → editor.bg                 1.47    +16     -5 231/18/21 a1           #2B2E3EFF    #0A0A10FF   
 syntax.constant → editor.bg                   14.94    +76    +35 170/58/81 a1           #B3EBE2FF    #0A0A10FF   
-syntax.constructor → editor.bg                14.94    +78    +28 144/51/83 a1           #BFEAD0FF    #0A0A10FF   
+syntax.constructor → editor.bg                14.92    +78    +28 145/51/83 a1           #BEEAD0FF    #0A0A10FF   
 syntax.embedded → editor.bg                    2.31    +34    -11 230/12/39 a0.81        #575B6FCE    #0A0A10FF   
 syntax.enum → editor.bg                       14.22    +84    +36 314/59/89 a1           #F3D1EBFF    #0A0A10FF   
-syntax.function → editor.bg                   14.77    +77    +48 189/71/82 a1           #B2E8F2FF    #0A0A10FF   
-syntax.function.method → editor.bg            14.77    +77    +48 189/71/82 a1           #B2E8F2FF    #0A0A10FF   
-syntax.function.definition → editor.bg        14.77    +77    +48 189/71/82 a1           #B2E8F2FF    #0A0A10FF   
+syntax.function → editor.bg                   14.75    +77    +48 189/71/82 a1           #B1E8F2FF    #0A0A10FF   
+syntax.function.method → editor.bg            14.75    +77    +48 189/71/82 a1           #B1E8F2FF    #0A0A10FF   
+syntax.function.definition → editor.bg        14.75    +77    +48 189/71/82 a1           #B1E8F2FF    #0A0A10FF   
 syntax.hint → editor.bg                        7.58    +60    +18 213/41/65 a1           #83A3CBFF    #0A0A10FF   
 syntax.keyword → editor.bg                     2.31    +34    -11 230/12/39 a0.81        #575B6FCE    #0A0A10FF   
 syntax.label → editor.bg                      14.22    +84    +36 314/59/89 a1           #F3D1EBFF    #0A0A10FF   
@@ -152,7 +152,7 @@ syntax.link_uri → editor.bg                    7.58    +60    +18 213/41/65 a1
 syntax.namespace → editor.bg                   2.31    +34    -11 230/12/39 a0.81        #575B6FCE    #0A0A10FF   
 syntax.number → editor.bg                     14.94    +76    +35 170/58/81 a1           #B3EBE2FF    #0A0A10FF   
 syntax.operator → editor.bg                   14.38    +85    +57 348/80/90 a1           #FAD2DAFF    #0A0A10FF   
-syntax.predictive → editor.bg                 14.94    +78    +28 144/51/83 a1           #BFEAD0FF    #0A0A10FF   
+syntax.predictive → editor.bg                 14.92    +78    +28 145/51/83 a1           #BEEAD0FF    #0A0A10FF   
 syntax.preproc → editor.bg                     2.31    +34    -11 230/12/39 a0.81        #575B6FCE    #0A0A10FF   
 syntax.primary → editor.bg                     2.31    +34    -11 230/12/39 a0.81        #575B6FCE    #0A0A10FF   
 syntax.property → editor.bg                    3.31    +43    -14 261/9/48 a0.85         #787087D8    #0A0A10FF   
@@ -160,21 +160,21 @@ syntax.punctuation → editor.bg                 1.96    +24     -2 226/21/29 a1
 syntax.punctuation.bracket → editor.bg         1.96    +24     -2 226/21/29 a1           #3A4159FF    #0A0A10FF   
 syntax.punctuation.delimiter → editor.bg       1.47    +16     -5 231/18/21 a1           #2B2E3EFF    #0A0A10FF   
 syntax.punctuation.list_marker → editor.bg       1.96    +24     -2 226/21/29 a1           #3A4159FF    #0A0A10FF   
-syntax.punctuation.markup → editor.bg         14.56    +84    +73 12/96/89 a1            #FED4CAFF    #0A0A10FF   
+syntax.punctuation.markup → editor.bg         14.55    +84    +73 12/96/89 a1            #FED4C9FF    #0A0A10FF   
 syntax.punctuation.special → editor.bg         1.47    +16     -5 231/18/21 a1           #2B2E3EFF    #0A0A10FF   
-syntax.selector → editor.bg                   14.94    +78    +28 144/51/83 a1           #BFEAD0FF    #0A0A10FF   
+syntax.selector → editor.bg                   14.92    +78    +28 145/51/83 a1           #BEEAD0FF    #0A0A10FF   
 syntax.selector.pseudo → editor.bg             2.31    +34    -11 230/12/39 a0.81        #575B6FCE    #0A0A10FF   
-syntax.string → editor.bg                     14.77    +77    +48 189/71/82 a1           #B2E8F2FF    #0A0A10FF   
-syntax.string.escape → editor.bg              14.77    +77    +48 189/71/82 a1           #B2E8F2FF    #0A0A10FF   
+syntax.string → editor.bg                     14.75    +77    +48 189/71/82 a1           #B1E8F2FF    #0A0A10FF   
+syntax.string.escape → editor.bg              14.75    +77    +48 189/71/82 a1           #B1E8F2FF    #0A0A10FF   
 syntax.string.regex → editor.bg               14.38    +85    +57 348/80/90 a1           #FAD2DAFF    #0A0A10FF   
-syntax.string.special → editor.bg             14.77    +77    +48 189/71/82 a1           #B2E8F2FF    #0A0A10FF   
-syntax.string.special.symbol → editor.bg      14.77    +77    +48 189/71/82 a1           #B2E8F2FF    #0A0A10FF   
-syntax.tag → editor.bg                        14.56    +84    +73 12/96/89 a1            #FED4CAFF    #0A0A10FF   
-syntax.text.literal → editor.bg               14.77    +77    +48 189/71/82 a1           #B2E8F2FF    #0A0A10FF   
+syntax.string.special → editor.bg             14.75    +77    +48 189/71/82 a1           #B1E8F2FF    #0A0A10FF   
+syntax.string.special.symbol → editor.bg      14.75    +77    +48 189/71/82 a1           #B1E8F2FF    #0A0A10FF   
+syntax.tag → editor.bg                        14.55    +84    +73 12/96/89 a1            #FED4C9FF    #0A0A10FF   
+syntax.text.literal → editor.bg               14.75    +77    +48 189/71/82 a1           #B1E8F2FF    #0A0A10FF   
 syntax.title → editor.bg                       9.88    +70    +26 143/49/75 a0.87        #A1DFB9DE    #0A0A10FF   
-syntax.type → editor.bg                       14.94    +78    +28 144/51/83 a1           #BFEAD0FF    #0A0A10FF   
+syntax.type → editor.bg                       14.92    +78    +28 145/51/83 a1           #BEEAD0FF    #0A0A10FF   
 syntax.variable → editor.bg                    2.31    +34    -11 230/12/39 a0.81        #575B6FCE    #0A0A10FF   
-syntax.variable.special → editor.bg           14.94    +78    +28 144/51/83 a1           #BFEAD0FF    #0A0A10FF   
+syntax.variable.special → editor.bg           14.92    +78    +28 145/51/83 a1           #BEEAD0FF    #0A0A10FF   
 syntax.variant → editor.bg                    14.22    +84    +36 314/59/89 a1           #F3D1EBFF    #0A0A10FF   "
 `;
 
@@ -279,12 +279,12 @@ active_line_number → gutter                    6.55    +59     -3 259/20/64 a1
 tab.active → tab.active_bg                     4.12    +90    +61 245/86/92 a0.5         #DAD7FC80    #040305FF   
 tab.inactive → tab.inactive_bg                 2.70    +35    -19 247/18/39 a1           #555174FF    #07060DFF   
 status_bar text → status_bar.bg                4.16    +87    +73 245/86/92 a0.5         #DAD7FC80    #0B0A0DFF   
-terminal.fg → terminal.bg                      1.72    +54     +5 240/38/56 a0.49        #6464B97C    #050408FF   
-terminal.red → terminal.bg                     7.14    +67    +48 357/81/69 a1           #F07178FF    #050408FF   
-terminal.green → terminal.bg                  14.84    +71    +33 84/66/73 a1            #C3E88DFF    #050408FF   
-terminal.yellow → terminal.bg                 13.63    +69    +67 39/100/71 a1           #FFCB6BFF    #050408FF   
-terminal.blue → terminal.bg                    8.90    +73    +67 221/100/75 a1          #82AAFFFF    #050408FF   
-terminal.cyan → terminal.bg                   13.48    +75    +67 197/100/77 a1          #89DDFFFF    #050408FF   
+terminal.fg → terminal.bg                      1.74    +52    +20 240/38/56 a0.49        #6464B97C    #09090DFF   
+terminal.red → terminal.bg                     6.95    +65    +63 357/81/69 a1           #F07178FF    #09090DFF   
+terminal.green → terminal.bg                  14.43    +69    +48 84/66/73 a1            #C3E88DFF    #09090DFF   
+terminal.yellow → terminal.bg                 13.26    +67    +82 39/100/71 a1           #FFCB6BFF    #09090DFF   
+terminal.blue → terminal.bg                    8.65    +71    +82 221/100/75 a1          #82AAFFFF    #09090DFF   
+terminal.cyan → terminal.bg                   13.11    +73    +82 197/100/77 a1          #89DDFFFF    #09090DFF   
 error → background                             3.13    +42    +65 357/65/42 a1           #AF252DFF    #000000FF   
 error.bg → background                          1.23    +42    +61 357/61/42 a0.32        #AC2A3052    #000000FF   
 warning → background                           7.98    +62    +52 22/52/62 a1            #D1916CFF    #000000FF   
@@ -602,8 +602,8 @@ tab.activeFg → tab.activeBg                    5.52    +84     +6 257/13/90 a0
 tab.inactiveFg → tab.inactiveBg                4.22    +65     -7 0/0/71 a0.62           #B5B5B59E    #0F0E10     
 statusBar.fg → statusBar.bg                    2.16    +43    -27 0/0/49 a0.54           #7C7C7C8A    #0E0B13     
 panelTitle.activeFg → panel.bg                 5.34    +84    -14 257/13/90 a0.57        #E3E1E891    #0E0B13     
-input.fg → input.bg                           14.68    +80    +21 49/30/86 a1            #E6E2D1FF    #110F12FF   
-input.placeholder → input.bg                   1.74    +65     -9 0/0/71 a0.27           #B5B5B545    #110F12FF   
+input.fg → input.bg                           14.79    +79     +8 49/30/86 a1            #E6E2D1FF    #0E0E16FF   
+input.placeholder → input.bg                   1.73    +64    -22 0/0/71 a0.27           #B5B5B545    #0E0E16FF   
 button.fg → button.bg                          3.18    +56    +87 194/100/84 a0.49       #ACECFF7D    #443E5040   
 list.activeFg → list.activeBg                 11.33    +66     +1 49/30/86 a1            #E6E2D1FF    #2A2441FF   
 list.hoverFg → list.hoverBg                    7.13    +80    -20 194/25/84 a0.7         #CBDBE0B3    #0A0610FF   
@@ -664,9 +664,9 @@ comment.doc: range 1.47–2.32 (spread 0.85) [Minted: 1.85, Minted Theory: 1.47,
 constant: range 3.19–14.94 (spread 11.75) [Minted: 3.19, Minted Theory: 14.94, Slate: 7.98, Apathy: 8.08, Apathetic Ocean: 8.48, Apathy Experimental: 7.49]
 embedded: range 2.31–9.55 (spread 7.24) [Minted: 2.61, Minted Theory: 2.31, Slate: 7.85, Apathy: 9.55, Apathetic Ocean: 5.78, Apathy Experimental: 9.10]
 enum: range 7.84–14.22 (spread 6.38) [Minted: 7.84, Minted Theory: 14.22, Slate: 9.46, Apathy: 11.41, Apathetic Ocean: 9.81, Apathy Experimental: 10.59]
-function: range 8.84–16.10 (spread 7.26) [Minted: 11.69, Minted Theory: 14.77, Slate: 8.84, Apathy: 11.41, Apathetic Ocean: 16.10, Apathy Experimental: 10.59]
-function.definition: range 8.84–14.77 (spread 5.93) [Minted: 11.69, Minted Theory: 14.77, Slate: 8.84, Apathy: 11.98, Apathetic Ocean: 11.97, Apathy Experimental: 11.11]
-function.method: range 8.84–16.10 (spread 7.26) [Minted: 11.69, Minted Theory: 14.77, Slate: 8.84, Apathy: 11.41, Apathetic Ocean: 16.10, Apathy Experimental: 10.59]
+function: range 8.84–16.10 (spread 7.26) [Minted: 11.69, Minted Theory: 14.75, Slate: 8.84, Apathy: 11.41, Apathetic Ocean: 16.10, Apathy Experimental: 10.59]
+function.definition: range 8.84–14.75 (spread 5.91) [Minted: 11.69, Minted Theory: 14.75, Slate: 8.84, Apathy: 11.98, Apathetic Ocean: 11.97, Apathy Experimental: 11.11]
+function.method: range 8.84–16.10 (spread 7.26) [Minted: 11.69, Minted Theory: 14.75, Slate: 8.84, Apathy: 11.41, Apathetic Ocean: 16.10, Apathy Experimental: 10.59]
 hint: range 4.20–9.64 (spread 5.44) [Minted: 4.20, Minted Theory: 7.58, Slate: 7.51, Apathy: 7.62, Apathetic Ocean: 9.64, Apathy Experimental: 7.50]
 keyword: range 2.31–8.36 (spread 6.05) [Minted: 8.31, Minted Theory: 2.31, Slate: 7.70, Apathy: 8.36, Apathetic Ocean: 7.02, Apathy Experimental: 7.95]
 label: range 7.02–14.22 (spread 7.20) [Minted: 9.82, Minted Theory: 14.22, Slate: 9.41, Apathy: 8.36, Apathetic Ocean: 7.02, Apathy Experimental: 7.95]
@@ -675,7 +675,7 @@ link_uri: range 4.20–9.64 (spread 5.44) [Minted: 4.20, Minted Theory: 7.58, Sl
 namespace: range 2.31–9.55 (spread 7.24) [Minted: 2.61, Minted Theory: 2.31, Slate: 7.85, Apathy: 9.55, Apathetic Ocean: 5.78, Apathy Experimental: 9.10]
 number: range 7.49–14.94 (spread 7.45) [Minted: 8.00, Minted Theory: 14.94, Slate: 7.75, Apathy: 8.08, Apathetic Ocean: 8.48, Apathy Experimental: 7.49]
 operator: range 3.63–14.38 (spread 10.75) [Minted: 3.63, Minted Theory: 14.38, Slate: 4.16, Apathy: 4.34, Apathetic Ocean: 4.22, Apathy Experimental: 4.03]
-predictive: range 5.56–14.94 (spread 9.38) [Minted: 7.84, Minted Theory: 14.94, Slate: 7.85, Apathy: 6.31, Apathetic Ocean: 5.56, Apathy Experimental: 5.86]
+predictive: range 5.56–14.92 (spread 9.36) [Minted: 7.84, Minted Theory: 14.92, Slate: 7.85, Apathy: 6.31, Apathetic Ocean: 5.56, Apathy Experimental: 5.86]
 preproc: range 2.31–8.36 (spread 6.05) [Minted: 8.31, Minted Theory: 2.31, Slate: 7.70, Apathy: 8.36, Apathetic Ocean: 7.02, Apathy Experimental: 7.95]
 primary: range 2.31–9.55 (spread 7.24) [Minted: 2.61, Minted Theory: 2.31, Slate: 7.85, Apathy: 9.55, Apathetic Ocean: 5.78, Apathy Experimental: 9.10]
 property: range 3.31–12.34 (spread 9.03) [Minted: 5.50, Minted Theory: 3.31, Slate: 9.41, Apathy: 12.34, Apathetic Ocean: 5.57, Apathy Experimental: 11.58]
@@ -683,20 +683,20 @@ punctuation: range 1.96–4.55 (spread 2.59) [Minted: 3.19, Minted Theory: 1.96,
 punctuation.bracket: range 1.51–4.55 (spread 3.04) [Minted: 1.85, Minted Theory: 1.96, Slate: 4.55, Apathy: 4.22, Apathetic Ocean: 1.51, Apathy Experimental: 3.91]
 punctuation.delimiter: range 1.47–4.55 (spread 3.08) [Minted: 1.85, Minted Theory: 1.47, Slate: 4.55, Apathy: 2.12, Apathetic Ocean: 2.21, Apathy Experimental: 2.12]
 punctuation.list_marker: range 1.96–4.55 (spread 2.59) [Minted: 3.19, Minted Theory: 1.96, Slate: 4.55, Apathy: 2.12, Apathetic Ocean: 2.21, Apathy Experimental: 2.12]
-punctuation.markup: range 2.88–14.56 (spread 11.68) [Minted: 2.88, Minted Theory: 14.56, Slate: 4.55, Apathy: 9.52, Apathetic Ocean: 9.81, Apathy Experimental: 8.83]
+punctuation.markup: range 2.88–14.55 (spread 11.67) [Minted: 2.88, Minted Theory: 14.55, Slate: 4.55, Apathy: 9.52, Apathetic Ocean: 9.81, Apathy Experimental: 8.83]
 punctuation.special: range 1.47–4.92 (spread 3.45) [Minted: 1.85, Minted Theory: 1.47, Slate: 4.55, Apathy: 4.92, Apathetic Ocean: 4.68, Apathy Experimental: 4.56]
-selector: range 9.41–14.94 (spread 5.53) [Minted: 14.59, Minted Theory: 14.94, Slate: 9.41, Apathy: 11.41, Apathetic Ocean: 9.81, Apathy Experimental: 10.59]
+selector: range 9.41–14.92 (spread 5.51) [Minted: 14.59, Minted Theory: 14.92, Slate: 9.41, Apathy: 11.41, Apathetic Ocean: 9.81, Apathy Experimental: 10.59]
 selector.pseudo: range 2.31–8.36 (spread 6.05) [Minted: 8.31, Minted Theory: 2.31, Slate: 7.70, Apathy: 8.36, Apathetic Ocean: 7.02, Apathy Experimental: 7.95]
-string: range 8.51–14.77 (spread 6.26) [Minted: 11.63, Minted Theory: 14.77, Slate: 11.36, Apathy: 11.84, Apathetic Ocean: 8.51, Apathy Experimental: 10.99]
-string.escape: range 8.51–14.77 (spread 6.26) [Minted: 11.63, Minted Theory: 14.77, Slate: 11.36, Apathy: 11.84, Apathetic Ocean: 8.51, Apathy Experimental: 10.99]
+string: range 8.51–14.75 (spread 6.24) [Minted: 11.63, Minted Theory: 14.75, Slate: 11.36, Apathy: 11.84, Apathetic Ocean: 8.51, Apathy Experimental: 10.99]
+string.escape: range 8.51–14.75 (spread 6.24) [Minted: 11.63, Minted Theory: 14.75, Slate: 11.36, Apathy: 11.84, Apathetic Ocean: 8.51, Apathy Experimental: 10.99]
 string.regex: range 4.16–14.38 (spread 10.22) [Minted: 11.05, Minted Theory: 14.38, Slate: 4.16, Apathy: 6.99, Apathetic Ocean: 7.32, Apathy Experimental: 6.48]
-string.special: range 8.51–14.77 (spread 6.26) [Minted: 11.63, Minted Theory: 14.77, Slate: 11.36, Apathy: 11.84, Apathetic Ocean: 8.51, Apathy Experimental: 10.99]
-string.special.symbol: range 8.51–14.77 (spread 6.26) [Minted: 11.63, Minted Theory: 14.77, Slate: 11.36, Apathy: 11.84, Apathetic Ocean: 8.51, Apathy Experimental: 10.99]
-tag: range 2.88–14.56 (spread 11.68) [Minted: 2.88, Minted Theory: 14.56, Slate: 4.55, Apathy: 9.52, Apathetic Ocean: 9.81, Apathy Experimental: 8.83]
-text.literal: range 8.51–14.77 (spread 6.26) [Minted: 11.63, Minted Theory: 14.77, Slate: 11.36, Apathy: 11.84, Apathetic Ocean: 8.51, Apathy Experimental: 10.99]
+string.special: range 8.51–14.75 (spread 6.24) [Minted: 11.63, Minted Theory: 14.75, Slate: 11.36, Apathy: 11.84, Apathetic Ocean: 8.51, Apathy Experimental: 10.99]
+string.special.symbol: range 8.51–14.75 (spread 6.24) [Minted: 11.63, Minted Theory: 14.75, Slate: 11.36, Apathy: 11.84, Apathetic Ocean: 8.51, Apathy Experimental: 10.99]
+tag: range 2.88–14.55 (spread 11.67) [Minted: 2.88, Minted Theory: 14.55, Slate: 4.55, Apathy: 9.52, Apathetic Ocean: 9.81, Apathy Experimental: 8.83]
+text.literal: range 8.51–14.75 (spread 6.24) [Minted: 11.63, Minted Theory: 14.75, Slate: 11.36, Apathy: 11.84, Apathetic Ocean: 8.51, Apathy Experimental: 10.99]
 title: range 7.47–15.82 (spread 8.35) [Minted: 15.82, Minted Theory: 9.88, Slate: 7.47, Apathy: 7.61, Apathetic Ocean: 13.67, Apathy Experimental: 7.54]
-type: range 9.46–14.94 (spread 5.48) [Minted: 14.59, Minted Theory: 14.94, Slate: 9.46, Apathy: 11.41, Apathetic Ocean: 9.81, Apathy Experimental: 10.59]
+type: range 9.46–14.92 (spread 5.46) [Minted: 14.59, Minted Theory: 14.92, Slate: 9.46, Apathy: 11.41, Apathetic Ocean: 9.81, Apathy Experimental: 10.59]
 variable: range 2.31–12.34 (spread 10.03) [Minted: 7.84, Minted Theory: 2.31, Slate: 7.85, Apathy: 12.34, Apathetic Ocean: 9.55, Apathy Experimental: 11.58]
-variable.special: range 7.84–14.94 (spread 7.10) [Minted: 7.84, Minted Theory: 14.94, Slate: 7.85, Apathy: 9.89, Apathetic Ocean: 9.34, Apathy Experimental: 9.18]
+variable.special: range 7.84–14.92 (spread 7.08) [Minted: 7.84, Minted Theory: 14.92, Slate: 7.85, Apathy: 9.89, Apathetic Ocean: 9.34, Apathy Experimental: 9.18]
 variant: range 7.84–14.22 (spread 6.38) [Minted: 7.84, Minted Theory: 14.22, Slate: 9.46, Apathy: 11.41, Apathetic Ocean: 9.81, Apathy Experimental: 10.59]"
 `;

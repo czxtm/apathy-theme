@@ -20,20 +20,21 @@ import {
 	mintedBaseSyntax,
 	mintedBaseUi,
 } from "./mintedBase";
-import type { SlimThemeDefinition, ThemeDefinition } from "./types";
+import type { ColorLike, SlimThemeDefinition, ThemeDefinition } from "./types";
 import { normalizeTheme } from "./types";
 import { mix, transparentize } from "./utils";
 
-const baseAccent = "#B3E6DEFF";
-const baseError = "#b13564";
-const baseForeground = "#575B6FCE";
-const baseMuted = "#3A4159FF";
-const baseSubtle = "#2B2E3EFF";
+
+const baseAccent = oklch(0.887, 0.054, 184.5, 1);
+const baseError = oklch(0.526, 0.164, 1.5, 1);
+const baseForeground = oklch(0.475, 0.033, 276.2, 0.808);
+const baseMuted = oklch(0.379, 0.042, 271.7, 1);
+const baseSubtle = oklch(0.305, 0.029, 276.3, 1);
 
 const base = {
-	background: "#0C0C13",
-	surface: "#101018",
-	raised: "#161a27",
+	background: oklch(0.158, 0.015, 284.6, 1),
+	surface: oklch(0.177, 0.016, 284.6, 1),
+	raised: oklch(0.22, 0.026, 270.9, 1),
 
 	foreground: baseForeground,
 	muted: baseMuted,
@@ -48,23 +49,23 @@ export const tc = (input: string, opts: Partial<MkColorOptions>) =>
 	});
 
 export const palette = {
-	// background: "#101018",
-	background: "#0C0C13",
-	surface: "#101018",
-	raised: "#161a27",
+	// background: oklch(0.177, 0.016, 284.6, 1),
+	background: oklch(0.158, 0.015, 284.6, 1),
+	surface: oklch(0.177, 0.016, 284.6, 1),
+	raised: oklch(0.22, 0.026, 270.9, 1),
 
 	foreground: baseForeground,
 	muted: baseMuted,
 	subtle: baseSubtle,
 
-	border: tc(base.subtle, { contrast: { minContrast: 1.4, maxContrast: 5.5 } }),
+	border: tc(base.subtle.hexa(), { contrast: { minContrast: 1.4, maxContrast: 5.5 } }),
 
-	warning: "#ffdecc",
-	errora: "#e59ac2",
-	info: "#83a6d2",
-	hint: "#9483d2",
-	success: "#a1cec5",
-	rosewater: "#f5e0dc",
+	warning: oklch(0.923, 0.044, 50.4, 1),
+	errora: oklch(0.772, 0.103, 346.5, 1),
+	info: oklch(0.716, 0.075, 254.4, 1),
+	hint: oklch(0.657, 0.116, 292.8, 1),
+	success: oklch(0.817, 0.049, 181.4, 1),
+	rosewater: oklch(0.923, 0.024, 30.5, 1),
 
 	// Color-theory anchors (derived from Minted's base accent)
 	primary: new Color(baseAccent).saturate(0.08).lighter(0.1).hexa(),
@@ -206,9 +207,9 @@ const baseOverrides = mintedBaseComponentOverrides as {
 const _terminalOverrides = mintedBaseComponentOverrides.terminal
 	? {
 			...mintedBaseComponentOverrides.terminal,
-			background: "#0A0A0FFF",
-			foreground: mix(palette.foreground, palette.analogousGreen, 0.18),
-			ansiBlack: "#0B0A0FFF",
+			background: oklch(0.147, 0.011, 285, 1),
+		foreground: mix(palette.foreground, palette.analogousGreen, 0.18),
+			ansiBlack: oklch(0.149, 0.011, 294.2, 1),
 			ansiRed: new Color(palette.error).rotate(18).darker(0.4).hexa(),
 			ansiGreen: new Color(palette.analogousBlue)
 				.darker(0.22)
@@ -239,27 +240,27 @@ const _terminalOverrides = mintedBaseComponentOverrides.terminal
 				.hexa(),
 		}
 	: undefined;
-const tempoverrides: Record<string, string> = {
-	"#1E434ACC": "#1E434AAB",
-	"#34347054": "#34347054",
-	"#F3E6DFFF": "#F3E6DFFF",
-	"#80123CDE": "#80123CDE",
-	"#CBE5EF26": "#CBE5EF26",
-	"#CB3F7566": "#CB3F7566",
-	"#A1CEC51A": "#A1CEC51A",
-	"#83A6D21A": "#83A6D21A",
-	"#F0DADDFF": "#F0DADDFF",
-	"#F0DADD40": "#F0DADD40",
-	"#2323432E": "#2323432E",
-	"#87A6CEE0": "#87A6CEE0",
-	"#B3A097E6": "#B3A097E6",
-	"#A8958DE0": "#A8958DE0",
-	"#8AAAA552": "#8AAAA552",
-	"#6B40B859": "#6B40B859",
-	"#43326959": "#43326959",
-	"#809F9BE0": "#809F9BE0",
-	"#4D3B3252": "#4D3B3252",
-	"#AB5726E0": "#AB5726E0",
+const tempoverrides: Record<string, ColorLike> = {
+	"oklch(0.359, 0.044, 211.5, 0.71)": oklch(0.359, 0.044, 211.5, 0.71),
+	"oklch(0.359, 0.101, 280, 0.329)": oklch(0.359, 0.101, 280, 0.329),
+	"oklch(0.933, 0.017, 50.4, 1)": oklch(0.933, 0.017, 50.4, 1),
+	"oklch(0.396, 0.145, 5, 0.871)": oklch(0.396, 0.145, 5, 0.871),
+	"oklch(0.906, 0.031, 222.9, 0.49)": oklch(0.906, 0.031, 222.9, 0.49),
+	"oklch(0.583, 0.181, 0.9, 0.)": oklch(0.583, 0.181, 0.9, 0.),
+	"oklch(0.817, 0.049, 181.4, 0.02)": oklch(0.817, 0.049, 181.4, 0.02),
+	"oklch(0.716, 0.075, 254.4, 0.02)": oklch(0.716, 0.075, 254.4, 0.02),
+	"oklch(0.907, 0.025, 8.2, 1)": oklch(0.907, 0.025, 8.2, 1),
+	"oklch(0.907, 0.025, 8.2, 0.51)": oklch(0.907, 0.025, 8.2, 0.51),
+	"oklch(0.274, 0.058, 281.8, 0.8)": oklch(0.274, 0.058, 281.8, 0.8),
+	"oklch(0.716, 0.068, 255, 0.878)": oklch(0.716, 0.068, 255, 0.878),
+	"oklch(0.72, 0.026, 47, 0.902)": oklch(0.72, 0.026, 47, 0.902),
+	"oklch(0.684, 0.026, 44.2, 0.78)": oklch(0.684, 0.026, 44.2, 0.78),
+	"oklch(0.713, 0.036, 184.8, 0.22)": oklch(0.713, 0.036, 184.8, 0.22),
+	"oklch(0.488, 0.18, 295.4, 0.49)": oklch(0.488, 0.18, 295.4, 0.49),
+	"oklch(0.364, 0.093, 295.7, 0.49)": oklch(0.364, 0.093, 295.7, 0.49),
+	"oklch(0.678, 0.035, 186.7, 0.78)": oklch(0.678, 0.035, 186.7, 0.78),
+	"oklch(0.369, 0.03, 47.9, 0.22)": oklch(0.369, 0.03, 47.9, 0.22),
+	"oklch(0.55, 0.126, 47.9, 0.78)": oklch(0.55, 0.126, 47.9, 0.78),
 } as const;
 const mintedTheorySource = {
 	name: "apathy /// theory",
@@ -280,19 +281,19 @@ const mintedTheorySource = {
 	},
 	extraColors: {
 		...mintedBaseExtraColors,
-		"activityBarBadge.background": "#a3d3dc",
-		"composerPane.background": "#0e0a12",
+		"activityBarBadge.background": oklch(0.836, 0.051, 210.3, 1),
+		"composerPane.background": oklch(0.154, 0.018, 307.2, 1),
 	},
 	ui: {
 		...mintedBaseUi,
 		backgrounds: {
 			...mintedBaseUi.backgrounds,
 			base: palette.background,
-			darker: mix(palette.background, "#000000", 0.4),
+			darker: mix(palette.background, oklch(0, 0, 0, 1), 0.4),
 			surface: palette.surface,
-			raised: "#13141bbc",
-			overlay: mix(palette.raised, "#000000", 0.2),
-			codeBlock: mix(palette.background, "#000000", 0.5),
+			raised: oklch(0.193, 0.014, 278.6, 0.37),
+			overlay: mix(palette.raised, oklch(0, 0, 0, 1), 0.2),
+			codeBlock: mix(palette.background, oklch(0, 0, 0, 1), 0.5)
 		},
 		foregrounds: {
 			...mintedBaseUi.foregrounds,
@@ -311,11 +312,11 @@ const mintedTheorySource = {
 		},
 
 		subtleElements: (() => {
-			const bg = "#0B0B1284";
-			const hover = new Color("#0B0B12").lighter(0.1).hexa();
-			const active = new Color("#0B0B12").lighter(0.2).hexa();
-			const selected = "#51506F2B";
-			const disabled = new Color("#0B0B12")
+			const bg = oklch(0.153, 0.015, 284.5, 0.52);
+			const hover = new Color(oklch(0.153, 0.015, 284.5, 1)).lighter(0.1).hexa();
+			const active = new Color(oklch(0.153, 0.015, 284.5, 1)).lighter(0.2).hexa();
+			const selected = oklch(0.445, 0.051, 285.6, 0.21);
+			const disabled = new Color(oklch(0.153, 0.015, 284.5, 1))
 				.desaturate(0.5)
 				.transparent(0.5)
 				.hexa();
@@ -343,10 +344,10 @@ const mintedTheorySource = {
 			};
 		})(),
 		elements: (() => {
-			const bg = "#191629";
+			const bg = oklch(0.214, 0.037, 290.2, 1);
 			const hover = new Color(bg).lighter(0.1).hexa();
 			const active = new Color(bg).lighter(0.2).hexa();
-			const selected = "#6B6AAC24";
+			const selected = oklch(0.554, 0.101, 283.3, 0.19);
 			const disabled = new Color(bg).desaturate(0.5).transparent(0.5).hexa();
 			return {
 				background: bg,
@@ -374,7 +375,7 @@ const mintedTheorySource = {
 			background: palette.background,
 			foreground: palette.foreground,
 			border: mix(palette.subtle, palette.background, 0.5),
-			titleBackground: "#0A0A10",
+			titleBackground: oklch(0.148, 0.013, 284.7, 1),
 			titleForeground: palette.foreground,
 		},
 		accent: {
@@ -383,12 +384,12 @@ const mintedTheorySource = {
 			primaryForeground: palette.foreground,
 			secondary: palette.complement,
 			palette: [
-				"#75E353FF",
-				"#5EE578FF",
-				"#69E7B8FF",
-				"#74E1E8FF",
-				"#7FB5EAFF",
-				"#8A91ECFF",
+				oklch(0.821, 0.208, 139.1, 1),
+				oklch(0.822, 0.19, 147.4, 1),
+				oklch(0.844, 0.132, 166.1, 1),
+				oklch(0.848, 0.101, 201, 1),
+				oklch(0.756, 0.096, 248.7, 1),
+				oklch(0.689, 0.133, 278.9, 1),
 			],
 		},
 		status: {
@@ -445,15 +446,15 @@ const mintedTheorySource = {
 		},
 		git: {
 			...mintedBaseUi.git,
-			added: "#a1dfb8dF",
-			modified: "#F3E6DFFF",
-			deleted: tempoverrides["#80123CDE"],
+			added: oklch(0.851, 0.083, 156.5, 0.875),
+			modified: oklch(0.933, 0.017, 50.4, 1),
+			deleted: oklch(0.396, 0.145, 5, 0.871),
 			conflict: palette.complement,
-			renamed: tempoverrides["#CBE5EF26"],
+			renamed: oklch(0.906, 0.031, 222.9, 0.149),
 		},
 		indentGuide: {
-			background: tempoverrides["#25183B59"],
-			activeBackground: tempoverrides["#6B40B859"],
+			background: oklch(0.245, 0.065, 298.6, 0.349),
+			activeBackground: oklch(0.488, 0.18, 295.4, 0.349),
 		},
 	},
 	componentOverrides: {
@@ -490,15 +491,15 @@ const mintedTheorySource = {
 			focusBackground: oklch(0.2466, 0.02518, 274.34, 0.4549),
 		},
 		editor: {
-			background: "#0a0a10",
+			background: oklch(0.148, 0.013, 284.7, 1),
 			selectionBackground: oklch(0.244, 0.02083, 285, 0.513),
 		},
 		input: {
 			background: oklch(0.17, 0.0082, 285, 0.3725),
 		},
-		"editor.background": "#0a0a10",
+		"editor.background": oklch(0.148, 0.013, 284.7, 1),
 		overrides: {
-			background: "#0a0a10",
+			background: oklch(0.148, 0.013, 284.7, 1),
 		},
 		// ...(terminalOverrides ? { terminal: terminalOverrides } : {}),
 	},

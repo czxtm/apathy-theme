@@ -1,5 +1,4 @@
 export const expectedZed = {
-	name: "Minted Theory",
 	appearance: "dark",
 	style: {
 		background: "#0c0c13ff",
