@@ -1,28 +1,42 @@
+
 <div align="center">
   <h1>apathy</h1>
+  A sophisticated dark theme with vibrant, neon-like syntax highlighting.<br /> Excellent contrast and readability while maintaining a visually striking aesthetic.
+  <br /><br />
   <a href="https://vscode.dev/editor/theme/coopermaruyama.apathy-theme">Live Demo</a>
+  <br /><br />
+  <img width="1054" height="699" alt="minted" src="https://github.com/user-attachments/assets/c0fe7102-033c-448a-96c9-4162a6eb724f" />
 </div>
 
+
+<div align="center">
+  
+</div>
 <br />
 
-![005](/assets/006.png)
-<!-- <img alt="006" src="https://github.com/user-attachments/assets/768db3aa-572f-4f19-8922-539494fbf3e1" style="max-width: 100%;object-fit: cover;aspect-ratio: 16/9;object-position: top left;box-shadow: 0px 2px 5px hsla(0,0%,0%,0.2);border-radius: 6px;" /> -->
+## Variants
 
 
+<details open>
+  <summary><h2>theory</h2></summary>
+  <div align="center"><img width="1072" height="709" alt="theory" src="https://github.com/user-attachments/assets/f0137389-c1b2-41f5-8724-751f5511b298"/></div>
+</details>
 
-
-
-<center>
-  A sophisticated dark theme with vibrant, neon-like syntax highlighting.<br /> Excellent contrast and readability while maintaining a visually striking aesthetic.
-</center>
 <br />
 
-![005](/assets/005.png)
-<!-- <img src="/assets/005.png" style=" aspect-ratio: 16 / 9; object-fit: cover; object-position: top left; box-shadow: 0px 1px 5px hsla(0,0%,0%,.1);"/> -->
+<details open>
+  <summary><h2>minted</h2></summary>
+  <div align="center"><img width="1054" height="699" alt="minted" src="https://github.com/user-attachments/assets/c0fe7102-033c-448a-96c9-4162a6eb724f" /></div>
+</details>
 
+<br />
 
-![005](/assets/003.png)
-<!-- <img src="/assets/003.png" style=" aspect-ratio: 16 / 9; object-fit: cover; object-position: top left; box-shadow: 0px 1px 5px hsla(0,0%,0%,.1);"/> -->
+<details open>
+  <summary><h2>ocean</h2></summary>
+  <div align="center"><img width="1081" height="709" alt="ocean" src="https://github.com/user-attachments/assets/5c12d4a5-36e6-415e-a256-7f220a9d1bf6" /></div>
+</details>
+
+<br />
 
 
 
