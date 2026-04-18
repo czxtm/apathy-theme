@@ -9,12 +9,12 @@ import { Color, mkElementColors, oklch } from "@/core/color";
 import { SemanticTokenModifier } from "../types";
 import { p } from "./mintedBase";
 import {
-	type ColorLike,
-	make,
-	normalizeTheme,
-	type SlimThemeDefinition,
-	type ThemeDefinition,
-	type UserInterface,
+  type ColorLike,
+  make,
+  normalizeTheme,
+  type SlimThemeDefinition,
+  type ThemeDefinition,
+  type UserInterface,
 } from "./types";
 import { darken, l10, lighten, mix, transparentize } from "./utils";
 
@@ -23,13 +23,13 @@ import { darken, l10, lighten, mix, transparentize } from "./utils";
 // ============================================================================
 
 const mp = {
-	...p,
-	fg: oklch(0.475, 0.052, 266).alpha(0.9),
-	fgbright: oklch(0.836, 0.019, 269).alpha(0.91),
-	fgsubtle: oklch(0.66, 0.044, 267).alpha(0.91),
-	misty: oklch(0.66, 0.044, 267).alpha(0.91),
-	uiFg: oklch(0.636, 0.062, 269).alpha(0.71),
-	uiMuted: oklch(0.53, 0.078, 285).alpha(0.67),
+  ...p,
+  fg: oklch(0.475, 0.052, 266).alpha(0.9),
+  fgbright: oklch(0.836, 0.019, 269).alpha(0.91),
+  fgsubtle: oklch(0.66, 0.044, 267).alpha(0.91),
+  misty: oklch(0.66, 0.044, 267).alpha(0.91),
+  uiFg: oklch(0.636, 0.062, 269).alpha(0.71),
+  uiMuted: oklch(0.53, 0.078, 285).alpha(0.67),
 } as const;
 
 // ============================================================================
@@ -37,88 +37,88 @@ const mp = {
 // ============================================================================
 
 const syntax: SlimThemeDefinition["syntax"] = {
-	source: mp.fg,
-	comments: mp.charcoal,
-	strings: make({
-		default: mp.wasabi2,
-		regex: mp.peach,
-	}),
-	operators: {
-		default: mp.crimson,
-	},
+  source: mp.fg,
+  comments: mp.charcoal,
+  strings: make({
+    default: mp.wasabi2,
+    regex: mp.peach,
+  }),
+  operators: {
+    default: mp.crimson,
+  },
 
-	literals: {
-		default: mp.cyan,
-		string: mp.wasabi2,
-		number: mp.cyan,
-		boolean: mp.cyan,
-		null: mp.lavender.alpha(0.81),
-		undefined: mp.lavender.alpha(0.81),
-		regex: mp.peach,
-	},
+  literals: {
+    default: mp.cyan,
+    string: mp.wasabi2,
+    number: mp.cyan,
+    boolean: mp.cyan,
+    null: mp.lavender.alpha(0.81),
+    undefined: mp.lavender.alpha(0.81),
+    regex: mp.peach,
+  },
 
-	keywords: {
-		default: mp.devwhite.alpha(0.81),
-		operator: mp.crimson,
-	},
+  keywords: {
+    default: mp.devwhite.alpha(0.81),
+    operator: mp.crimson,
+  },
 
-	variables: {
-		default: mp.slate,
-		local: mp.slate,
-		parameter: mp.slate,
-		property: mp.taupe,
-		global: mp.slate,
-		other: mp.flatwhite.alpha(0.98),
-	},
+  variables: {
+    default: mp.slate,
+    local: mp.slate,
+    parameter: mp.slate,
+    property: mp.taupe,
+    global: mp.slate,
+    other: mp.flatwhite.alpha(0.98),
+  },
 
-	constants: {
-		default: mp.mist.alpha(0.76),
-		numeric: mp.cyan,
-		language: mp.cyan,
-		userDefined: mp.mist.alpha(0.76),
-	},
+  constants: {
+    default: mp.mist.alpha(0.76),
+    numeric: mp.cyan,
+    language: mp.cyan,
+    userDefined: mp.mist.alpha(0.76),
+  },
 
-	functions: {
-		default: mp.seafoam,
-		declaration: mp.seafoam,
-		call: mp.seafoam,
-		method: mp.seafoam,
-		builtin: mp.seafoam,
-	},
+  functions: {
+    default: mp.seafoam,
+    declaration: mp.seafoam,
+    call: mp.seafoam,
+    method: mp.seafoam,
+    builtin: mp.seafoam,
+  },
 
-	types: {
-		default: mp.ice,
-		primitive: mp.peach,
-		class: mp.ice,
-		interface: mp.ice,
-		enum: mp.slate,
-		typeParameter: mp.ice,
-		namespace: mp.ice,
-	},
+  types: {
+    default: mp.ice,
+    primitive: mp.peach,
+    class: mp.ice,
+    interface: mp.ice,
+    enum: mp.slate,
+    typeParameter: mp.ice,
+    namespace: mp.ice,
+  },
 
-	punctuation: {
-		default: mp.mist.alpha(0.76),
-		definition: oklch(0.355, 0.03, 292).alpha(0.82),
-		delimiter: mp.charcoal,
-		bracket: mp.charcoal,
-		accessor: mp.charcoal,
-	},
+  punctuation: {
+    default: mp.mist.alpha(0.76),
+    definition: oklch(0.355, 0.03, 292).alpha(0.82),
+    delimiter: mp.charcoal,
+    bracket: mp.charcoal,
+    accessor: mp.charcoal,
+  },
 
-	meta: {
-		default: mp.peach,
-		decorator: mp.peach,
-		macro: mp.peach,
-		annotation: mp.peach,
-		label: mp.blush,
-		tag: mp.gray1,
-	},
-	storage: {
-		default: mp.bluegray,
-		type: mp.bluegray,
-	},
-	special: {
-		jsxClass: mp.blush,
-	},
+  meta: {
+    default: mp.peach,
+    decorator: mp.peach,
+    macro: mp.peach,
+    annotation: mp.peach,
+    label: mp.blush,
+    tag: mp.gray1,
+  },
+  storage: {
+    default: mp.bluegray,
+    type: mp.bluegray,
+  },
+  special: {
+    jsxClass: mp.blush,
+  },
 };
 
 // ============================================================================
@@ -126,47 +126,47 @@ const syntax: SlimThemeDefinition["syntax"] = {
 // ============================================================================
 
 const core = {
-	background: mp.midnight,
-	foreground: mp.fg.mix(mp.midnight, 0.2),
-	accent: mp.lavender.alpha(0.81),
-	highlight: mp.peach,
-	active: mp.ice,
+  background: mp.midnight,
+  foreground: mp.fg.mix(mp.midnight, 0.2),
+  accent: mp.lavender.alpha(0.81),
+  highlight: mp.peach,
+  active: mp.ice,
 } as const;
 
 const overlay = mp.charcoal
-	.set({
-		l: (l) => l * 1.02,
-		c: (c) => c * 1.05,
-		h: (h) => h,
-	})
-	.alpha(0.1);
+  .set({
+    l: (l) => l * 1.02,
+    c: (c) => c * 1.05,
+    h: (h) => h,
+  })
+  .alpha(0.1);
 
 const backgrounds: UserInterface<ColorLike>["backgrounds"] = {
-	base: mp.midnight,
-	darker: mp.midnight.darker(0.15),
-	surface: mp.midnight
-		.set({
-			l: (l) => l * 1.12,
-			c: (c) => c * 1.8,
-			h: (h) => h,
-		})
-		.alpha(0.84),
-	raised: mp.midnight.set({
-		l: (l) => l * 1.13,
-		c: (c) => c * 1.5,
-		h: (h) => h,
-	}),
-	overlay,
-	codeBlock: mp.midnightDark.darker(0.05),
+  base: mp.midnight,
+  darker: mp.midnight.darker(0.15),
+  surface: mp.midnight
+    .set({
+      l: (l) => l * 1.12,
+      c: (c) => c * 1.8,
+      h: (h) => h,
+    })
+    .alpha(0.84),
+  raised: mp.midnight.set({
+    l: (l) => l * 1.13,
+    c: (c) => c * 1.5,
+    h: (h) => h,
+  }),
+  overlay,
+  codeBlock: mp.midnightDark.darker(0.05),
 };
 
 const focusColor = mp.peach;
 const foregrounds: UserInterface<ColorLike>["foregrounds"] = {
-	default: mp.uiFg,
-	muted: mp.uiMuted,
-	subtle: oklch(0.311, 0.057, 278),
-	accent: oklch(0.701, 0.141, 287).alpha(0.81),
-	focused: focusColor,
+  default: mp.uiFg,
+  muted: mp.uiMuted,
+  subtle: oklch(0.311, 0.057, 278),
+  accent: oklch(0.701, 0.141, 287).alpha(0.81),
+  focused: focusColor,
 };
 
 const borders: UserInterface<ColorLike>["borders"] = {

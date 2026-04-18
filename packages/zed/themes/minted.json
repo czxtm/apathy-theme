@@ -125,11 +125,11 @@
 				"conflict": "#cb195fff",
 				"conflict.background": "#cb195fff",
 				"conflict.border": "#cb195fff",
-				"created": "#ccf1acff",
-				"created.background": "#85ad9c52",
+				"created": "#86cebeff",
+				"created.background": "#4c867c45",
 				"created.border": "#78a290e0",
-				"deleted": "#c52b61ff",
-				"deleted.background": "#c0356252",
+				"deleted": "#f09fadff",
+				"deleted.background": "#86cebeff",
 				"deleted.border": "#c52b61e0",
 				"error": "#c52b61ff",
 				"error.background": "#c0356252",
@@ -146,15 +146,15 @@
 				"info": "#6372a0ff",
 				"info.background": "#66739a52",
 				"info.border": "#6372a0e0",
-				"modified": "#c4ebf1ff",
+				"modified": "#7786b7ff",
 				"modified.background": "#cf997c52",
 				"modified.border": "#c58d6fe0",
-				"predictive": "#9aa1c7ff",
-				"predictive.background": "#9aa1c7ff",
-				"predictive.border": "#9aa1c7ff",
-				"renamed": "#449dabff",
-				"renamed.background": "#449dabff",
-				"renamed.border": "#449dabff",
+				"predictive": "#2a2d4dff",
+				"predictive.background": "#3a3f541a",
+				"predictive.border": "#14151e54",
+				"renamed": "#9fa0f0ff",
+				"renamed.background": "#9fa0f0ff",
+				"renamed.border": "#9fa0f0ff",
 				"success": "#ccf1acff",
 				"success.background": "#85ad9c52",
 				"success.border": "#78a290e0",
@@ -230,13 +230,13 @@
 						"color": "#9aa1c7ff"
 					},
 					"function": {
-						"color": "#99d3b9ff"
+						"color": "#b4e7dfff"
 					},
 					"function.method": {
-						"color": "#99d3b9ff"
+						"color": "#ecbfbbff"
 					},
 					"function.definition": {
-						"color": "#99d3b9ff"
+						"color": "#ecbfbbff"
 					},
 					"hint": {
 						"color": "#6372a0ff",
