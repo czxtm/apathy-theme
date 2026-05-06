@@ -6,6 +6,166 @@
  * https://github.com/efemkay/obsidian-modular-css-layout
  */
 
+/* @settings
+
+name: Apathy Theme
+id: apathy-theme
+settings:
+  -
+    id: publish-note
+    title: Obsidian Publish note
+    description: "Publish sites do not run community plugins. Configure these settings in Obsidian, then copy any resulting custom CSS variables or classes into your Publish custom CSS when needed."
+    type: info-text
+    markdown: true
+  -
+    id: typography
+    title: Typography
+    type: heading
+    level: 2
+    collapsed: true
+  -
+    id: font-text-size
+    title: Text size
+    type: variable-number-slider
+    default: 16
+    min: 12
+    max: 24
+    step: 1
+    format: px
+  -
+    id: font-small
+    title: Small text size
+    type: variable-number-slider
+    default: 13
+    min: 10
+    max: 18
+    step: 1
+    format: px
+  -
+    id: layout
+    title: Layout
+    type: heading
+    level: 2
+    collapsed: true
+  -
+    id: apathy-hide-title
+    title: Hide page title
+    description: Hide the rendered page title in Obsidian and Obsidian Publish.
+    type: class-toggle
+  -
+    id: image-radius
+    title: Image radius
+    type: variable-number-slider
+    default: 8
+    min: 0
+    max: 24
+    step: 1
+    format: px
+  -
+    id: callouts
+    title: Callouts
+    type: heading
+    level: 2
+    collapsed: true
+  -
+    id: callout-radius
+    title: Callout radius
+    type: variable-number-slider
+    default: 8
+    min: 0
+    max: 24
+    step: 1
+    format: px
+  -
+    id: callout-border-width
+    title: Callout border width
+    type: variable-number-slider
+    default: 1
+    min: 0
+    max: 4
+    step: 1
+    format: px
+  -
+    id: cards
+    title: Cards
+    type: heading
+    level: 2
+    collapsed: true
+  -
+    id: cards-min-width
+    title: Card minimum width
+    type: variable-number-slider
+    default: 180
+    min: 120
+    max: 360
+    step: 10
+    format: px
+  -
+    id: cards-padding
+    title: Card padding
+    type: variable-number-slider
+    default: 1.2
+    min: 0.5
+    max: 3
+    step: 0.1
+    format: em
+  -
+    id: cards-image-height
+    title: Card image height
+    type: variable-number-slider
+    default: 400
+    min: 120
+    max: 720
+    step: 20
+    format: px
+  -
+    id: cards-image-fit
+    title: Card image fit
+    type: variable-select
+    default: contain
+    options:
+      -
+        label: Contain
+        value: contain
+      -
+        label: Cover
+        value: cover
+      -
+        label: Fill
+        value: fill
+  -
+    id: image-grid
+    title: Image grid
+    type: heading
+    level: 2
+    collapsed: true
+  -
+    id: img-grid-gap
+    title: Image grid gap
+    type: variable-number-slider
+    default: 0.5
+    min: 0
+    max: 2
+    step: 0.05
+    format: rem
+  -
+    id: img-grid-fit
+    title: Image grid fit
+    type: variable-select
+    default: cover
+    options:
+      -
+        label: Cover
+        value: cover
+      -
+        label: Contain
+        value: contain
+      -
+        label: Fill
+        value: fill
+
+*/
+
 .theme-dark.apathy-theme-apathy-theory,
 body.theme-dark.apathy-theme-apathy-theory,
 .theme-dark {
@@ -81,6 +241,24 @@ body.theme-dark.apathy-theme-apathy-theory,
   --color-green-rgb: 161, 223, 185;
   --callout-border-width: 1px;
   --callout-radius: 8px;
+  --font-text-size: 16px;
+  --font-small: 13px;
+  --cards-min-width: 180px;
+  --cards-max-width: 1fr;
+  --cards-mobile-width: 180px;
+  --cards-image-height: 400px;
+  --cards-padding: 1.2em;
+  --cards-image-fit: contain;
+  --cards-background: transparent;
+  --cards-border-width: 1px;
+  --cards-aspect-ratio: auto;
+  --cards-columns: repeat(auto-fit, minmax(var(--cards-min-width), var(--cards-max-width)));
+  --image-radius: 8px;
+  --img-grid-fit: cover;
+  --img-grid-background: transparent;
+  --image-grid-fit: var(--img-grid-fit);
+  --image-grid-background: var(--img-grid-background);
+  --img-grid-gap: 0.5rem;
   --metadata-label-text-color: #2b2e3eff;
   --metadata-input-background: #0f0f135f;
   --metadata-input-text-color: #575b6fce;
@@ -161,4 +339,8 @@ body.theme-dark.apathy-theme-apathy-theory,
 }
 .theme-dark .callout[data-callout="quote"] {
   --callout-color: 58, 65, 89;
+}
+
+.apathy-hide-title .inline-title {
+  display: none;
 }

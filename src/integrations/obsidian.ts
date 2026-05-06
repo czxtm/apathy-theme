@@ -9,6 +9,10 @@ import { Color, toHex } from "../core/color";
 import type { ThemeFilters } from "../filters";
 import type { ThemeDefinition, ThemeDefinitionExtended } from "../themes/types";
 import { strictColorFactory, uiFactory } from "../themes/types";
+import {
+	obsidianAppStyleSettingsCss,
+	obsidianStyleSettingsBlock,
+} from "./obsidianStyleSettings";
 
 export interface BuildOptions {
 	/** Override filters (will merge with/override theme.filters) */
@@ -160,6 +164,25 @@ function obsidianVars(
 		"--color-green-rgb": rgbTriplet(success),
 		"--callout-border-width": "1px",
 		"--callout-radius": "8px",
+		"--font-text-size": "16px",
+		"--font-small": "13px",
+		"--cards-min-width": "180px",
+		"--cards-max-width": "1fr",
+		"--cards-mobile-width": "180px",
+		"--cards-image-height": "400px",
+		"--cards-padding": "1.2em",
+		"--cards-image-fit": "contain",
+		"--cards-background": "transparent",
+		"--cards-border-width": "1px",
+		"--cards-aspect-ratio": "auto",
+		"--cards-columns":
+			"repeat(auto-fit, minmax(var(--cards-min-width), var(--cards-max-width)))",
+		"--image-radius": "8px",
+		"--img-grid-fit": "cover",
+		"--img-grid-background": "transparent",
+		"--image-grid-fit": "var(--img-grid-fit)",
+		"--image-grid-background": "var(--img-grid-background)",
+		"--img-grid-gap": "0.5rem",
 		"--metadata-label-text-color": subtle,
 		"--metadata-input-background": inputBg,
 		"--metadata-input-text-color": inputFg,
@@ -214,6 +237,8 @@ export function mapObsidian(
  * https://github.com/efemkay/obsidian-modular-css-layout
  */
 
+${obsidianStyleSettingsBlock}
+
 .theme-${theme.type}.apathy-theme-${slug},
 body.theme-${theme.type}.apathy-theme-${slug},
 .theme-${theme.type} {
@@ -244,6 +269,8 @@ ${calloutRule("error", error)}
 ${calloutRule("bug", error)}
 ${calloutRule("example", accent)}
 ${calloutRule("quote", quote)}
+
+${obsidianAppStyleSettingsCss}
 `;
 }
 
