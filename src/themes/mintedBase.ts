@@ -155,6 +155,20 @@ export const p = {
 	alphaWhite: oklch(0.915, 0.004, H - 37).alpha(0.13),
 } as const;
 
+export const syntaxBase = {
+	attribute: oklch(0.539, 0.039, 281.4),
+	class: oklch(0.88, 0.042, 18),
+	function: oklch(0.787, 0.1, 277),
+	keyword: oklch(0.462, 0.079, 273.1),
+	number: oklch(0.778, 0.082, 225.9),
+	operator: oklch(0.689, 0.224, 355),
+	property: oklch(0.617, 0.06, 287.9).alpha(0.8),
+	source: oklch(0.475, 0.052, 266).alpha(0.9),
+	string: oklch(0.821, 0.076, 127.1),
+	type: oklch(0.828, 0.102, 64.7),
+	variable: oklch(0.894, 0.051, 270.8).alpha(0.918),
+} as const;
+
 // Backward-compatible export name
 export const mintedBasePalette = p;
 
@@ -163,57 +177,57 @@ export const mintedBasePalette = p;
 // ============================================================================
 
 export const mintedBaseSyntax: SyntaxDefinition = {
-	source: p.mist.alpha(0.76),
+	source: syntaxBase.source,
 	comments: p.charcoal,
 	strings: make({
-		default: p.wasabi2,
+		default: syntaxBase.string,
 		regex: p.peach,
 	}),
 	operators: {
-		default: p.crimson,
+		default: syntaxBase.operator,
 	},
 	literals: {
-		default: p.cyan,
-		string: p.wasabi2,
-		number: p.cyan,
-		boolean: p.cyan,
+		default: syntaxBase.number,
+		string: syntaxBase.string,
+		number: syntaxBase.number,
+		boolean: syntaxBase.number,
 		null: p.lavender.alpha(0.81),
 		undefined: p.lavender.alpha(0.81),
 		regex: p.peach,
 	},
 	keywords: {
-		default: p.devwhite.alpha(0.81),
-		operator: p.crimson,
+		default: syntaxBase.keyword,
+		operator: syntaxBase.operator,
 	},
 	variables: {
-		default: p.slate,
-		local: p.slate,
-		parameter: p.slate,
-		property: p.taupe,
-		global: p.slate,
+		default: syntaxBase.variable,
+		local: syntaxBase.variable,
+		parameter: syntaxBase.variable,
+		property: syntaxBase.property,
+		global: syntaxBase.variable,
 		other: p.flatwhite.alpha(0.98),
 	},
 	constants: {
 		default: p.mist.alpha(0.76),
-		numeric: p.cyan,
-		language: p.cyan,
+		numeric: syntaxBase.number,
+		language: syntaxBase.number,
 		userDefined: p.mist.alpha(0.76),
 	},
 	functions: {
-		default: p.seafoam,
-		declaration: p.seafoam,
-		call: p.seafoam,
-		method: p.seafoam,
-		builtin: p.seafoam,
+		default: syntaxBase.function,
+		declaration: syntaxBase.function,
+		call: syntaxBase.function,
+		method: syntaxBase.function,
+		builtin: syntaxBase.function,
 	},
 	types: {
-		default: p.ice,
-		primitive: p.peach,
-		class: p.ice,
-		interface: p.ice,
+		default: syntaxBase.type,
+		primitive: syntaxBase.type,
+		class: syntaxBase.class,
+		interface: syntaxBase.class,
 		enum: p.slate,
-		typeParameter: p.ice,
-		namespace: p.ice,
+		typeParameter: syntaxBase.class,
+		namespace: syntaxBase.class,
 	},
 	punctuation: {
 		default: p.mist.alpha(0.76),
@@ -223,10 +237,10 @@ export const mintedBaseSyntax: SyntaxDefinition = {
 		accessor: p.charcoal,
 	},
 	meta: {
-		default: p.peach,
-		decorator: p.peach,
-		macro: p.peach,
-		annotation: p.peach,
+		default: syntaxBase.attribute,
+		decorator: syntaxBase.attribute,
+		macro: syntaxBase.attribute,
+		annotation: syntaxBase.attribute,
 		label: p.blush,
 		tag: p.gray1,
 	},

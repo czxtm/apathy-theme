@@ -10,7 +10,6 @@ import { SemanticTokenModifier } from "../types";
 import { p } from "./mintedBase";
 import {
   type ColorLike,
-  make,
   normalizeTheme,
   type SlimThemeDefinition,
   type ThemeDefinition,
@@ -33,70 +32,102 @@ const mp = {
   flamingo: oklch(0.844, 0.052, 24),
 } as const;
 
+const statusTone = (
+  foreground: ColorLike,
+  background: ColorLike,
+  border: ColorLike = foreground,
+) => ({
+  foreground,
+  background,
+  border,
+});
+
+const statusTones = {
+  error: statusTone(
+    oklch(0.667, 0.145, 359),
+    oklch(0.313, 0.064, 358).alpha(0.27),
+  ),
+  hint: statusTone(
+    oklch(0.742, 0.112, 303).alpha(0.94),
+    oklch(0.319, 0.013, 305).alpha(0.22),
+    oklch(0.703, 0.077, 299),
+  ),
+  info: statusTone(
+    oklch(0.737, 0.094, 270).alpha(0.94),
+    oklch(0.291, 0.045, 273).alpha(0.32),
+  ),
+  warning: statusTone(
+    oklch(0.891, 0.041, 76).alpha(0.91),
+    oklch(0.347, 0.026, 74).alpha(0.3),
+  ),
+  created: statusTone(
+    oklch(0.915, 0.098, 131),
+    oklch(0.331, 0.032, 131).alpha(0.28),
+  ),
+  modified: statusTone(
+    oklch(0.914, 0.041, 208),
+    oklch(0.347, 0.026, 74).alpha(0.3),
+    oklch(0.891, 0.041, 76).alpha(0.91),
+  ),
+} as const;
+
 // ============================================================================
 // Syntax Definition
 // ============================================================================
 
 const syntax: SlimThemeDefinition["syntax"] = {
   source: mp.fg,
-  comments: mp.charcoal,
-  strings: make({
-    default: mp.wasabi2,
+  comments: oklch(0.296, 0.056, 281).alpha(0.87),
+  strings: {
+    default: oklch(0.821, 0.076, 127.1),
     regex: mp.peach,
-  }),
-  operators: {
-    default: mp.crimson,
   },
-
+  operators: {
+    default: oklch(0.742, 0.014, 102),
+  },
   literals: {
-    default: mp.cyan,
-    string: mp.wasabi2,
-    number: mp.cyan,
-    boolean: mp.cyan,
+    default: oklch(0.778, 0.082, 225.9),
+    string: oklch(0.821, 0.076, 127.1),
+    number: oklch(0.778, 0.082, 225.9),
+    boolean: oklch(0.778, 0.082, 225.9),
     null: mp.lavender.alpha(0.81),
     undefined: mp.lavender.alpha(0.81),
     regex: mp.peach,
   },
-
   keywords: {
-    default: mp.devwhite.alpha(0.81),
-    operator: mp.crimson,
+    default: oklch(0.462, 0.079, 273.1),
+    operator: oklch(0.742, 0.014, 102),
   },
-
   variables: {
-    default: mp.slate,
-    local: mp.slate,
-    parameter: mp.slate,
-    property: mp.taupe,
-    global: mp.slate,
+    default: oklch(0.693, 0.056, 280.1).alpha(0.98),
+    local: oklch(0.693, 0.056, 280.1).alpha(0.98),
+    parameter: oklch(0.693, 0.056, 280.1).alpha(0.98),
+    property: oklch(0.617, 0.06, 287.9).alpha(0.8),
+    global: oklch(0.693, 0.056, 280.1).alpha(0.98),
     other: mp.flatwhite.alpha(0.98),
   },
-
   constants: {
     default: mp.mist.alpha(0.76),
-    numeric: mp.cyan,
-    language: mp.cyan,
+    numeric: oklch(0.778, 0.082, 225.9),
+    language: oklch(0.778, 0.082, 225.9),
     userDefined: mp.mist.alpha(0.76),
   },
-
   functions: {
-    default: mp.seafoam,
-    declaration: mp.flamingo,
-    call: mp.ice,
-    method: mp.flamingo,
-    builtin: mp.blush,
+    default: oklch(0.88, 0.042, 18),
+    declaration: oklch(0.942, 0.048, 202.8),
+    call: oklch(0.88, 0.042, 18),
+    method: oklch(0.88, 0.042, 18),
+    builtin: oklch(0.437, 0.089, 287.1),
   },
-
   types: {
-    default: mp.ice,
-    primitive: mp.peach,
-    class: mp.ice,
-    interface: mp.ice,
+    default: oklch(0.7, 0.079, 280.9),
+    primitive: oklch(0.437, 0.089, 287.1),
+    class: oklch(0.88, 0.042, 18),
+    interface: oklch(0.88, 0.042, 18),
     enum: mp.slate,
-    typeParameter: mp.ice,
-    namespace: mp.ice,
+    typeParameter: oklch(0.88, 0.042, 18),
+    namespace: oklch(0.88, 0.042, 18),
   },
-
   punctuation: {
     default: mp.mist.alpha(0.76),
     definition: oklch(0.355, 0.03, 292).alpha(0.82),
@@ -104,13 +135,12 @@ const syntax: SlimThemeDefinition["syntax"] = {
     bracket: mp.charcoal,
     accessor: mp.charcoal,
   },
-
   meta: {
-    default: mp.peach,
-    decorator: mp.peach,
-    macro: mp.peach,
-    annotation: mp.peach,
-    label: mp.blush,
+    default: oklch(0.539, 0.039, 281.4),
+    decorator: oklch(0.539, 0.039, 281.4),
+    macro: oklch(0.675, 0.23, 316.9),
+    annotation: oklch(0.539, 0.039, 281.4),
+    label: oklch(0.773, 0.119, 283.3),
     tag: mp.gray1,
   },
   storage: {
@@ -248,15 +278,15 @@ const git = (() => {
     removedTextBorder: oklch(0.223, 0.056, 8.3).alpha(0.133).render(),
   };
   const filesForeground = {
-    base: oklch(0.473, 0.046, 268.8),
+    base: oklch(0.473, 0.046, 268.8).alpha(0.79),
     modified: oklch(0.627, 0.076, 271.0),
     added: oklch(0.799, 0.076, 178.7),
     deleted: oklch(0.786, 0.098, 8.2),
-    ignored: oklch(0.421, 0.035, 267.8),
+    ignored: oklch(0.421, 0.035, 267.8).alpha(0.79),
     renamed: oklch(0.736, 0.115, 282.7),
     untracked: oklch(0.612, 0.044, 288.2),
-    stageDeleted: oklch(0.786, 0.098, 8.2),
-    stageModified: oklch(0.901, 0.098, 8.2),
+    stageDeleted: oklch(0.448, 0.058, 2.2).alpha(0.96),
+    stageModified: oklch(0.901, 0.083, 94.1).alpha(0.92),
   };
   const files = {
     fg: filesForeground,
@@ -281,21 +311,9 @@ const ui: UserInterface<ColorLike> = {
   borders,
   accent,
   status: {
-    error: mkElementColors(mp.crimson, {
-      background: backgrounds.base,
-      foreground: foregrounds.default,
-    }),
-    warning: {
-      ...mkElementColors(mp.peach, {
-        background: backgrounds.base,
-        foreground: foregrounds.default,
-      }),
-      foreground: oklch(0.914, 0.041, 208).hexa(),
-    },
-    info: mkElementColors(mp.bluegray, {
-      background: backgrounds.base,
-      foreground: foregrounds.default,
-    }),
+    error: statusTones.error,
+    warning: statusTones.warning,
+    info: statusTones.info,
     success: {
       ...mkElementColors(mp.seafoam, {
         background: backgrounds.base,
@@ -303,6 +321,9 @@ const ui: UserInterface<ColorLike> = {
       }),
       foreground: oklch(0.915, 0.098, 131).hexa(),
     },
+    hint: statusTones.hint,
+    created: statusTones.created,
+    modified: statusTones.modified,
   },
   selection: {
     background: mix(syntax.source, mp.midnight, 0.5),

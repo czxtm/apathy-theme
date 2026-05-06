@@ -6,6 +6,7 @@ import * as bun from "bun";
 import { toHex } from "./core/color";
 import { presets as filterPresets, type ThemeFilters } from "./filters";
 import { mapObsidian } from "./integrations/obsidian";
+import { mapObsidianPublish } from "./integrations/obsidianPublish";
 import { generatePreviewHTML } from "./integrations/preview";
 import { mapShiki } from "./integrations/shiki";
 import { mapVSCode } from "./integrations/vscode";
@@ -32,6 +33,8 @@ interface ThemeConfig {
 	shikiOutputPath?: string;
 	/** Output path for Obsidian snippet (optional) */
 	obsidianOutputPath?: string;
+	/** Output path for Obsidian Publish theme (optional) */
+	obsidianPublishOutputPath?: string;
 }
 
 const themes: ThemeConfig[] = [
@@ -42,6 +45,7 @@ const themes: ThemeConfig[] = [
 		zedOutputPath: "./packages/zed/themes/minted.json",
 		shikiOutputPath: "./dist/shiki/minted.json",
 		obsidianOutputPath: "./packages/obsidian/minted.css",
+		obsidianPublishOutputPath: "./packages/obsidian/publish/minted.css",
 		// Example: You can add filters here to override/add to theme.filters
 		// filters: filterPresets.lowContrast,
 	},
@@ -51,6 +55,7 @@ const themes: ThemeConfig[] = [
 		zedOutputPath: "./packages/zed/themes/minted-theory.json",
 		shikiOutputPath: "./dist/shiki/minted-theory.json",
 		obsidianOutputPath: "./packages/obsidian/minted-theory.css",
+		obsidianPublishOutputPath: "./packages/obsidian/publish/minted-theory.css",
 	},
 	{
 		theme: slate,
@@ -59,6 +64,7 @@ const themes: ThemeConfig[] = [
 		zedOutputPath: "./packages/zed/themes/slate.json",
 		shikiOutputPath: "./dist/shiki/slate.json",
 		obsidianOutputPath: "./packages/obsidian/slate.css",
+		obsidianPublishOutputPath: "./packages/obsidian/publish/slate.css",
 		// No basePath = fresh build
 	},
 	{
@@ -67,6 +73,7 @@ const themes: ThemeConfig[] = [
 		zedOutputPath: "./packages/zed/themes/apathy.json",
 		shikiOutputPath: "./dist/shiki/apathy.json",
 		obsidianOutputPath: "./packages/obsidian/apathy.css",
+		obsidianPublishOutputPath: "./packages/obsidian/publish/apathy.css",
 	},
 	{
 		theme: apatheticOcean,
@@ -74,6 +81,7 @@ const themes: ThemeConfig[] = [
 		zedOutputPath: "./packages/zed/themes/apathetic-ocean.json",
 		shikiOutputPath: "./dist/shiki/apathetic-ocean.json",
 		obsidianOutputPath: "./packages/obsidian/apathetic-ocean.css",
+		obsidianPublishOutputPath: "./packages/obsidian/publish/apathetic-ocean.css",
 	},
 	{
 		theme: apathyExperimental,
@@ -81,6 +89,7 @@ const themes: ThemeConfig[] = [
 		zedOutputPath: "./packages/zed/themes/apathy-experimental.json",
 		shikiOutputPath: "./dist/shiki/apathy-experimental.json",
 		obsidianOutputPath: "./packages/obsidian/apathy-experimental.css",
+		obsidianPublishOutputPath: "./packages/obsidian/publish/apathy-experimental.css",
 	},
 ];
 
@@ -326,6 +335,16 @@ Examples:
 			await bun.write(config.obsidianOutputPath, obsidianTheme);
 			console.log(
 				`Built: ${config.theme.name} (Obsidian) -> ${config.obsidianOutputPath}`,
+			);
+		}
+
+		if (config.obsidianPublishOutputPath) {
+			const obsidianPublishTheme = await mapObsidianPublish(config.theme, {
+				filters: Object.keys(filters).length > 0 ? filters : undefined,
+			});
+			await bun.write(config.obsidianPublishOutputPath, obsidianPublishTheme);
+			console.log(
+				`Built: ${config.theme.name} (Obsidian Publish) -> ${config.obsidianPublishOutputPath}`,
 			);
 		}
 
