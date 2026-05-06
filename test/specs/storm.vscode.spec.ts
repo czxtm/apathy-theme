@@ -1,5 +1,5 @@
 export const expected = {
-  name: "Apathetic Ocean",
+  name: "apathy /// storm",
   type: "dark",
   semanticHighlighting: true,
   colors: {
@@ -21,8 +21,8 @@ export const expected = {
     "quickInput.foreground": "#949ab0e0",
     "quickInputList.focusBackground": "#090a1194",
     "quickInputList.focusForeground": "#d0d1d5ff",
-    "list.hoverBackground": "#090a1194",
-    "list.hoverForeground": "#d0d1d5ff",
+    "list.hoverBackground": "#3e42512e",
+    "list.hoverForeground": "#e6e2d1ff",
     "quickInput.list.focusBackground": "#090a1194",
     "activityBar.background": "#040507ff",
     "activityBar.foreground": "#808599ff",

@@ -1,10 +1,10 @@
 export const expectedZed = {
 	$schema: "https://zed.dev/schema/themes/v0.2.0.json",
-	name: "Apathy Theme Family",
+	name: "apathy Theme Family",
 	author: "Cooper Maruyama",
 	themes: [
 		{
-			name: "Apathy",
+			name: "apathy",
 			appearance: "dark",
 			style: {
 				"editor.background": "#08070fdf",
@@ -19,7 +19,7 @@ export const expectedZed = {
 				"editor.gutter.background": "#05040aff",
 				"title_bar.background": "#06040b",
 				"elevated_surface.background": "#1b1629ff",
-				"border.variant": "#4a3f60ff",
+				"border.variant": "#33333333",
 				"status_bar.background": "#06040b",
 				"element.background": "#0c0a12ff",
 				"element.hover": "#2f294a44",
@@ -37,7 +37,7 @@ export const expectedZed = {
 				"ghost_element.hover": "#3c365466",
 				"info.background": "#15142faf",
 				"surface.background": "#0e0b13ff",
-				border: "#3a3448ff",
+				border: "#8079ce23",
 				"border.selected": "#3d3558ff",
 				"border.transparent": "#07060dff",
 				created: "#aaffaacc",
@@ -45,7 +45,7 @@ export const expectedZed = {
 				"border.focused": "#0B0A3Cff",
 				"panel.focused_border": "#07060dff",
 				"terminal.foreground": "#6464b97c",
-				"terminal.background": "#050408ff",
+				"terminal.background": "#09090dff",
 				"editor.indent_guide_active": "#4b3a848d",
 				"editor.indent_guide": "#4b3a842d",
 				"editor.active_line.background": "#0b0a15ff",

@@ -1,5 +1,5 @@
 export const expectedZed = {
-	name: "Minted",
+	name: "apathy /// minted",
 	appearance: "dark",
 	style: {
 		"editor.foreground": "#545c7ee6",
@@ -51,5 +51,63 @@ export const expectedZed = {
 		"version_control.deleted": "#a63b6555",
 		"version_control.word_added": "#3c567c35",
 		"version_control.word_deleted": "#a63b6544",
+		error: "#D96A93FF",
+		"error.background": "#4A223145",
+		hint: "#B99AE6F0",
+		"hint.background": "#34313838",
+		"hint.border": "#A695C9FF",
+		info: "#93A7E6F0",
+		"info.background": "#242A4252",
+		warning: "#EBD8BEE8",
+		"warning.background": "#42382B4D",
+		"syntax": {
+			"type.builtin": {
+				"color": "#4f4980ff"
+			},
+			"function": {
+				"color": "#f2cdcd",
+			},
+			"function.definition": {
+				"color": "#c7f6fa",
+			},
+			"attribute": {
+				"color": "#6a6c85",
+			},
+			"constructor": {
+				"color": "#f2cdcd"
+			},
+			"operator": {
+				// "color": "#6a6c85",
+				// "color": "#fd4Ca2FF",
+				"color": "#adaCa2FF",
+			},
+			"keyword": {
+				"color": "#4a5585",
+			},
+			"keyword.directive.define": {
+				"color": "#cd5Cf2FF",
+			},
+			"type": {
+				"color": "#9599cf",
+			},
+			"variable": {
+				"color": "#9599bffa",
+			},
+			"comment": {
+				"color": "#282948dd"
+			},
+			"property": {
+				"color": "#8380a8CC",
+			},
+			"title": {
+				"color": "#ABaBFFFF",
+			},
+			"number": {
+				"color": "#7bc2df",
+			},
+			"string": {
+				"color": "#b7ce99",
+			},
+		}
 	},
 };

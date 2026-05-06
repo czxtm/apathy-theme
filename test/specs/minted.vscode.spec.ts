@@ -1,5 +1,5 @@
 export const expected = {
-  name: "Minted",
+  name: "apathy /// minted",
   type: "dark",
   semanticHighlighting: true,
   colors: {

@@ -45,7 +45,7 @@ const tests: Test[] = [
   },
   {
     label: "zed / apathy",
-    generate: () => mapZed(apathy).themes[0],
+    generate: () => mapZed(apathy),
     expected: expectedZed,
   },
   {
