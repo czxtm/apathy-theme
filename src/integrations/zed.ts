@@ -764,9 +764,6 @@ function buildStyle(
   const info = c("ui.status.info.foreground");
   const success = c("ui.status.success.foreground");
 
-  // Predictive/ghost text color - use parameter color for better visibility
-  const predictiveColor = get(t.tokens.variables, "parameter") || muted;
-
   const gitAdded = c("ui.git.added", "ui.status.success.foreground");
   const gitModified = c("ui.git.modified", "ui.status.warning.foreground");
   const gitDeleted = c("ui.git.deleted", "ui.status.error.foreground");
@@ -976,6 +973,9 @@ function buildStyle(
     keyword: {
       color: get(tokens.keywords, "default"),
     },
+    "keyword.directive.define": {
+      color: get(tokens.meta, "macro") || get(tokens.keywords, "default"),
+    },
     label: {
       color: get(tokens.meta, "label") || get(tokens.keywords, "default"),
     },
@@ -1062,11 +1062,14 @@ function buildStyle(
       color: get(tokens.strings, "default"),
     },
     title: {
-      color: success,
+      color: get(tokens.meta, "label") || success,
       font_weight: 700,
     },
     type: {
       color: get(tokens.types, "default"),
+    },
+    "type.builtin": {
+      color: get(tokens.types, "primitive") || get(tokens.types, "default"),
     },
     variable: {
       color: get(tokens.variables, "default"),
@@ -1334,8 +1337,8 @@ function buildStyle(
     "conflict.background": gitConflict,
     "conflict.border": gitConflict,
     created: c(
-      "ui.git.files.foreground.added",
       "ui.status.created.foreground",
+      "ui.git.files.foreground.added",
       "ui.status.success.foreground",
     ),
     "created.background": c(
@@ -1373,9 +1376,9 @@ function buildStyle(
     "info.background": c("ui.status.info.background"),
     "info.border": c("ui.status.info.border"),
     modified: c(
+      "ui.status.modified.foreground",
       "ui.git.files.foreground.modified",
       "ui.git.diff.background.modified",
-      "ui.status.modified.foreground",
       "ui.status.warning.foreground",
     ),
     "modified.background": c(

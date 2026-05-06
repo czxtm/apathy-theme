@@ -1222,6 +1222,8 @@ function generateVSCodeTheme(t: ThemeDefinition): VSCodeThemeFile {
 			tokenColor("keyword.control.flow", c("tokens.keywords.control")),
 			tokenColor("keyword.control.import", c("tokens.keywords.import")),
 			tokenColor("keyword.control.export", c("tokens.keywords.import")),
+			tokenColor("keyword.directive", c("tokens.meta.macro")),
+			tokenColor("keyword.directive.define", c("tokens.meta.macro")),
 			tokenColor("keyword.operator", c("tokens.operators")),
 			tokenColor("keyword.operator.logical", c("tokens.operators.logical")),
 			tokenColor(
@@ -1285,6 +1287,7 @@ function generateVSCodeTheme(t: ThemeDefinition): VSCodeThemeFile {
 			tokenColor("support.class", c("tokens.types.class")),
 			tokenColor("entity.name.type", c("tokens.types")),
 			tokenColor("support.type", c("tokens.types")),
+			tokenColor("support.type.builtin", c("tokens.types.primitive")),
 
 			// Tags & Attributes (HTML/JSX)
 			tokenColor("entity.name.tag", c("tokens.meta.tag")),
@@ -1351,8 +1354,8 @@ function generateVSCodeTheme(t: ThemeDefinition): VSCodeThemeFile {
 			),
 
 			// Markup (Markdown)
-			tokenColor("markup.heading", c("tokens.types"), "bold"),
-			tokenColor("entity.name.section.markdown", c("tokens.types"), "bold"),
+			tokenColor("markup.heading", c("tokens.meta.label"), "bold"),
+			tokenColor("entity.name.section.markdown", c("tokens.meta.label"), "bold"),
 			tokenColor("markup.bold", c("tokens.keywords"), "bold"),
 			tokenColor("markup.italic", c("tokens.strings"), "italic"),
 			tokenColor("markup.inline.raw", c("tokens.literals.string")),

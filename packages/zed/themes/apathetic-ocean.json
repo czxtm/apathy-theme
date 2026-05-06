@@ -245,6 +245,9 @@
 					"keyword": {
 						"color": "#8ac3cbcf"
 					},
+					"keyword.directive.define": {
+						"color": "#eea8ece6"
+					},
 					"label": {
 						"color": "#8ac3cbcf"
 					},
@@ -324,10 +327,13 @@
 						"color": "#7cb57dff"
 					},
 					"title": {
-						"color": "#b5ddc1ff",
+						"color": "#8ac3cbcf",
 						"font_weight": 700
 					},
 					"type": {
+						"color": "#dba1d8ff"
+					},
+					"type.builtin": {
 						"color": "#dba1d8ff"
 					},
 					"variable": {
