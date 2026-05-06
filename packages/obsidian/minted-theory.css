@@ -175,7 +175,7 @@ body.theme-dark.apathy-theme-apathy-theory,
   --background-secondary-alt: #13141b5e;
   --background-modifier-cover: #100f19ff;
   --background-modifier-hover: #13141b5e;
-  --background-modifier-active-hover: #3e3f4fe1;
+  --background-modifier-active-hover: #2d3143f3;
   --background-modifier-border: #1b1c28ff;
   --background-modifier-border-hover: #b3ebe280;
   --background-modifier-border-focus: #b3ebe280;
@@ -192,14 +192,14 @@ body.theme-dark.apathy-theme-apathy-theory,
   --interactive-success: #a1dfb9de;
   --interactive-warning: #f3e6dfff;
   --interactive-accent-rgb: 179, 235, 226;
-  --text-highlight-bg: #3e3f4fe1;
-  --text-selection: #3e3f4fe1;
+  --text-highlight-bg: #2d3143f3;
+  --text-selection: #2d3143f3;
   --titlebar-background: #030204ff;
   --titlebar-background-focused: #0c0c13ff;
   --titlebar-text-color: #3a4159ff;
   --titlebar-text-color-focused: #575b6fce;
   --nav-item-background-hover: #13141b5e;
-  --nav-item-background-active: #3e3f4fe1;
+  --nav-item-background-active: #2d3143f3;
   --nav-item-color: #3a4159ff;
   --nav-item-color-hover: #575b6fce;
   --nav-item-color-active: #575b6fce;
@@ -227,7 +227,7 @@ body.theme-dark.apathy-theme-apathy-theory,
   --prompt-results-background: #101018ff;
   --prompt-results-border-color: #1b1c28ff;
   --caret-color: #b3ebe2ff;
-  --cursor-line-background: #3e3f4fe1;
+  --cursor-line-background: #2d3143f3;
   --editor-background: #0a0a10ff;
   --editor-foreground: #575b6fce;
   --input-shadow: none;
