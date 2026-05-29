@@ -14,6 +14,7 @@ import {
 	type SlimThemeDefinition,
 	type ThemeDefinition,
 	type UserInterface,
+    Variant,
 } from "./types";
 import { darken, l10, lighten, mix, transparentize } from "./utils";
 
@@ -700,6 +701,7 @@ const slateSource = {
 	type: "dark",
 	palette: rawColors,
 	background: ui.backgrounds.base,
+	variant: Variant.Slate,
 
 	syntax,
 

@@ -11,7 +11,7 @@
 import { Color, type ColorInput, oklch, toHex } from "@/core/color";
 import { SemanticTokenModifier } from "../types";
 import type { SlimThemeDefinition, ThemeDefinition } from "./types";
-import { make, normalizeTheme } from "./types";
+import { make, normalizeTheme, Variant } from "./types";
 import { lighten, mix, transparentize } from "./utils";
 
 // ============================================================================
@@ -908,6 +908,7 @@ const apatheticOceanSource = {
 		"terminal.dropBackground": toHex(elevated),
 		"tree.indentGuidesStroke": palette.tabBorder,
 	},
+	variant: Variant.Ocean,
 } satisfies SlimThemeDefinition;
 
 export const apatheticOcean: ThemeDefinition =

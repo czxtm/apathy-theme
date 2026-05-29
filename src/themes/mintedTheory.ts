@@ -21,7 +21,7 @@ import {
 	mintedBaseUi,
 } from "./mintedBase";
 import type { ColorLike, SlimThemeDefinition, ThemeDefinition } from "./types";
-import { normalizeTheme } from "./types";
+import { normalizeTheme, Variant } from "./types";
 import { mix, transparentize } from "./utils";
 
 
@@ -263,6 +263,7 @@ const tempoverrides: Record<string, ColorLike> = {
 	"oklch(0.55, 0.126, 47.9, 0.78)": oklch(0.55, 0.126, 47.9, 0.78),
 } as const;
 const mintedTheorySource = {
+	variant: Variant.TheoryDark,
 	name: "apathy /// theory",
 	type: "dark",
 	palette: {

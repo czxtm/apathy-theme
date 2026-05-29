@@ -7,6 +7,7 @@ import { toHex } from "./core/color";
 import { presets as filterPresets, type ThemeFilters } from "./filters";
 import { mapObsidian } from "./integrations/obsidian";
 import { mapObsidianPublish } from "./integrations/obsidianPublish";
+import { mapOpencode } from "./integrations/opencode";
 import { generatePreviewHTML } from "./integrations/preview";
 import { mapShiki } from "./integrations/shiki";
 import { mapVSCode } from "./integrations/vscode";
@@ -35,6 +36,8 @@ interface ThemeConfig {
 	obsidianOutputPath?: string;
 	/** Output path for Obsidian Publish theme (optional) */
 	obsidianPublishOutputPath?: string;
+	/** Output path for OpenCode TUI theme (optional) */
+	opencodeOutputPath?: string;
 }
 
 const themes: ThemeConfig[] = [
@@ -46,6 +49,7 @@ const themes: ThemeConfig[] = [
 		shikiOutputPath: "./dist/shiki/minted.json",
 		obsidianOutputPath: "./packages/obsidian/minted.css",
 		obsidianPublishOutputPath: "./packages/obsidian/publish/minted.css",
+		opencodeOutputPath: "./packages/opencode/minted.json",
 		// Example: You can add filters here to override/add to theme.filters
 		// filters: filterPresets.lowContrast,
 	},
@@ -56,6 +60,7 @@ const themes: ThemeConfig[] = [
 		shikiOutputPath: "./dist/shiki/minted-theory.json",
 		obsidianOutputPath: "./packages/obsidian/minted-theory.css",
 		obsidianPublishOutputPath: "./packages/obsidian/publish/minted-theory.css",
+		opencodeOutputPath: "./packages/opencode/minted-theory.json",
 	},
 	{
 		theme: slate,
@@ -65,6 +70,7 @@ const themes: ThemeConfig[] = [
 		shikiOutputPath: "./dist/shiki/slate.json",
 		obsidianOutputPath: "./packages/obsidian/slate.css",
 		obsidianPublishOutputPath: "./packages/obsidian/publish/slate.css",
+		opencodeOutputPath: "./packages/opencode/slate.json",
 		// No basePath = fresh build
 	},
 	{
@@ -74,6 +80,7 @@ const themes: ThemeConfig[] = [
 		shikiOutputPath: "./dist/shiki/apathy.json",
 		obsidianOutputPath: "./packages/obsidian/apathy.css",
 		obsidianPublishOutputPath: "./packages/obsidian/publish/apathy.css",
+		opencodeOutputPath: "./packages/opencode/apathy.json",
 	},
 	{
 		theme: apatheticOcean,
@@ -82,6 +89,7 @@ const themes: ThemeConfig[] = [
 		shikiOutputPath: "./dist/shiki/apathetic-ocean.json",
 		obsidianOutputPath: "./packages/obsidian/apathetic-ocean.css",
 		obsidianPublishOutputPath: "./packages/obsidian/publish/apathetic-ocean.css",
+		opencodeOutputPath: "./packages/opencode/apathetic-ocean.json",
 	},
 	{
 		theme: apathyExperimental,
@@ -90,6 +98,7 @@ const themes: ThemeConfig[] = [
 		shikiOutputPath: "./dist/shiki/apathy-experimental.json",
 		obsidianOutputPath: "./packages/obsidian/apathy-experimental.css",
 		obsidianPublishOutputPath: "./packages/obsidian/publish/apathy-experimental.css",
+		opencodeOutputPath: "./packages/opencode/apathy-experimental.json",
 	},
 ];
 
@@ -345,6 +354,19 @@ Examples:
 			await bun.write(config.obsidianPublishOutputPath, obsidianPublishTheme);
 			console.log(
 				`Built: ${config.theme.name} (Obsidian Publish) -> ${config.obsidianPublishOutputPath}`,
+			);
+		}
+
+		if (config.opencodeOutputPath) {
+			const opencodeTheme = mapOpencode(config.theme, {
+				filters: Object.keys(filters).length > 0 ? filters : undefined,
+			});
+			await bun.write(
+				config.opencodeOutputPath,
+				JSON.stringify(opencodeTheme, null, "\t"),
+			);
+			console.log(
+				`Built: ${config.theme.name} (OpenCode) -> ${config.opencodeOutputPath}`,
 			);
 		}
 

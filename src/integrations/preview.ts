@@ -1064,7 +1064,7 @@ function colorPickerScript(theme: ThemeDefinition): string {
 
 	const allEntries = [...uiEntries, ...paletteEntries];
 	const entriesJson = JSON.stringify(allEntries);
-	const themeName = theme.name;
+	const themeName = theme.variant;
 
 	return `
 <style>

@@ -1,5 +1,7 @@
 {
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"typescript.enablePromptUseWorkspaceTsdk": true,
-	"js/ts.experimental.useTsgo": true
+	"js/ts.experimental.useTsgo": true,
+	"dependi.npm.lockFileEnabled": true,
+	"typescript.native-preview.tsdk": "/Users/cm/git/coopmoney/apathy-theme/node_modules/@typescript/native-preview"
 }

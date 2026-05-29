@@ -22,15 +22,15 @@ import { apathyExperimental } from "./themes/apathyExperimental";
 import { minted } from "./themes/minted";
 import { mintedTheory } from "./themes/mintedTheory";
 import { slate } from "./themes/slate";
-import type { ThemeDefinition } from "./themes/types";
+import { ThemeDefinition, Variant } from "./themes/types";
 
-const themeMap: Record<string, ThemeDefinition> = {
-	Minted: minted,
-	"Minted Theory": mintedTheory,
-	Slate: slate,
-	Apathy: apathy,
-	"Apathetic Ocean": apatheticOcean,
-	"Apathy Experimental": apathyExperimental,
+const themeMap: Record<Variant, ThemeDefinition> = {
+	[Variant.Minted]: minted,
+	[Variant.TheoryDark]: mintedTheory,
+	[Variant.Slate]: slate,
+	[Variant.Default]: apathy,
+	[Variant.Ocean]: apatheticOcean,
+	[Variant.Experimental]: apathyExperimental,
 };
 
 // ── Config ──────────────────────────────────────────────────────────────────
@@ -161,7 +161,7 @@ function applyOverrides<T extends Record<string, unknown>>(
 
 function handleColorOverride(
 	ws: any,
-	data: { theme: string; overrides: Record<string, string> },
+	data: { theme: Variant; overrides: Record<string, string> },
 ) {
 	const base = themeMap[data.theme];
 	if (!base) {
@@ -171,7 +171,7 @@ function handleColorOverride(
 
 	const start = performance.now();
 	const patched = applyOverrides(
-		base as Record<string, unknown>,
+		base,
 		data.overrides,
 	);
 

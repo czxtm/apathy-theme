@@ -9,6 +9,7 @@ import { SemanticTokenModifier } from "../types";
 import {
 	make,
 	normalizeTheme,
+	Variant,
 	type SlimThemeDefinition,
 	type ThemeDefinition,
 } from "./types";
@@ -158,6 +159,7 @@ export const v = (k: PaletteValue): PaletteValue => k;
 // ============================================================================
 
 const apathySource = {
+	variant: Variant.Default,
 	name: "apathy",
 	type: "dark",
 	palette,

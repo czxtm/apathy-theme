@@ -23,6 +23,15 @@ import type {
 } from "../types";
 import type { ThemePath, UIPath } from "./themePaths.generated";
 
+export enum Variant {
+  Default = "default",
+  Minted = "minted",
+  TheoryDark = "theory",
+  Slate = "slate",
+  Ocean = "ocean",
+  Experimental = "experimental",
+}
+
 // ============================================================================
 // Color Palette
 // ============================================================================
@@ -1184,6 +1193,7 @@ export interface SemanticOverrides
 // ============================================================================
 
 export interface ThemeDefinition<ColorValue extends ColorLike = ColorLike> {
+  variant: Variant;
   /** Name of the theme */
   name: string;
 
@@ -1254,6 +1264,7 @@ export type ComponentOverrides<_ColorValue extends ColorLike = ColorLike> =
   Record<string, unknown>;
 
 export interface SlimThemeDefinition<ColorValue extends ColorLike = ColorLike> {
+  variant: Variant;
   name: string;
   type: "dark" | "light";
   palette: ColorPalette;

@@ -14,6 +14,7 @@ import {
   type SlimThemeDefinition,
   type ThemeDefinition,
   type UserInterface,
+  Variant,
 } from "./types";
 import { darken, l10, lighten, mix, transparentize } from "./utils";
 
@@ -745,6 +746,7 @@ const components = {
 // ============================================================================
 
 const mintedSource = {
+  variant: Variant.Minted,
   name: "apathy /// minted",
   type: "dark",
   palette: {},

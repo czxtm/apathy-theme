@@ -9,6 +9,7 @@ import { SemanticTokenModifier } from "../types";
 import {
 	make,
 	normalizeTheme,
+	Variant,
 	type SlimThemeDefinition,
 	type ThemeDefinition,
 } from "./types";
@@ -477,6 +478,7 @@ const apathyExperimentalSource = {
 			),
 		},
 	},
+	variant: Variant.Experimental,
 } satisfies SlimThemeDefinition;
 
 export const apathyExperimental: ThemeDefinition = normalizeTheme(
