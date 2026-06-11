@@ -5,7 +5,7 @@
   <br /><br />
   <a href="https://vscode.dev/editor/theme/coopermaruyama.apathy-theme">Live Demo</a>
   <br /><br />
-  <img style="object-fit: cover;" src="https://github.com/user-attachments/assets/c0fe7102-033c-448a-96c9-4162a6eb724f" />
+  <img  style="aspect-ratio: 1054 / 699; object-fit: cover;" width="2108" height="1398" src="https://github.com/user-attachments/assets/c0fe7102-033c-448a-96c9-4162a6eb724f" />
 </div>
 
 
@@ -19,7 +19,7 @@
 
 <details open>
   <summary><h2>theory</h2></summary>
-  <div align="center"><img style="object-fit: cover;" alt="theory" src="https://github.com/user-attachments/assets/f0137389-c1b2-41f5-8724-751f5511b298"/></div>
+  <div align="center"><img style="aspect-ratio: 1054 / 699; object-fit: cover;" width="2108" height="1398" alt="theory" src="https://github.com/user-attachments/assets/f0137389-c1b2-41f5-8724-751f5511b298"/></div>
 </details>
 
 <br />
