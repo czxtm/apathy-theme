@@ -8,7 +8,7 @@ export const expectedZed = {
 		"text.placeholder": "#2a2d4dff",
 		"text.disabled": "#2a2d4dff",
 		"text.accent": "#998ff1cf",
-		"terminal.foreground": "#666b95c2",
+		"terminal.foreground": "#aeaacceb",
 		"editor.background": "#0a0a0Fff",
 		background: "#0A0A0fff",
 		"panel.background": "#0A0A0fff",
@@ -60,54 +60,55 @@ export const expectedZed = {
 		"info.background": "#242A4252",
 		warning: "#EBD8BEE8",
 		"warning.background": "#42382B4D",
-		"syntax": {
+		syntax: {
 			"type.builtin": {
-				"color": "#4f4980ff"
+				color: "#4f4980ff",
 			},
-			"function": {
-				"color": "#f2cdcd",
+			function: {
+				color: "#f2cdcd",
 			},
 			"function.definition": {
-				"color": "#c7f6fa",
+				color: "#c7f6fa",
 			},
-			"attribute": {
-				"color": "#6a6c85",
+			operator: {
+				color: "#adaca2",
 			},
-			"constructor": {
-				"color": "#f2cdcd"
+			constant: {
+				color: "#7bc2df",
 			},
-			"operator": {
-				// "color": "#6a6c85",
-				// "color": "#fd4Ca2FF",
-				"color": "#adaCa2FF",
+			attribute: {
+				color: "#6a6c85",
 			},
-			"keyword": {
-				"color": "#4a5585",
+			constructor: {
+				color: "#f2cdcd",
+			},
+			keyword: {
+				color: "#4a5585",
 			},
 			"keyword.directive.define": {
-				"color": "#cd5Cf2FF",
+				color: "#cd5Cf2FF",
 			},
-			"type": {
-				"color": "#9599cf",
+			type: {
+				color: "#9599cf",
 			},
-			"variable": {
-				"color": "#9599bffa",
+			variable: {
+				color: "#9599bffa",
 			},
-			"comment": {
-				"color": "#282948dd"
+			comment: {
+				color: "#282948dd",
 			},
-			"property": {
-				"color": "#8380a8CC",
+			property: {
+				color: "#8380a8CC",
 			},
-			"title": {
-				"color": "#ABaBFFFF",
+			title: {
+				color: "#ABaBFFFF",
 			},
-			"number": {
-				"color": "#7bc2df",
+			number: {
+				color: "#7bc2df",
 			},
-			"string": {
-				"color": "#b7ce99",
+			string: {
+				color: "#b7ce99",
 			},
-		}
+		},
 	},
 };

@@ -366,7 +366,7 @@ function buildColors(
 		"panel.border": c("ui.overrides.panel.border", "ui.borders.default"),
 		// "gauge.border": c("ui.borders.subtle"),
 		"sash.hoverBorder": c("ui.borders.active"),
-		"editorGroup.border": c("ui.borders.subtle"),
+		"editorGroup.border": c("ui.borders.disabled", "ui.borders.subtle"),
 		// "composerPane.background": c("ui.backgrounds.surface"),
 		"editor.compositionBorder": c("ui.borders.active"),
 		"editorWidget.background": c(
@@ -836,6 +836,10 @@ function buildColors(
 			"ui.overrides.diffEditor.insertedLineBackground",
 			"ui.git.added",
 		),
+		"diffEditor.insertedTextBorder": c(
+			"ui.git.diff.border.added",
+			"ui.git.added",
+		),
 		"diffEditor.removedLineBackground": c(
 			"ui.overrides.diffEditor.removedLineBackground",
 			"ui.git.deleted",
@@ -863,6 +867,30 @@ function buildColors(
 		"editorInlayHint.diagonalFill": c(
 			"ui.overrides.diffEditor.diagonalFill",
 			"ui.borders.subtle",
+		),
+		"editorInlayHint.foreground": c(
+			"ui.inlineHints.foreground",
+			"ui.foregrounds.muted",
+		),
+		"editorInlayHint.background": c(
+			"ui.inlineHints.background",
+			"ui.backgrounds.raised",
+		),
+		"editorInlayHint.typeForeground": c(
+			"ui.inlineHints.foreground",
+			"ui.foregrounds.muted",
+		),
+		"editorInlayHint.typeBackground": c(
+			"ui.inlineHints.background",
+			"ui.backgrounds.raised",
+		),
+		"editorInlayHint.parameterForeground": c(
+			"ui.inlineHints.foreground",
+			"ui.foregrounds.muted",
+		),
+		"editorInlayHint.parameterBackground": c(
+			"ui.inlineHints.background",
+			"ui.backgrounds.raised",
 		),
 
 		// ═══════════════════════════════════════════════════════════════════════
@@ -924,13 +952,27 @@ function buildColors(
 			"ui.foregrounds.default",
 		),
 		"editorHoverWidget.background": c(
+			"ui.overrides.editorWidget.background",
 			"ui.elements.background",
 			"ui.backgrounds.overlay",
 		),
-		"editorHoverWidget.border": c("ui.elements.border", "ui.borders.default"),
+		"editorHoverWidget.border": c(
+			"ui.overrides.editorWidget.border",
+			"ui.elements.border",
+			"ui.borders.default",
+		),
 		"editorHoverWidget.foreground": c(
+			"ui.overrides.editorWidget.foreground",
 			"ui.elements.foreground",
 			"ui.foregrounds.default",
+		),
+		"editorHoverWidget.highlightForeground": c(
+			"ui.elements.hover.foreground",
+			"ui.foregrounds.accent",
+		),
+		"editorHoverWidget.statusBarBackground": c(
+			"ui.elements.active.background",
+			"ui.backgrounds.raised",
 		),
 		"sideBarTitle.background": c(
 			"ui.panels.titleBackground",
@@ -1355,7 +1397,11 @@ function generateVSCodeTheme(t: ThemeDefinition): VSCodeThemeFile {
 
 			// Markup (Markdown)
 			tokenColor("markup.heading", c("tokens.meta.label"), "bold"),
-			tokenColor("entity.name.section.markdown", c("tokens.meta.label"), "bold"),
+			tokenColor(
+				"entity.name.section.markdown",
+				c("tokens.meta.label"),
+				"bold",
+			),
 			tokenColor("markup.bold", c("tokens.keywords"), "bold"),
 			tokenColor("markup.italic", c("tokens.strings"), "italic"),
 			tokenColor("markup.inline.raw", c("tokens.literals.string")),
