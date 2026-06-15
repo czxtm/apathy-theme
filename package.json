@@ -1,105 +1,105 @@
 {
-	"name": "apathy-theme",
-	"displayName": "Apathy Theme",
-	"description": "A dark, sophisticated color theme with purple/black backgrounds and vibrant neon-like syntax highlighting.",
-	"version": "3.9.0",
-	"icon": "icon.png",
-	"publisher": "coopermaruyama",
-	"engines": {
-		"vscode": "^1.105.0"
-	},
-	"categories": [
-		"Themes"
-	],
-	"keywords": [
-		"dark",
-		"purple",
-		"neon",
-		"syntax",
-		"color-theme",
-		"apathy"
-	],
-	"imports": {
-		"#/*": "./src/*"
-	},
-	"contributes": {
-		"configurationDefaults": {
-			"editor.semanticHighlighting.enabled": true
-		},
-		"themes": [
-			{
-				"label": "apathy /// minted",
-				"uiTheme": "vs-dark",
-				"path": "./dist/minted.json"
-			},
-			{
-				"label": "apathy /// theory",
-				"uiTheme": "vs-dark",
-				"path": "./dist/minted-theory.json"
-			},
-			{
-				"label": "apathy",
-				"uiTheme": "vs-dark",
-				"path": "./dist/apathy.json"
-			},
-			{
-				"label": "apathy /// storm",
-				"uiTheme": "vs-dark",
-				"path": "./dist/apathetic-ocean.json"
-			}
-		]
-	},
-	"vsce": {
-		"dependencies": false
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/coopmoney/apathy-theme"
-	},
-	"license": "MIT",
-	"private": true,
-	"scripts": {
-		"generate:theme-paths": "bun run packages/scripts/generate-theme-paths.ts",
-		"check:theme-paths": "bun run generate:theme-paths && test -z \"$(git status --porcelain -- src/themes/themePaths.generated.ts)\"",
-		"build": "bun run generate:theme-paths && bun run src/main.ts",
-		"dev": "portless apathy --force bun run src/dev-server.ts",
-		"watch": "bun run --watch src/main.ts",
-		"bump:patch": "bun run src/main.ts bump patch",
-		"bump:minor": "bun run src/main.ts bump minor",
-		"bump:major": "bun run src/main.ts bump major",
-		"vscode:prepublish": "bun run build",
-		"release": "bunx release-it",
-		"release:ci": "bunx release-it --ci",
-		"pack": "vsce package --no-dependencies",
-		"publish": "vsce publish --no-dependencies"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "^2.4.15",
-		"@effect/language-service": "^0.86.1",
-		"@types/bun": "^1.3.14",
-		"@types/vscode": "1.105.0",
-		"@typescript/native-preview": "^7.0.0-dev.20260513.1",
-		"playwright": "^1.60.0",
-		"release-it": "^20.0.1"
-	},
-	"dependencies": {
-		"color-convert": "^3.1.3",
-		"colorjs.io": "^0.6.1",
-		"effect": "^3.21.2",
-		"tsx": "^4.21.0",
-		"@vscode/vsce": "^3.9.1"
-	},
-	"overrides": {
-		"qs": "6.15.1",
-		"lodash": "4.18.1",
-		"ip-address": "10.2.0",
-		"brace-expansion": "1.1.14",
-		"defu": "6.1.7",
-		"basic-ftp": "6.0.1",
-		"minimatch": "3.1.5",
-		"underscore": "1.13.8",
-		"fast-uri": "3.1.2",
-		"undici": "8.2.0",
-		"picomatch": "4.0.4"
-	}
+  "name": "apathy-theme",
+  "displayName": "Apathy Theme",
+  "description": "A dark, sophisticated color theme with purple/black backgrounds and vibrant neon-like syntax highlighting.",
+  "version": "3.11.0",
+  "icon": "icon.png",
+  "publisher": "coopermaruyama",
+  "engines": {
+    "vscode": "^1.105.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "keywords": [
+    "dark",
+    "purple",
+    "neon",
+    "syntax",
+    "color-theme",
+    "apathy"
+  ],
+  "imports": {
+    "#/*": "./src/*"
+  },
+  "contributes": {
+    "configurationDefaults": {
+      "editor.semanticHighlighting.enabled": true
+    },
+    "themes": [
+      {
+        "label": "apathy /// minted",
+        "uiTheme": "vs-dark",
+        "path": "./dist/minted.json"
+      },
+      {
+        "label": "apathy /// theory",
+        "uiTheme": "vs-dark",
+        "path": "./dist/minted-theory.json"
+      },
+      {
+        "label": "apathy",
+        "uiTheme": "vs-dark",
+        "path": "./dist/apathy.json"
+      },
+      {
+        "label": "apathy /// storm",
+        "uiTheme": "vs-dark",
+        "path": "./dist/apathetic-ocean.json"
+      }
+    ]
+  },
+  "vsce": {
+    "dependencies": false
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coopmoney/apathy-theme"
+  },
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "generate:theme-paths": "bun run packages/scripts/generate-theme-paths.ts",
+    "check:theme-paths": "bun run generate:theme-paths && test -z \"$(git status --porcelain -- src/themes/themePaths.generated.ts)\"",
+    "build": "bun run generate:theme-paths && bun run src/main.ts",
+    "dev": "portless apathy --force bun run src/dev-server.ts",
+    "watch": "bun run --watch src/main.ts",
+    "bump:patch": "bun run src/main.ts bump patch",
+    "bump:minor": "bun run src/main.ts bump minor",
+    "bump:major": "bun run src/main.ts bump major",
+    "vscode:prepublish": "bun run build",
+    "release": "bunx release-it",
+    "release:ci": "bunx release-it --ci",
+    "pack": "vsce package --no-dependencies",
+    "publish": "vsce publish --no-dependencies"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.15",
+    "@effect/language-service": "^0.86.1",
+    "@types/bun": "^1.3.14",
+    "@types/vscode": "1.105.0",
+    "@typescript/native-preview": "^7.0.0-dev.20260513.1",
+    "playwright": "^1.60.0",
+    "release-it": "^20.0.1"
+  },
+  "dependencies": {
+    "color-convert": "^3.1.3",
+    "colorjs.io": "^0.6.1",
+    "effect": "^3.21.2",
+    "tsx": "^4.21.0",
+    "@vscode/vsce": "^3.9.1"
+  },
+  "overrides": {
+    "qs": "6.15.1",
+    "lodash": "4.18.1",
+    "ip-address": "10.2.0",
+    "brace-expansion": "1.1.14",
+    "defu": "6.1.7",
+    "basic-ftp": "6.0.1",
+    "minimatch": "3.1.5",
+    "underscore": "1.13.8",
+    "fast-uri": "3.1.2",
+    "undici": "8.2.0",
+    "picomatch": "4.0.4"
+  }
 }

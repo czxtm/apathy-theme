@@ -19,3 +19,10 @@ assets/
 *.tsbuildinfo
 previews
 packages/
+dist/previews
+*.html
+.envrc
+.sops.yaml
+.release-it.json
+docs
+shiki
