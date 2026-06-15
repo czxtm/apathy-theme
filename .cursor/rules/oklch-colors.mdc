@@ -1,0 +1,29 @@
+---
+description: Require all color values to be specified as OKLCH or derived from OKLCH
+applyTo: "**/*.{css,scss,ts,tsx,js,jsx,json}"
+alwaysApply: false
+---
+
+# OKLCH Color Values
+
+All color values MUST be specified using `oklch(...)` or transformed from an OKLCH source value.
+
+## Required pattern
+
+- Prefer explicit `oklch(...)` values for authored colors.
+- If a target format is required by an external API, generator, editor theme format, or test fixture, derive it from an OKLCH source value in code.
+- Keep the OKLCH source close to the transformed value so future edits preserve the intended color space.
+- Do not introduce raw hex, RGB, HSL, named colors, or other color literals unless they are generated from OKLCH or required as non-authored fixture output.
+
+```ts
+// BAD: raw authored color literal
+const accent = "#82aaff";
+
+// GOOD: authored OKLCH source
+const accent = "oklch(72% 0.14 260)";
+
+// GOOD: external format derived from OKLCH
+const accent = toHex("oklch(72% 0.14 260)");
+```
+
+When modifying existing colors, convert the source of truth to OKLCH first, then update any derived outputs or snapshots.
