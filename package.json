@@ -49,6 +49,9 @@
 			}
 		]
 	},
+	"vsce": {
+		"dependencies": false
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/coopmoney/apathy-theme"

@@ -11,3 +11,11 @@ src/**
 test/**
 *.vsix
 .mypy_cache/
+.cursor/
+.github/
+.meta/
+.omo/
+assets/
+*.tsbuildinfo
+previews
+packages/
