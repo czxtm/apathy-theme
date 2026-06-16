@@ -5,14 +5,14 @@
   <br /><br />
   <a href="https://vscode.dev/editor/theme/coopermaruyama.apathy-theme">Live Demo</a>
   <br /><br />
-  <img width="1358" height="708" alt="Slide 16_9 - 1" src="https://github.com/user-attachments/assets/2f3f4072-5973-4420-ab89-caf42e113add" />
+  <img width="1358" height="708" alt="Slide 16_9 - 1" style="object-fit:contain" src="https://github.com/user-attachments/assets/2f3f4072-5973-4420-ab89-caf42e113add" />
 
 </div>
 
 
 <div align="center">
   <br /><br />
-  <img width="1478" height="1024" alt="Slide 16_9 - 1" src="https://github.com/user-attachments/assets/3cf08e81-b380-4bd2-b033-4b3ebaceb7d0" />
+  <img width="1478" height="1024" alt="Slide 16_9 - 1" style="object-fit:contain" src="https://github.com/user-attachments/assets/3cf08e81-b380-4bd2-b033-4b3ebaceb7d0" />
 </div>
 <br />
 
