@@ -107,7 +107,7 @@ else
   git push "git@github.com:${FORK_REPO}.git" "$BRANCH"
 fi
 
-PR_TITLE="chore: update apathy-theme to ${REF}"
+PR_TITLE="Update apathy-theme to ${REF}"
 PR_BODY="Automated update of the apathy-theme extension to ${REF} (version ${EXT_VERSION})."
 
 if command -v gh >/dev/null 2>&1; then

@@ -700,9 +700,7 @@ export type InteractiveElementState<ColorValue extends ColorLike = ColorLike> =
       border?: ColorValue;
     };
 
-export interface InteractiveElementColors<
-  ColorValue extends ColorLike = ColorLike,
-> {
+export interface InteractiveElementColors<ColorValue extends ColorLike = ColorLike> {
   background: ColorValue;
   selectionBackground?: ColorValue;
   foreground?: ColorValue;
@@ -1185,8 +1183,7 @@ export interface LanguageSpecificTokens {
   };
 }
 
-export interface SemanticOverrides
-  extends SemanticTokens, LanguageSpecificTokens {}
+export interface SemanticOverrides extends SemanticTokens, LanguageSpecificTokens {}
 
 // ============================================================================
 // Complete Theme Definition
@@ -1260,8 +1257,10 @@ export interface SyntaxDefinition {
   special?: Partial<TokenAssignments["special"]>;
 }
 
-export type ComponentOverrides<_ColorValue extends ColorLike = ColorLike> =
-  Record<string, unknown>;
+export type ComponentOverrides<_ColorValue extends ColorLike = ColorLike> = Record<
+  string,
+  unknown
+>;
 
 export interface SlimThemeDefinition<ColorValue extends ColorLike = ColorLike> {
   variant: Variant;
@@ -1311,14 +1310,8 @@ function normalizeSyntax(syntax: SyntaxDefinition): TokenAssignments {
     stringsDefault,
     source,
   ) as ColorLike;
-  const keywordsDefault = firstDefined(
-    syntax.keywords?.default,
-    source,
-  ) as ColorLike;
-  const variablesDefault = firstDefined(
-    syntax.variables?.default,
-    source,
-  ) as ColorLike;
+  const keywordsDefault = firstDefined(syntax.keywords?.default, source) as ColorLike;
+  const variablesDefault = firstDefined(syntax.variables?.default, source) as ColorLike;
   const constantsDefault = firstDefined(
     syntax.constants?.default,
     syntax.literals?.default,
@@ -1367,25 +1360,13 @@ function normalizeSyntax(syntax: SyntaxDefinition): TokenAssignments {
         syntax.operators?.comparison,
         operatorsDefault,
       ) as ColorLike,
-      logical: firstDefined(
-        syntax.operators?.logical,
-        operatorsDefault,
-      ) as ColorLike,
-      bitwise: firstDefined(
-        syntax.operators?.bitwise,
-        operatorsDefault,
-      ) as ColorLike,
-      wordlike: firstDefined(
-        syntax.operators?.wordlike,
-        operatorsDefault,
-      ) as ColorLike,
+      logical: firstDefined(syntax.operators?.logical, operatorsDefault) as ColorLike,
+      bitwise: firstDefined(syntax.operators?.bitwise, operatorsDefault) as ColorLike,
+      wordlike: firstDefined(syntax.operators?.wordlike, operatorsDefault) as ColorLike,
     },
     literals: {
       default: literalsDefault,
-      string: firstDefined(
-        syntax.literals?.string,
-        stringsDefault,
-      ) as ColorLike,
+      string: firstDefined(syntax.literals?.string, stringsDefault) as ColorLike,
       number: firstDefined(
         syntax.literals?.number,
         syntax.constants?.numeric,
@@ -1414,33 +1395,18 @@ function normalizeSyntax(syntax: SyntaxDefinition): TokenAssignments {
     },
     keywords: {
       default: keywordsDefault,
-      control: firstDefined(
-        syntax.keywords?.control,
-        keywordsDefault,
-      ) as ColorLike,
+      control: firstDefined(syntax.keywords?.control, keywordsDefault) as ColorLike,
       declaration: firstDefined(
         syntax.keywords?.declaration,
         keywordsDefault,
       ) as ColorLike,
-      import: firstDefined(
-        syntax.keywords?.import,
-        keywordsDefault,
-      ) as ColorLike,
-      modifier: firstDefined(
-        syntax.keywords?.modifier,
-        keywordsDefault,
-      ) as ColorLike,
-      operator: firstDefined(
-        syntax.keywords?.operator,
-        operatorsDefault,
-      ) as ColorLike,
+      import: firstDefined(syntax.keywords?.import, keywordsDefault) as ColorLike,
+      modifier: firstDefined(syntax.keywords?.modifier, keywordsDefault) as ColorLike,
+      operator: firstDefined(syntax.keywords?.operator, operatorsDefault) as ColorLike,
     },
     variables: {
       default: variablesDefault,
-      local: firstDefined(
-        syntax.variables?.local,
-        variablesDefault,
-      ) as ColorLike,
+      local: firstDefined(syntax.variables?.local, variablesDefault) as ColorLike,
       parameter: firstDefined(
         syntax.variables?.parameter,
         syntax.variables?.local,
@@ -1500,10 +1466,7 @@ function normalizeSyntax(syntax: SyntaxDefinition): TokenAssignments {
     },
     types: {
       default: typesDefault,
-      primitive: firstDefined(
-        syntax.types?.primitive,
-        typesDefault,
-      ) as ColorLike,
+      primitive: firstDefined(syntax.types?.primitive, typesDefault) as ColorLike,
       class: firstDefined(syntax.types?.class, typesDefault) as ColorLike,
       interface: firstDefined(
         syntax.types?.interface,
@@ -1515,10 +1478,7 @@ function normalizeSyntax(syntax: SyntaxDefinition): TokenAssignments {
         syntax.types?.typeParameter,
         typesDefault,
       ) as ColorLike,
-      namespace: firstDefined(
-        syntax.types?.namespace,
-        typesDefault,
-      ) as ColorLike,
+      namespace: firstDefined(syntax.types?.namespace, typesDefault) as ColorLike,
     },
     punctuation: {
       default: punctuationDefault,
@@ -1582,26 +1542,14 @@ function deriveSemantic(tokens: TokenAssignments): Semantic {
     comment: tokens.comments,
     string: tokens.strings.default,
     keyword: tokens.keywords.default,
-    number: firstDefined(
-      tokens.literals.number,
-      tokens.literals.default,
-    ) as ColorLike,
-    regexp: firstDefined(
-      tokens.strings.regex,
-      tokens.strings.default,
-    ) as ColorLike,
+    number: firstDefined(tokens.literals.number, tokens.literals.default) as ColorLike,
+    regexp: firstDefined(tokens.strings.regex, tokens.strings.default) as ColorLike,
     operator: tokens.operators.default,
-    namespace: firstDefined(
-      tokens.types.namespace,
-      tokens.types.default,
-    ) as ColorLike,
+    namespace: firstDefined(tokens.types.namespace, tokens.types.default) as ColorLike,
     type: tokens.types.default,
     struct: firstDefined(tokens.types.class, tokens.types.default) as ColorLike,
     class: firstDefined(tokens.types.class, tokens.types.default) as ColorLike,
-    interface: firstDefined(
-      tokens.types.interface,
-      tokens.types.default,
-    ) as ColorLike,
+    interface: firstDefined(tokens.types.interface, tokens.types.default) as ColorLike,
     enum: firstDefined(tokens.types.enum, tokens.types.default) as ColorLike,
     typeParameter: firstDefined(
       tokens.types.typeParameter,
@@ -1612,10 +1560,7 @@ function deriveSemantic(tokens: TokenAssignments): Semantic {
       tokens.functions.method,
       tokens.functions.default,
     ) as ColorLike,
-    decorator: firstDefined(
-      tokens.meta.decorator,
-      tokens.meta.default,
-    ) as ColorLike,
+    decorator: firstDefined(tokens.meta.decorator, tokens.meta.default) as ColorLike,
     macro: firstDefined(tokens.meta.macro, tokens.meta.default) as ColorLike,
     variable: tokens.variables.default,
     parameter: firstDefined(
@@ -1635,9 +1580,7 @@ export function normalizeTheme<ColorValue extends ColorLike>(
 ): ThemeDefinition<ColorValue> {
   const tokens = normalizeSyntax(source.syntax);
   const componentOverrides =
-    (source.componentOverrides as
-      | Partial<UIComponents<ColorValue>>
-      | undefined) ?? {};
+    (source.componentOverrides as Partial<UIComponents<ColorValue>> | undefined) ?? {};
   const semantic = {
     ...deriveSemantic(tokens),
     ...(source.semantic ?? {}),
@@ -1690,8 +1633,7 @@ export function semantic(
   if (typeof value === "string") return value;
   if (value instanceof Color) return value.hexa();
   if (typeof value === "object" && value !== null) {
-    if (variant && (value as any)[variant])
-      return toHex((value as any)[variant]);
+    if (variant && (value as any)[variant]) return toHex((value as any)[variant]);
     return toHex((value as any).default);
   }
   return undefined;
@@ -1700,8 +1642,7 @@ export function semantic(
 function isColor(value: unknown): value is ColorLike {
   return (
     value instanceof Color ||
-    (typeof value === "string" &&
-      /^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(value))
+    (typeof value === "string" && /^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(value))
   );
 }
 /**
@@ -1710,10 +1651,7 @@ function isColor(value: unknown): value is ColorLike {
  * If a key is not found but the parent has a "default" property,
  * it will fall back to that default (CSS-like cascading behavior).
  */
-export function getThemeValue(
-  theme: ThemeDefinition,
-  path: ThemePath,
-): string | null {
+export function getThemeValue(theme: ThemeDefinition, path: ThemePath): string | null {
   const parts = path.split(".");
   let current: unknown = theme;
   let lastDefault: unknown;
@@ -1731,9 +1669,7 @@ export function getThemeValue(
       if (isColor(lastDefault)) {
         return toHex(lastDefault);
       }
-      throw new Error(
-        `Cannot access '${part}' on non-object at path '${path}'`,
-      );
+      throw new Error(`Cannot access '${part}' on non-object at path '${path}'`);
     }
 
     const obj = current as Record<string, unknown>;
@@ -1819,11 +1755,7 @@ function getExactValue(theme: ThemeDefinition, path: string): string | null {
   let current: unknown = theme;
 
   for (const part of parts) {
-    if (
-      current === null ||
-      current === undefined ||
-      typeof current !== "object"
-    ) {
+    if (current === null || current === undefined || typeof current !== "object") {
       return null;
     }
     const obj = current as Record<string, unknown>;
@@ -1888,10 +1820,11 @@ export function strictColorFactory<T extends ThemeDefinition>(t: T) {
 }
 
 export function semanticFactory(t: ThemeDefinition) {
-  return function c<
-    P extends SemanticTokenType,
-    T extends SemanticTokenModifier,
-  >(path: P, fallback: ThemePath = "ui.foregrounds.default", _mod?: T): string {
+  return function c<P extends SemanticTokenType, T extends SemanticTokenModifier>(
+    path: P,
+    fallback: ThemePath = "ui.foregrounds.default",
+    _mod?: T,
+  ): string {
     const rawV =
       t.semantic?.[path] ??
       getThemeValue(t, fallback) ??
@@ -1899,12 +1832,8 @@ export function semanticFactory(t: ThemeDefinition) {
     let v: string = toHex(rawV);
     const parts = path.split(".");
     const last = parts.length > 1 ? parts[parts.length - 1] : null;
-    const mk = Object.keys(t.modifiers || {}).includes(last as string)
-      ? last
-      : null;
-    const tokenModifier = mk
-      ? t.modifiers?.[mk as SemanticTokenModifier]
-      : null;
+    const mk = Object.keys(t.modifiers || {}).includes(last as string) ? last : null;
+    const tokenModifier = mk ? t.modifiers?.[mk as SemanticTokenModifier] : null;
     if (tokenModifier?.transform) {
       v = toHex(tokenModifier.transform(v));
     } else if (tokenModifier?.global?.foreground) {
@@ -1920,25 +1849,19 @@ export function semanticFactory(t: ThemeDefinition) {
 // ============================================================================
 // UI Colors (panel, button, etc)
 // ============================================================================
-export function getComponentColor(
-  theme: ThemeDefinition,
-  path: ComponentPath,
-): string {
+export function getComponentColor(theme: ThemeDefinition, path: ComponentPath): string {
   // Try override first
   const parts = path.split(".") as [keyof UIComponents, string];
   const [component, prop] = parts;
   const override =
-    theme.ui.overrides?.[component]?.[
-      prop as keyof UIComponents[typeof component]
-    ];
+    theme.ui.overrides?.[component]?.[prop as keyof UIComponents[typeof component]];
   if (override) return toHex(override);
 
   // Use fallback mapping
   const fallbackPath = fallbacks[path];
   if (fallbackPath) {
     return (
-      getThemeValue(theme, `ui.${fallbackPath}`) ??
-      toHex(theme.ui.foregrounds.default)
+      getThemeValue(theme, `ui.${fallbackPath}`) ?? toHex(theme.ui.foregrounds.default)
     );
   }
 

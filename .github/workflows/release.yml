@@ -134,10 +134,6 @@ jobs:
           extensionFile: ${{ steps.publishToOpenVSX.outputs.vsixPath }}
 
       - name: Release Zed Extension
-        uses: huacnlee/zed-extension-action@v2
-        with:
-          extension-name: apathy-theme
-          push-to: czxtm/zed-extensions
-        env:
-          # the personal access token should have "repo" & "workflow" scopes
-          COMMITTER_TOKEN: ${{ secrets.COMMITTER_TOKEN }}
+        run: |
+          bun run packages/scripts/update-zed-version.ts ${{ steps.bump.outputs.version }} || true
+          bash packages/scripts/update-zed-submodule.sh
