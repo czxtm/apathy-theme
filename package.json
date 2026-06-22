@@ -2,7 +2,7 @@
   "name": "apathy-theme",
   "displayName": "Apathy Theme",
   "description": "A dark, sophisticated color theme with purple/black backgrounds and vibrant neon-like syntax highlighting.",
-  "version": "3.15.1",
+  "version": "3.15.2",
   "icon": "icon.png",
   "publisher": "coopermaruyama",
   "engines": {
