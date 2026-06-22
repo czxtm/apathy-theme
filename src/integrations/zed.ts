@@ -704,6 +704,7 @@ function buildStyle(
     "ui.backgrounds.raised",
   );
   const elementActive = c(
+    "ui.subtleElements.active.background",
     "ui.elements.active.background",
     "ui.menu.selectionBackground",
     "ui.backgrounds.raised",
@@ -972,6 +973,9 @@ function buildStyle(
     },
     keyword: {
       color: get(tokens.keywords, "default"),
+    },
+    "keyword.declaration": {
+      color: get(tokens.keywords, "declaration") || get(tokens.keywords, "default"),
     },
     "keyword.directive.define": {
       color: get(tokens.meta, "macro") || get(tokens.keywords, "default"),
@@ -1331,11 +1335,14 @@ function buildStyle(
       "ui.status.conflict.border",
       "ui.git.conflict",
     ),
-    "version_control.conflict_marker.theirs": info,
+    "version_control.conflict_marker.theirs": c(
+      "ui.status.conflict.foreground",
+      "ui.status.info.foreground",
+    ),
 
     conflict: gitConflict,
-    "conflict.background": gitConflict,
-    "conflict.border": gitConflict,
+    "conflict.background": c("ui.status.conflict.background", "ui.git.conflict"),
+    "conflict.border": c("ui.status.conflict.border", "ui.git.conflict"),
     created: c(
       "ui.status.created.foreground",
       "ui.git.files.foreground.added",

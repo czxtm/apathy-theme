@@ -27,7 +27,7 @@
 				"surface.background": "#101018ff",
 				"element.background": "#191629ff",
 				"element.hover": "#2c293dff",
-				"element.active": "#403d53ff",
+				"element.active": "#32333bff",
 				"element.selected": "#6b6aac30",
 				"element.disabled": "#19182180",
 				"drop_target.background": "#14121dff",
@@ -243,6 +243,9 @@
 						"font_weight": 700
 					},
 					"keyword": {
+						"color": "#575b6fce"
+					},
+					"keyword.declaration": {
 						"color": "#575b6fce"
 					},
 					"keyword.directive.define": {

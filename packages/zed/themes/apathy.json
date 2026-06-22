@@ -27,7 +27,7 @@
 				"surface.background": "#0e0b13ff",
 				"element.background": "#0c0a12ff",
 				"element.hover": "#2f294a44",
-				"element.active": "#1b1629ff",
+				"element.active": "#3c365466",
 				"element.selected": "#2f294a55",
 				"element.disabled": "#26244aff",
 				"drop_target.background": "#1b1629ff",
@@ -121,10 +121,10 @@
 				"version_control.word_added": "#47cf7ec9",
 				"version_control.word_deleted": "#f92672ff",
 				"version_control.conflict_marker.ours": "#60b97912",
-				"version_control.conflict_marker.theirs": "#68aab2ff",
+				"version_control.conflict_marker.theirs": "#ff7a00ff",
 				"conflict": "#ff7a00e6",
-				"conflict.background": "#ff7a00e6",
-				"conflict.border": "#ff7a00e6",
+				"conflict.background": "#15142faf",
+				"conflict.border": "#60b97912",
 				"created": "#aff99ecc",
 				"created.background": "#a6a6a652",
 				"created.border": "#989899e0",
@@ -244,6 +244,9 @@
 					},
 					"keyword": {
 						"color": "#afd1e9cf"
+					},
+					"keyword.declaration": {
+						"color": "#7d7a8bff"
 					},
 					"keyword.directive.define": {
 						"color": "#f184bce6"

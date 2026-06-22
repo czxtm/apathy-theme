@@ -1,14 +1,14 @@
 {
 	"$schema": "https://opencode.ai/theme.json",
 	"defs": {
-		"bg": "#0c0c13",
+		"bg": "#08080a",
 		"bgSurface": "#100f1c",
 		"bgRaised": "#10101b",
 		"bgOverlay": "#3a3f54",
 		"fg": "#7b8ab1",
 		"fgMuted": "#676597",
 		"fgSubtle": "#2a2d4d",
-		"fgAccent": "#9a8ff1",
+		"fgAccent": "#77f5c9",
 		"primary": "#b4e7df",
 		"secondary": "#fcb086",
 		"error": "#d96a92",
@@ -19,7 +19,7 @@
 		"borderActive": "#a7f3f1",
 		"borderSubtle": "#14151e",
 		"gitAdded": "#4c867c",
-		"gitModified": "#6273a3",
+		"gitModified": "#7786b7",
 		"gitDeleted": "#a43a64",
 		"diffAddedBg": "#011211",
 		"diffRemovedBg": "#a43a64",
@@ -27,13 +27,13 @@
 		"synComment": "#282948",
 		"synKeyword": "#4a5585",
 		"synFunction": "#f2cdcd",
-		"synVariable": "#9599bf",
-		"synString": "#b7ce99",
+		"synVariable": "#7777a8",
+		"synString": "#c6d4cb",
 		"synNumber": "#7bc2df",
 		"synType": "#9599cf",
 		"synOperator": "#adaca2",
 		"synPunctuation": "#767b95",
-		"mdCode": "#b7ce99"
+		"mdCode": "#c6d4cb"
 	},
 	"theme": {
 		"primary": {

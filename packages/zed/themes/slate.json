@@ -245,6 +245,9 @@
 					"keyword": {
 						"color": "#9ba3c2ff"
 					},
+					"keyword.declaration": {
+						"color": "#9ba3c2ff"
+					},
 					"keyword.directive.define": {
 						"color": "#ffcb6bff"
 					},

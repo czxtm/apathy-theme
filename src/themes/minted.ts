@@ -20,6 +20,7 @@ import { darken, l10, lighten, mix, transparentize } from "./utils";
 
 const hue = {
 	red: {
+		raspberry: 1.9,
 		stageDeleted: 2.2,
 		removedTextBackground: 3.3,
 		terminalBrightRed: 5.8,
@@ -37,6 +38,8 @@ const hue = {
 		error: 359,
 	},
 	amber: {
+		copper: 45.2,
+		olive: 102.2,
 		warningBackground: 74,
 		warning: 76,
 		terminalYellow: 81.1,
@@ -50,13 +53,14 @@ const hue = {
 		paletteLime: 139.1,
 		terminalGreen: 142.7,
 		paletteGreen: 147.4,
-		iconAccent: 158,
+		seafoam: 158,
 		terminalBrightGreen: 162.8,
 		paletteMint: 166.1,
+		mint: 168,
 		gitUntracked: 170.5,
-		versionControlAdded: 182,
-		gitLensAdded: 183.3,
-		iconForeground: 185,
+		mutedTeal: 182,
+		brightTeal: 183.3,
+		iceMint: 185,
 	},
 	cyan: {
 		diffLine: 189.7,
@@ -67,16 +71,17 @@ const hue = {
 		diffInsertedText: 195.1,
 		hoverHighlight: 200.2,
 		paletteCyan: 201,
-		functionDeclaration: 202.8,
-		hoverStatusBar: 206,
+		frost: 202.8,
+		aquaMist: 206,
 		modified: 208,
 		terminalCyan: 210.3,
 		terminalBrightBlue: 213.7,
 		literal: 225.9,
 		collaborator: 227,
-		editorWidgetForeground: 239.2,
+		powderBlue: 239.2,
 	},
 	blue: {
+		deepIndigo: 244.2,
 		link: 248.6,
 		paletteBlue: 248.7,
 		findMatch: 256,
@@ -115,6 +120,7 @@ const hue = {
 		renamed: 282.7,
 		indentGuide: 283,
 		label: 283.3,
+		lavender: 283.9,
 		ruler: 284,
 		pane: 284.3,
 		uiMuted: 285,
@@ -138,6 +144,7 @@ const hue = {
 		hint: 303,
 		hintBackground: 305,
 		macro: 316.9,
+		mauveRose: 336.2,
 		terminalBrightMagenta: 337.6,
 	},
 } as const;
@@ -204,7 +211,7 @@ const syntax: SlimThemeDefinition["syntax"] = {
 	source: mp.fg,
 	comments: oklch(0.296, 0.056, hue.violet.softPurple).alpha(0.87),
 	strings: {
-		default: oklch(0.821, 0.076, hue.green.string),
+		default: oklch(0.857, 0.019, hue.green.seafoam).alpha(0.933),
 		regex: mp.peach,
 	},
 	operators: {
@@ -212,7 +219,7 @@ const syntax: SlimThemeDefinition["syntax"] = {
 	},
 	literals: {
 		default: oklch(0.778, 0.082, hue.cyan.literal),
-		string: oklch(0.821, 0.076, hue.green.string),
+		string: oklch(0.857, 0.019, hue.green.seafoam).alpha(0.933),
 		number: oklch(0.778, 0.082, hue.cyan.literal),
 		boolean: oklch(0.778, 0.082, hue.cyan.literal),
 		null: mp.lavender.alpha(0.81),
@@ -224,11 +231,11 @@ const syntax: SlimThemeDefinition["syntax"] = {
 		operator: oklch(0.742, 0.014, hue.amber.operator),
 	},
 	variables: {
-		default: oklch(0.694, 0.056, hue.violet.variable).alpha(0.98),
-		local: oklch(0.694, 0.056, hue.violet.variable).alpha(0.98),
-		parameter: oklch(0.694, 0.056, hue.violet.variable).alpha(0.98),
+		default: oklch(0.589, 0.075, hue.violet.lavender),
+		local: oklch(0.589, 0.075, hue.violet.lavender),
+		parameter: oklch(0.589, 0.075, hue.violet.lavender),
 		property: oklch(0.617, 0.06, hue.violet.property).alpha(0.8),
-		global: oklch(0.694, 0.056, hue.violet.variable).alpha(0.98),
+		global: oklch(0.589, 0.075, hue.violet.lavender),
 		other: mp.flatwhite.alpha(0.98),
 	},
 	constants: {
@@ -239,7 +246,7 @@ const syntax: SlimThemeDefinition["syntax"] = {
 	},
 	functions: {
 		default: oklch(0.88, 0.042, hue.red.functionWarm),
-		declaration: oklch(0.942, 0.048, hue.cyan.functionDeclaration),
+		declaration: oklch(0.942, 0.048, hue.cyan.frost),
 		call: oklch(0.88, 0.042, hue.red.functionWarm),
 		method: oklch(0.88, 0.042, hue.red.functionWarm),
 		builtin: oklch(0.437, 0.089, hue.violet.primitive),
@@ -267,7 +274,7 @@ const syntax: SlimThemeDefinition["syntax"] = {
 		decorator: oklch(0.539, 0.039, hue.violet.meta),
 		macro: oklch(0.675, 0.23, hue.magenta.macro),
 		annotation: oklch(0.539, 0.039, hue.violet.meta),
-		label: oklch(0.773, 0.119, hue.violet.label),
+		label: oklch(0.913, 0.035, hue.magenta.mauveRose).alpha(0.667),
 		tag: mp.gray1,
 	},
 	storage: {
@@ -292,7 +299,7 @@ const overlay = mp.charcoal
 	.alpha(0.1);
 
 const backgrounds: UserInterface<ColorLike>["backgrounds"] = {
-	base: mp.midnight,
+	base: oklch(0.135, 0.005, hue.violet.uiMuted),
 	darker: mp.midnight.darker(0.15),
 	surface: mp.midnight
 		.set({
@@ -315,7 +322,7 @@ const foregrounds: UserInterface<ColorLike>["foregrounds"] = {
 	default: mp.uiFg,
 	muted: mp.uiMuted,
 	subtle: oklch(0.311, 0.057, hue.violet.textSubtle),
-	accent: oklch(0.701, 0.141, hue.violet.accent).alpha(0.81),
+	accent: oklch(0.886, 0.13, hue.green.mint),
 	focused: focusColor,
 };
 
@@ -362,7 +369,7 @@ const git = (() => {
 		wordDeleted: mp.deletedRose.alpha(0.27),
 		untracked: oklch(0.8725, 0.0962, hue.green.gitUntracked).alpha(0.824),
 		ignored: mp.mist.alpha(0.76),
-		conflict: mp.crimson,
+		conflict: oklch(0.581, 0.188, hue.red.raspberry).alpha(0.706),
 		renamed: mp.gitRenamed,
 		stageModified: oklch(0.4967, 0.0822, hue.violet.stageModified).alpha(0.957),
 		stageDeleted: mp.gitStageDeleted,
@@ -399,9 +406,9 @@ const git = (() => {
 		base: oklch(0.473, 0.046, hue.violet.gitFileBase).alpha(0.79),
 		modified: oklch(0.627, 0.076, hue.violet.gitModified),
 		added: status.added,
-		deleted: oklch(0.786, 0.098, hue.red.diffDeleted),
+		deleted: oklch(0.786, 0.098, hue.red.diffDeleted).alpha(0.918),
 		ignored: oklch(0.421, 0.035, hue.violet.gitIgnored).alpha(0.79),
-		renamed: oklch(0.736, 0.115, hue.violet.renamed),
+		renamed: oklch(0.736, 0.115, hue.violet.renamed).alpha(0.918),
 		untracked: status.untracked,
 		stageDeleted: oklch(0.448, 0.058, hue.red.stageDeleted).alpha(0.96),
 		stageModified: status.stageModified,
@@ -442,6 +449,11 @@ const ui: UserInterface<ColorLike> = {
 		hint: statusTones.hint,
 		created: statusTones.created,
 		modified: statusTones.modified,
+		conflict: statusTone(
+			oklch(0.282, 0.039, hue.amber.olive).alpha(0.706),
+			oklch(0.365, 0.08, hue.amber.copper).alpha(0.918),
+			oklch(0.176, 0.041, hue.blue.deepIndigo).alpha(0.886),
+		),
 	},
 	selection: {
 		background: mix(syntax.source, mp.midnight, 0.5),
@@ -487,7 +499,7 @@ const ui: UserInterface<ColorLike> = {
 			foreground: oklch(0.903, 0.0873, hue.cyan.hoverHighlight),
 		},
 		active: {
-			background: oklch(0.8786, 0.0707, hue.cyan.hoverStatusBar).alpha(0.804),
+			background: oklch(0.8786, 0.0707, hue.cyan.aquaMist).alpha(0.804),
 		},
 		selected: {
 			background: oklch(0.269, 0.057, hue.violet.scrollbar).alpha(0.67),
@@ -495,20 +507,14 @@ const ui: UserInterface<ColorLike> = {
 	},
 
 	git: {
-		added: oklch(0.577, 0.063, hue.green.versionControlAdded).alpha(0.27),
-		modified: Color.create(accent.primaryForeground)
-			.set({
-				l: (l) => l * 0.63,
-				c: (c) => c * 1.47,
-				h: (h) => h + 84,
-			})
-			.alpha(0.33),
+		added: oklch(0.577, 0.063, hue.green.mutedTeal).alpha(0.27),
+		modified: git.status.modified,
 		deleted: mp.deletedRose.alpha(0.3),
 		wordAdded: oklch(0.45, 0.07, hue.blue.wordAdded).alpha(0.21),
 		wordDeleted: mp.deletedRose.alpha(0.27),
 		untracked: mp.mist.alpha(0.76),
 		ignored: mp.mist.alpha(0.76),
-		conflict: mp.crimson,
+		conflict: oklch(0.581, 0.188, hue.red.raspberry).alpha(0.706),
 		renamed: git.files.fg.renamed,
 		stageModified: git.files.fg.stageModified,
 		stageDeleted: git.files.fg.stageDeleted,
@@ -520,7 +526,7 @@ const ui: UserInterface<ColorLike> = {
 				deleted: git.files.fg.deleted,
 				untracked: git.files.fg.untracked,
 				ignored: git.files.fg.ignored,
-				conflict: git.files.fg.deleted,
+				conflict: oklch(0.789, 0.1, hue.red.raspberry).alpha(0.918),
 				renamed: git.files.fg.renamed,
 			},
 		},
@@ -561,9 +567,9 @@ const ui: UserInterface<ColorLike> = {
 		activeBorder: mp.windowBorder,
 	},
 	icon: {
-		foreground: oklch(0.952, 0.034, hue.green.iconForeground),
+		foreground: oklch(0.952, 0.034, hue.green.iceMint),
 		muted: oklch(0.108, 0.005, hue.violet.neutral),
-		accent: oklch(0.935, 0.088, hue.green.iconAccent).alpha(0.83),
+		accent: oklch(0.935, 0.088, hue.green.seafoam).alpha(0.83),
 	},
 	focus: {
 		border: mp.focusBorderAlpha,
@@ -628,6 +634,9 @@ const ui: UserInterface<ColorLike> = {
 
 	subtleElements: {
 		background: oklch(0.118, 0.013, hue.violet.neutral).alpha(0.52),
+		active: {
+			background: oklch(0.592, 0.124, hue.violet.neutral).alpha(0.102),
+		},
 		selectionBackground: oklch(0.2196, 0.0516, hue.violet.activeLine).alpha(
 			0.329,
 		),
@@ -643,7 +652,7 @@ const ui: UserInterface<ColorLike> = {
 
 const components = {
 	editor: {
-		background: darken(ui.backgrounds.base, 0.1),
+		background: oklch(0.143, 0.013, hue.violet.uiMuted).alpha(0.8),
 		foreground: oklch(0.482, 0.056, hue.violet.editorForeground).alpha(0.9),
 		lineHighlight:
 			ui.highlights?.activeLine?.background || ui.backgrounds.overlay,
@@ -683,7 +692,7 @@ const components = {
 	},
 	editorWidget: {
 		background: oklch(0.1456, 0.0088, hue.violet.widgetBackground).alpha(0.925),
-		foreground: oklch(0.9333, 0.036, hue.cyan.editorWidgetForeground).alpha(
+		foreground: oklch(0.9333, 0.036, hue.cyan.powderBlue).alpha(
 			0.718,
 		),
 		border: oklch(0.5547, 0.0354, hue.blue.hoverBorder).alpha(0.404),
@@ -932,6 +941,7 @@ const mintedSource = {
 
 	extraColors: {
 		// "editorPane.background": mp.midnight.render(),
+		"editor.background": oklch(0.144, 0.015, hue.violet.pane).render(),
 		"editorPane.background": oklch(0.1436, 0.0152, hue.violet.pane),
 		"editor.lineHighlightBackground": mp.lineHighlight.render(),
 		"editor.wordHighlightBackground": mp.wordHighlight.render(),
@@ -972,10 +982,7 @@ const mintedSource = {
 		"sideBar.foreground": git.files.fg.base,
 		"gitDecoration.modifiedResourceForeground": git.files.fg.modified,
 		"gitDecoration.addedResourceForeground": git.files.fg.added,
-		"gitDecoration.conflictingResourceForeground": git.files.fg.deleted,
-		"gitDecoration.deletedResourceForeground": git.files.fg.deleted,
 		"gitDecoration.ignoredResourceForeground": git.files.fg.ignored,
-		"gitDecoration.renamedResourceForeground": git.files.fg.renamed,
 		"gitDecoration.untrackedResourceForeground": git.files.fg.untracked,
 		"gitDecoration.stageDeletedResourceForeground": git.files.fg.stageDeleted,
 		"gitDecoration.stageModifiedResourceForeground": git.files.fg.stageModified,
@@ -984,7 +991,7 @@ const mintedSource = {
 		"gitlens.decorations.addedForegroundColor": oklch(
 			0.899,
 			0.081,
-			hue.green.gitLensAdded,
+			hue.green.brightTeal,
 		)
 			.alpha(0.918)
 			.render(),

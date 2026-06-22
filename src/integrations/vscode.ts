@@ -999,7 +999,10 @@ function buildColors(
 		// ═══════════════════════════════════════════════════════════════════════
 		"gitDecoration.addedResourceForeground": c("ui.git.added"),
 		"gitDecoration.modifiedResourceForeground": c("ui.git.modified"),
-		"gitDecoration.deletedResourceForeground": c("ui.git.deleted"),
+		"gitDecoration.deletedResourceForeground": c(
+			"ui.git.files.foreground.deleted",
+			"ui.git.deleted",
+		),
 		"gitDecoration.untrackedResourceForeground": c(
 			"ui.git.untracked",
 			"ui.foregrounds.muted",
@@ -1009,10 +1012,12 @@ function buildColors(
 			"ui.foregrounds.subtle",
 		),
 		"gitDecoration.conflictingResourceForeground": c(
+			"ui.git.files.foreground.conflict",
 			"ui.git.conflict",
 			"ui.status.warning.foreground",
 		),
 		"gitDecoration.renamedResourceForeground": c(
+			"ui.git.files.foreground.renamed",
 			"ui.git.renamed",
 			"ui.git.added",
 		),
