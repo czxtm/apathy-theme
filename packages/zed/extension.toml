@@ -6,9 +6,9 @@ authors = ["Cooper Maruyama <me@cooperm.com>"]
 description = "A dark, low-contrast theme family with muted purple undertones for reduced eye strain. Includes Apathy, Apathetic Ocean, and Minted variants."
 repository = "https://github.com/coopmoney/apathy-theme"
 themes = [
-  "themes/apathy.json",
+    "themes/minted.json",
+   "themes/apathy.json",
   "themes/apathetic-ocean.json",
-  "themes/minted.json",
   "themes/minted-theory.json",
   "themes/slate.json",
 ]
